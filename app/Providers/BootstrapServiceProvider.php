@@ -25,6 +25,8 @@ class BootstrapServiceProvider extends ServiceProvider
     {
         $this->app->bind(\App\Services\Role\RoleServiceInterface::class, \App\Services\Role\RoleService::class);
         $this->app->bind(\App\Services\Authunticate\AuthServiceInterface::class, \App\Services\Authunticate\AuthService::class);
+        $this->app->bind(\App\Services\User\UserServiceInterface::class, \App\Services\User\UserService::class);
+        $this->app->bind(\App\Services\Option\OptionServiceInterface::class, \App\Services\Option\OptionService::class);
         //:end-bindings:
     }
 }

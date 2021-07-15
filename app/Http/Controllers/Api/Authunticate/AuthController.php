@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Api\Authunticate;
 
+use Illuminate\Http\JsonResponse;
+use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
 use App\Services\Authunticate\AuthService;
 use App\Http\Requests\Authunticate\LoginStore;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Authunticate\RegisterStore;
 
 class AuthController extends Controller
 {
-    protected $authService;
+    protected $authService , $userService;
 
-    public function __construct(AuthService $authService)
+    public function __construct(AuthService $authService , UserService $userService)
     {
         $this->authService = $authService;
     }
@@ -41,6 +43,18 @@ class AuthController extends Controller
 
         return $this->error([
             "msg" => trans("dashboard.error.authunticate.login")
+        ]);
+    }
+
+    /**
+     * ثبت حساب جدید
+     * @param RegisterStore $request
+     * @return JsonResponse
+     */
+    public function register(RegisterStore $request)
+    {
+        $user = $this->userService->create([
+
         ]);
     }
 

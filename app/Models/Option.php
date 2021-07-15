@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\SerializeCast;
 use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
@@ -10,6 +11,11 @@ class Option extends Model
         "key",
         "default",
         "value"
+    ];
+
+    protected $casts = [
+        "default" => SerializeCast::class  ,
+        "value" => SerializeCast::class,
     ];
 
     public $timestamps = false;
