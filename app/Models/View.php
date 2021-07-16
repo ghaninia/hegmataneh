@@ -4,10 +4,9 @@ namespace App\Models;
 
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Interfaces\FilterableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class View extends Model implements FilterableInterface
+class View extends Model
 {
 
     use HasFilterTrait , HasFactory;
@@ -34,12 +33,4 @@ class View extends Model implements FilterableInterface
         return $this->morphTo();
     }
 
-    ################
-    #### SCOPES ####
-    ################
-
-    public function filterNamespace(): string
-    {
-        return "\\App\\Contracts\\Filters\\ViewFilters";
-    }
 }

@@ -24,6 +24,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
+            "status" => Arr::random(EnumsPost::status()),
             "type" => $type = Arr::random(EnumsPost::type()) ,
             "comment_status" => $this->faker->boolean() ,
             "vote_status" => $this->faker->boolean() ,

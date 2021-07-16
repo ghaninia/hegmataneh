@@ -28,6 +28,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Option\OptionRepositoryInterface::class, \App\Repositories\Option\OptionRepository::class);
         $this->app->bind(\App\Repositories\View\ViewRepositoryInterface::class, \App\Repositories\View\ViewRepository::class);
         $this->app->bind(\App\Repositories\Vote\VoteRepositoryInterface::class, \App\Repositories\Vote\VoteRepository::class);
+        $this->app->bind(\App\Repositories\Post\PostRepositoryInterface::class, \App\Repositories\Post\PostRepository::class);
         //:end-bindings:
     }
 }

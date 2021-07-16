@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Models\User;
 use App\Http\Requests\UserUpdate;
+use App\Services\Post\PostService;
 use App\Services\User\UserService;
 use App\Services\View\ViewService;
 use App\Services\Vote\VoteService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\Detail\DetailUserPostStore;
 use App\Http\Requests\User\UserIndex;
 use App\Http\Requests\User\UserStore;
 use App\Http\Resources\User\UserResource;
+use App\Http\Resources\Post\PostCollection;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\View\ViewCollection;
 use App\Http\Resources\Vote\VoteCollection;
@@ -21,16 +24,22 @@ use App\Http\Requests\User\Details\DetailUserVoteStore;
 class UserController extends Controller
 {
 
-    protected $userService, $viewService, $voteService;
+    protected
+        $userService,
+        $viewService,
+        $voteService,
+        $postService;
 
     public function __construct(
         UserService $userService,
         ViewService $viewService,
-        VoteService $voteService
+        VoteService $voteService,
+        PostService $postService
     ) {
         $this->userService = $userService;
         $this->viewService = $viewService;
         $this->voteService = $voteService;
+        $this->postService = $postService;
     }
 
     /**
@@ -145,10 +154,37 @@ class UserController extends Controller
         return new VoteCollection(
             $this->voteService->list(
                 $filters = $request->only([
-                    "user", "user_ip" , "post_id"
+                    "user", "user_ip", "post_id"
                 ])
             )
         );
-        
+    }
+
+    /**
+     * Get all user posts
+     *
+     * @param User $user
+     * @param DetailUserVoteStore $request
+     * @return JsonResource
+     */
+    public function posts(User $user, DetailUserPostStore $request): JsonResource
+    {
+
+        $request->merge(["user" => $user->id]);
+
+        return new PostCollection(
+            $this->postService->list(
+                $filters = $request->only([
+                    "user",
+                    "status" ,
+                    "comment_status" ,
+                    "vote_status" ,
+                    "format" ,
+                    "slug" ,
+                    "title" ,
+                    "content" ,
+                ])
+            )
+        );
     }
 }

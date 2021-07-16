@@ -14,6 +14,12 @@ class ViewService implements ViewServiceInterface
         $this->viewRepo = $viewRepo;
     }
 
+
+    /**
+     * لیست تمام امتیازها
+     * @param array $filters
+     * @return Paginator
+     */
     public function list(array $filters)
     {
         return

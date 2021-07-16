@@ -4,16 +4,18 @@ namespace App\Models;
 
 use App\Core\Enums\EnumsFile;
 use App\Core\Enums\EnumsTerm;
+use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use SoftDeletes , HasFactory;
+    use SoftDeletes , HasFactory , HasFilterTrait;
 
     protected $fillable = [
         "type",
+        "status" ,
         "user_id",
         "file_id",
         "comment_status",
@@ -34,8 +36,6 @@ class Post extends Model
         "download_limit",
         "sale_price_dates_from",
         "sale_price_dates_to",
-        "attachment_id",
-        "technology",
         "attachment_id",
         "published_at"
     ];
@@ -135,4 +135,5 @@ class Post extends Model
     {
         return $this->morphToMany(Term::class, 'termables')->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
     }
+
 }

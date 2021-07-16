@@ -14,6 +14,12 @@ class VoteService implements VoteServiceInterface
         $this->voteRepo = $voteRepo;
     }
 
+
+    /**
+     * لیست تمام امتیازبندهی
+     * @param array $filters
+     * @return Paginator
+     */
     public function list(array $filters)
     {
         return

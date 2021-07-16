@@ -38,12 +38,23 @@ Route::group([
 Route::group([
     "prefix" => "v1",
     "middleware" => [
-        "auth:api"
+        // "auth:api"
     ]
 ], function () {
+
+    ##############
+    ##############
+    ##############
     ### role route
+    ##############
+    ##############
     Route::apiResource("role", RoleController::class);
+
+    ##############
+    ##############
     ### user route
+    ##############
+    ##############
     Route::apiResource("user", UserController::class);
     Route::group([
         "prefix" => "user",
@@ -58,4 +69,6 @@ Route::group([
         Route::get("{user}/portfolios", [UserController::class, "portfolios"])->name("portfolios");
         Route::get("{user}/comments", [UserController::class, "comments"])->name("comments");
     });
+
+
 });

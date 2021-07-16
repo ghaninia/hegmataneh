@@ -5,12 +5,11 @@ namespace App\Models;
 use Laravel\Passport\HasApiTokens;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Notifications\Notifiable;
-use App\Core\Interfaces\FilterableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements FilterableInterface
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasFilterTrait;
 
@@ -76,11 +75,4 @@ class User extends Authenticatable implements FilterableInterface
         return $this->hasMany(Vote::class) ;
     }
 
-    ################
-    #### SCOPES ####
-    ################
-    public function filterNamespace(): string
-    {
-        return "\\App\\Contracts\\Filters\\UserFilters";
-    }
 }
