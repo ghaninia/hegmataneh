@@ -11,7 +11,7 @@ class AuthService implements AuthServiceInterface
 
     public function field()
     {
-        return "username";
+        return "email";
     }
 
     /**

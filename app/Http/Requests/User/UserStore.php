@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Authunticate;
+namespace App\Http\Requests\User;
 
-use App\Core\Enums\EnumsOption;
 use App\Rules\MobileRule;
 use App\Rules\PasswordRule;
 use App\Rules\UsernameRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterStore extends FormRequest
+class UserStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +16,7 @@ class RegisterStore extends FormRequest
      */
     public function authorize()
     {
-        return options(EnumsOption::DASHBOARD_CAN_REGISTER);
+        return true;
     }
 
     /**
@@ -28,6 +27,7 @@ class RegisterStore extends FormRequest
     public function rules()
     {
         return [
+            "role_id" => ["required", "exists:roles,id"],
             "name" => ["nullable", "string", "max:255"],
             "email" => ["required", "email", "unique:users"],
             "mobile" => ["nullable", new MobileRule, "unique:users"],

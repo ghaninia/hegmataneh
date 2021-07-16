@@ -17,4 +17,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::class;
     }
+
+    public function query()
+    {
+        return $this->model ;
+    }
 }

@@ -19,11 +19,12 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'confirm' => $this->status,
+            'status' => $this->status,
             'email' => $this->email,
             'mobile' => $this->mobile,
             "username" => $this->username,
             "bio" => $this->bio,
+            "created_at" => $this->created_at ,
             "role"  => new RoleResource($this->whenLoaded("role")),
             "files" => new FileCollection($this->whenLoaded("files"))
         ];

@@ -25,16 +25,15 @@ class RoleUpdate extends FormRequest
      */
     public function rules()
     {
-        return [] ;
-        // $role = $this->route("role");
-        // return [
-        //     "name" => ["required", "string", "max:255", Rule::unique("roles")->ignore($role->id)],
-        //     "permissions" => ["required", "array"],
-        //     "permissions.*" => [
-        //         "required", Rule::in(
-        //             EnumsRole::all()
-        //         )
-        //     ]
-        // ];
+        $role = $this->route("role");
+        return [
+            "name" => ["required", "string", "max:255", Rule::unique("roles")->ignore($role->id)],
+            "permissions" => ["required", "array"],
+            "permissions.*" => [
+                "required", Rule::in(
+                    EnumsRole::all()
+                )
+            ]
+        ];
     }
 }

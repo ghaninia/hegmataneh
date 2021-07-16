@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Enums\EnumsOption;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return options("vote_items_enable");
+    // return options(EnumsOption::NOTIFICATION_CONFIRM_REGISTER);
 });

@@ -21,16 +21,16 @@ class OptionSeeder extends Seeder
                 "key" => $record["key"],
                 "default" => $record["default"],
             ]);
-        },[
+        }, [
             [
                 ### سربرگ داشبورد
-                'key' => EnumsOption::DASHBOARD_TITLE,
-                'default' => NULL
+                'key' => EnumsOption::TITLE,
+                'default' => "صفحه رسمی امین غنی نیا"
             ],
             [
                 ### توضیحات داشبورد
-                'key' => 'dashboard_description',
-                'default' => NULL
+                'key' => EnumsOption::DESCRIPTION,
+                'default' => "توضیحات کوتاهی در مورد صفحه رسمی امین غنی نیا"
             ],
             [
                 ### آیا بصورت خصوصی در بیاید
@@ -40,7 +40,7 @@ class OptionSeeder extends Seeder
             [
                 ### آیدی دیفالت کسی که میخواهد عضو شود
                 'key' => EnumsOption::DASHBOARD_DEFAULT_REGISTER_ROLE,
-                'default' => NULL
+                'default' => 2
             ],
             [
                 ### آیا هر کسی میتواند لاگین کند
@@ -54,23 +54,23 @@ class OptionSeeder extends Seeder
             ],
             [
                 ### قوانین زمان ثبت نام
-                'key' => 'dashboard_register_rule',
+                'key' => EnumsOption::DASHBOARD_REGISTER_RULE,
                 'default' => NULL
             ],
             [
                 ### کپی رایت نوتیفیکیشن
                 'key' => EnumsOption::NOTIFICATION_COPYRIGHT,
-                'default' => NULL
+                'default' => "©Copyrights Lora Co - 1400"
             ],
             [
                 ### پیام زمانی که نوتیفکیشن زمان ثبت نام ثبت میشود
                 'key' => EnumsOption::NOTIFICATION_CONFIRM_REGISTER,
-                'default' => NULL
+                'default' => "از عضویت شما صمیمانه خوشبختیم. اگر شما میخواهید پروفایل خود را تکمیل نمایید و عضویت را کامل کنید روی لینک زیر کلیک کنید و در غیر این صورت این ایمیل را نادیده بگیرید"
             ],
             [
                 ### سابجکت درخواست تایید ثبت نام
                 'key' => EnumsOption::NOTIFICATION_CONFIRM_REGISTER_SUBJECT,
-                'default' => NULL
+                'default' => "تایید عضویت سایت"
             ],
             [
                 ### توکن اینستاگرام

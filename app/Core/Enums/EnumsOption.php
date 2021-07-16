@@ -7,9 +7,9 @@ use App\Core\Abstracts\Enum;
 class EnumsOption extends Enum
 {
     ### سربرگ داشبورد
-    const DASHBOARD_TITLE = "dashboard_title";
+    const TITLE = "title";
     ### توضیحات داشبورد
-    const DASHBOARD_DESCRIPTION  = "dashboard_description";
+    const DESCRIPTION  = "description";
     ### آیا بصورت خصوصی در بیاید
     const DASHBOARD_PRIVATE  = "dashboard_private";
     ### آیدی دیفالت کسی که میخواهد عضو شود
@@ -22,7 +22,7 @@ class EnumsOption extends Enum
     const DASHBOARD_REGISTER_RULE  = "dashboard_register_rule";
     ### کپی رایت نوتیفیکیشن
     const NOTIFICATION_COPYRIGHT  = "notification_copyright";
-    ### پیام زمانی که نوتیفکیشن زمان ثبت نام ثبت میشود
+    ###  زمانی که نوتیفکیشن زمان ثبت نام ثبت میشود
     const NOTIFICATION_CONFIRM_REGISTER  = "notification_confirm_register";
     ### سابجکت درخواست تایید ثبت نام
     const NOTIFICATION_CONFIRM_REGISTER_SUBJECT  = "notification_confirm_register_subject";
