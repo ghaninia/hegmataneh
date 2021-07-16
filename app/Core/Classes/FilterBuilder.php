@@ -2,6 +2,8 @@
 
 namespace App\Core\Classes;
 
+use Illuminate\Support\Str;
+
 class FilterBuilder
 {
     protected $query;
@@ -18,16 +20,15 @@ class FilterBuilder
     public function apply()
     {
         foreach ($this->filters as $name => $value) {
-            $normailizedName = ucfirst($name);
+            $normailizedName = Str::camel($name);
+            $normailizedName = Str::ucfirst($normailizedName) ;
             $class = $this->namespace . "\\{$normailizedName}";
 
             if (!class_exists($class)) {
                 continue;
             }
 
-
             (new $class($this->query))->handle($value);
-
         }
         return $this->query;
     }

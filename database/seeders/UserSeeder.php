@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Portfolio;
+use App\Models\Post;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\View;
+use App\Models\Vote;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -16,7 +20,20 @@ class UserSeeder extends Seeder
     public function run()
     {
         Role::factory()->has(
-            User::factory()->count(20)
+            User::factory()
+                ->has(
+                    Portfolio::factory()->count(10)
+                )
+                ->has(
+                    Post::factory()->count(10)
+                )
+                ->has(
+                    View::factory()->count(10)
+                )
+                ->has(
+                    Vote::factory()->count(10)
+                )
+                ->count(10)
         )
         ->count(5)
         ->create();

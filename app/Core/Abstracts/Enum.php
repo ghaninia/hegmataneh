@@ -14,6 +14,15 @@ abstract class Enum
     }
 
     /*
+    ** تمام تایپ های که با format شروع میشود
+    ** @return array
+    */
+    public static function format(): array
+    {
+        return self::reflaction("FORMAT_");
+    }
+
+    /*
     ** تمام تایپ های که با status شروع میشود
     ** @return array
     */

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\View;
+namespace App\Http\Resources\Vote;
 
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ViewResource extends JsonResource
+class VoteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,10 @@ class ViewResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "ip" => $this->user_ip,
-            "viewable" => $this->whenLoaded("viewable"),
-            "user" => new UserResource($this->whenLoaded("user")),
+            'user_ip' => $this->user_ip,
+            'vote' => $this->vote,
+            'user' => new UserResource($this->whenLoaded("user")),
+            'post' => new UserResource($this->whenLoaded("post")),
             "created_at" => $this->created_at
         ];
     }

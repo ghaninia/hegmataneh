@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
+use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Core\Interfaces\FilterableInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class View extends Model
+class View extends Model implements FilterableInterface
 {
+
+    use HasFilterTrait , HasFactory;
+
     protected $fillable = [
         'viewable_id',
         'viewable_type',
@@ -13,7 +19,6 @@ class View extends Model
         'user_ip',
         'marked'
     ];
-
 
     ###################
     #### RELATIONS ####
@@ -24,13 +29,17 @@ class View extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function post()
-    {
-        return $this->belongsTo(Post::class, "viewable_id", "id");
-    }
-
     public function viewable()
     {
         return $this->morphTo();
+    }
+
+    ################
+    #### SCOPES ####
+    ################
+
+    public function filterNamespace(): string
+    {
+        return "\\App\\Contracts\\Filters\\ViewFilters";
     }
 }

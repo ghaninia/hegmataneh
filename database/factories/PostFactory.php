@@ -1,0 +1,39 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Core\Enums\EnumsPost;
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
+
+class PostFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Post::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            "type" => $type = Arr::random(EnumsPost::type()) ,
+            "comment_status" => $this->faker->boolean() ,
+            "vote_status" => $this->faker->boolean() ,
+            "format" => $format = Arr::random(EnumsPost::format()),
+            "development" => $this->faker->numberBetween(0,100),
+            "title" => $this->faker->realText(50) ,
+            "goal_post" => $this->faker->realText(100),
+            "slug" => $this->faker->slug() ,
+            "content" => $this->faker->realText(500),
+            "excerpt" => $this->faker->realText(100),
+        ];
+    }
+}

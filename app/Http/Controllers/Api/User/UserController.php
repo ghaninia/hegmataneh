@@ -6,20 +6,31 @@ use App\Models\User;
 use App\Http\Requests\UserUpdate;
 use App\Services\User\UserService;
 use App\Services\View\ViewService;
+use App\Services\Vote\VoteService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserIndex;
 use App\Http\Requests\User\UserStore;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserCollection;
+use App\Http\Resources\View\ViewCollection;
+use App\Http\Resources\Vote\VoteCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Requests\User\Details\DetailUserViewStore;
+use App\Http\Requests\User\Details\DetailUserVoteStore;
 
 class UserController extends Controller
 {
 
-    protected $userService , $viewService ;
-    public function __construct(UserService $userService , ViewService $viewService)
-    {
+    protected $userService, $viewService, $voteService;
+
+    public function __construct(
+        UserService $userService,
+        ViewService $viewService,
+        VoteService $voteService
+    ) {
         $this->userService = $userService;
-        $this->viewService = $viewService ;
+        $this->viewService = $viewService;
+        $this->voteService = $voteService;
     }
 
     /**
@@ -93,8 +104,51 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->userService->delete($user);
+
         return $this->success([
             "msg" => trans("dashboard.success.user.delete")
         ]);
+    }
+
+    /**
+     * Get all user views
+     *
+     * @param User $user
+     * @param DetailUserViewStore $request
+     * @return JsonResource
+     */
+    public function views(User $user, DetailUserViewStore $request): JsonResource
+    {
+        $request->merge(["user" => $user->id]);
+
+        return new ViewCollection(
+            $this->viewService->list(
+                $filters = $request->only([
+                    "user", "user_ip"
+                ])
+            )
+        );
+    }
+
+    /**
+     * Get all user votes
+     *
+     * @param User $user
+     * @param DetailUserVoteStore $request
+     * @return JsonResource
+     */
+    public function votes(User $user, DetailUserVoteStore $request): JsonResource
+    {
+
+        $request->merge(["user" => $user->id]);
+
+        return new VoteCollection(
+            $this->voteService->list(
+                $filters = $request->only([
+                    "user", "user_ip" , "post_id"
+                ])
+            )
+        );
+        
     }
 }

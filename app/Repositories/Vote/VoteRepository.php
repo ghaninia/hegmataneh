@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\View;
+namespace App\Repositories\Vote;
 
-use App\Models\View;
-use App\Repositories\View\ViewRepositoryInterface;
+use App\Models\Vote;
 use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
+use App\Repositories\Vote\VoteRepositoryInterface;
 
-class ViewRepository extends BaseRepository implements ViewRepositoryInterface
+class VoteRepository extends BaseRepository implements VoteRepositoryInterface
 {
     /**
      * Specify Model class name
@@ -15,7 +15,7 @@ class ViewRepository extends BaseRepository implements ViewRepositoryInterface
      */
     public function model()
     {
-        return View::class;
+        return Vote::class;
     }
 
     public function query()

@@ -10,7 +10,7 @@ use App\Services\Option\OptionServiceInterface;
 class OptionService implements OptionServiceInterface
 {
 
-    ## زمان اکسپایر شدن بر اساس دقیقه
+    ## زمان اکسپایر شدن بر اساس ثانیه
     const EXPIRE_TIME = 600;
 
     ## نام قراردادی کش

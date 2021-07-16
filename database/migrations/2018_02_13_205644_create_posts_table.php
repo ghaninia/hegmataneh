@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger("file_id")->nullable()->index();
 
             //** post **//
-            $table->enum('format', EnumsPost::type() )->nullable();
+            $table->enum('format', EnumsPost::format() )->nullable();
 
             $table->boolean("comment_status")->default(true);
             $table->boolean('vote_status')->default(true);

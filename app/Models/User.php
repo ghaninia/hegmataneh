@@ -66,6 +66,16 @@ class User extends Authenticatable implements FilterableInterface
         return $this->hasMany(Portfolio::class);
     }
 
+    public function views()
+    {
+        return $this->hasMany(View::class) ;
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class) ;
+    }
+
     ################
     #### SCOPES ####
     ################

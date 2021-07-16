@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
+use App\Models\Term;
+use App\Models\Portfolio;
+use App\Models\Quotation;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +19,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Relation::morphMap([
+            "user" => User::class ,
+            "post" => Post::class ,
+            "portfolio" => Portfolio::class ,
+            "term" => Term::class ,
+            "quotation" => Quotation::class ,
+        ]);
     }
 
     /**
