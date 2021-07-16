@@ -69,6 +69,4 @@ Route::group([
         Route::get("{user}/portfolios", [UserController::class, "portfolios"])->name("portfolios");
         Route::get("{user}/comments", [UserController::class, "comments"])->name("comments");
     });
-
-
 });

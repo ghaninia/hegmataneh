@@ -9,17 +9,20 @@ use App\Services\User\UserService;
 use App\Services\View\ViewService;
 use App\Services\Vote\VoteService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\Detail\DetailUserPostStore;
 use App\Http\Requests\User\UserIndex;
 use App\Http\Requests\User\UserStore;
+use App\Services\Product\ProductService;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\Post\PostCollection;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\View\ViewCollection;
 use App\Http\Resources\Vote\VoteCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Requests\User\Detail\DetailUserPostStore;
 use App\Http\Requests\User\Details\DetailUserViewStore;
 use App\Http\Requests\User\Details\DetailUserVoteStore;
+use App\Http\Requests\User\Detail\DetailUserProductStore;
+use App\Http\Resources\Product\ProductCollection;
 
 class UserController extends Controller
 {
@@ -28,18 +31,21 @@ class UserController extends Controller
         $userService,
         $viewService,
         $voteService,
-        $postService;
+        $postService,
+        $productService;
 
     public function __construct(
         UserService $userService,
         ViewService $viewService,
         VoteService $voteService,
-        PostService $postService
+        PostService $postService,
+        ProductService $productService
     ) {
         $this->userService = $userService;
         $this->viewService = $viewService;
         $this->voteService = $voteService;
         $this->postService = $postService;
+        $this->productService = $productService;
     }
 
     /**
@@ -128,14 +134,16 @@ class UserController extends Controller
      */
     public function views(User $user, DetailUserViewStore $request): JsonResource
     {
-        $request->merge(["user" => $user->id]);
+
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "user", "user_ip"
+            ])
+        );
 
         return new ViewCollection(
-            $this->viewService->list(
-                $filters = $request->only([
-                    "user", "user_ip"
-                ])
-            )
+            $this->viewService->list($filters)
         );
     }
 
@@ -149,14 +157,15 @@ class UserController extends Controller
     public function votes(User $user, DetailUserVoteStore $request): JsonResource
     {
 
-        $request->merge(["user" => $user->id]);
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "user", "user_ip", "post_id"
+            ])
+        );
 
         return new VoteCollection(
-            $this->voteService->list(
-                $filters = $request->only([
-                    "user", "user_ip", "post_id"
-                ])
-            )
+            $this->voteService->list($filters)
         );
     }
 
@@ -170,21 +179,52 @@ class UserController extends Controller
     public function posts(User $user, DetailUserPostStore $request): JsonResource
     {
 
-        $request->merge(["user" => $user->id]);
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "user",
+                "status",
+                "comment_status",
+                "vote_status",
+                "format",
+                "slug",
+                "title",
+                "content",
+            ])
+        );
 
         return new PostCollection(
-            $this->postService->list(
-                $filters = $request->only([
-                    "user",
-                    "status" ,
-                    "comment_status" ,
-                    "vote_status" ,
-                    "format" ,
-                    "slug" ,
-                    "title" ,
-                    "content" ,
-                ])
-            )
+            $this->postService->list($filters)
+        );
+    }
+
+    /**
+     * Get all user products
+     *
+     * @param User $user
+     * @param DetailUserVoteStore $request
+     * @return JsonResource
+     */
+    public function products(User $user, DetailUserProductStore $request): JsonResource
+    {
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "user",
+                "status",
+                "comment_status",
+                "vote_status",
+                "format",
+                "slug",
+                "title",
+                "content",
+                "development",
+                "price"
+            ])
+        );
+
+        return new ProductCollection(
+            $this->productService->list($filters)
         );
     }
 }

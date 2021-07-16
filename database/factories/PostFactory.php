@@ -35,6 +35,7 @@ class PostFactory extends Factory
             "slug" => $this->faker->slug() ,
             "content" => $this->faker->realText(500),
             "excerpt" => $this->faker->realText(100),
+            "price" => $this->faker->numberBetween(100,5000)
         ];
     }
 }

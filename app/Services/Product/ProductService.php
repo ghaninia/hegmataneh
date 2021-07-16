@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Services\Post;
+namespace App\Services\Product;
 
 use App\Core\Enums\EnumsPost;
 use App\Repositories\Post\PostRepository;
-use App\Services\Post\PostServiceInterface;
+use App\Services\Product\ProductServiceInterface;
 
-class PostService implements PostServiceInterface
+class ProductService implements ProductServiceInterface
 {
     protected $postRepo;
-
     public function __construct(PostRepository $postRepo)
     {
         $this->postRepo = $postRepo;
     }
 
     /**
-     * لیست تمام پست ها
+     * لیست تمام محصولات
      * @param array $filters
      * @return Paginator
      */
@@ -24,7 +23,7 @@ class PostService implements PostServiceInterface
     {
         return
             $this->postRepo->query()
-            ->where("type", EnumsPost::TYPE_POST)
+            ->where("type", EnumsPost::TYPE_PRODUCT)
             ->filterBy($filters)
             ->paginate();
     }

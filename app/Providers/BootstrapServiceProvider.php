@@ -30,6 +30,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\View\ViewServiceInterface::class, \App\Services\View\ViewService::class);
         $this->app->bind(\App\Services\Vote\VoteServiceInterface::class, \App\Services\Vote\VoteService::class);
         $this->app->bind(\App\Services\Post\PostServiceInterface::class, \App\Services\Post\PostService::class);
+        $this->app->bind(\App\Services\Product\ProductServiceInterface::class, \App\Services\Product\ProductService::class);
         //:end-bindings:
     }
 }
