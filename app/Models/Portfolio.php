@@ -2,26 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Portfolio extends Model
 {
-    use HasFactory ;
+    use HasFactory , HasFilterTrait ;
 
     protected $fillable = [
         "user_id",
-        "file_id",
         "name",
         "description",
         "demo",
         "excerpt",
         "percent",
-        "started_at"
+        "launched_at"
     ];
 
     protected $dates = [
-        "started_at"
+        "launched_at"
     ];
 
     ###################

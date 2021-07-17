@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Portfolio;
 use App\Models\Post;
 use App\Models\Role;
+use App\Models\Skill;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Vote;
@@ -32,6 +33,9 @@ class UserSeeder extends Seeder
                 )
                 ->has(
                     Vote::factory()->count(10)
+                )
+                ->has(
+                    Skill::factory()->count(5)
                 )
                 ->count(10)
         )

@@ -6,7 +6,10 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Vote;
+use App\Models\Skill;
+use App\Models\Portfolio;
 use App\Core\Classes\FilterBuilder;
+use App\Models\Comment;
 
 trait HasFilterTrait
 {
@@ -24,6 +27,9 @@ trait HasFilterTrait
             User::class => "App\\Contracts\\Filters\\UserFilters",
             View::class => "App\\Contracts\\Filters\\ViewFilters",
             Vote::class => "App\\Contracts\\Filters\\VoteFilters",
+            Skill::class => "App\\Contracts\\Filters\\SkillFilters",
+            Portfolio::class => "App\\Contracts\\Filters\\PortfolioFilters",
+            Comment::class => "App\\Contracts\\Filters\\CommentFilters",
         ][__CLASS__] ?? null;
     }
 }

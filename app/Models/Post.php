@@ -86,16 +86,6 @@ class Post extends Model
         return $this->morphToMany(File::class, 'fileables');
     }
 
-    public function pictures()
-    {
-        return $this->morphToMany(File::class, 'fileables')->wherePivot("format", EnumsFile::TYPE_IMAGE);
-    }
-
-    public function attachments()
-    {
-        return $this->morphToMany(File::class, 'fileables')->wherePivot("format", EnumsFile::TYPE_FILE);
-    }
-
     public function skills()
     {
         return $this->morphToMany(Skill::class, "skillable");

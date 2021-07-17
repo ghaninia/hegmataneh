@@ -73,25 +73,25 @@ class FilterBuilder
 
     /**
      * در صورتی که ولیدیشن بر اساس رنج باشد
-     * @param $value
+     * @param $key
      * @return ?string
      */
-    public function operator($value): ?string
+    public function operator($key): ?string
     {
-        $value = trim(strtolower($value));
-        switch ($value) {
+        $key = trim(strtolower($key));
+        switch ($key) {
                 ## کوچکتر مساوی
             case "lte":
-                return ">=";
+                return "<=";
                 ## بزرگتر مساوی
             case "gte":
-                return "<=";
+                return ">=";
                 ## کوچکتر
             case "lt":
-                return ">";
+                return "<";
                 ## بزرگتر
             case "gt":
-                return "<";
+                return ">";
         }
 
         return null;

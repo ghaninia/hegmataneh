@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use App\Core\Enums\EnumsComment;
+use App\Core\Traits\HasFilterTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    use HasFactory , HasFilterTrait ;
+
     protected $fillable = [
         'comment_id',
         'post_id',

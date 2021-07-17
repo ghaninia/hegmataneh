@@ -32,7 +32,7 @@ class PostFactory extends Factory
             "development" => $this->faker->numberBetween(0,100),
             "title" => $this->faker->realText(50) ,
             "goal_post" => $this->faker->realText(100),
-            "slug" => $this->faker->slug() ,
+            "slug" => $this->faker->unique()->slug() ,
             "content" => $this->faker->realText(500),
             "excerpt" => $this->faker->realText(100),
             "price" => $this->faker->numberBetween(100,5000)

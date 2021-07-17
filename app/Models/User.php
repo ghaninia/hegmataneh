@@ -50,6 +50,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
     public function posts()
     {
         return $this->hasMany(Post::class, "user_id");
@@ -75,4 +76,8 @@ class User extends Authenticatable
         return $this->hasMany(Vote::class) ;
     }
 
+    public function skills()
+    {
+        return $this->morphToMany(Skill::class, "skillable");
+    }
 }

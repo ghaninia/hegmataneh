@@ -14,12 +14,10 @@ class CreateSkillsTable extends Migration
     public function up()
     {
         Schema::create('skills', function (Blueprint $table) {
-            $table->id() ;
-            $table->string("title_en")->unique() ;
-            $table->string("title_fa")->nullable() ;
-            $table->text("svg")->nullable() ;
-            $table->text("icon")->nullable() ;
-
+            $table->id();
+            $table->string("title_en")->unique();
+            $table->string("title_fa")->nullable();
+            $table->text("icon")->nullable();
             $table->timestamps();
         });
     }

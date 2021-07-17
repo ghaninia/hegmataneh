@@ -4,25 +4,37 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Models\User;
 use App\Http\Requests\UserUpdate;
+use App\Services\Page\PageService;
 use App\Services\Post\PostService;
 use App\Services\User\UserService;
 use App\Services\View\ViewService;
 use App\Services\Vote\VoteService;
 use App\Http\Controllers\Controller;
+use App\Services\Skill\SkillService;
 use App\Http\Requests\User\UserIndex;
 use App\Http\Requests\User\UserStore;
+use App\Services\Comment\CommentService;
 use App\Services\Product\ProductService;
 use App\Http\Resources\User\UserResource;
+use App\Http\Resources\Page\PageCollection;
 use App\Http\Resources\Post\PostCollection;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\View\ViewCollection;
 use App\Http\Resources\Vote\VoteCollection;
+use App\Services\Portfolio\PortfolioService;
+use App\Http\Resources\Skill\SkillCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Requests\User\Detail\DetailUserPostStore;
-use App\Http\Requests\User\Details\DetailUserViewStore;
-use App\Http\Requests\User\Details\DetailUserVoteStore;
-use App\Http\Requests\User\Detail\DetailUserProductStore;
+use App\Http\Resources\Comment\CommentCollection;
 use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\Portfolio\PortfolioCollection;
+use App\Http\Requests\User\Detail\DetailUserPageStore;
+use App\Http\Requests\User\Detail\DetailUserPostStore;
+use App\Http\Requests\User\Detail\DetailUserViewStore;
+use App\Http\Requests\User\Detail\DetailUserVoteStore;
+use App\Http\Requests\User\Detail\DetailUserSkillStore;
+use App\Http\Requests\User\Detail\DetailUserCommentStore;
+use App\Http\Requests\User\Detail\DetailUserProductStore;
+use App\Http\Requests\User\Detail\DetailUserPortfolioStore;
 
 class UserController extends Controller
 {
@@ -32,20 +44,32 @@ class UserController extends Controller
         $viewService,
         $voteService,
         $postService,
-        $productService;
+        $productService,
+        $pageService,
+        $skillService,
+        $portfolioService ,
+        $commentService;
 
     public function __construct(
         UserService $userService,
         ViewService $viewService,
         VoteService $voteService,
         PostService $postService,
-        ProductService $productService
+        ProductService $productService,
+        PageService $pageService,
+        SkillService $skillService,
+        PortfolioService $portfolioService ,
+        CommentService $commentService
     ) {
         $this->userService = $userService;
         $this->viewService = $viewService;
         $this->voteService = $voteService;
         $this->postService = $postService;
         $this->productService = $productService;
+        $this->pageService = $pageService;
+        $this->skillService = $skillService;
+        $this->portfolioService = $portfolioService ;
+        $this->commentService = $commentService ;
     }
 
     /**
@@ -173,12 +197,11 @@ class UserController extends Controller
      * Get all user posts
      *
      * @param User $user
-     * @param DetailUserVoteStore $request
+     * @param DetailUserPostStore $request
      * @return JsonResource
      */
     public function posts(User $user, DetailUserPostStore $request): JsonResource
     {
-
         $filters = array_merge(
             ["user" => $user->id],
             $request->only([
@@ -190,6 +213,7 @@ class UserController extends Controller
                 "slug",
                 "title",
                 "content",
+                "created_at" ,
             ])
         );
 
@@ -202,7 +226,7 @@ class UserController extends Controller
      * Get all user products
      *
      * @param User $user
-     * @param DetailUserVoteStore $request
+     * @param DetailUserProductStore $request
      * @return JsonResource
      */
     public function products(User $user, DetailUserProductStore $request): JsonResource
@@ -222,9 +246,113 @@ class UserController extends Controller
                 "price"
             ])
         );
-
         return new ProductCollection(
             $this->productService->list($filters)
         );
     }
+
+    /**
+     * Get all user pages
+     *
+     * @param User $user
+     * @param DetailUserPageStore $request
+     * @return JsonResource
+     */
+    public function pages(User $user, DetailUserPageStore $request): JsonResource
+    {
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "user",
+                "status",
+                "comment_status",
+                "vote_status",
+                "format",
+                "slug",
+                "title",
+                "content",
+                "theme"
+            ])
+        );
+        return new PageCollection(
+            $this->pageService->list($filters)
+        );
+    }
+
+    /**
+     * Get all user skills
+     *
+     * @param User $user
+     * @param DetailUserSkillStore $request
+     * @return JsonResource
+     */
+    public function skills(User $user, DetailUserSkillStore $request): JsonResource
+    {
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "title_fa",
+                "title_en",
+            ])
+        );
+        return new SkillCollection(
+            $this->skillService->list($filters)
+        );
+    }
+
+    /**
+     * Get all user portfolios
+     *
+     * @param User $user
+     * @param DetailUserPortfolioStore $request
+     * @return JsonResource
+     */
+    public function portfolios(User $user, DetailUserPortfolioStore $request): JsonResource
+    {
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                "name",
+                "description",
+                "demo",
+                "excerpt",
+                "percent",
+                "launched_at"
+            ])
+        );
+
+        return new PortfolioCollection(
+            $this->portfolioService->list($filters)
+        );
+    }
+
+    /**
+     * Get all user comments
+     *
+     * @param User $user
+     * @param DetailUserCommentStore $request
+     * @return JsonResource
+     */
+    public function comments(User $user, DetailUserCommentStore $request): JsonResource
+    {
+        $filters = array_merge(
+            ["user" => $user->id],
+            $request->only([
+                'comment_id',
+                'post_id',
+                'fullname',
+                'email',
+                'website',
+                'ipv4',
+                'status',
+                'content',
+                "created_at"
+            ])
+        );
+
+        return new CommentCollection(
+            $this->commentService->list($filters)
+        );
+    }
+
 }
