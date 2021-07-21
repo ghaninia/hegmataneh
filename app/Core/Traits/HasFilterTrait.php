@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\View;
 use App\Models\Vote;
 use App\Models\Skill;
+use App\Models\Option;
 use App\Models\Comment;
 use App\Models\Portfolio;
 use App\Core\Classes\FilterBuilder;
@@ -32,6 +33,7 @@ trait HasFilterTrait
             Portfolio::class => "App\\Contracts\\Filters\\PortfolioFilters",
             Comment::class => "App\\Contracts\\Filters\\CommentFilters",
             Term::class => "App\\Contracts\\Filters\\TermFilters",
+            Option::class => "App\\Contracts\\Filters\\OptionFilters",
         ][__CLASS__] ?? null;
     }
 }

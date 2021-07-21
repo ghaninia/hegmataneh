@@ -3,8 +3,8 @@
 namespace App\Repositories\Option;
 
 use App\Models\Option;
-use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 use App\Repositories\Option\OptionRepositoryInterface;
+use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class OptionRepository extends BaseRepository implements OptionRepositoryInterface
 {
@@ -18,11 +18,20 @@ class OptionRepository extends BaseRepository implements OptionRepositoryInterfa
         return Option::class;
     }
 
-    public function updateOrCreate($key, $value)
+    /**
+     * @param string $key
+     * @param $value
+     * @return Option
+     */
+    public function updateOrCreate($key, $value) : Option
     {
-        return $this->model->updateOrCreate(
-            ["key" => $key],
-            ["value" => $value]
-        );
+        return
+            $this->model->updateOrCreate(
+                ["key" => $key],
+                [
+                    "key" => $key,
+                    "value" => $value
+                ]
+            );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\Option;
 
+use App\Models\Option;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use App\Repositories\Option\OptionRepository;
@@ -83,10 +84,19 @@ class OptionService implements OptionServiceInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @return boolean
+     * @return Option
      */
-    public function put(string $key,  $value): bool
+    public function put(string $key,  $value) : Option
     {
         return $this->service()->updateOrCreate($key, serialize($value));
+    }
+
+
+    /**
+     * @return boolean
+     */
+    public function forget(): bool
+    {
+        return Cache::forget(self::CACHE_NAME);
     }
 }

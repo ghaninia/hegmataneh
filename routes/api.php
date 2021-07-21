@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
+use App\Http\Controllers\Api\Option\OptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,4 +87,15 @@ Route::group([
     ############
     Route::apiResource("category", CategoryController::class);
 
+
+    ###########
+    ### options
+    ###########
+    Route::group([
+        "prefix" => "option",
+        "as" => "option.",
+    ], function () {
+        Route::get("/", [OptionController::class, "index"])->name("index");
+        Route::patch("/", [OptionController::class, "update"])->name("update");
+    });
 });

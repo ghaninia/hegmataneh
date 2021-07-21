@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Option;
-use App\Core\Enums\EnumsOption;
 use App\Core\Enums\EnumsPost;
+use App\Core\Enums\EnumsSort;
+use App\Core\Enums\EnumsAnchor;
+use App\Core\Enums\EnumsOption;
 use Illuminate\Database\Seeder;
+use App\Core\Enums\EnumsAuthunticate;
 
 class OptionSeeder extends Seeder
 {
@@ -40,7 +43,7 @@ class OptionSeeder extends Seeder
             [
                 ### آیدی دیفالت کسی که میخواهد عضو شود
                 'key' => EnumsOption::DASHBOARD_DEFAULT_REGISTER_ROLE,
-                'default' => 2
+                'default' => NULL
             ],
             [
                 ### آیا هر کسی میتواند لاگین کند
@@ -155,26 +158,22 @@ class OptionSeeder extends Seeder
             [
                 ### فقط اعضا و میمهان توانایی امتیازدهی پست ها را دارند
                 'key' => EnumsOption::CAN_VOTE_POSTS,
-                'default' => ['guest', 'member']
+                'default' => EnumsAuthunticate::type()
             ],
             [
                 ### فقط اعضا و میهمان توانایی امتیازدهی برگه ها را دارند
                 'key' => EnumsOption::CAN_VOTE_PAGES,
-                'default' => ['guest', 'member']
+                'default' => EnumsAuthunticate::type()
             ],
             [
                 ### فقط اعضا و میهمان توانایی امتیازدهی محصولات را دارند
                 'key' => EnumsOption::CAN_VOTE_PRODUCTS,
-                'default' => ['guest', 'member', 'customer']
+                'default' => EnumsAuthunticate::type()
             ],
             [
                 ### چه وضعیت های جدول پست میتواند امتیاز بگیرد
                 'key' => EnumsOption::VOTE_ITEMS_ENABLE,
-                'default' => [
-                    EnumsPost::TYPE_POST,
-                    EnumsPost::TYPE_PAGE,
-                    EnumsPost::TYPE_PRODUCT
-                ]
+                'default' => EnumsPost::type()
             ],
             [
                 ### سربرگ فروشگاه
@@ -194,11 +193,7 @@ class OptionSeeder extends Seeder
             [
                 ### چه وضعیت های جدول پست میتواند کامنت بگیرد
                 'key' => EnumsOption::CAN_COMMENT_POSTS,
-                'default' => [
-                    EnumsPost::TYPE_POST,
-                    EnumsPost::TYPE_PAGE,
-                    EnumsPost::TYPE_PRODUCT
-                ]
+                'default' => EnumsPost::type()
             ],
             [
                 ### توانایی ریپلای کامنت وجود داشته باشد
@@ -228,12 +223,12 @@ class OptionSeeder extends Seeder
             [
                 ### کامنت ها به چه صورتی مرتب گردند
                 'key' => EnumsOption::COMMENT_ORDER,
-                'default' => 'desc'
+                'default' => EnumsSort::TYPE_ASC
             ],
             [
                 ### بصورت پیشفرض کامنت ها چگونه مرتب شوند
                 'key' => EnumsOption::DEFAULT_COMMENTS_PAGE,
-                'default' => 'desc'
+                'default' => EnumsSort::TYPE_ASC
             ],
             [
                 ### نظارت بر روی نظرات
@@ -243,17 +238,17 @@ class OptionSeeder extends Seeder
             [
                 ### چه کسی میتواند نظرها را لایک کند
                 'key' => EnumsOption::CAN_LIKE_COMMENTS,
-                'default' => ['guest', 'member']
+                'default' => EnumsAuthunticate::type()
             ],
             [
                 ### توانایی لایک برای چه کسایی وجود دارد؟
                 'key' => EnumsOption::LIKE_ITEMS_ENABLE,
-                'default' => ['comment']
+                'default' => EnumsAnchor::type()
             ],
             [
                 ### افراد میتوانند لایک های خود را عوض کنند؟
                 'key' => EnumsOption::MEMBER_CAN_EDIT_LIKE,
-                'default' => 1
+                'default' => TRUE
             ],
             [
                 ### لوگو

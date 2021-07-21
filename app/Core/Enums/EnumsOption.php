@@ -6,6 +6,13 @@ use App\Core\Abstracts\Enum;
 
 class EnumsOption extends Enum
 {
+
+    /**
+     * برای ولیدیشن باید در کلاس
+     * App\Http\Requests\Option\OptionUpdate
+     * اقدام نمایید
+     */
+
     ### سربرگ داشبورد
     const TITLE = "title";
     ### توضیحات داشبورد
