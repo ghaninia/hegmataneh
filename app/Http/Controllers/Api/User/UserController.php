@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Models\User;
-use App\Http\Requests\UserUpdate;
 use App\Services\Page\PageService;
 use App\Services\Post\PostService;
 use App\Services\User\UserService;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Skill\SkillService;
 use App\Http\Requests\User\UserIndex;
 use App\Http\Requests\User\UserStore;
+use App\Http\Requests\User\UserUpdate;
 use App\Services\Comment\CommentService;
 use App\Services\Product\ProductService;
 use App\Http\Resources\User\UserResource;

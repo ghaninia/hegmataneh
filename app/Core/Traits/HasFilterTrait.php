@@ -3,13 +3,14 @@
 namespace App\Core\Traits;
 
 use App\Models\Post;
+use App\Models\Term;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Vote;
 use App\Models\Skill;
+use App\Models\Comment;
 use App\Models\Portfolio;
 use App\Core\Classes\FilterBuilder;
-use App\Models\Comment;
 
 trait HasFilterTrait
 {
@@ -30,6 +31,7 @@ trait HasFilterTrait
             Skill::class => "App\\Contracts\\Filters\\SkillFilters",
             Portfolio::class => "App\\Contracts\\Filters\\PortfolioFilters",
             Comment::class => "App\\Contracts\\Filters\\CommentFilters",
+            Term::class => "App\\Contracts\\Filters\\TermFilters",
         ][__CLASS__] ?? null;
     }
 }

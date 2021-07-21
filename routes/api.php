@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Term\TagController;
 use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
 
 /*
@@ -69,4 +71,19 @@ Route::group([
         Route::get("{user}/portfolios", [UserController::class, "portfolios"])->name("portfolios");
         Route::get("{user}/comments", [UserController::class, "comments"])->name("comments");
     });
+
+    #######
+    #######
+    ### tag
+    #######
+    #######
+    Route::apiResource("tag", TagController::class);
+
+    ############
+    ############
+    ### category
+    ############
+    ############
+    Route::apiResource("category", CategoryController::class);
+
 });

@@ -3,21 +3,22 @@
 namespace App\Models;
 
 use App\Core\Enums\EnumsTerm;
+use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Term extends Model
 {
+    use HasFilterTrait , HasFactory ;
+
     protected $fillable = [
         "name",
         "color",
         "type",
         "slug",
         "term_id",
-        "file_id",
         "description",
-        "demo"
     ];
-
 
     ###################
     #### RELATIONS ####
@@ -28,22 +29,17 @@ class Term extends Model
         return $this->morphedByMany(Post::class, "termables");
     }
 
-    public function picture()
-    {
-        return $this->belongsTo(File::class);
-    }
-
     public function parent()
     {
-        return $this->belongsTo(Term::class);
+        return $this->belongsTo(Term::class , "term_id" , "id");
     }
 
-    public function childerns()
+    public function childrens()
     {
-        return $this->hasMany(Term::class);
+        return $this->hasMany(Term::class , "term_id" , "id");
     }
 
-    ################
+    ###############
     #### SCOPES ####
     ################
 
