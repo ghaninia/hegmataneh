@@ -17,6 +17,7 @@ class EnumsFile extends Enum
     ];
 
     const MIME_TYPE_FILE = [
+        "image/svg",
         "image/svg+xml",
         "image/vnd.microsoft.icon",
         "video/x-msvideo",
@@ -24,20 +25,20 @@ class EnumsFile extends Enum
         "text/csv",
         "application/msword",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "text/javascript" ,
-        "application/json" ,
-        "audio/mpeg" ,
-        "video/mp4" ,
-        "video/mpeg" ,
-        "application/pdf" ,
-        "application/vnd.rar" ,
-        "application/x-tar" ,
-        "text/plain" ,
-        "audio/wav" ,
-        "application/vnd.ms-excel" ,
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ,
-        "application/xml" ,
-        "application/zip" ,
+        "text/javascript",
+        "application/json",
+        "audio/mpeg",
+        "video/mp4",
+        "video/mpeg",
+        "application/pdf",
+        "application/vnd.rar",
+        "application/x-tar",
+        "text/plain",
+        "audio/wav",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/xml",
+        "application/zip",
         "video/3gpp"
     ];
 }

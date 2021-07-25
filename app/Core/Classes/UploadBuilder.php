@@ -4,11 +4,12 @@ namespace App\Core\Classes;
 
 use Illuminate\Support\Str;
 use App\Core\Enums\EnumsFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 abstract class UploadBuilder
 {
-    private $basePath = "uploads";
+    private string $basePath = "uploads";
     public $user, $file, $usage;
 
     /**
@@ -19,13 +20,14 @@ abstract class UploadBuilder
     {
         return [
             "path" => Storage::putFileAs(
-                $this->basePathUpload(),
+                $this->cleanFormatAddress(
+                    $this->basePathUpload()
+                ),
                 $this->file,
                 $this->generateName()
             ),
-            "type" => $this->typePath(),
-            "size" =>  $this->fileSize(),
-            "usage" => $this->usage,
+            "type" => $this->fileType(),
+            "size" =>  $this->fileSize()
         ];
     }
 
@@ -52,47 +54,45 @@ abstract class UploadBuilder
     }
 
     /**
-     * get per file
-     * @param string $path
-     * @return string
-     */
-    public function per(string $path): string
-    {
-        return substr(sprintf('%o', fileperms($path)), -4);
-    }
-
-    /**
-     * get create time file
-     * @param string $path
-     * @return string
-     */
-    public function time(string $path): string
-    {
-        return fileatime($path);
-    }
-
-
-
-    /**
      * delete file
      * @param string $path
      * @return boolean
      */
     public function delete(string $path): bool
     {
-        return Storage::delete($path);
+        return
+            is_dir($path) ?
+            File::deleteDirectory($path) :
+            File::delete($path);
     }
 
     /**
+     * remove address relative path
+     * @param string $path
+     * @param bool $isLinkAddress
+     * @return string
+     */
+    public function cleanFormatAddress(string $path, bool $isLinkAddress = false): string
+    {
+        $trimPath = $this->trimSeparator(
+            $isLinkAddress ? Storage::url(DIRECTORY_SEPARATOR) : Storage::path(DIRECTORY_SEPARATOR)
+        );
+        $path = str_replace($trimPath, "", $path);
+        $path = $this->trimSeparator($path);
+
+        return $path;
+    }
+
+    /**
+     * get link address
      * @param $path
      * @return string
      */
     public function link($path): string
     {
-        $trimPath = $this->trimSeparator(Storage::path(DIRECTORY_SEPARATOR));
-        $path = str_replace($trimPath, "", $path);
-        $path = $this->trimSeparator($path);
-        return Storage::url($path);
+        return Storage::url(
+            $this->cleanFormatAddress($path)
+        );
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class UploadBuilder
     private function basePathUpload(): string
     {
         $path  = $this->basePath();
-        $path .= $this->typePath();
+        $path .= $this->fileType();
         return $path;
     }
 
@@ -116,7 +116,7 @@ abstract class UploadBuilder
         $path  = $this->addSeparator($this->basePath);
         $path .= !!$userPath ? $this->addSeparator($userPath) : NULL;
 
-        return $this->trimSeparator(Storage::path($path));
+        return Storage::path($path);
     }
 
     /**
@@ -132,7 +132,7 @@ abstract class UploadBuilder
      * get type file
      * @return string
      */
-    private function typePath(): string
+    private function fileType(): string
     {
         return in_array($this->file->getMimeType(), EnumsFile::MIME_TYPE_FILE) ?
             EnumsFile::TYPE_FILE :
@@ -156,5 +156,25 @@ abstract class UploadBuilder
     private function fileSize(): int
     {
         return $this->file->getSize();
+    }
+
+    /**
+     * get per file
+     * @param string $path
+     * @return string
+     */
+    public function per(string $path): string
+    {
+        return substr(sprintf('%o', fileperms($path)), -4);
+    }
+
+    /**
+     * get create time file
+     * @param string $path
+     * @return string
+     */
+    public function time(string $path): string
+    {
+        return fileatime($path);
     }
 }

@@ -11,7 +11,6 @@ class File extends Model
         "type",
         "path",
         "size",
-        "usage",
     ];
 
     ###################

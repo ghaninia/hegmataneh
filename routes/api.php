@@ -119,6 +119,12 @@ Route::group([
     ########
     ### file
     ########
-    Route::apiResource("file", FileController::class);
-
+    Route::group([
+        "as" => "file",
+        "prefix" => "file"
+    ], function () {
+        Route::get("/", [FileController::class, "index"])->name("index");
+        Route::post("/", [FileController::class, "store"])->name("store");
+        Route::delete("/", [FileController::class, "destroy"])->name("destroy");
+    });
 });

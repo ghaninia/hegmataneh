@@ -2,7 +2,6 @@
 
 namespace App\Services\Upload;
 
-use App\Models\File;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use App\Core\Classes\UploadBuilder;
@@ -25,17 +24,14 @@ class UploadService extends UploadBuilder implements UploadServiceInterface
 
     /**
      * @param UploadedFile $file
-     * @param string $usage
      * @param User $user
      * @return self
      */
     public function setParameters(
         UploadedFile $file,
-        string $usage,
         ?User $user = null
     ) {
         $this->file = $file;
-        $this->usage = $usage;
         $this->user = $user;
         return $this;
     }
@@ -75,17 +71,6 @@ class UploadService extends UploadBuilder implements UploadServiceInterface
             $this->fileRepo->createMultiple(
                 static::$uploadFiles
             );
-    }
-
-    /**
-     * complete delete file
-     * @param File $file
-     * @return boolean
-     */
-    public function destroy(File $file): bool
-    {
-        @$this->delete($file->path);
-        return $file->delete();
     }
 
     /**
