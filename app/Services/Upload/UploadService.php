@@ -23,24 +23,32 @@ class UploadService extends UploadBuilder implements UploadServiceInterface
     }
 
     /**
+     * setter file
      * @param UploadedFile $file
-     * @param User $user
      * @return self
      */
-    public function setParameters(
-        UploadedFile $file,
-        ?User $user = null
-    ) {
+    public function setFile(UploadedFile $file)
+    {
         $this->file = $file;
-        $this->user = $user;
         return $this;
     }
 
     /**
-     * get user
+     * setter user
+     * @param User $user
+     * @return self
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        return $this ;
+    }
+
+    /**
+     * getter user
      * @return ?User
      */
-    public function user(): ?User
+    public function getUser(): ?User
     {
         return $this->user ?? $this->authService->user() ?? null;
     }
@@ -51,8 +59,9 @@ class UploadService extends UploadBuilder implements UploadServiceInterface
      */
     public function upload(): void
     {
+        $user = $this->getUser() ;
         static::$uploadFiles[] = array_merge(
-            ["user_id" => optional($user = $this->user())->id],
+            ["user_id" => $user->id ?? null ],
             $this->put(
                 $this->file,
                 $this->usage,
@@ -79,7 +88,22 @@ class UploadService extends UploadBuilder implements UploadServiceInterface
      */
     public function userPath(): ?string
     {
-        $user = $this->user();
+        $user = $this->getUser();
         return !!$user ? $user->id  : NULL;
+    }
+
+
+    public function accessFile($link)
+    {
+        $userBasePath = $this->cleanFormatAddress(
+            $this->basePath()
+        );
+
+        $linkBasePath = $this->cleanFormatAddress(
+            $link,
+            true
+        );
+
+        return str_starts_with($linkBasePath, $userBasePath);
     }
 }

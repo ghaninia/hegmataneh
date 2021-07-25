@@ -18,4 +18,8 @@ class FileRepository extends BaseRepository implements FileRepositoryInterface
         return File::class;
     }
 
+    public function query()
+    {
+        return $this->model;
+    }
 }

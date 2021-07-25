@@ -3,7 +3,6 @@
 namespace App\Services\File;
 
 use App\Services\Upload\UploadService;
-use Illuminate\Support\Facades\Storage;
 use App\Repositories\File\FileRepository;
 use App\Services\File\FileServiceInterface;
 
@@ -19,6 +18,7 @@ class FileService implements FileServiceInterface
         FileRepository $fileRepo
     ) {
         $this->uploadService = $uploadService;
+        $this->fileRepo = $fileRepo;
     }
 
     /**
@@ -65,16 +65,22 @@ class FileService implements FileServiceInterface
 
     /**
      * delete files
-     * @param string $link
+     * @param array $link
      * @return boolean
      */
-    public function remove(...$links): bool
+    public function remove(array $links): bool
     {
-        $result = [];
+        $paths = $result = [];
 
-        array_walk($links, function ($link) use (&$result) {
-            $result[] = $this->uploadService->delete($link);
+        array_walk($links, function ($link) use (&$paths, &$result) {
+            $result[] = $this->uploadService->delete(
+                $paths[] = $this->uploadService->cleanFormatAddress($link, true)
+            );
         });
+
+        $this->fileRepo->query()
+            ->whereIn("path", $paths)
+            ->delete();
 
         return count(
             array_filter($result, fn ($item) => $item)

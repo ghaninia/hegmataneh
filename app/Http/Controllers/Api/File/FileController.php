@@ -45,7 +45,7 @@ class FileController extends Controller
         $attachments = $request->file("attachments");
 
         array_walk($attachments, function ($attachment) {
-            $this->uploadService->setParameters($attachment)->upload();
+            $this->uploadService->setFile($attachment)->upload();
         });
 
         $files = $this->uploadService->dispath();
@@ -71,9 +71,9 @@ class FileController extends Controller
 
         return
             $this->success([
-                "msg" => trans("dashboard.success.file.delete", [
+                "msg" => $result ? trans("dashboard.success.file.delete", [
                     "attribute" => $result
-                ])
+                ]) : trans("dashboard.success.file.without_delete")
             ]);
     }
 }

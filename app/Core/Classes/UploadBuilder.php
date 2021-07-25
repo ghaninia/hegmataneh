@@ -60,8 +60,11 @@ abstract class UploadBuilder
      */
     public function delete(string $path): bool
     {
+        if (!Storage::exists($path))
+            return false;
+
         return
-            is_dir($path) ?
+            is_dir($path = Storage::path($path)) ?
             File::deleteDirectory($path) :
             File::delete($path);
     }
@@ -79,8 +82,7 @@ abstract class UploadBuilder
         );
         $path = str_replace($trimPath, "", $path);
         $path = $this->trimSeparator($path);
-
-        return $path;
+        return str_replace(DIRECTORY_SEPARATOR, "/", $path);
     }
 
     /**
