@@ -2,7 +2,7 @@
 
 namespace App\Core\Interfaces;
 
-interface FilterContract
+interface FilterInterface
 {
     public function handle($value): void;
 }

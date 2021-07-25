@@ -3,10 +3,10 @@
 namespace App\Contracts\Filters\PortfolioFilters;
 
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 use Carbon\Carbon;
 
-class LaunchedAt extends QueryFilter implements FilterContract
+class LaunchedAt extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

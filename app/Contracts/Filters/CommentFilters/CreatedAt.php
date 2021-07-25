@@ -4,9 +4,9 @@ namespace App\Contracts\Filters\CommentFilters;
 
 use Carbon\Carbon;
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 
-class CreatedAt extends QueryFilter implements FilterContract
+class CreatedAt extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

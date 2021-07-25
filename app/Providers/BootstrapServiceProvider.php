@@ -38,6 +38,8 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Comment\CommentServiceInterface::class, \App\Services\Comment\CommentService::class);
         $this->app->bind(\App\Services\Category\CategoryServiceInterface::class, \App\Services\Category\CategoryService::class);
         $this->app->bind(\App\Services\Tag\TagServiceInterface::class, \App\Services\Tag\TagService::class);
+        $this->app->bind(\App\Services\Upload\UploadServiceInterface::class, \App\Services\Upload\UploadService::class);
+        $this->app->bind(\App\Services\File\FileServiceInterface::class, \App\Services\File\FileService::class);
         //:end-bindings:
     }
 }

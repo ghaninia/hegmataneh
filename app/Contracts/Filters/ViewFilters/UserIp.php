@@ -3,9 +3,9 @@
 namespace App\Contracts\Filters\ViewFilters;
 
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 
-class UserIp extends QueryFilter implements FilterContract
+class UserIp extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

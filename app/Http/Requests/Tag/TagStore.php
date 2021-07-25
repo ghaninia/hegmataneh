@@ -4,6 +4,7 @@ namespace App\Http\Requests\Tag;
 
 use App\Models\Term;
 use App\Rules\SlugRule;
+use App\Core\Enums\EnumsFileable;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TagStore extends FormRequest
@@ -28,7 +29,7 @@ class TagStore extends FormRequest
         return [
             "name" => ["required", "max:255"],
             "content" => ["nullable", "string"],
-            "slug" => [ new SlugRule(Term::class, "name")],
+            "slug" => [new SlugRule(Term::class, "name")],
         ];
     }
 }

@@ -33,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Portfolio\PortfolioRepositoryInterface::class, \App\Repositories\Portfolio\PortfolioRepository::class);
         $this->app->bind(\App\Repositories\Comment\CommentRepositoryInterface::class, \App\Repositories\Comment\CommentRepository::class);
         $this->app->bind(\App\Repositories\Term\TermRepositoryInterface::class, \App\Repositories\Term\TermRepository::class);
+        $this->app->bind(\App\Repositories\File\FileRepositoryInterface::class, \App\Repositories\File\FileRepository::class);
         //:end-bindings:
     }
 }

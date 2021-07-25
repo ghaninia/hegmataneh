@@ -3,9 +3,9 @@
 namespace App\Contracts\Filters\PortfolioFilters;
 
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 
-class Percent extends QueryFilter implements FilterContract
+class Percent extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

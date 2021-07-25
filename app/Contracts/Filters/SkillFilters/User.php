@@ -3,9 +3,9 @@
 namespace App\Contracts\Filters\SkillFilters;
 
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 
-class User extends QueryFilter implements FilterContract
+class User extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

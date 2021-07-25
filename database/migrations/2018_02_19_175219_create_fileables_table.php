@@ -14,12 +14,12 @@ class CreateFileablesTable extends Migration
     public function up()
     {
         Schema::create('fileables', function (Blueprint $table) {
-            $table->id() ;
-            $table->unsignedBigInteger('file_id')->index() ;
-            $table->string("fileables_id")->index() ; ;
+            $table->id();
+            $table->unsignedBigInteger('file_id')->index();
+            $table->string("fileables_id")->index();;
             $table->string("fileables_type");
-            $table->string("format") ;
-            $table->timestamps() ;
+            $table->string("usage")->nullable();
+            $table->timestamps();
         });
     }
 

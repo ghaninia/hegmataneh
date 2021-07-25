@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Term extends Model
 {
-    use HasFilterTrait , HasFactory ;
+    use HasFilterTrait, HasFactory;
 
     protected $fillable = [
         "name",
@@ -31,12 +31,17 @@ class Term extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Term::class , "term_id" , "id");
+        return $this->belongsTo(Term::class, "term_id", "id");
     }
 
     public function childrens()
     {
-        return $this->hasMany(Term::class , "term_id" , "id");
+        return $this->hasMany(Term::class, "term_id", "id");
+    }
+
+    public function files()
+    {
+        return $this->morphToMany(File::class, "fileables");
     }
 
     ###############

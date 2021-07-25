@@ -12,6 +12,7 @@ class EnumsPost extends Enum
 
     const STATUS_PUBLISHED = "published" ;
     const STATUS_DISABLED = "disabled" ;
+    const STATUS_DRAFT = "draft" ;
 
     const FORMAT_CONTEXT = "context" ;
     const FORMAT_PODCAST = "podcast" ;

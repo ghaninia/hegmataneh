@@ -3,9 +3,9 @@
 namespace App\Contracts\Filters\CommentFilters;
 
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 
-class Email extends QueryFilter implements FilterContract
+class Email extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

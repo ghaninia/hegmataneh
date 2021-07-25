@@ -17,7 +17,6 @@ class Skill extends Model
         'icon'
     ] ;
 
-
     ###################
     #### RELATIONS ####
     ###################

@@ -29,7 +29,7 @@ class AuthService implements AuthServiceInterface
      * بررسی کاربر لاگین شده
      * @return User || false
      */
-    public function user(): User
+    public function user(): ?User
     {
         return Auth::user();
     }

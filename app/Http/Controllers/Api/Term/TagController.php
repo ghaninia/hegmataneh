@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\Api\Term;
 
 use App\Models\Term;
+use App\Core\Enums\EnumsFile;
 use App\Services\Tag\TagService;
+use App\Core\Enums\EnumsFileable;
 use App\Http\Requests\Tag\TagIndex;
 use App\Http\Requests\Tag\TagStore;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\TagUpdate;
+use App\Services\Upload\UploadService;
 use App\Http\Resources\Tag\TagResource;
 use App\Http\Resources\Tag\TagCollection;
 
 class TagController extends Controller
 {
-    protected $tagService;
+    protected $tagService, $uploadService;
 
-    public function __construct(TagService $tagService)
+    public function __construct(TagService $tagService, UploadService $uploadService)
     {
         $this->tagService = $tagService;
+        $this->uploadService = $uploadService;
     }
 
     /**

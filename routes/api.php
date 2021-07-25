@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Term\TagController;
 use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\Skill\SkillController;
+use App\Http\Controllers\Api\Option\OptionController;
 use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
-use App\Http\Controllers\Api\Option\OptionController;
+use App\Http\Controllers\Api\File\FileController;
+use App\Http\Controllers\Api\Post\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +44,7 @@ Route::group([
 Route::group([
     "prefix" => "v1",
     "middleware" => [
-        // "auth:api"
+        "auth:api"
     ]
 ], function () {
 
@@ -60,17 +63,22 @@ Route::group([
     ##############
     Route::apiResource("user", UserController::class);
     Route::group([
-        "prefix" => "user",
+        "prefix" => "user/{user}",
         "as" => "user."
     ], function () {
-        Route::get("{user}/views", [UserController::class, "views"])->name("views");
-        Route::get("{user}/votes", [UserController::class, "votes"])->name("votes");
-        Route::get("{user}/posts", [UserController::class, "posts"])->name("posts");
-        Route::get("{user}/pages", [UserController::class, "pages"])->name("pages");
-        Route::get("{user}/products", [UserController::class, "products"])->name("products");
-        Route::get("{user}/skills", [UserController::class, "skills"])->name("skills");
-        Route::get("{user}/portfolios", [UserController::class, "portfolios"])->name("portfolios");
-        Route::get("{user}/comments", [UserController::class, "comments"])->name("comments");
+        Route::get("views", [UserController::class, "views"])->name("views");
+        Route::get("votes", [UserController::class, "votes"])->name("votes");
+        Route::get("posts", [UserController::class, "posts"])->name("posts");
+        Route::get("pages", [UserController::class, "pages"])->name("pages");
+        Route::get("products", [UserController::class, "products"])->name("products");
+        Route::get("skills", [UserController::class, "skills"])->name("skills");
+        Route::get("portfolios", [UserController::class, "portfolios"])->name("portfolios");
+        Route::get("comments", [UserController::class, "comments"])->name("comments");
+
+        ########
+        ### page
+        ########
+        Route::apiResource("page", PageController::class);
     });
 
     #######
@@ -98,4 +106,19 @@ Route::group([
         Route::get("/", [OptionController::class, "index"])->name("index");
         Route::patch("/", [OptionController::class, "update"])->name("update");
     });
+
+
+    #########
+    #########
+    ### skill
+    #########
+    #########
+    Route::apiResource("skill", SkillController::class);
+
+
+    ########
+    ### file
+    ########
+    Route::apiResource("file", FileController::class);
+
 });

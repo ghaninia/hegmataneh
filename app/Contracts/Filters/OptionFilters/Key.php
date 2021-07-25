@@ -3,9 +3,9 @@
 namespace App\Contracts\Filters\OptionFilters;
 
 use App\Core\Abstracts\QueryFilter;
-use App\Core\Interfaces\FilterContract;
+use App\Core\Interfaces\FilterInterface;
 
-class Key extends QueryFilter implements FilterContract
+class Key extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {

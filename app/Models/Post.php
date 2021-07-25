@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsFile;
+use Carbon\Carbon;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -11,13 +11,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use SoftDeletes , HasFactory , HasFilterTrait;
+    use SoftDeletes, HasFactory, HasFilterTrait;
 
     protected $fillable = [
         "type",
-        "status" ,
+        "status",
         "user_id",
-        "file_id",
         "comment_status",
         "vote_status",
         "format",
@@ -36,7 +35,6 @@ class Post extends Model
         "download_limit",
         "sale_price_dates_from",
         "sale_price_dates_to",
-        "attachment_id",
         "published_at"
     ];
 
@@ -53,9 +51,7 @@ class Post extends Model
     ];
 
     protected $hidden = [
-        'user_id',
         'price',
-
         "price",
         "sale_price",
         "maximum_sell",
@@ -63,7 +59,6 @@ class Post extends Model
         "download_limit",
         "sale_price_dates_from",
         "sale_price_dates_to",
-
         "user_id",
         "file_id",
         "comment_status",
@@ -71,6 +66,16 @@ class Post extends Model
         "format",
         "development",
     ];
+
+    public function setPublishedAtAttribute($value = null)
+    {
+        $this->attributes["published_at"] = !!$value ? Carbon::parse($value) : Carbon::now();
+    }
+
+    public function setCreatedAtAttribute($value = null)
+    {
+        $this->attributes["created_at"] = !!$value ? Carbon::parse($value) : Carbon::now();
+    }
 
     ###################
     #### RELATIONS ####
@@ -125,5 +130,4 @@ class Post extends Model
     {
         return $this->morphToMany(Term::class, 'termables')->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
     }
-
 }

@@ -44,7 +44,7 @@ abstract class Enum
      * لیست تمام پسوندها
      * @return array
      */
-    public static function MIMES(): array
+    public static function mimes(): array
     {
         return array_merge(...self::reflaction("MIME_TYPE_"));
     }
