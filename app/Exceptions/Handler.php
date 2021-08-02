@@ -2,11 +2,15 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Core\Traits\MessageTrait;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use MessageTrait ;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -38,4 +42,13 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $this->error([
+            "msg" => trans("dashboard.error.authunticate.unauthunticate")
+        ]);
+    }
+
 }

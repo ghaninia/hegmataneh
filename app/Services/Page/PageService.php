@@ -17,7 +17,6 @@ class PageService implements PageServiceInterface
         $this->postRepo = $postRepo;
     }
 
-
     /**
      * لیست تمام برگه ها
      * @param array $filters

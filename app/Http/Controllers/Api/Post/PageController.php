@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use App\Services\Page\PageService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Page\PageResource;
+use App\Http\Requests\Post\Page\PageIndex;
 use App\Http\Requests\Post\Page\PageStore;
+use App\Http\Requests\Post\Page\PageUpdate;
+use App\Http\Resources\Page\PageCollection;
 
 class PageController extends Controller
 {
@@ -20,24 +23,48 @@ class PageController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  User $user
+     * @param  PageIndex $request
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index(User $user, PageIndex $request)
     {
-        $this->authorizeForUser($user, 'viewAny', Post::class);
+        $filters = array_merge(
+            [
+                "user" => $user->id,
+            ],
+            $request->only([
+                "comment_status",
+                "vote_status",
+                "status",
+                "format",
+                "slug",
+                "title",
+                "content",
+                "development",
+                "theme",
+            ])
+        );
+        $pages =
+            $this->pageService
+            ->list($filters)
+            ->loadCount([
+                "views",
+                "comments",
+                "votes"
+            ]);
+        return new PageCollection($pages);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  User $user
+     * @param  PageStore $request
      * @return \Illuminate\Http\Response
      */
     public function store(User $user, PageStore $request)
     {
-        $this->authorizeForUser($user, 'create', Post::class);
-
         $page = $this->pageService->create(
             $user,
             $request->only([
@@ -59,19 +86,24 @@ class PageController extends Controller
 
         return $this->success([
             "data" => new PageResource($page),
-            "msg"
+            "msg" => trans("dashboard.success.page.create")
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
+     * @param  Post $page
      * @return \Illuminate\Http\Response
      */
     public function show(User $user,  Post $page)
     {
-        $this->authorizeForUser($user, 'view', $page);
+        return new PageResource($page->loadCount([
+            "views",
+            "comments",
+            "votes"
+        ]));
     }
 
     /**
@@ -81,9 +113,8 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user, Post $page, Request $request)
+    public function update(User $user, Post $page, PageUpdate $request)
     {
-        $this->authorizeForUser($user, 'update', $page);
     }
 
     /**
@@ -94,6 +125,5 @@ class PageController extends Controller
      */
     public function destroy(User $user, Post $page)
     {
-        $this->authorizeForUser($user, 'delete', $page);
     }
 }

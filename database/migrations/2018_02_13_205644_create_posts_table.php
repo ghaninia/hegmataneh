@@ -28,7 +28,7 @@ class CreatePostsTable extends Migration
             $table->string("slug")->unique();
             $table->text("content")->nullable();
             $table->text("excerpt")->nullable();
-            $table->text("technology")->nullable();
+            $table->text("faq")->nullable();
             $table->string("theme")->nullable();
 
             //** product**//

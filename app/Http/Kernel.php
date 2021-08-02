@@ -40,9 +40,9 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \App\Http\Middleware\JsonMiddleware::class ,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\DefaultApiAcceptJson::class ,
         ],
     ];
 

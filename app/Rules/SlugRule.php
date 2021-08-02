@@ -32,7 +32,6 @@ class SlugRule implements Rule
     public function passes($attribute, $value)
     {
         try {
-
             $field = request($this->field);
 
             if (

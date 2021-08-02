@@ -28,13 +28,15 @@ class PageStore extends FormRequest
     public function rules()
     {
         return [
+
+            "title" => ["required", "string"],
+            "slug" => [new SlugRule(Post::class, "title")],
+
             "status" => ["required", Rule::in(EnumsPost::status())],
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
             "format" => ["required", Rule::in(EnumsPost::format())],
             "development" => ["required", "numeric"],
-            "title" => ["required", "string"],
-            "slug" => ["nullable", new SlugRule(Post::class, "title")],
             "content" => ["nullable", "string"],
             "excerpt" => ["nullable", "string"],
             "faq" => ["nullable", "string"],
