@@ -58,3 +58,7 @@ php artisan db:seed
 <a href="https://documenter.getpostman.com/view/14577533/TzmBCtDy#7ee5cd45-65dd-4666-a9d6-b7d498982d75" target="_blank">
 داکیومنت وب سرویس
 </a>
+|
+<a href="https://trello.com/b/4HK9UyyD/amen" target="_blank">
+اسکروم برد
+</a>
