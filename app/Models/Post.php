@@ -28,14 +28,8 @@ class Post extends Model
         "excerpt",
         "faq",
         "theme",
-        "price",
-        "sale_price",
-        "maximum_sell",
-        "expire_day",
-        "download_limit",
-        "sale_price_dates_from",
-        "sale_price_dates_to",
-        "published_at"
+        "published_at",
+        "deleted_at"
     ];
 
     protected $guarded = [
@@ -69,7 +63,7 @@ class Post extends Model
 
     public function setPublishedAtAttribute($value = null)
     {
-        $this->attributes["published_at"] = !!$value ? Carbon::parse($value) : Carbon::now();
+        $this->attributes["published_at"] = !!$value ? Carbon::parse($value) : null;
     }
 
     public function setCreatedAtAttribute($value = null)
@@ -77,9 +71,29 @@ class Post extends Model
         $this->attributes["created_at"] = !!$value ? Carbon::parse($value) : Carbon::now();
     }
 
+    public function setDeletedAtAttribute($value = null)
+    {
+        $this->attributes["deleted_at"] = !!$value ? Carbon::parse($value) : null;
+    }
+
     ###################
     #### RELATIONS ####
     ###################
+
+    public function productInformation()
+    {
+        return $this->hasOne( ProductInformation::class );
+    }
+
+    public function serials ()
+    {
+        return $this->belongsToMany( Serial::class )->withPivot([
+            "title",
+            "is_locked",
+            "priority",
+            "description"
+        ]);
+    }
 
     public function user()
     {

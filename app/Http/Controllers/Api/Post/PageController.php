@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Post;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Services\Page\PageService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Page\PageResource;
@@ -115,6 +114,30 @@ class PageController extends Controller
      */
     public function update(User $user, Post $page, PageUpdate $request)
     {
+        $page = $this->pageService->update(
+            $page,
+            $user,
+            $request->only([
+                "status",
+                "comment_status",
+                "vote_status",
+                "format",
+                "development",
+                "title",
+                "slug",
+                "content",
+                "excerpt",
+                "faq",
+                "theme",
+                "published_at",
+                "created_at",
+            ])
+        );
+
+        return $this->success([
+            "msg" => trans("dashboard.success.page.update") ,
+            "data" => $page
+        ]);
     }
 
     /**
@@ -125,5 +148,11 @@ class PageController extends Controller
      */
     public function destroy(User $user, Post $page)
     {
+        $this->pageService->delete(
+            $page
+        );
+        return $this->success([
+            "msg" => trans("dashboard.success.page.delete")
+        ]);
     }
 }

@@ -36,7 +36,7 @@ class PageUpdate extends FormRequest
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
             "format" => ["required", Rule::in(EnumsPost::format())],
-            "development" => ["required", "numeric"],
+            "development" => ["nullable", "numeric"],
             "content" => ["nullable", "string"],
             "excerpt" => ["nullable", "string"],
             "faq" => ["nullable", "string"],

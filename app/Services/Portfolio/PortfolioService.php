@@ -9,6 +9,7 @@ use App\Services\Portfolio\PortfolioServiceInterface;
 class PortfolioService implements PortfolioServiceInterface
 {
     protected $portfolioRepo;
+    
     public function __construct(PortfolioRepository $portfolioRepo)
     {
         $this->portfolioRepo = $portfolioRepo;
