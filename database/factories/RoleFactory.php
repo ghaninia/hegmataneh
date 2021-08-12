@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Role;
-use App\Core\Enums\EnumsRole;
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoleFactory extends Factory
@@ -22,14 +22,23 @@ class RoleFactory extends Factory
      */
     public function definition()
     {
-
-        $permissions = collect($roles = EnumsRole::all())->shuffle()->take(
-            random_int(1, count($roles) - 1)
-        )->toArray();
-
         return [
             "name" => $this->faker->company(),
-            "permissions" => $permissions
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Role $role) {
+            $permissions =
+                Permission::inRandomOrder()
+                ->take(
+                    random_int(1, count(getEntireRoutesAction()))
+                )
+                ->pluck("id")
+                ->toArray();
+
+            $role->permissions()->attach($permissions);
+        });
     }
 }

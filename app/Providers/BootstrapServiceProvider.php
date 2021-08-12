@@ -40,6 +40,8 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Tag\TagServiceInterface::class, \App\Services\Tag\TagService::class);
         $this->app->bind(\App\Services\Upload\UploadServiceInterface::class, \App\Services\Upload\UploadService::class);
         $this->app->bind(\App\Services\File\FileServiceInterface::class, \App\Services\File\FileService::class);
+        $this->app->bind(\App\Services\AccessServiceServiceInterface::class, \App\Services\AccessServiceService::class);
+        $this->app->bind(\App\Services\Access\AccessServiceInterface::class, \App\Services\Access\AccessService::class);
         //:end-bindings:
     }
 }

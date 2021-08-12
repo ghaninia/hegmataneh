@@ -35,6 +35,6 @@ class CreateSerialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('series');
+        Schema::dropIfExists('serials');
     }
 }

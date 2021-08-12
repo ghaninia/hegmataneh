@@ -7,17 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
 {
-    use HasFactory ;
+    use HasFactory;
 
     protected $fillable = [
         "name",
-        "permissions"
     ];
-
-    protected $casts = [
-        "permissions" => "array"
-    ];
-
 
     ###################
     #### RELATIONS ####
@@ -28,14 +22,8 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
-    public function childrens()
+    public function permissions()
     {
-        return $this->hasMany(Role::class);
+        return $this->belongsToMany(Permission::class);
     }
-
-    public function parent()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
 }

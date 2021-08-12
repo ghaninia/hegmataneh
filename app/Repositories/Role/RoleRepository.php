@@ -17,4 +17,10 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     {
         return Role::class ;
     }
+
+    public function query()
+    {
+        return $this->model ;
+    }
+
 }

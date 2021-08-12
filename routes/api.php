@@ -44,7 +44,8 @@ Route::group([
 Route::group([
     "prefix" => "v1",
     "middleware" => [
-        "auth:api"
+        "auth:api" ,
+        // "access"
     ]
 ], function () {
 
