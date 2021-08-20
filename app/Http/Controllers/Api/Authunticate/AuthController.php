@@ -62,7 +62,7 @@ class AuthController extends Controller
                 'role_id' => options(EnumsOption::DASHBOARD_REGISTER_RULE),
             ])
         );
-
+        
         $this->userService->sendVerifyNotification($user);
 
         return $this->success([

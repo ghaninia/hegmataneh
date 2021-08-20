@@ -28,7 +28,11 @@ class PostResource extends JsonResource
             "excerpt"  => $this->excerpt,
             "published_at" => $this->published_at ,
             "created_at" => $this->created_at,
-            "user"  => new UserResource($this->whenLoaded("user"))
+            "user"  => new UserResource($this->whenLoaded("user")) ,
+
+            "views_count" => $this->when(isset($this->views_count), $this->views_count),
+            "votes_count" => $this->when(isset($this->votes_count), $this->votes_count),
+            "comments_count" => $this->when(isset($this->comments_count), $this->comments_count),
         ];
     }
 }

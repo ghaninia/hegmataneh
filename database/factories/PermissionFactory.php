@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class PermissionFactory extends Factory
 {
@@ -21,8 +22,10 @@ class PermissionFactory extends Factory
      */
     public function definition()
     {
+        $actions = getEntireRoutesAction();
         return [
-            //
+            "action" => $this->faker->unique()->numberBetween(0, count($actions)),
+            "key" => null
         ];
     }
 }

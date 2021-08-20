@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Models\Post;
+use App\Models\Term;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,50 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureRateLimiting();
+
+        /**
+         * در سیستم طوری که slugable را تنظیم مینماییم که فقط فقط از رکورد های مدنظر دریافت نماید
+         * به این منظور ما باید کلاس و نوع scopeRelationMethod را به سیستم دهیم
+         */
+        foreach ([
+            "tag" => [
+                "class" => Term::class,
+                "relationMethod" => "tags"
+            ],
+            "category" => [
+                "class" => Term::class,
+                "relationMethod" => "categories"
+            ],
+            "page" => [
+                "class" => Post::class,
+                "relationMethod" => "pages"
+            ],
+            "post" => [
+                "class" => Post::class,
+                "relationMethod" => "posts"
+            ],
+            "product" => [
+                "class" => Post::class,
+                "relationMethod" => "products"
+            ],
+        ] as $name => $detail) {
+            Route::bind($name, function ($value) use ($detail) {
+                $class = $detail["class"];
+                $relationMethod = $detail["relationMethod"] ?? null;
+                return
+                    $class::query()
+                    ->when(
+                        !!$relationMethod,
+                        fn ($query) => $query->{$relationMethod}()
+                    )
+                    ->where(function ($query) use ($value) {
+                        $query
+                            ->where("slug", $value)
+                            ->orWhere("id", $value);
+                    })
+                    ->firstOrFail();
+            });
+        }
 
         $this->routes(function () {
             Route::prefix('api')

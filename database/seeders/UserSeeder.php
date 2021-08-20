@@ -24,23 +24,21 @@ class UserSeeder extends Seeder
         Role::factory()->has(
             User::factory()
                 ->has(
-                    Portfolio::factory()->count(10)
+                    Portfolio::factory()
                 )
                 ->has(
-                    Post::factory()->count(10)
+                    Post::factory()
                 )
                 ->has(
-                    View::factory()->count(10)
+                    View::factory()
                 )
                 ->has(
-                    Vote::factory()->count(10)
+                    Vote::factory()
                 )
                 ->has(
-                    Skill::factory()->count(5)
+                    Skill::factory()
                 )
-                ->count(10)
         )
-        ->count(5)
         ->create();
     }
 }

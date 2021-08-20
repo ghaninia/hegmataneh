@@ -2,14 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Term\TagController;
+use App\Http\Controllers\Api\File\FileController;
+use App\Http\Controllers\Api\Post\PageController;
+use App\Http\Controllers\Api\Post\PostController;
 use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Skill\SkillController;
 use App\Http\Controllers\Api\Option\OptionController;
 use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
-use App\Http\Controllers\Api\File\FileController;
-use App\Http\Controllers\Api\Post\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ Route::group([
 Route::group([
     "prefix" => "v1",
     "middleware" => [
-        "auth:api" ,
+        "auth:api",
         // "access"
     ]
 ], function () {
@@ -80,6 +81,7 @@ Route::group([
         ### page
         ########
         Route::apiResource("page", PageController::class);
+        Route::apiResource("post", PostController::class);
     });
 
     #######
@@ -88,6 +90,9 @@ Route::group([
     #######
     #######
     Route::apiResource("tag", TagController::class);
+    Route::prefix("tag")->name("tag.")->group(function () {
+        Route::post("set", [TagController::class, "set"])->name("set");
+    });
 
     ############
     ############
@@ -95,7 +100,6 @@ Route::group([
     ############
     ############
     Route::apiResource("category", CategoryController::class);
-
 
     ###########
     ### options

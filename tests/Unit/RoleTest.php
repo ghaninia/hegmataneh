@@ -3,47 +3,81 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Models\User;
-use App\Core\Enums\EnumsRole;
+use App\Models\Role;
+use App\Models\Permission;
 use App\Services\Role\RoleService;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Collection;
 
 class RoleTest extends TestCase
 {
-    /**
-     * سطح دسترسی ورودی باید مورد تایید ما باشد
-     *
-     * @return void
-     */
-    // public function test_access_full_can()
-    // {
-    //     $user = User::whereHas("role", function ($query) {
-    //         $query->whereJsonContains("permissions", EnumsRole::PERMISSION_USER);
-    //     })
-    //         ->first();
+    private function service()
+    {
+        return app(RoleService::class);
+    }
 
-    //     return !!$user ? $this->assertTrue(
-    //         app(RoleService::class)->fullCan(
-    //             $user,
-    //             [
-    //                 EnumsRole::PERMISSION_USER
-    //             ]
-    //         )
-    //     ) : $this->assertNull($user);
-    // }
+    public function createPermissions($count)
+    {
+        return Permission::factory()
+            ->count($count)
+            ->create();
+    }
 
-    /**
-     * ساخت نقش جدید
-     * @return void
-     */
     public function test_create_role()
     {
-        $role = app(RoleService::class)->create([
-                "name" => "test",
-                "permissions" => EnumsRole::all()
+        $count = 5;
+
+        $role = $this->service()->create([
+            "name" => "::name::",
+            "permissions" => $this->createPermissions($count)->pluck("id")->toArray()
+        ]);
+
+        $this->assertTrue($role instanceof Role);
+        $this->assertDatabaseHas("roles", [
+            "name" => "::name::",
+            "id" => $role->id
+        ]);
+        $this->assertCount($count, $role->permissions);
+        $this->assertTrue($role->permissions->first() instanceof Permission);
+        return $role;
+    }
+
+    public function test_all_role()
+    {
+        $roles = $this->service()->all();
+        $this->assertTrue($roles instanceof Collection);
+        $this->assertEquals($roles->count(), Role::count());
+    }
+
+    /**
+     * @depends test_create_role
+     */
+    public function test_update_role($role)
+    {
+        $count = 5 ;
+
+        $role =
+            $this->service()->update($role, [
+                "name" => "::NAME2::",
+                "permissions" => $this->createPermissions($count)->pluck("id")->toArray()
             ]);
 
-        return $this->assertEquals($role->name, "test");
+        $this->assertTrue($role instanceof Role);
+        $this->assertDatabaseHas("roles", [
+            "name" => "::NAME2::",
+            "id" => $role->id
+        ]);
+        $this->assertCount($count, $role->permissions);
+        $this->assertTrue($role->permissions->first() instanceof Permission);
+
+
+        return $role ;
+    }
+
+    /**
+     * @depends test_update_role
+     */
+    public function test_delete_role($role)
+    {
+        $this->assertTrue($this->service()->delete($role));
     }
 }

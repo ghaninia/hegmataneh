@@ -4,6 +4,7 @@ namespace App\Services\Post;
 
 use Carbon\Carbon;
 use App\Models\Post;
+use App\Models\User;
 use App\Core\Enums\EnumsPost;
 use App\Jobs\PublishedPostJob;
 use App\Repositories\Post\PostRepository;
@@ -54,5 +55,32 @@ class PostService implements PostServiceInterface
         PublishedPostJob::dispatch($post)->delay(
             Carbon::parse($post->published_at)
         );
+    }
+
+    /**
+     * ثبت پست جدید
+     * @param User $user
+     * @param array $data
+     */
+    public function create(User $user, array $data): Post
+    {
+        return
+            $this->postRepo->create([
+                "type" => EnumsPost::TYPE_PAGE,
+                "status" => $data["status"],
+                "user_id" => $user->id,
+                "comment_status" => $data["comment_status"] ?? false,
+                "vote_status" => $data["vote_status"] ?? false,
+                "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
+                "development" => $data["development"] ?? 0,
+                "title" => $data["title"],
+                "goal_post" => $data["goal_post"] ?? NULL,
+                "slug" => slug($data["slug"] ?? NULL, $data["title"]),
+                "content" => $data["content"] ?? NULL,
+                "faq" => $data["faq"] ?? NULL,
+                "excerpt" => $data["excerpt"] ?? NULL,
+                "published_at" => $data["published_at"] ?? NULL,
+                "created_at" => $data["created_at"] ?? Carbon::now()
+            ]);
     }
 }

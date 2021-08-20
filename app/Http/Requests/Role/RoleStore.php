@@ -29,9 +29,7 @@ class RoleStore extends FormRequest
             "name" => [ "required" , "string" , "max:255" , "unique:roles"] ,
             "permissions" => ["required" , "array"] ,
             "permissions.*" => [
-                "required" , Rule::in(
-                    EnumsRole::all()
-                )
+                "required" , "exists:permissions,id"
             ]
         ];
     }

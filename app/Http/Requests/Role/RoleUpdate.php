@@ -30,9 +30,7 @@ class RoleUpdate extends FormRequest
             "name" => ["required", "string", "max:255", Rule::unique("roles")->ignore($role->id)],
             "permissions" => ["required", "array"],
             "permissions.*" => [
-                "required", Rule::in(
-                    EnumsRole::all()
-                )
+                "required" , "exists:permissions,id"
             ]
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\Enums\EnumsPost;
 use Carbon\Carbon;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasFilterTrait;
@@ -82,12 +83,12 @@ class Post extends Model
 
     public function productInformation()
     {
-        return $this->hasOne( ProductInformation::class );
+        return $this->hasOne(ProductInformation::class);
     }
 
-    public function serials ()
+    public function serials()
     {
-        return $this->belongsToMany( Serial::class )->withPivot([
+        return $this->belongsToMany(Serial::class)->withPivot([
             "title",
             "is_locked",
             "priority",
@@ -143,5 +144,24 @@ class Post extends Model
     public function categories()
     {
         return $this->morphToMany(Term::class, 'termables')->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
+    }
+
+    ###############
+    #### SCOPES ####
+    ################
+
+    public static function scopePages($query)
+    {
+        return $query->where("type", EnumsPost::TYPE_PAGE);
+    }
+
+    public static function scopePosts($query)
+    {
+        return $query->where("type", EnumsPost::TYPE_POST);
+    }
+
+    public static function scopeProducts($query)
+    {
+        return $query->where("type", EnumsPost::TYPE_PRODUCT);
     }
 }

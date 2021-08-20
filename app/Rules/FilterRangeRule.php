@@ -42,7 +42,7 @@ class FilterRangeRule implements Rule
             }
         }
 
-        return !in_array(FALSE , $validate) ;
+        return !in_array(FALSE, $validate) || (!!$value);
     }
 
     /**

@@ -6,7 +6,7 @@ use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
 use App\Repositories\Term\TermRepository;
 use App\Services\Tag\TagServiceInterface;
-use phpDocumentor\Reflection\DocBlock\Tag;
+use Illuminate\Database\Eloquent\Model;
 
 class TagService implements TagServiceInterface
 {
@@ -60,7 +60,6 @@ class TagService implements TagServiceInterface
         return $tag->delete() ;
     }
 
-
     /**
      * لیست تمام فیلتر
      * @param array $filters
@@ -73,6 +72,12 @@ class TagService implements TagServiceInterface
             ->where("type", EnumsTerm::TYPE_TAG)
             ->filterBy($filters)
             ->paginate();
+    }
+
+
+    public function syncTags(Model $model , array $tags)
+    {
+        $model->tags()->sync($tags);
     }
 
 }

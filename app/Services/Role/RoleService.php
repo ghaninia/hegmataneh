@@ -3,7 +3,6 @@
 namespace App\Services\Role;
 
 use App\Models\Role;
-use App\Models\User;
 use App\Repositories\Role\RoleRepository;
 use App\Services\Role\RoleServiceInterface;
 
@@ -34,11 +33,13 @@ class RoleService implements RoleServiceInterface
      */
     public function create(array $data): Role
     {
-        return
-            $this->roleRepo->create([
+        $role = $this->roleRepo->create([
                 "name" => $data["name"],
-                "permissions" => $data["permissions"],
             ]);
+
+        $role->permissions()->sync($data["permissions"]);
+
+        return $role ;
     }
 
     /**
@@ -51,9 +52,8 @@ class RoleService implements RoleServiceInterface
     {
         $role->update([
             "name" => $data["name"],
-            "permissions" => $data["permissions"],
         ]);
-
+        $role->permissions()->sync($data["permissions"]);
         return $role->refresh();
     }
 

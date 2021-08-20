@@ -48,13 +48,13 @@ class Term extends Model
     #### SCOPES ####
     ################
 
-    public static function scopeTags()
+    public static function scopeTags($query)
     {
-        return self::where("type", EnumsTerm::TYPE_TAG);
+        return $query->where("type", EnumsTerm::TYPE_TAG);
     }
 
-    public static function scopeCategories()
+    public static function scopeCategories($query)
     {
-        return self::where("type", EnumsTerm::TYPE_CATEGORY);
+        return $query->where("type", EnumsTerm::TYPE_CATEGORY);
     }
 }

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api\Term;
 
 use App\Models\Term;
-use App\Core\Enums\EnumsFile;
 use App\Services\Tag\TagService;
-use App\Core\Enums\EnumsFileable;
 use App\Http\Requests\Tag\TagIndex;
 use App\Http\Requests\Tag\TagStore;
 use App\Http\Controllers\Controller;

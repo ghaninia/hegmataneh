@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Post;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Services\Tag\TagService;
 use App\Services\Page\PageService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Page\PageResource;
@@ -14,10 +15,11 @@ use App\Http\Resources\Page\PageCollection;
 
 class PageController extends Controller
 {
-    protected $pageService;
-    public function __construct(PageService $pageService)
+    protected $pageService, $tagService;
+    public function __construct(PageService $pageService, TagService $tagService)
     {
         $this->pageService = $pageService;
+        $this->tagService = $tagService;
     }
 
     /**
@@ -29,9 +31,7 @@ class PageController extends Controller
     public function index(User $user, PageIndex $request)
     {
         $filters = array_merge(
-            [
-                "user" => $user->id,
-            ],
+            ["user" => $user->id],
             $request->only([
                 "comment_status",
                 "vote_status",
@@ -64,24 +64,15 @@ class PageController extends Controller
      */
     public function store(User $user, PageStore $request)
     {
+
         $page = $this->pageService->create(
             $user,
-            $request->only([
-                "status",
-                "comment_status",
-                "vote_status",
-                "format",
-                "development",
-                "title",
-                "slug",
-                "content",
-                "excerpt",
-                "faq",
-                "theme",
-                "published_at",
-                "created_at",
-            ])
+            $request->all()
         );
+
+        $request->whenFilled("tags", function () use ($page, $request) {
+            $this->tagService->syncTags($page, $request->tags);
+        });
 
         return $this->success([
             "data" => new PageResource($page),
@@ -135,7 +126,7 @@ class PageController extends Controller
         );
 
         return $this->success([
-            "msg" => trans("dashboard.success.page.update") ,
+            "msg" => trans("dashboard.success.page.update"),
             "data" => $page
         ]);
     }
