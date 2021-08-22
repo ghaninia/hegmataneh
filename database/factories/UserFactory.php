@@ -25,15 +25,14 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name() ,
-            "mobile" => $this->faker->unique()->numerify("0911#######") ,
-            'status' => Arr::random( EnumsUser::status() ),
+            'name' => $this->faker->name(),
+            "mobile" => $this->faker->unique()->numerify("0911#######"),
+            'status' => Arr::random(EnumsUser::status()),
             'email' => $this->faker->unique()->safeEmail(),
-            "username" => $this->faker->unique()->userName() ,
-            'password' => bcrypt("secret") ,
+            "username" => $this->faker->unique()->userName(),
+            'password' => bcrypt("secret"),
             "remember_token" => Str::random(10),
             "bio" => $this->faker->realText(1000)
         ];
     }
-
 }

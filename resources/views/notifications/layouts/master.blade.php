@@ -1,302 +1,616 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{{ options(\App\Core\Enums\EnumsOption::TITLE) }}</title>
-    <style>
-        /* -------------------------------------
-    GLOBAL
-    A very basic CSS reset
-------------------------------------- */
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: tahoma, Arial, sans-serif;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        body {
-            -webkit-font-smoothing: antialiased;
-            -webkit-text-size-adjust: none;
-            width: 100% !important;
-            height: 100%;
-            line-height: 1.6;
-        }
-
-        /* Let's make sure all tables have defaults */
-        table td {
-            vertical-align: top;
-        }
-
-        /* -------------------------------------
-            BODY & CONTAINER
-        ------------------------------------- */
-        body {
-            direction: rtl;
-            background-color: #f6f6f6;
-        }
-
-        .body-wrap {
-            background-color: #f6f6f6;
-            width: 100%;
-        }
-
-        .container {
-            display: block ;
-            max-width: 600px !important;
-            margin: 0 auto !important;
-            clear: both !important;
-        }
-
-        .content {
-            max-width: 600px;
-            margin: 20px auto;
-            display: block;
-            padding: 25px;
-            background: #fff ;
-            box-shadow : 0 0 20px rgba(0,0,0,.1) ;
-            border-radius: 10px ;
-        }
-
-        /* -------------------------------------
-            HEADER, FOOTER, MAIN
-        ------------------------------------- */
-        .main {
-            background: #fff;
-            border: 1px solid #e9e9e9;
-            border-radius: 5px;
-            box-shadow : 0px 1px 5px rgba(0,0,0,0.1)
-        }
-
-        .content-wrap {
-            padding: 20px;
-        }
-
-        .content-block {
-            padding: 0 0 20px;
-        }
-
-        .header {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            width: 100%;
-            clear: both;
-            color: #999;
-            padding: 20px;
-        }
-        .footer a {
-            color: #999;
-        }
-        .footer p, .footer a, .footer unsubscribe, .footer td {
-            font-size: 12px;
-        }
-
-        /* -------------------------------------
-            TYPOGRAPHY
-        ------------------------------------- */
-        h1, h2, h3 {
-            font-family: tahoma, Arial, sans-serif;
-            color: #000;
-            margin: 40px 0 0;
-            line-height: 1.2;
-            font-weight: 400;
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 500;
-        }
-
-        h2 {
-            font-size: 24px;
-        }
-
-        h3 {
-            font-size: 18px;
-        }
-
-        h4 {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        p, ul, ol {
-            margin-bottom: 10px;
-            font-weight: normal;
-        }
-        p li, ul li, ol li {
-            margin-left: auto;
-            margin-right: 5px;
-            list-style-position: inside;
-        }
-
-        /* -------------------------------------
-            LINKS & BUTTONS
-        ------------------------------------- */
-        a {
-            color: #1ab394;
-            text-decoration: underline;
-        }
-
-        .btn-primary {
-            text-decoration: none;
-            color: #FFF;
-            background-color: #1ab394;
-            border: solid #1ab394;
-            border-width: 5px 10px;
-            line-height: 2;
-            font-weight: bold;
-            text-align: center;
-            cursor: pointer;
-            display: inline-block;
-            border-radius: 5px;
-            text-transform: capitalize;
-        }
-
-        /* -------------------------------------
-            OTHER STYLES THAT MIGHT BE USEFUL
-        ------------------------------------- */
-        .last {
-            margin-bottom: 0;
-        }
-
-        .first {
-            margin-top: 0;
-        }
-
-        .aligncenter {
-            text-align: center;
-        }
-
-        .alignright {
-            text-align: right;
-        }
-
-        .alignleft {
-            text-align: left;
-        }
-
-        .clear {
-            clear: both;
-        }
-
-        /* -------------------------------------
-            ALERTS
-            Change the class depending on warning email, good email or bad email
-        ------------------------------------- */
-        .alert {
-            font-size: 16px;
-            color: #fff;
-            font-weight: 500;
-            padding: 20px;
-            text-align: center;
-            border-radius: 3px 3px 0 0;
-        }
-        .alert a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-        }
-        .alert.alert-warning {
-            background: #f8ac59;
-        }
-        .alert.alert-bad {
-            background: #ed5565;
-        }
-        .alert.alert-good {
-            background: #1ab394;
-            font-weight: bold ;
-            text-align: right!important;
-        }
-
-        /* -------------------------------------
-            INVOICE
-            Styles for the billing table
-        ------------------------------------- */
-        .invoice {
-            margin: 40px auto;
-            text-align: right;
-            width: 80%;
-        }
-        .invoice td {
-            padding: 5px 0;
-        }
-        .invoice .invoice-items {
-            width: 100%;
-        }
-        .invoice .invoice-items td {
-            border-top: #eee 1px solid;
-        }
-        .invoice .invoice-items .total td {
-            border-top: 2px solid #333;
-            border-bottom: 2px solid #333;
-            font-weight: 700;
-        }
-
-        /* -------------------------------------
-            RESPONSIVE AND MOBILE FRIENDLY STYLES
-        ------------------------------------- */
-        @media only screen and (max-width: 640px) {
-            h1, h2, h3, h4 {
-                font-weight: 600 !important;
-                margin: 20px 0 5px !important;
-            }
-
-            h1 {
-                font-size: 22px !important;
-            }
-
-            h2 {
-                font-size: 18px !important;
-            }
-
-            h3 {
-                font-size: 16px !important;
-            }
-
-            .container {
-                width: 100% !important;
-            }
-
-            .content, .content-wrap {
-                padding: 10px !important;
-            }
-
-            .invoice {
-                width: 100% !important;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body>
-<table class="body-wrap">
-    <tr>
-        <td class="container" width="600">
-            <div class="content">
-                @yield('content')
-                <div class="footer">
-                    <table width="100%">
-                        <tr>
-                            <td class="aligncenter content-block">{{ options(\App\Core\Enums\EnumsOption::NOTIFICATION_COPYRIGHT) }}</td>
-                        </tr>
+    @php( $enumsOption = new \App\Core\Enums\EnumsOption)
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#ececec">
+        <tbody>
+            <tr>
+                <td align="center" valign="top" style="background-color:#EB5E28">
+                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" bgcolor="#EB5E28"
+                        style="background-color:#EB5E28">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+
+                                    <table width="560" align="center" border="0" cellspacing="0" cellpadding="0"
+                                        bgcolor="#EB5E28" style="background-color:#EB5E28;margin:0;width:600px">
+
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top" height="10">
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td valign="top">
+
+
+                                                    <table width="100%" align="center" border="0" cellspacing="0"
+                                                        cellpadding="0">
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top">
+
+
+                                                                    <table align="right" border="0" cellspacing="0"
+                                                                        cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table align="center" border="0"
+                                                                                        cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td
+                                                                                                    style="font-size:12px;line-height:27px;font-family:Tahoma,Arial,Helvetica,sans-serif;color:#ffffff;font-weight:normal;text-align:center">
+                                                                                                    <span
+                                                                                                        style="text-decoration:none;color:#ffffff"><a
+                                                                                                            href="{{ route('guest.main') }}"
+                                                                                                            style="text-decoration:none;color:rgb(255,255,255)"
+                                                                                                            target="_blank">{{ trans("guest.menu.main") }}</a></span>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td valign="top">
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+
+
+
+                                                                    <table border="0" align="left" cellpadding="0"
+                                                                        cellspacing="0">
+
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td valign="top" align="center">
+
+                                                                                    <table border="0" align="center"
+                                                                                        cellpadding="0" cellspacing="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="center"
+                                                                                                    valign="middle">
+                                                                                                    <a href="{{ options($enumsOption::TWITTER_ACCOUNT) }}"
+                                                                                                        style="text-decoration:none"
+                                                                                                        target="_blank" >
+                                                                                                        <img
+                                                                                                            src="{{ asset("assets/guest/images/social/dark/twitter.png") }}"
+                                                                                                            width="30"
+                                                                                                            alt="icon-twitter"
+                                                                                                            style="max-width:30px"
+                                                                                                            border="0"
+                                                                                                            hspace="0"
+                                                                                                            vspace="0"
+                                                                                                            class="CToWUd"></a>
+                                                                                                </td>
+                                                                                                <td align="center"
+                                                                                                    valign="middle"
+                                                                                                    id="m_6516544622090354064clear-padding">
+                                                                                                    <a href="{{ options($enumsOption::TELEGRAM_ACCOUNT) }}"
+                                                                                                        style="text-decoration:none"
+                                                                                                        target="_blank" >
+                                                                                                        <img
+                                                                                                            src="{{ asset("assets/guest/images/social/dark/telegram.png") }}"
+                                                                                                            width="20"
+                                                                                                            alt="icon-googleplus"
+                                                                                                            style="max-width:30px"
+                                                                                                            border="0"
+                                                                                                            hspace="0"
+                                                                                                            vspace="0"
+                                                                                                            class="CToWUd"></a>
+                                                                                                </td>
+
+                                                                                                <td align="center"
+                                                                                                    valign="middle"
+                                                                                                    id="m_6516544622090354064clear-padding">
+                                                                                                    <a href="{{ options($enumsOption::INSTAGRAM_ACCOUNT) }}"
+                                                                                                        style="text-decoration:none"
+                                                                                                        target="_blank" >
+                                                                                                        <img
+                                                                                                        src="{{ asset("assets/guest/images/social/dark/instagram.png") }}"
+                                                                                                        width="30"
+                                                                                                            alt="icon-instagram"
+                                                                                                            style="max-width:30px"
+                                                                                                            border="0"
+                                                                                                            hspace="0"
+                                                                                                            vspace="0"
+                                                                                                            class="CToWUd"></a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td valign="top" height="10">
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td valign="top">
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                </div>
-            </div>
-        </td>
-        <td>
-        </td>
-    </tr>
-</table>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100%" align="center" valign="top" style="background-color:#EB5E28">
+                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0"
+                        style="height:20px;background-color:#ffffff;opacity:0.5">
+                        <tbody>
+                            <tr>
+                                <td valign="top" height="20"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+
+                        <tbody>
+                            <tr>
+                                <td align="center" valign="top">
+
+
+                                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0"
+                                        bgcolor="#ffffff" style="background-color:#ffffff">
+
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top">
+
+
+
+                                                    <table width="560" align="center" border="0" cellspacing="0"
+                                                        cellpadding="0">
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" height="20">
+                                                                </td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td valign="middle">
+
+                                                                    <table align="left" border="0" cellspacing="0"
+                                                                        cellpadding="0">
+
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td align="center" valign="top">
+                                                                                    <a href="{{ route("guest.main") }}"
+                                                                                        style="text-decoration:none"><img
+                                                                                            src="{{ logo() }}"
+                                                                                            width="118" height="30"
+                                                                                            style="max-width:137px"
+                                                                                            alt="Logo" border="0"
+                                                                                            hspace="0" vspace="0"
+                                                                                            class="CToWUd"></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <table border="0" align="right" cellpadding="0"
+                                                                        cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td valign="middle" align="center">
+
+                                                                                    <table align="right" border="0"
+                                                                                        cellpadding="0" cellspacing="0"
+                                                                                        style="height:100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td
+                                                                                                    style="font-size:13px;line-height:18px;color:#a3a2a2;font-weight:normal;text-align:center;font-family:Arail,Tahoma,Helvetica,Arial,sans-serif">
+                                                                                                    <span
+                                                                                                        style="text-decoration:none;color:#a3a2a2"><a
+                                                                                                            href="#"
+                                                                                                            style="text-decoration:none;color:rgb(163,162,162)"
+                                                                                                            target="_blank">{{ trans("guest.menu.contactus") }}</a></span>
+                                                                                                    &nbsp;&nbsp; <span
+                                                                                                        style="text-decoration:none;color:#a3a2a2"><a
+                                                                                                            href="#"
+                                                                                                            style="text-decoration:none;color:rgb(163,162,162)"
+                                                                                                            target="_blank">{{ trans("guest.menu.aboutus") }}</a></span>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" height="20">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td width="100%" align="center" valign="top">
+                                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0"
+                                        style="background-color:#ffffff;border-bottom:2px solid #d0e3f2">
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top" align="center"
+                                                    style="background:#EB5E28;height:11px;font-size:14px;font-weight:800;padding:9px 0;color:#ffffff;font-family:Tahoma">
+                                                    {{ options($enumsOption::DESCRIPTION) }}
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" align="center">
+                    <table width="100%" height="20" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top" height="20">
+                                    <img src="{{ asset("assets/guest/images/space.png") }}"
+                                        width="20" alt="space" style="display:block;max-height:20px;max-width:20px"
+                                        class="CToWUd">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top">
+                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                        style="background-color:#ffffff;border-bottom:2px solid #c7c7c7">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <table width="560" align="center" border="0" cellspacing="0" cellpadding="0"
+                                        bgcolor="#ffffff" style="background-color:#ffffff">
+                                        <tbody>
+                                            <tr>
+                                                <td height="20"></td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                        align="right">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="right"
+                                                                    style="font-size:18px;line-height:22px;font-family:Tahoma,Arial,Helvetica,sans-serif;color:#555555;font-weight:bold;text-align:right">
+                                                                    <span style="color:#555555;font-weight:bold">
+                                                                        <a href="#m_6516544622090354064_"
+                                                                            style="text-decoration:none;color:rgb(85,85,85);font-weight:bold">
+                                                                            <h5><b>{{ $subject ?? null }}</b></h5>
+                                                                        </a>
+                                                                    </span>
+                                                                </td>
+                                                                <td align="left" valign="top" width="29"
+                                                                    style="padding-right:10px;vertical-align:middle">
+                                                                    <table width="29" border="0" cellspacing="0"
+                                                                        cellpadding="0" align="left">
+                                                                        <tbody>
+                                                                            <tr valign="top">
+                                                                                <td align="left" valign="middle">
+                                                                                    <img src="{{ asset("assets/guest/images/alert.png") }}"
+                                                                                        width="29" alt="megaphone"
+                                                                                        style="max-width:29px"
+                                                                                        border="0" hspace="0" vspace="0"
+                                                                                        class="CToWUd">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="15"></td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table border="0" cellspacing="0" cellpadding="0" align="right">
+                                                        <tbody>
+                                                            @yield("content")
+                                                            <tr>
+                                                                <td height="15"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table align="left" border="0" cellspacing="0"
+                                                                        cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td
+                                                                                    style="font-size:12px;line-height:18px;font-family:Tahoma,Arial,Helvetica,sans-serif;color:#EB5E28;font-weight:bold;text-align:center">
+                                                                                    <span
+                                                                                        style="text-decoration:none;color:#EB5E28">
+                                                                                        <b style="font-size:12px"> <span
+                                                                                                style="color:#444">{{ trans("guest.with-respect") }}</span> <a
+                                                                                                href="{{ route("guest.main") }}"
+                                                                                                style="color:#EB5E28;text-decoration:none"
+                                                                                                target="_blank" href="">{{ options($enumsOption::TITLE) }}</a></b>
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="20"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" align="center">
+                    <table width="100%" height="2" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top" height="2">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top">
+                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                        style="background-color:#e5e7ea;border-bottom:2px solid #ececec">
+                        <tbody>
+                            <tr>
+                                <td height="10"></td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table border="0" align="center" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" align="left"
+                                                                    style="text-align:center;color:#cb6e74;font-size:10px;font-family:Tahoma">
+                                                                    <span>{{ trans("dashboard.notification.replay") }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="10"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" align="center">
+                    <table width="100%" height="20" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top" height="20">
+                                    <img src="{{ asset("assets/guest/images/space.png") }}"
+                                        width="20" alt="space" style="display:block;max-height:20px;max-width:20px"
+                                        class="CToWUd">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top">
+                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                        style="background-color:#ffffff;border-bottom:2px solid #c7c7c7">
+                        <tbody>
+                            <tr>
+                                <td height="10"></td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table border="0" align="center" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" align="left">
+                                                                    <table border="0" align="left" cellpadding="0"
+                                                                        cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="padding-left:5px" height="30"
+                                                                                    align="center" valign="middle">
+                                                                                    <a href="{{ options($enumsOption::TWITTER_ACCOUNT) }}"
+                                                                                        style="text-decoration:none"
+                                                                                        target="_blank">
+                                                                                        <img src="{{ asset("assets/guest/images/social/light/twitter.png") }}"
+                                                                                            width="30"
+                                                                                            alt="icon-twitter"
+                                                                                            style="max-width:30px"
+                                                                                            border="0" hspace="0"
+                                                                                            vspace="0" class="CToWUd">
+                                                                                    </a>
+                                                                                </td>
+
+                                                                                <td style="padding-left:5px" height="30"
+                                                                                    align="center" valign="middle">
+                                                                                    <a href="{{ options($enumsOption::TELEGRAM_ACCOUNT) }}"
+                                                                                        style="text-decoration:none"
+                                                                                        target="_blank">
+                                                                                        <img src="{{ asset("assets/guest/images/social/light/telegram.png") }}"
+                                                                                            width="30" alt="icon-rss"
+                                                                                            style="max-width:30px"
+                                                                                            border="0" hspace="0"
+                                                                                            vspace="0" class="CToWUd">
+                                                                                    </a>
+                                                                                </td>
+
+                                                                                <td style="padding-left:5px" height="30"
+                                                                                    align="center" valign="middle">
+                                                                                    <a href="{{ options($enumsOption::INSTAGRAM_ACCOUNT) }}"
+                                                                                        style="text-decoration:none"
+                                                                                        target="_blank">
+                                                                                        <img
+                                                                                        src="{{ asset("assets/guest/images/social/light/instagram.png") }}"
+                                                                                            width="30"
+                                                                                            alt="icon-instagram"
+                                                                                            style="max-width:30px"
+                                                                                            border="0" hspace="0"
+                                                                                            vspace="0" class="CToWUd">
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="10"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table width="560" align="center" border="0" cellspacing="0"
+                                                        cellpadding="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" height="20">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top" height="20">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="text-align:center;background:#dcdcdc;padding:20px">
+        {{ options($enumsOption::NOTIFICATION_COPYRIGHT) }}
+    </div>
 </body>
 </html>

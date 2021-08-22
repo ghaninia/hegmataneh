@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp("verified_at")->nullable();
             $table->softDeletes() ;
 
             $table->index([

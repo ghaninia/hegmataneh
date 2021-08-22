@@ -16,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view("/" , "welcome");
+### used name in other places
+Route::group([
+    "as" => "guest." ,
+] , function(){
+    Route::view("/" , "welcome")->name("main");
+});

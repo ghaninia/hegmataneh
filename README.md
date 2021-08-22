@@ -56,6 +56,14 @@ php artisan migrate
 php artisan db:seed
 ```
 
+<p>
+    در صورت بررسی صحت نوع عملکرد, تست سیستم را اجرا نمایید
+</p>
+
+```php
+php artisan test
+```
+
 <a href="https://documenter.getpostman.com/view/14577533/TzmBCtDy#7ee5cd45-65dd-4666-a9d6-b7d498982d75" target="_blank">
 داکیومنت وب سرویس
 </a>

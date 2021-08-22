@@ -9,6 +9,7 @@ use App\Repositories\User\UserRepository;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Notifications\ConfirmAccountNotification;
+use Carbon\Carbon;
 
 class UserService implements UserServiceInterface
 {
@@ -58,8 +59,8 @@ class UserService implements UserServiceInterface
             "bio" => $data["bio"] ?? null
         ];
 
-        if(isset($data["password"]))
-            $updateFields['password'] = bcrypt($data["password"]) ;
+        if (isset($data["password"]))
+            $updateFields['password'] = bcrypt($data["password"]);
 
         return $this->userRepo->updateById(
             $user->id,
@@ -74,7 +75,7 @@ class UserService implements UserServiceInterface
      */
     public function delete(User $user): bool
     {
-        return $this->userRepo->deleteById($user->id) ;
+        return $this->userRepo->deleteById($user->id);
     }
 
     /**
@@ -97,28 +98,30 @@ class UserService implements UserServiceInterface
      */
     public function verify(string $token): ?User
     {
-
         $user = $this->userRepo->query()
-            ->where("status", EnumsUser::STATUS_DISABLE)
+            ->whereNull("verified_at")
             ->where("remember_token", $token)
             ->first();
 
-        return
+        $user =
             is_null($user) ? NULL :
             $this->userRepo->updateById(
                 $user->id,
                 [
                     "remember_token"  => $this->rememberTokenGenerate(),
-                    "status" => EnumsUser::STATUS_ENABLE
+                    "status" => EnumsUser::STATUS_ENABLE,
+                    "verified_at" => Carbon::now()
                 ]
             );
+
+        return $user ;
     }
 
     /**
      * ساخت توکن جدید
      * @return string
      */
-    private function rememberTokenGenerate(): string
+    public function rememberTokenGenerate(): string
     {
         return Str::random(30);
     }

@@ -44,3 +44,12 @@ function getEntireRoutesAction(): array
         });
     return $routes;
 }
+
+/**
+ * لوگوهای وب سایت
+ * @return string
+ */
+function logo()
+{
+    return "" ;
+}

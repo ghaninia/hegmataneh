@@ -21,19 +21,23 @@ class User extends Authenticatable
         'mobile',
         "username",
         'password',
-        'picture',
         "remember_token",
-        "bio"
+        "bio" ,
+        "verified_at"
     ];
 
     protected $hidden = [
         'password',
-        'remember_token',
         'role_id'
     ];
 
     protected $dates = [
-        "deleted_at"
+        "deleted_at" ,
+        "verified_at"
+    ];
+
+    protected $casts = [
+        "status" => "boolean"
     ];
 
     public function files()

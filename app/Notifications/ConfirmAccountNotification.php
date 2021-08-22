@@ -2,16 +2,16 @@
 
 namespace App\Notifications;
 
-use App\Core\Enums\EnumsOption;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
+use App\Core\Enums\EnumsOption;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ConfirmAccountNotification extends Notification implements ShouldQueue
+class ConfirmAccountNotification extends Notification // implements ShouldQueue
 {
-    use Queueable;
+    // use Queueable;
 
     public $user;
 

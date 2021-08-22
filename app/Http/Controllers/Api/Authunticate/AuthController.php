@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         return $this->error([
             "msg" => trans("dashboard.error.authunticate.login")
-        ] , 404);
+        ], 404);
     }
 
     /**
@@ -62,7 +62,7 @@ class AuthController extends Controller
                 'role_id' => options(EnumsOption::DASHBOARD_REGISTER_RULE),
             ])
         );
-        
+
         $this->userService->sendVerifyNotification($user);
 
         return $this->success([
@@ -79,8 +79,7 @@ class AuthController extends Controller
      */
     public function verify(string $token)
     {
-
-        if (!! $user = $this->userService->verify($token))
+        if (!!$user = $this->userService->verify($token))
             $this->success([
                 "msg" => trans("dashboard.success.register.verify"),
                 "data" => $user
