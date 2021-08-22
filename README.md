@@ -56,7 +56,7 @@ php artisan migrate
 php artisan db:seed
 ```
 
-<p>
+<p dir="rtl" align="right">
     در صورت بررسی صحت نوع عملکرد, تست سیستم را اجرا نمایید
 </p>
 
