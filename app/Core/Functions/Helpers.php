@@ -40,7 +40,7 @@ function getEntireRoutesAction(): array
                 is_string($method) &&
                 str_starts_with($method, "App\Http\Controllers")
             )
-                $routes[] = $method;
+            $routes[] = $method;
         });
     return $routes;
 }
@@ -51,5 +51,6 @@ function getEntireRoutesAction(): array
  */
 function logo()
 {
+    ### ازدیتابیس باید خوانده شود
     return "" ;
 }

@@ -9,7 +9,7 @@ use App\Services\Access\AccessServiceInterface;
 class AccessService implements AccessServiceInterface
 {
 
-    protected $user, $permissions, $roleRepo;
+    public $user, $permissions, $roleRepo;
 
     public function __construct(
         RoleRepository $roleRepo
@@ -44,7 +44,7 @@ class AccessService implements AccessServiceInterface
      */
     private function checkLogic(string $operator): bool
     {
-        return
+        $result =
             $this->roleRepo->query()
             ->whereHas(
                 "users",
@@ -56,9 +56,11 @@ class AccessService implements AccessServiceInterface
                     ->whereIn("permissions.action", $this->permissions)
                     ->orWhereIn("permissions.key", $this->permissions),
                 $operator,
-                count($this->permissions),
+                count($this->permissions)
             )
             ->exists();
+
+        return empty($this->permissions) ? false : $result;
     }
 
     /**
@@ -81,6 +83,6 @@ class AccessService implements AccessServiceInterface
      */
     public function sufficientAbility(): bool
     {
-        return $this->checkLogic("<=");
+        return $this->checkLogic(">=");
     }
 }

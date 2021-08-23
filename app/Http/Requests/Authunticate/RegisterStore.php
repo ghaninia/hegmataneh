@@ -17,7 +17,8 @@ class RegisterStore extends FormRequest
      */
     public function authorize()
     {
-        return options(EnumsOption::DASHBOARD_CAN_REGISTER);
+        return true ;
+        // return options(EnumsOption::DASHBOARD_CAN_REGISTER);
     }
 
     /**

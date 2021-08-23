@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Services;
 
 use Tests\TestCase;
 use App\Models\Role;
@@ -174,7 +174,6 @@ class UserTest extends TestCase
 
         $this->assertEquals($users->total(), 1);
     }
-
 
     public function test_send_verify_account_notification()
     {

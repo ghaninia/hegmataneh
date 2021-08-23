@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Permission\PermissionRepository;
 
 class PermissionSeeder extends Seeder
@@ -14,12 +16,9 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $actions = array_map(
+        Permission::insert($actions = array_map(
             fn ($action) => ["action" => $action],
             getEntireRoutesAction()
-        );
-        app(PermissionRepository::class)->createMultiple(
-            $actions
-        );
+        ));
     }
 }
