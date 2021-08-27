@@ -35,6 +35,9 @@ class PostFactory extends Factory
             "slug" => $this->faker->unique()->slug() ,
             "content" => $this->faker->realText(500),
             "excerpt" => $this->faker->realText(100),
+
+            "published_at" => $this->faker->dateTime() ,
+            "created_at"   => $this->faker->dateTime()
         ];
     }
 }

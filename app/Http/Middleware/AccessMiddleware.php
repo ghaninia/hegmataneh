@@ -22,10 +22,10 @@ class AccessMiddleware
     public function handle(Request $request, Closure $next)
     {
         $result = app(AuthService::class)
-            ->can("f_ability", Route::getCurrentRoute()->getActionName());
+            ->can("f_ability", $request->route()->getActionMethod());
 
         return $result ? $next($request) : $this->error([
-            "dashboard.error.authunticate.unauthorize"
+            "msg" => trans("dashboard.error.authunticate.unauthorize")
         ]);
     }
 }

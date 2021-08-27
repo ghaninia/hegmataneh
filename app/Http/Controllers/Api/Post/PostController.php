@@ -4,19 +4,26 @@ namespace App\Http\Controllers\Api\Post;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\Tag\TagService;
 use App\Services\Post\PostService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostIndex;
 use App\Http\Requests\Post\PostStore;
-use App\Http\Requests\Post\Page\PageStore;
+use App\Services\Category\CategoryService;
 use App\Http\Resources\Post\PostCollection;
 
 class PostController extends Controller
 {
-    protected $postService;
-    public function __construct(PostService $postService)
-    {
+    protected $postService, $categoryService, $tagService;
+
+    public function __construct(
+        PostService $postService,
+        CategoryService $categoryService,
+        TagService $tagService
+    ) {
         $this->postService = $postService;
+        $this->categoryService = $categoryService;
+        $this->tagService = $tagService;
     }
 
     /**
@@ -59,7 +66,16 @@ class PostController extends Controller
                 $user,
                 $request->all()
             );
-        
+
+        $this->tagService->sync(
+            $post,
+            $request->input("tags", [])
+        );
+
+        $this->categoryService->sync(
+            $post,
+            $request->input("categories", [])
+        );
     }
 
     /**

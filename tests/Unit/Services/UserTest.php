@@ -186,6 +186,7 @@ class UserTest extends TestCase
             ->create();
 
         Notification::fake();
+        Notification::assertNotSentTo($user , ConfirmAccountNotification::class);
         $this->userService->sendVerifyNotification($user) ;
         Notification::assertSentTo($user, ConfirmAccountNotification::class);
     }

@@ -4,6 +4,7 @@ namespace App\Services\Category;
 
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
+use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
 use App\Services\Category\CategoryServiceInterface;
 
@@ -76,5 +77,15 @@ class CategoryService implements CategoryServiceInterface
             ->where("type", EnumsTerm::TYPE_CATEGORY)
             ->filterBy($filters)
             ->paginate();
+    }
+
+    /**
+     * مدیریت دسته بندی‌ها
+     * @param Model $model
+     * @param array $data
+     */
+    public function sync(Model $model, array $data = [])
+    {
+        $model->categories()->sync($data);
     }
 }

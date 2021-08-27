@@ -4,9 +4,9 @@ namespace App\Services\Tag;
 
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
+use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
 use App\Services\Tag\TagServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 
 class TagService implements TagServiceInterface
 {
@@ -74,10 +74,13 @@ class TagService implements TagServiceInterface
             ->paginate();
     }
 
-
-    public function syncTags(Model $model , array $tags)
+    /**
+     * مدیریت برچسب های
+     * @param Model $model
+     * @param array $data
+     */
+    public function sync(Model $model, array $data = [])
     {
-        $model->tags()->sync($tags);
+        $model->tags()->sync( $data ) ;
     }
-
 }

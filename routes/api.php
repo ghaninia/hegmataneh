@@ -90,9 +90,6 @@ Route::group([
     #######
     #######
     Route::apiResource("tag", TagController::class);
-    Route::prefix("tag")->name("tag.")->group(function () {
-        Route::post("set", [TagController::class, "set"])->name("set");
-    });
 
     ############
     ############

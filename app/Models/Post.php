@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsPost;
 use Carbon\Carbon;
+use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -138,12 +138,14 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->morphToMany(Term::class, 'termables')->wherePivot("type", EnumsTerm::TYPE_TAG);
+        return $this->morphToMany(Term::class, 'termables')
+            ->wherePivot("type", EnumsTerm::TYPE_TAG);
     }
 
     public function categories()
     {
-        return $this->morphToMany(Term::class, 'termables')->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
+        return $this->morphToMany(Term::class, 'termables')
+            ->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
     }
 
     ###############

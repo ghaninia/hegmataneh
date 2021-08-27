@@ -66,21 +66,22 @@ class PostService implements PostServiceInterface
     {
         return
             $this->postRepo->create([
-                "type" => EnumsPost::TYPE_PAGE,
-                "status" => $data["status"],
                 "user_id" => $user->id,
-                "comment_status" => $data["comment_status"] ?? false,
-                "vote_status" => $data["vote_status"] ?? false,
-                "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
-                "development" => $data["development"] ?? 0,
                 "title" => $data["title"],
-                "goal_post" => $data["goal_post"] ?? NULL,
                 "slug" => slug($data["slug"] ?? NULL, $data["title"]),
                 "content" => $data["content"] ?? NULL,
                 "faq" => $data["faq"] ?? NULL,
                 "excerpt" => $data["excerpt"] ?? NULL,
+                "type" => EnumsPost::TYPE_PAGE,
+                "status" => $data["status"],
+                "comment_status" => $data["comment_status"] ?? false,
+                "vote_status" => $data["vote_status"] ?? false,
+                "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
+                "goal_post" => $data["goal_post"] ?? NULL,
                 "published_at" => $data["published_at"] ?? NULL,
                 "created_at" => $data["created_at"] ?? Carbon::now()
             ]);
     }
+
+
 }

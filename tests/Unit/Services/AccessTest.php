@@ -39,11 +39,8 @@ class AccessTest extends TestCase
         return $this->getEntitePermissions()->pluck("action")->toArray() ;
     }
 
-
     public function test_user_full_access_permissions_is_correct()
     {
-
-
         $service =
             $this->accessService
             ->setUser($this->getUserHasFullAbilities())

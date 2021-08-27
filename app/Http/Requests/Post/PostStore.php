@@ -16,7 +16,7 @@ class PostStore extends FormRequest
      */
     public function authorize()
     {
-        return true ;
+        return true;
     }
 
     /**
@@ -34,14 +34,17 @@ class PostStore extends FormRequest
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
             "format" => ["required", Rule::in(EnumsPost::format())],
-            "development" => ["nullable", "numeric"],
             "content" => ["nullable", "string"],
             "excerpt" => ["nullable", "string"],
             "faq" => ["nullable", "string"],
-            "theme" => ["nullable", "string"],
             "published_at" => ["nullable", "date_format:Y/m/d H:i:s"],
             "created_at" => ["nullable", "date_format:Y/m/d H:i:s"],
 
+            "tags" => ["nullable", "array"],
+            "tags.*" => ["required", "exists:terms,id"],
+
+            "categories" => ["nullable", "array"],
+            "categories.*" => ["required", "exists:terms,id"],
         ];
     }
 }
