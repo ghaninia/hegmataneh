@@ -50,6 +50,7 @@ class PostFeatureTest extends TestCase
     {
         $this->withoutMiddleware();
         $user = $this->createUser();
+
         $tags = $this->createTags();
         $categories =  $this->createCats();
 
@@ -64,8 +65,8 @@ class PostFeatureTest extends TestCase
             "excerpt" => "::EXCERPT::",
             "faq" => "::FAQ::",
 
-            "published_at" => Carbon::now()->format("y/m/d"),
-            "created_at" =>  Carbon::now()->format("y/m/d"),
+            "published_at" => Carbon::now(),
+            "created_at" =>  Carbon::now(),
 
             "tags" => $tags,
             "categories" => $categories
@@ -73,5 +74,6 @@ class PostFeatureTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee("ok");
+        $response->assertSee("msg");
     }
 }

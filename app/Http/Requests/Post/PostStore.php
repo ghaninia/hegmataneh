@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\Post;
 
-use App\Core\Enums\EnumsPost;
+use App\Models\Post;
 use App\Rules\SlugRule;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Core\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PostStore extends FormRequest
 {
@@ -37,8 +38,8 @@ class PostStore extends FormRequest
             "content" => ["nullable", "string"],
             "excerpt" => ["nullable", "string"],
             "faq" => ["nullable", "string"],
-            "published_at" => ["nullable", "date_format:Y/m/d H:i:s"],
-            "created_at" => ["nullable", "date_format:Y/m/d H:i:s"],
+            "published_at" => ["nullable", "date"],
+            "created_at" => ["nullable", "date"],
 
             "tags" => ["nullable", "array"],
             "tags.*" => ["required", "exists:terms,id"],

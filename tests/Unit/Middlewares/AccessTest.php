@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AccessMiddleware;
 use Illuminate\Routing\Route as RoutingRoute;
 
@@ -19,31 +20,30 @@ class AccessTest extends TestCase
      */
     public function test_access_middleware()
     {
-        // $routeAction = [
-        //     "controller" => "App\\Api\\Controllers\\TestController@Test" ,
-        //     "uses" => "App\\Api\\Controllers\\TestController"
-        // ];
-        // $user = User::factory()
-        //     ->for(
-        //         Role::factory()
-        //             ->has(
-        //                 Permission::factory()->state(["action" => $routeAction])
-        //             )
-        //     )
-        //     ->create();
 
-        // $request = new Request();
+        $routeAction = "TestController@Test";
 
-        // $request->setUserResolver(fn () => $user);
+        $user = User::factory()
+            ->for(
+                Role::factory()
+                    ->has(
+                        Permission::factory()->state(["action" => $routeAction])
+                    )
+            )
+            ->create();
 
-        // $route = (new RoutingRoute('GET', 'testing/test', ["uses" => $routeAction ] ))->bind($request) ;
+        $request = new Request();
 
-        // $request->setRouteResolver(function () use ($request, $routeAction) {
-        //     return
-        // });
+        $request->setRouteResolver(function () use ($request , $routeAction) {
+            $route = Route::get("test" , $routeAction)->name("test") ;
+            return $route->bind($request);
+        });
 
-        // $middleware = new AccessMiddleware  ;
-        // $response   = $middleware->handle($request , fn($response) => null ) ;
+        $request->setUserResolver(fn () => $user);
 
+        $middleware = new AccessMiddleware  ;
+        $response   = $middleware->handle($request ,function($next){}) ;
+        
+        $this->assertNull( $response ) ;
     }
 }

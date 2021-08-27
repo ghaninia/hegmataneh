@@ -11,6 +11,7 @@ use App\Http\Requests\Post\PostIndex;
 use App\Http\Requests\Post\PostStore;
 use App\Services\Category\CategoryService;
 use App\Http\Resources\Post\PostCollection;
+use App\Http\Resources\Post\PostResource;
 
 class PostController extends Controller
 {
@@ -76,6 +77,11 @@ class PostController extends Controller
             $post,
             $request->input("categories", [])
         );
+
+        return $this->success([
+            "data" => new PostResource( $post ),
+            "msg"  => trans("dashboard.success.post.create")
+        ]);
     }
 
     /**

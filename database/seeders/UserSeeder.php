@@ -21,24 +21,25 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        Role::factory()->has(
-            User::factory()
-                ->has(
-                    Portfolio::factory()
-                )
-                ->has(
-                    Post::factory()
-                )
-                ->has(
-                    View::factory()
-                )
-                ->has(
-                    Vote::factory()
-                )
-                ->has(
-                    Skill::factory()
-                )
-        )
-        ->create();
+        Role::factory()
+            ->has(
+                User::factory()
+                    ->has(
+                        Portfolio::factory()
+                    )
+                    ->has(
+                        Post::factory()
+                    )
+                    ->has(
+                        View::factory()
+                    )
+                    ->has(
+                        Vote::factory()
+                    )
+                    ->has(
+                        Skill::factory()
+                    )
+            )
+            ->create();
     }
 }

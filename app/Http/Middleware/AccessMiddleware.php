@@ -5,8 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Core\Traits\MessageTrait;
-use Illuminate\Support\Facades\Route;
-use App\Services\Authunticate\AuthService;
+use Illuminate\Support\Facades\Gate;
 
 class AccessMiddleware
 {
@@ -21,8 +20,10 @@ class AccessMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $result = app(AuthService::class)
-            ->can("f_ability", $request->route()->getActionMethod());
+        $action = $request->route()->getAction()["uses"];
+        $user = $request->user();
+
+        $result = Gate::forUser($user)->allows("f_ability", $action );
 
         return $result ? $next($request) : $this->error([
             "msg" => trans("dashboard.error.authunticate.unauthorize")

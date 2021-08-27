@@ -27,18 +27,4 @@ class RoleFactory extends Factory
         ];
     }
 
-    public function configure()
-    {
-        return $this->afterCreating(function (Role $role) {
-            $permissions =
-                Permission::inRandomOrder()
-                ->take(
-                    random_int(1, count(getEntireRoutesAction()))
-                )
-                ->pluck("id")
-                ->toArray();
-
-            $role->permissions()->attach($permissions);
-        });
-    }
 }
