@@ -35,12 +35,15 @@ class PageService implements PageServiceInterface
      * ساخت برگه جدید
      * @param User $user
      * @param array $data
+     * @param Post $post | null
      * @return Post
      */
-    public function create(User $user, array $data): Post
+    public function updateOrCreate(User $user, array $data, ?Post $post = null): Post
     {
         return
-            $this->postRepo->create([
+            $this->postRepo->updateOrCreate([
+                "id" => $post->id ?? null
+            ], [
                 "type" => EnumsPost::TYPE_PAGE,
                 "status" => $data["status"],
                 "user_id" => $user->id,
@@ -56,37 +59,7 @@ class PageService implements PageServiceInterface
                 "excerpt" => $data["excerpt"] ?? NULL,
                 "theme" => $data["theme"] ?? NULL,
                 "published_at" => $data["published_at"] ?? NULL,
-                "created_at" => $data["created_at"] ?? Carbon::now()
-            ]);
-    }
-
-    /**
-     * ویرایش برگه
-     * @param Post $page
-     * @param User $user
-     * @param array $data
-     * @return Post
-     */
-    public function update(Post $page , User $user, array $data): Post
-    {
-        return
-            $this->postRepo->updateById( $page->id , [
-                "type" => EnumsPost::TYPE_PAGE,
-                "user_id" => $user->id,
-                "status" => $data["status"],
-                "comment_status" => $data["comment_status"] ?? false,
-                "vote_status" => $data["vote_status"] ?? false,
-                "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
-                "development" => $data["development"] ?? 0,
-                "title" => $data["title"],
-                "goal_post" => $data["goal_post"] ?? NULL,
-                "slug" => slug($data["slug"] ?? NULL, $data["title"]),
-                "content" => $data["content"] ?? NULL,
-                "faq" => $data["faq"] ?? NULL,
-                "excerpt" => $data["excerpt"] ?? NULL,
-                "theme" => $data["theme"] ?? NULL,
-                "published_at" => $data["published_at"] ?? NULL,
-                "created_at" => $data["created_at"] ?? Carbon::now()
+                "created_at" => $post->created_at ?? $data["created_at"] ?? Carbon::now()
             ]);
     }
 
@@ -97,9 +70,6 @@ class PageService implements PageServiceInterface
      */
     public function delete(Post $page): bool
     {
-        return
-            $page->trashed() ?
-            $page->forceDelete() :
-            $page->delete();
+        return $this->postRepo->forceDelete($page);
     }
 }

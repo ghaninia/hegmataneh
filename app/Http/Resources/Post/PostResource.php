@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Post;
 
+use App\Http\Resources\Category\CategoryCollection;
+use App\Http\Resources\Tag\TagCollection;
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +19,7 @@ class PostResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "status"  => $this->status ,
+            "status"  => $this->status,
             "comment_status"  => (bool) $this->comment_status,
             "vote_status"  => (bool) $this->vote_status,
             "format" => $this->format,
@@ -26,9 +28,12 @@ class PostResource extends JsonResource
             "slug"  => $this->slug,
             "content"  => $this->content,
             "excerpt"  => $this->excerpt,
-            "published_at" => $this->published_at ,
+            "published_at" => $this->published_at,
             "created_at" => $this->created_at,
-            "user"  => new UserResource($this->whenLoaded("user")) ,
+
+            "user"  => new UserResource($this->whenLoaded("user")),
+            "categories"  => new CategoryCollection($this->whenLoaded("categories")),
+            "tags"  => new TagCollection($this->whenLoaded("tags")),
 
             "views_count" => $this->when(isset($this->views_count), $this->views_count),
             "votes_count" => $this->when(isset($this->votes_count), $this->votes_count),

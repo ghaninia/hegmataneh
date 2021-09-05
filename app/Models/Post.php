@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasFilterTrait;
@@ -33,49 +32,15 @@ class Post extends Model
         "deleted_at"
     ];
 
-    protected $guarded = [
-        "type",
-        "price"
-    ];
-
     protected $dates = [
         "deleted_at",
-        "sale_price_dates_from",
-        "sale_price_dates_to",
         "published_at"
     ];
 
-    protected $hidden = [
-        'price',
-        "price",
-        "sale_price",
-        "maximum_sell",
-        "expire_day",
-        "download_limit",
-        "sale_price_dates_from",
-        "sale_price_dates_to",
-        "user_id",
-        "file_id",
-        "comment_status",
-        "vote_status",
-        "format",
-        "development",
+    protected $casts = [
+        "deleted_at" => "datetime" ,
+        "published_at" => "datetime" ,
     ];
-
-    public function setPublishedAtAttribute($value = null)
-    {
-        $this->attributes["published_at"] = !!$value ? Carbon::parse($value) : null;
-    }
-
-    public function setCreatedAtAttribute($value = null)
-    {
-        $this->attributes["created_at"] = !!$value ? Carbon::parse($value) : Carbon::now();
-    }
-
-    public function setDeletedAtAttribute($value = null)
-    {
-        $this->attributes["deleted_at"] = !!$value ? Carbon::parse($value) : null;
-    }
 
     ###################
     #### RELATIONS ####

@@ -31,7 +31,7 @@ class UserTest extends TestCase
         $role = Role::factory()->create();
 
         $fakeUser = User::factory()->make();
-
+        
         $user = $this->userService->create(
             array_merge([
                 "role_id" => $role->id,
@@ -58,11 +58,14 @@ class UserTest extends TestCase
     {
         $role = Role::factory()->create();
 
+        $fakeUser = User::factory()->make() ;
+
+
         $user = $this->userService->update($user, [
             "name" => $name = "::NAME::",
-            "username" => $username = "::USERNAME::",
-            "email" => $email = "::EMAIL::",
-            "mobile" => $mobile = "::MOBILE::",
+            "username" => $username = $fakeUser->username ,
+            "email" => $email = $fakeUser->email ,
+            "mobile" => $mobile = $fakeUser->mobile ,
             "status" => $status = EnumsUser::STATUS_DISABLE,
             "role_id" => $roleId = $role->id,
             "bio" => $bio = "::BIO::",

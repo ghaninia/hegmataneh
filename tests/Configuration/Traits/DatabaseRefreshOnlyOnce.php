@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 
 trait DatabaseRefreshOnlyOnce
 {
-
     private static $databaseRefreshTurnOn = false;
-
     protected function setUpTraits()
     {
         parent::setUpTraits();

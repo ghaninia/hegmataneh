@@ -17,7 +17,7 @@ class PageUpdate extends FormRequest
      */
     public function authorize()
     {
-        return TRUE;
+        return true ;
     }
 
     /**
@@ -27,11 +27,10 @@ class PageUpdate extends FormRequest
      */
     public function rules()
     {
+        $statsSchedule = EnumsPost::STATUS_SCHEDULE;
         return [
-
             "title" => ["required", "string"],
             "slug" => [new SlugRule(Post::class, "title", $this->route("page"))],
-
             "status" => ["required", Rule::in(EnumsPost::status())],
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
@@ -41,8 +40,8 @@ class PageUpdate extends FormRequest
             "excerpt" => ["nullable", "string"],
             "faq" => ["nullable", "string"],
             "theme" => ["nullable", "string"],
-            "published_at" => ["nullable", "date_format:Y/m/d H:i:s"],
-            "created_at" => ["nullable", "date_format:Y/m/d H:i:s"],
+            "published_at" => ["nullable", "required_if:status,{$statsSchedule}", "date"],
+            "created_at" => ["nullable", "date"],
         ];
     }
 }

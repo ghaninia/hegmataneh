@@ -32,17 +32,7 @@ class PageController extends Controller
     {
         $filters = array_merge(
             ["user" => $user->id],
-            $request->only([
-                "comment_status",
-                "vote_status",
-                "status",
-                "format",
-                "slug",
-                "title",
-                "content",
-                "development",
-                "theme",
-            ])
+            $request->all()
         );
         $pages =
             $this->pageService
@@ -65,14 +55,10 @@ class PageController extends Controller
     public function store(User $user, PageStore $request)
     {
 
-        $page = $this->pageService->create(
+        $page = $this->pageService->updateOrCreate(
             $user,
             $request->all()
         );
-
-        $request->whenFilled("tags", function () use ($page, $request) {
-            $this->tagService->syncTags($page, $request->tags);
-        });
 
         return $this->success([
             "data" => new PageResource($page),
@@ -105,24 +91,11 @@ class PageController extends Controller
      */
     public function update(User $user, Post $page, PageUpdate $request)
     {
-        $page = $this->pageService->update(
-            $page,
+
+        $page = $this->pageService->updateOrCreate(
             $user,
-            $request->only([
-                "status",
-                "comment_status",
-                "vote_status",
-                "format",
-                "development",
-                "title",
-                "slug",
-                "content",
-                "excerpt",
-                "faq",
-                "theme",
-                "published_at",
-                "created_at",
-            ])
+            $request->all(),
+            $page
         );
 
         return $this->success([

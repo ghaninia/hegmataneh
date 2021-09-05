@@ -10,6 +10,7 @@
             body , html {
                 margin : 0 ;
                 height: 100% ;
+                background : #0B0014
             }
             a , body {
                 font-family: Verdana ;
@@ -26,7 +27,7 @@
                 flex-direction: column
             }
             .shock {
-                color: rgb(126, 126, 126) ;
+                color: #F5E9E2 ;
                 display: block ;
                 position: relative;
                 font-size : 80px ;
@@ -35,19 +36,19 @@
             }
             .shock:after, .shock:before {
                 position: absolute;
-                background : #fff ;
+                background : #D44D5C ;
                 content: attr(data-label);
                 clip: rect(0, 900px, 0, 0);
             }
             .shock:after {
                 animation: shock-anim 2s infinite linear alternate-reverse;
                 left: 2px;
-                text-shadow: 2px 0 #001aff;
+                text-shadow: 2px 0 #E3B5A4;
             }
             .shock:before {
                 animation: shock 3s infinite linear alternate-reverse;
                 left: -2px;
-                text-shadow: -2px 0 rgb(255, 0, 0);
+                text-shadow: -2px 0 #773344;
             }
             @keyframes shock-anim {
                 0% { clip: rect(3px, 9999px, 93px, 0); }

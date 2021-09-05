@@ -81,6 +81,13 @@ Route::group([
         ########
         Route::apiResource("page", PageController::class);
         Route::apiResource("post", PostController::class);
+        Route::group([
+            "prefix" => "post/{post}",
+            "as" => "post."
+        ], function () {
+            Route::delete("force", [PostController::class, "forceDelete"])->name("force");
+            Route::post("restore", [PostController::class, "restore"])->name("restore");
+        });
     });
 
     #######

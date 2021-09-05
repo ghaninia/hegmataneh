@@ -28,7 +28,6 @@ class User extends Authenticatable
 
     protected $hidden = [
         'password',
-        'role_id'
     ];
 
     protected $dates = [
@@ -84,4 +83,5 @@ class User extends Authenticatable
     {
         return $this->morphToMany(Skill::class, "skillable");
     }
+
 }

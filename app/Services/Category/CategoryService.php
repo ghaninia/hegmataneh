@@ -86,6 +86,12 @@ class CategoryService implements CategoryServiceInterface
      */
     public function sync(Model $model, array $data = [])
     {
-        $model->categories()->sync($data);
+        ### ست کردن تایپ در جدول واسط
+        array_map(function ($item) use (&$items) {
+            $items[$item] = ["type" => EnumsTerm::TYPE_CATEGORY];
+        }, $data);
+
+
+        $model->categories()->sync($items);
     }
 }

@@ -43,7 +43,7 @@ class AccessTest extends TestCase
 
         $middleware = new AccessMiddleware  ;
         $response   = $middleware->handle($request ,function($next){}) ;
-        
+
         $this->assertNull( $response ) ;
     }
 }

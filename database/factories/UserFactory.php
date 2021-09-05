@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             "mobile" => $this->faker->unique()->numerify("0911#######"),
             'status' => Arr::random(EnumsUser::status()),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => $this->faker->unique()->email,
             "username" => $this->faker->unique()->userName(),
             'password' => bcrypt("secret"),
             "remember_token" => Str::random(10),

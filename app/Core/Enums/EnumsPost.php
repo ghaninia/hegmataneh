@@ -10,11 +10,12 @@ class EnumsPost extends Enum
     const TYPE_PRODUCT = "product";
     const TYPE_PAGE = "page";
 
-    const STATUS_PUBLISHED = "published" ;
-    const STATUS_DISABLED = "disabled" ;
-    const STATUS_DRAFT = "draft" ;
+    const STATUS_PUBLISHED = "published";
+    const STATUS_DISABLED = "disabled";
+    const STATUS_DRAFT = "draft";
+    const STATUS_SCHEDULE = "schedule";
 
-    const FORMAT_CONTEXT = "context" ;
-    const FORMAT_PODCAST = "podcast" ;
-    const FORMAT_VIDEO = "video" ;
+    const FORMAT_CONTEXT = "context";
+    const FORMAT_PODCAST = "podcast";
+    const FORMAT_VIDEO = "video";
 }

@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Contracts\Filters\PortfolioFilters\Name;
-use App\Core\Enums\EnumsOption;
 use Tests\TestCase;
 use App\Models\User;
 use App\Core\Enums\EnumsUser;
+use App\Core\Enums\EnumsOption;
 use App\Services\Authunticate\AuthService;
 use Illuminate\Support\Facades\Notification;
+use App\Contracts\Filters\PortfolioFilters\Name;
 
-class AuthunticateFeatureTest extends TestCase
+class AuthunticateControllerTest extends TestCase
 {
 
     protected $authService;

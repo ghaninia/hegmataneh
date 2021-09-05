@@ -27,6 +27,8 @@ class PostStore extends FormRequest
      */
     public function rules()
     {
+        $statsSchedule = EnumsPost::STATUS_SCHEDULE;
+
         return [
             "title" => ["required", "string"],
             "slug" => [new SlugRule(Post::class, "title")],
@@ -38,7 +40,7 @@ class PostStore extends FormRequest
             "content" => ["nullable", "string"],
             "excerpt" => ["nullable", "string"],
             "faq" => ["nullable", "string"],
-            "published_at" => ["nullable", "date"],
+            "published_at" => [ "nullable" , "required_if:status,{$statsSchedule}", "date"],
             "created_at" => ["nullable", "date"],
 
             "tags" => ["nullable", "array"],

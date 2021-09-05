@@ -39,7 +39,7 @@ class TagService implements TagServiceInterface
      * @param array $data
      * @return Term
      */
-    public function update(Term $tag, array $data) : Term
+    public function update(Term $tag, array $data): Term
     {
         return
             $this->termRepo
@@ -55,9 +55,9 @@ class TagService implements TagServiceInterface
      * @param Term $tag
      * @return boolean
      */
-    public function delete(Term $tag) : bool
+    public function delete(Term $tag): bool
     {
-        return $tag->delete() ;
+        return $tag->delete();
     }
 
     /**
@@ -81,6 +81,11 @@ class TagService implements TagServiceInterface
      */
     public function sync(Model $model, array $data = [])
     {
-        $model->tags()->sync( $data ) ;
+        ### ست کردن تایپ در جدول واسط
+        array_map(function ($item) use (&$items) {
+            $items[$item] = ["type" => EnumsTerm::TYPE_TAG] ;
+        }, $data);
+
+        $model->tags()->sync($items);
     }
 }

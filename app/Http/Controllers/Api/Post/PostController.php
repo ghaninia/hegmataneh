@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Post;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Tag\TagService;
@@ -9,9 +10,10 @@ use App\Services\Post\PostService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostIndex;
 use App\Http\Requests\Post\PostStore;
+use App\Http\Requests\Post\PostUpdate;
+use App\Http\Resources\Post\PostResource;
 use App\Services\Category\CategoryService;
 use App\Http\Resources\Post\PostCollection;
-use App\Http\Resources\Post\PostResource;
 
 class PostController extends Controller
 {
@@ -29,7 +31,8 @@ class PostController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param User $user
+     * @param PostIndex $request
      * @return \Illuminate\Http\Response
      */
     public function index(User $user, PostIndex $request)
@@ -56,14 +59,14 @@ class PostController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param User $user
+     * @param PostStore $request
      * @return \Illuminate\Http\Response
      */
     public function store(User $user, PostStore $request)
     {
         $post =
-            $this->postService->create(
+            $this->postService->updateOrCreate(
                 $user,
                 $request->all()
             );
@@ -79,7 +82,7 @@ class PostController extends Controller
         );
 
         return $this->success([
-            "data" => new PostResource( $post ),
+            "data" => new PostResource($post),
             "msg"  => trans("dashboard.success.post.create")
         ]);
     }
@@ -90,31 +93,88 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user, Post $post)
     {
-        //
+        return new PostResource(
+            $post
+                ->load("categories", "tags", "user")
+                ->loadCount(["views", "comments", "votes"])
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Post $post
+     * @param  PostUpdate $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Post $post, User $user, PostUpdate $request)
     {
-        //
+        $post =
+            $this->postService->updateOrCreate(
+                $user,
+                $request->all(),
+                $post
+            );
+
+        $this->tagService->sync(
+            $post,
+            $request->input("tags", [])
+        );
+
+        $this->categoryService->sync(
+            $post,
+            $request->input("categories", [])
+        );
+
+        return $this->success([
+            "data" => new PostResource($post),
+            "msg"  => trans("dashboard.success.post.update")
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  User $user
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user, Post $post)
     {
-        //
+        $this->postService->delete($post);
+
+        return $this->success([
+            "msg" => trans("dashboard.success.post.delete")
+        ]);
+    }
+
+    /**
+     * بازگردانی پست حذف شده
+     * @param User $user
+     * @param Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(User $user, Post $post)
+    {
+        $this->postService->restore($post);
+        return $this->success([
+            "msg" => trans("dashboard.success.post.restore")
+        ]);
+    }
+
+    /**
+     * حذف پست بصورت کامل
+     * @param User $user
+     * @param Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function force(User $user, Post $post)
+    {
+        $this->postService->forceDelete($post);
+        return $this->success([
+            "msg" => trans("dashboard.success.post.forceDelete")
+        ]);
     }
 }

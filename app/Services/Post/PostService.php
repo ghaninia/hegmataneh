@@ -53,7 +53,7 @@ class PostService implements PostServiceInterface
     public function setPublishedJob(Post $post): void
     {
         PublishedPostJob::dispatch($post)->delay(
-            Carbon::parse($post->published_at)
+            $post->published_at
         );
     }
 
@@ -61,27 +61,58 @@ class PostService implements PostServiceInterface
      * ثبت پست جدید
      * @param User $user
      * @param array $data
+     * @param Post $post|null
      */
-    public function create(User $user, array $data): Post
+    public function updateOrCreate(User $user, array $data, ?Post $post = null): Post
     {
         return
-            $this->postRepo->create([
+            $this->postRepo->updateOrCreate([
+                "id" => $post->id ?? null
+            ], [
                 "user_id" => $user->id,
                 "title" => $data["title"],
                 "slug" => slug($data["slug"] ?? NULL, $data["title"]),
                 "content" => $data["content"] ?? NULL,
                 "faq" => $data["faq"] ?? NULL,
                 "excerpt" => $data["excerpt"] ?? NULL,
-                "type" => EnumsPost::TYPE_PAGE,
+                "type" => EnumsPost::TYPE_POST,
                 "status" => $data["status"],
                 "comment_status" => $data["comment_status"] ?? false,
                 "vote_status" => $data["vote_status"] ?? false,
                 "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
                 "goal_post" => $data["goal_post"] ?? NULL,
                 "published_at" => $data["published_at"] ?? NULL,
-                "created_at" => $data["created_at"] ?? Carbon::now()
+                "created_at" => $post->created_at ?? $data["created_at"] ?? Carbon::now()
             ]);
     }
 
+    /**
+     * حذف پست
+     * @param Post $post
+     * @return boolean
+     */
+    public function delete(Post $post)
+    {
+        return $this->postRepo->delete($post);
+    }
 
+    /**
+     * رستور کردن پست حذف شده
+     * @param Post $post
+     * @return boolean
+     */
+    public function restore(Post $post)
+    {
+        return $this->postRepo->restore($post);
+    }
+
+    /**
+     * حذف اجباری پست
+     * @param Post $post
+     * @return boolean
+     */
+    public function forceDelete(Post $post): bool
+    {
+        return $this->postRepo->forceDelete($post);
+    }
 }
