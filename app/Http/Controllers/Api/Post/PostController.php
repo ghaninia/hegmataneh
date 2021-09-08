@@ -106,11 +106,13 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  Post $post
+     * @param  User $user
      * @param  PostUpdate $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Post $post, User $user, PostUpdate $request)
+    public function update(User $user, Post $post, PostUpdate $request)
     {
+
         $post =
             $this->postService->updateOrCreate(
                 $user,
@@ -129,7 +131,7 @@ class PostController extends Controller
         );
 
         return $this->success([
-            "data" => new PostResource($post),
+            "data" => new PostResource($post->load(["categories" , "tags"])),
             "msg"  => trans("dashboard.success.post.update")
         ]);
     }

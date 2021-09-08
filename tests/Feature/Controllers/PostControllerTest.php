@@ -15,13 +15,11 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PostControllerTest extends TestCase
 {
-    use WithoutMiddleware ;
 
     protected function setUp(): void
     {
-        parent::setUp() ;
-        $this->withoutMiddleware(AccessMiddleware::class) ;
-        Passport::actingAs($this->createUser()) ;
+        parent::setUp();
+        Passport::actingAs($this->createUser());
     }
 
     private function createTags()
@@ -56,6 +54,8 @@ class PostControllerTest extends TestCase
 
     public function test_create_new_post()
     {
+        $this->withoutMiddleware(AccessMiddleware::class);
+
         $user = $this->createUser();
 
         $tags = $this->createTags();
@@ -63,7 +63,7 @@ class PostControllerTest extends TestCase
 
         $post = post::factory()->make();
 
-        $response = $this->json( "POST" ,route("user.post.store", $user->id), [
+        $response = $this->postJson(route("user.post.store", $user->id), [
             "title" => $post->title,
             "slug" => $post->slug,
             "status" =>  $post->status,
@@ -89,6 +89,7 @@ class PostControllerTest extends TestCase
 
     public function test_show_post()
     {
+        $this->withoutMiddleware(AccessMiddleware::class);
         $post = Post::factory()
             ->state([
                 "type" => EnumsPost::TYPE_POST
@@ -99,25 +100,31 @@ class PostControllerTest extends TestCase
             )
             ->create();
 
-        $response = $this->json(  "GET" , route("user.post.show", [
+        $response = $this->getJson(route("user.post.show", [
             "user" => $user->id,
             "post" => $post->id
         ]));
 
         $response->assertStatus(200);
-        $response->assertSee("id");
-        return $post;
     }
 
-    /**
-     * @depends test_show_post
-     */
-    public function test_update_post($post)
+
+
+    public function test_update_post()
     {
-        $user = $post->user;
+        $this->withoutMiddleware(AccessMiddleware::class);
+
+        $post = Post::factory()
+            ->state([
+                "type" => EnumsPost::TYPE_POST
+            ])
+            ->for($this->createUser())
+            ->create();
+
         $fakePost = Post::factory()->make();
-        $response = $this->json( "PUT" ,route("user.post.update", [
-            "user" => $user->id,
+
+        $response = $this->putJson(route("user.post.update", [
+            "user" => $post->user->id,
             "post" => $post->id
         ]), [
             "title" => $fakePost->title,
@@ -134,12 +141,13 @@ class PostControllerTest extends TestCase
             "created_at" => $fakePost->created_at,
             "tags" => [],
             "categories" => []
-        ], [
-            "content-type" => "application/x-www-form-urlencoded"
         ]);
 
         $response->assertStatus(200);
         $response->assertSee("ok");
         $response->assertSee("msg");
+        $this->assertDatabaseHas("posts" , [
+            "slug" => $fakePost->slug
+        ]);
     }
 }

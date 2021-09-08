@@ -8,12 +8,14 @@ use App\Models\User;
 use App\Core\Enums\EnumsUser;
 use App\Services\User\UserService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Notifications\ConfirmAccountNotification;
 
 class UserTest extends TestCase
 {
+    use WithFaker ;
 
     protected $userService;
 
@@ -31,7 +33,7 @@ class UserTest extends TestCase
         $role = Role::factory()->create();
 
         $fakeUser = User::factory()->make();
-        
+
         $user = $this->userService->create(
             array_merge([
                 "role_id" => $role->id,
@@ -62,7 +64,7 @@ class UserTest extends TestCase
 
 
         $user = $this->userService->update($user, [
-            "name" => $name = "::NAME::",
+            "name" => $name = $this->faker->name() ,
             "username" => $username = $fakeUser->username ,
             "email" => $email = $fakeUser->email ,
             "mobile" => $mobile = $fakeUser->mobile ,
@@ -138,13 +140,12 @@ class UserTest extends TestCase
 
     public function test_get_all_user_with_filter_email()
     {
-        $users = User::factory()
+        $user = User::factory()
             ->for(Role::factory())
-            ->state(["email" => $email = "::EMAIL2::"])
             ->create();
 
         $users = $this->userService->list([
-            "email" => $email
+            "email" => $user->email
         ]);
 
         $this->assertEquals($users->total(), 1);
@@ -152,13 +153,12 @@ class UserTest extends TestCase
 
     public function test_get_all_user_with_filter_mobile()
     {
-        $users = User::factory()
+        $user = User::factory()
             ->for(Role::factory())
-            ->state(["mobile" => $mobile = "::MOBILE2::"])
             ->create();
 
         $users = $this->userService->list([
-            "mobile" => $mobile
+            "mobile" => $user->mobile
         ]);
 
         $this->assertEquals($users->total(), 1);
@@ -166,13 +166,12 @@ class UserTest extends TestCase
 
     public function test_get_all_user_with_filter_username()
     {
-        $users = User::factory()
+        $user = User::factory()
             ->for(Role::factory())
-            ->state(["username" => $username = "::USERNAME2::"])
             ->create();
 
         $users = $this->userService->list([
-            "username" => $username
+            "username" => $user->username
         ]);
 
         $this->assertEquals($users->total(), 1);
