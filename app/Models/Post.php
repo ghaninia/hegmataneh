@@ -51,6 +51,11 @@ class Post extends Model
         return $this->hasOne(ProductInformation::class);
     }
 
+    public function price()
+    {
+        return $this->morphOne(Price::class , "priceable") ;
+    }
+
     public function serials()
     {
         return $this->belongsToMany(Serial::class)->withPivot([

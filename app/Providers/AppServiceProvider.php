@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Post;
 use App\Models\Term;
 use App\Models\User;
+use App\Models\Serial;
 use App\Models\Portfolio;
 use App\Models\Quotation;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
             "portfolio" => Portfolio::class,
             "term" => Term::class,
             "quotation" => Quotation::class,
+            "serial" => Serial::class ,
         ]);
     }
 

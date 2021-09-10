@@ -9,14 +9,27 @@ class Serial extends Model
 {
     use HasFactory;
 
-    public function posts ()
+    protected $fillable = [
+        "title",
+        "description",
+    ];
+
+
+    public function posts()
     {
-        return $this->belongsToMany( Post::class )->withPivot([
-            "title",
-            "is_locked",
-            "priority",
-            "description"
-        ]);
+        return $this
+            ->belongsToMany(Post::class)
+            ->withTimestamps()
+            ->withPivot([
+                "title",
+                "description",
+                "is_locked",
+                "priority",
+            ]);
     }
 
+    public function price()
+    {
+        return $this->morphOne(Price::class, "priceable");
+    }
 }

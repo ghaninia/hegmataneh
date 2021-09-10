@@ -22,11 +22,6 @@ class CreateProductInformationTable extends Migration
             $table->unsignedBigInteger("expire_day")->nullable();
             $table->unsignedBigInteger("download_limit")->nullable();
 
-            $table->float("price", 20, 2)->nullable()->default(0);
-            $table->float("amazing_price", 20, 2)->nullable()->default(0);
-            $table->timestamp("amazing_from_date")->nullable();
-            $table->timestamp("amazing_to_date")->nullable();
-
             $table->timestamps();
         });
     }

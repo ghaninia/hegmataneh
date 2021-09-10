@@ -14,10 +14,6 @@ class ProductInformation extends Model
         "maximum_sell" ,
         "expire_day" ,
         "download_limit" ,
-        "price" ,
-        "amazing_price" ,
-        "amazing_from_date" ,
-        "amazing_to_date" ,
     ];
 
     public function post()
