@@ -4,16 +4,16 @@ namespace App\Core\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 
-trait OtherBaseRepository
+trait ExteraQueriesTrait
 {
     public function query()
     {
         return $this->model;
     }
 
-    public function updateOrCreate($except, $data)
+    public function updateOrCreate(array $condition, array $data)
     {
-        return $this->model->updateOrCreate($except, $data);
+        return $this->model->updateOrCreate($condition, $data);
     }
 
     public function restore(Model $post)
@@ -25,4 +25,5 @@ trait OtherBaseRepository
     {
         return $this->model->forceDelete($post);
     }
+
 }

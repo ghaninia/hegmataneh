@@ -4,10 +4,14 @@ namespace App\Repositories\Option;
 
 use App\Models\Option;
 use App\Repositories\Option\OptionRepositoryInterface;
+use App\Core\Traits\ExteraQueriesTrait;
 use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class OptionRepository extends BaseRepository implements OptionRepositoryInterface
 {
+
+    use ExteraQueriesTrait ;
+
     /**
      * Specify Model class name
      *
@@ -18,20 +22,4 @@ class OptionRepository extends BaseRepository implements OptionRepositoryInterfa
         return Option::class;
     }
 
-    /**
-     * @param string $key
-     * @param $value
-     * @return Option
-     */
-    public function updateOrCreate($key, $value) : Option
-    {
-        return
-            $this->model->updateOrCreate(
-                ["key" => $key],
-                [
-                    "key" => $key,
-                    "value" => $value
-                ]
-            );
-    }
 }

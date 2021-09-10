@@ -3,11 +3,15 @@
 namespace App\Repositories\Permission;
 
 use App\Models\Permission;
-use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
+use App\Core\Traits\ExteraQueriesTrait;
 use App\Repositories\Permission\PermissionRepositoryInterface;
+use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class PermissionRepository extends BaseRepository implements PermissionRepositoryInterface
 {
+
+    use ExteraQueriesTrait ;
+
     /**
      * Specify Model class name
      *
@@ -18,8 +22,4 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         return Permission::class;
     }
 
-    public function query()
-    {
-        return $this->model;
-    }
 }

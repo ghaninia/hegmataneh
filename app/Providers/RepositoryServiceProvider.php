@@ -36,6 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\File\FileRepositoryInterface::class, \App\Repositories\File\FileRepository::class);
         $this->app->bind(\App\Repositories\Permission\PermissionRepositoryRepositoryInterface::class, \App\Repositories\Permission\PermissionRepositoryRepository::class);
         $this->app->bind(\App\Repositories\Permission\PermissionRepositoryInterface::class, \App\Repositories\Permission\PermissionRepository::class);
+        $this->app->bind(\App\Repositories\Serial\SerialRepositoryInterface::class, \App\Repositories\Serial\SerialRepository::class);
         //:end-bindings:
     }
 }

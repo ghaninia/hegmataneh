@@ -3,11 +3,14 @@
 namespace App\Repositories\Vote;
 
 use App\Models\Vote;
-use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 use App\Repositories\Vote\VoteRepositoryInterface;
+use App\Core\Traits\ExteraQueriesTrait;
+use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class VoteRepository extends BaseRepository implements VoteRepositoryInterface
 {
+    use ExteraQueriesTrait ;
+
     /**
      * Specify Model class name
      *
@@ -16,10 +19,5 @@ class VoteRepository extends BaseRepository implements VoteRepositoryInterface
     public function model()
     {
         return Vote::class;
-    }
-
-    public function query()
-    {
-        return $this->model;
     }
 }

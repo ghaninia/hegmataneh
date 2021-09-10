@@ -56,7 +56,7 @@ class AuthunticateControllerTest extends TestCase
             "password" => "secret" ,
             "bio" => $user->bio ,
         ]));
-        
+
         $response->assertStatus(200);
         $response->assertSee("ok");
     }

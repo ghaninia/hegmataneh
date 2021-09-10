@@ -4,10 +4,12 @@ namespace App\Repositories\Comment;
 
 use App\Models\Comment;
 use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Core\Traits\ExteraQueriesTrait;
 use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class CommentRepository extends BaseRepository implements CommentRepositoryInterface
 {
+    use ExteraQueriesTrait ;
     /**
      * Specify Model class name
      *
@@ -18,8 +20,4 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
         return Comment::class ;
     }
 
-    public function query()
-    {
-        return $this->model ;
-    }
 }

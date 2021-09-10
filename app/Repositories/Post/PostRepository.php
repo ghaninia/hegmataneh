@@ -3,13 +3,13 @@
 namespace App\Repositories\Post;
 
 use App\Models\Post;
-use App\Core\Traits\OtherBaseRepository;
 use App\Repositories\Post\PostRepositoryInterface;
+use App\Core\Traits\ExteraQueriesTrait;
 use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
-    use OtherBaseRepository ;
+    use ExteraQueriesTrait ;
 
     /**
      * Specify Model class name

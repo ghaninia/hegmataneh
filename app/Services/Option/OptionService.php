@@ -86,9 +86,9 @@ class OptionService implements OptionServiceInterface
      * @param mixed $value
      * @return Option
      */
-    public function put(string $key,  $value) : Option
+    public function put(string $key,  $value): Option
     {
-        return $this->service()->updateOrCreate($key, serialize($value));
+        return $this->service()->updateOrCreate(["key" => $key], ["value" => serialize($value)]);
     }
 
 

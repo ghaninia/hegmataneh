@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\View;
+namespace App\Repositories\Serial;
 
-use App\Models\View;
-use App\Repositories\View\ViewRepositoryInterface;
+use App\Models\Serial;
+use App\Repositories\Serial\SerialRepositoryInterface;
 use App\Core\Traits\ExteraQueriesTrait;
 use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
-class ViewRepository extends BaseRepository implements ViewRepositoryInterface
+class SerialRepository extends BaseRepository implements SerialRepositoryInterface
 {
     use ExteraQueriesTrait ;
     /**
@@ -17,7 +17,6 @@ class ViewRepository extends BaseRepository implements ViewRepositoryInterface
      */
     public function model()
     {
-        return View::class;
+        return Serial::class;
     }
-
 }
