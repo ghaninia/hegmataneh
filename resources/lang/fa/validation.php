@@ -161,6 +161,13 @@ return [
 
         "tags" => "برچسب‌ها" ,
         "tags.*" => "برچسب" ,
+
+
+        "episodes.*.title" => "عنوان اپیزود" ,
+        "episodes.*.description" => "توضیحات اپیزود" ,
+        "episodes.*.is_locked" => "قفل اپیزود" ,
+        "episodes.*.priority" => "اولویت اپیزود" ,
+
     ],
 
 ];

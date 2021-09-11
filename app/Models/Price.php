@@ -2,20 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Price extends Model
 {
-    use HasFactory;
+    use HasFactory, HasFilterTrait;
 
     protected $fillable = [
         "price",
-        "priceable_id" ,
-        "priceable_type" ,
+        "priceable_id",
+        "priceable_type",
+
+        "amazing_status",
         "amazing_price",
         "amazing_from_date",
         "amazing_to_date",
+    ];
+
+    protected $casts = [
+        "amazing_status" => "boolean"
     ];
 
     public function priceable()

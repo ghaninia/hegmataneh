@@ -56,14 +56,17 @@ class Post extends Model
         return $this->morphOne(Price::class , "priceable") ;
     }
 
-    public function serials()
+
+    public function episodes()
     {
-        return $this->belongsToMany(Serial::class)->withPivot([
-            "title",
-            "is_locked",
-            "priority",
-            "description"
-        ]);
+        return $this
+            ->belongsToMany(Serial::class)
+            ->withPivot([
+                "title",
+                "description",
+                "is_locked",
+                "priority",
+            ]);
     }
 
     public function user()

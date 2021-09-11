@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Contracts\Filters\PostFilters;
+namespace App\Contracts\Filters\SerialFilters;
 
 use App\Core\Abstracts\QueryFilter;
 use App\Core\Interfaces\FilterInterface;
 
-class Price extends QueryFilter implements FilterInterface
+class Title extends QueryFilter implements FilterInterface
 {
 
     public function handle($value): void

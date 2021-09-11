@@ -17,6 +17,8 @@ class CreatePricesTable extends Migration
             $table->id();
             $table->morphs("priceable");
             $table->float("price", 20, 2)->nullable()->default(0);
+
+            $table->boolean("amazing_status")->default(FALSE);
             $table->float("amazing_price", 20, 2)->nullable()->default(0);
             $table->timestamp("amazing_from_date")->nullable();
             $table->timestamp("amazing_to_date")->nullable();

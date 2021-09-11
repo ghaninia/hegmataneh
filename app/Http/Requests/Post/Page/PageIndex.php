@@ -37,7 +37,7 @@ class PageIndex extends FormRequest
             "theme" => ["nullable", "string"],
 
             "created_at" => ["nullable" , new FilterRangeRule ],
-            "created_at.*" => ["required" , "date_format:Y/m/d" ],
+            "created_at.*" => ["required" , "date" ],
         ];
     }
 }

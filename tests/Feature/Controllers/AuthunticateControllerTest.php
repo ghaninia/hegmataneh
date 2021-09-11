@@ -48,6 +48,7 @@ class AuthunticateControllerTest extends TestCase
         $user = User::factory()->make() ;
 
         options()->put(EnumsOption::DASHBOARD_CAN_REGISTER, TRUE);
+
         $response = $this->post(route("authunticate.register.store", [
             "name" => $user->name ,
             "email" => $user->email ,

@@ -43,6 +43,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\AccessServiceServiceInterface::class, \App\Services\AccessServiceService::class);
         $this->app->bind(\App\Services\Access\AccessServiceInterface::class, \App\Services\Access\AccessService::class);
         $this->app->bind(\App\Services\Serial\SerialServiceInterface::class, \App\Services\Serial\SerialService::class);
+        $this->app->bind(\App\Services\Price\PriceServiceInterface::class, \App\Services\Price\PriceService::class);
         //:end-bindings:
     }
 }

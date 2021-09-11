@@ -19,8 +19,8 @@ class CreatePostSerialTable extends Migration
             $table->unsignedBigInteger("serial_id") ;
             $table->string("title") ;
             $table->boolean("is_locked")->default(TRUE) ;
-            $table->tinyInteger("priority") ;
-            $table->longText("description") ;
+            $table->tinyInteger("priority")->nullable();
+            $table->longText("description")->nullable() ;
         });
     }
 

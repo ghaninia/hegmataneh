@@ -35,9 +35,9 @@ class PostIndex extends FormRequest
             "title" => [ "nullable" , "string" ] ,
             "content" => [ "nullable" , "string" ] ,
             "created_at" => ["nullable" , "array" , new FilterRangeRule ] ,
-            "created_at.*" => ["nullable" , "date_format:Y/m/d" ] ,
+            "created_at.*" => ["nullable" , "date" ] ,
             "published_at" => ["nullable" , "array" , new FilterRangeRule ] ,
-            "published_at.*" => ["nullable" , "date_format:Y/m/d" ] ,
+            "published_at.*" => ["nullable" , "date" ] ,
         ];
     }
 }

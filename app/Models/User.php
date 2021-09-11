@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->hasMany(Vote::class) ;
     }
 
+    public function serials()
+    {
+        return $this->hasMany(Vote::class) ;
+    }
+
     public function skills()
     {
         return $this->morphToMany(Skill::class, "skillable");

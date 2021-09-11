@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PostSerial extends Pivot
 {
+    use HasFactory ;
+
     protected $fillable = [
         "post_id",
         "serial_id",
@@ -14,6 +17,8 @@ class PostSerial extends Pivot
         "priority",
         "description"
     ];
+
+    public $timestamps = false ;
 
     protected $casts = [
         "is_locked" => "boolean"

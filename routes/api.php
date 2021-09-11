@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Skill\SkillController;
 use App\Http\Controllers\Api\Option\OptionController;
+use App\Http\Controllers\Api\Serial\SerialController;
 use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
 
@@ -88,6 +89,7 @@ Route::group([
             Route::delete("force", [PostController::class, "forceDelete"])->name("force");
             Route::post("restore", [PostController::class, "restore"])->name("restore");
         });
+        Route::apiResource("serial", SerialController::class);
     });
 
     #######

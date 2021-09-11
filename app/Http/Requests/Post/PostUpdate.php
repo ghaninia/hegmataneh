@@ -38,28 +38,27 @@ class PostUpdate extends FormRequest
      */
     public function rules()
     {
-        return [] ;
-        // $statsSchedule = EnumsPost::STATUS_SCHEDULE;
+        $statsSchedule = EnumsPost::STATUS_SCHEDULE;
 
-        // return [
-        //     "title" => ["required", "string"],
-        //     "slug" => [new SlugRule(Post::class, "title", $this->post)],
+        return [
+            "title" => ["required", "string"],
+            "slug" => [new SlugRule(Post::class, "title", $this->post)],
 
-        //     "status" => ["required", Rule::in(EnumsPost::status())],
-        //     "comment_status" => ["required", "boolean"],
-        //     "vote_status" => ["required", "boolean"],
-        //     "format" => ["required", Rule::in(EnumsPost::format())],
-        //     "content" => ["nullable", "string"],
-        //     "excerpt" => ["nullable", "string"],
-        //     "faq" => ["nullable", "string"],
-        //     "published_at" => ["nullable", "required_if:status,{$statsSchedule}", "date"],
-        //     "created_at" => ["nullable", "date"],
+            "status" => ["required", Rule::in(EnumsPost::status())],
+            "comment_status" => ["required", "boolean"],
+            "vote_status" => ["required", "boolean"],
+            "format" => ["required", Rule::in(EnumsPost::format())],
+            "content" => ["nullable", "string"],
+            "excerpt" => ["nullable", "string"],
+            "faq" => ["nullable", "string"],
+            "published_at" => ["nullable", "required_if:status,{$statsSchedule}", "date"],
+            "created_at" => ["nullable", "date"],
 
-        //     "tags" => ["nullable", "array"],
-        //     "tags.*" => ["required", "exists:terms,id"],
+            "tags" => ["nullable", "array"],
+            "tags.*" => ["required", "exists:terms,id"],
 
-        //     "categories" => ["nullable", "array"],
-        //     "categories.*" => ["required", "exists:terms,id"],
-        // ];
+            "categories" => ["nullable", "array"],
+            "categories.*" => ["required", "exists:terms,id"],
+        ];
     }
 }
