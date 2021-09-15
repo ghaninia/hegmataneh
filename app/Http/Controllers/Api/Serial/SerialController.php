@@ -10,6 +10,7 @@ use App\Services\Serial\SerialService;
 use App\Http\Requests\Serial\SerialIndex;
 use App\Http\Requests\Serial\SerialRequest;
 use App\Http\Resources\Serial\SerialResource;
+use App\Http\Resources\Serial\SerialCollection;
 
 class SerialController extends Controller
 {
@@ -40,7 +41,7 @@ class SerialController extends Controller
 
         $serials = $this->serialService->list($filters);
 
-        return SerialResource::collection(
+        return  new SerialCollection(
             $serials->load([
                 "posts",
                 "price"
@@ -112,6 +113,11 @@ class SerialController extends Controller
     public function destroy(User $user, Serial $serial)
     {
         $this->serialService->delete($serial) ;
+
+        return $this->success([
+            "msg" => trans("dashboard.success.serial.delete")
+        ]);
+
     }
 
 }

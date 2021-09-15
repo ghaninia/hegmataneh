@@ -27,16 +27,16 @@ class SerialIndex extends FormRequest
         return [
             "title" => ["nullable", "string"],
             "created_at" => ["nullable", "array", new FilterRangeRule],
-            "created_at.*" => ["required", "date_format:Y/m/d"],
+            "created_at.*" => ["required", "date"],
 
             "price" => ["nullable", "array", new FilterRangeRule],
-            "price.*" => ["required", "date_format:Y/m/d"],
+            "price.*" => ["required", "numeric"],
 
             "posts" => ["nullable", "array"],
             "posts.*" => ["required", "exists:posts"],
 
             "amazing_price" => ["nullable", "array", new FilterRangeRule],
-            "amazing_price.*" => ["required", "date_format:Y/m/d"],
+            "amazing_price.*" => ["required", "numeric"],
         ];
     }
 }
