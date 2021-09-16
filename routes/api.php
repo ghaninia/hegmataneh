@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Post\PostController;
 use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Skill\SkillController;
+use App\Http\Controllers\Api\Post\ProductController;
 use App\Http\Controllers\Api\Option\OptionController;
 use App\Http\Controllers\Api\Serial\SerialController;
 use App\Http\Controllers\Api\Term\CategoryController;
@@ -90,6 +91,7 @@ Route::group([
             Route::post("restore", [PostController::class, "restore"])->name("restore");
         });
         Route::apiResource("serial", SerialController::class);
+        Route::apiResource("product", ProductController::class);
     });
 
     #######

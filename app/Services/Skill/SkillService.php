@@ -3,7 +3,7 @@
 namespace App\Services\Skill;
 
 use App\Models\Skill;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Skill\SkillRepository;
 use App\Services\Skill\SkillServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -68,6 +68,16 @@ class SkillService implements SkillServiceInterface
      */
     public function delete(Skill $skill): bool
     {
-        return $this->skillRepo->delete($skill) ;
+        return $this->skillRepo->delete($skill);
+    }
+
+    /**
+     * مدیریت مهارتها
+     * @param Model $model
+     * @param array $skills
+     */
+    public function sync(Model $model, array $skills)
+    {
+        $model->skills()->sync($skills);
     }
 }

@@ -14,7 +14,6 @@ trait DatabaseRefreshOnlyOnce
         parent::setUpTraits();
         if (!self::$databaseRefreshTurnOn) {
             Artisan::call("migrate:fresh");
-            Artisan::call("passport:install");
             $this->seed(DatabaseSeeder::class);
             self::$databaseRefreshTurnOn = true;
         }

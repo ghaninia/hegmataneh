@@ -19,6 +19,13 @@ class CreateSkillablesTable extends Migration
             $table->unsignedBigInteger("skillable_id");
             $table->string("skillable_type");
             $table->index(["skill_id"]);
+
+            $table
+                ->foreign("skill_id")
+                ->references("id")
+                ->on("skills")
+                ->onDelete("CASCADE")
+                ->onUpdate("CASCADE");
         });
     }
 

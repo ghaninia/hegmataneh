@@ -10,7 +10,7 @@
             body , html {
                 margin : 0 ;
                 height: 100% ;
-                background : #0B0014
+                background : #0000009a
             }
             a , body {
                 font-family: Verdana ;

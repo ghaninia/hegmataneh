@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Price\PriceService;
 use App\Services\Serial\SerialService;
 use App\Http\Requests\Serial\SerialIndex;
-use App\Http\Requests\Serial\SerialRequest;
+use App\Http\Requests\Serial\SerialStore;
 use App\Http\Resources\Serial\SerialResource;
 use App\Http\Resources\Serial\SerialCollection;
 
@@ -55,7 +55,7 @@ class SerialController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, SerialRequest $request)
+    public function store(User $user, SerialStore $request)
     {
 
         $serial = $this->serialService->create($user,  $request->all());

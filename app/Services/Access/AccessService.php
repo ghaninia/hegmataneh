@@ -31,8 +31,9 @@ class AccessService implements AccessServiceInterface
      * permissions setter
      * @param $permissions
      */
-    public function setPermissions(...$permissions): self
+    public function setPermissions($permissions): self
     {
+        $permissions = is_string($permissions)  ? [$permissions] : $permissions ;
         $this->permissions = $permissions;
         return $this;
     }
@@ -52,13 +53,17 @@ class AccessService implements AccessServiceInterface
             )
             ->whereHas(
                 "permissions",
-                fn ($query) => $query
-                    ->whereIn("permissions.action", $this->permissions)
-                    ->orWhereIn("permissions.key", $this->permissions),
+                function ($query) {
+                    $query
+                        ->whereIn("permissions.action", $this->permissions)
+                        ->orWhereIn("permissions.key", $this->permissions);
+                },
                 $operator,
                 count($this->permissions)
             )
-            ->exists();
+            ->count();
+
+            dd($result , $operator) ;
 
         return empty($this->permissions) ? false : $result;
     }

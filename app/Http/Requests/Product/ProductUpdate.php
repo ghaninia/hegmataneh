@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Http\Requests\Product;
+
+use App\Rules\Term\TagRule;
+use App\Core\Enums\EnumsPost;
+use Illuminate\Validation\Rule;
+use App\Rules\Term\CategoryRule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProductUpdate extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $statsSchedule = EnumsPost::STATUS_SCHEDULE;
+
+        return [
+            "title" => ["required", "string"],
+            "slug" => ["nullable", "string"],
+            "content" => ["nullable", "text"],
+            "excerpt" => ["nullable", "text"],
+            "faq" => ["nullable", "text"],
+            "status" => ["nullable", Rule::in(EnumsPost::status())],
+            "comment_status" => ["nullable", "boolean"],
+            "vote_status" => ["nullable", "boolean"],
+            "created_at" => ["nullable", "date"],
+            "published_at" => ["nullable", "required_if:status,{$statsSchedule}", "date"],
+
+            "maximum_sell" => ["nullable", "numeric"],
+            "expire_day" => ["nullable", "numeric"],
+            "download_limit" => ["nullable", "numeric"],
+
+            "price" => ["nullable", "numeric"],
+            "amazing_price" => ["nullable", "numeric"],
+            "amazing_from_date" => ["nullable", "required_with:amazing_to_date", "date"],
+            "amazing_to_date" => ["nullable", "required_with:amazing_from_date", "date"],
+
+
+            "tags" => ["nullable", "array"],
+            "tags.*" => ["required", new TagRule],
+
+            "categories" => ["nullable", "array"],
+            "categories.*" => ["required", new CategoryRule],
+
+            "skills" => ["nullable", "array"],
+            "skills.*" => ["required", "exists:skills,id"]
+        ];
+    }
+}

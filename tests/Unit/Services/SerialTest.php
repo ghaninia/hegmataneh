@@ -3,13 +3,16 @@
 namespace Tests\Unit\Services;
 
 use Tests\TestCase;
+use App\Models\Post;
 use App\Models\Serial;
-use App\Models\PostSerial;
 use App\Services\Serial\SerialService;
 use Tests\Configuration\Classes\Generate;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class SerialTest extends TestCase
 {
+    use WithFaker;
+
     protected $serialService;
 
     protected function setUp(): void
@@ -34,18 +37,27 @@ class SerialTest extends TestCase
 
     public function test_append_episodes_to_serial()
     {
-        $episodes = PostSerial::factory()->count(5)->make();
+        $user = (new Generate)->user();
+        $serial = Serial::factory()->for($user)->create();
+        $posts  =  Post::factory()->for($user)->count(5)->create();
 
-        $serial = Serial::factory()->for(
-            (new Generate)->user()
-        )->create();
+        $datas = [];
+
+        $posts->map(function ($post) use (&$datas) {
+            $datas[$post->id] = [
+                "title" => $this->faker->title(),
+                "is_locked" => $this->faker->boolean(),
+                "priority" => $this->faker->numerify("#"),
+                "description" => $this->faker->realText()
+            ];
+        });
 
         $this->serialService
-            ->episodes($serial, $episodesCount = $episodes->toArray());
+            ->episodes($serial, $datas);
 
         $this->assertEquals(
             $serial->episodes->count(),
-            count($episodesCount)
+            count($datas)
         );
 
         return $serial;

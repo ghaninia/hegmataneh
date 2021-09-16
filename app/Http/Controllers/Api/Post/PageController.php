@@ -115,6 +115,7 @@ class PageController extends Controller
         $this->pageService->delete(
             $page
         );
+        
         return $this->success([
             "msg" => trans("dashboard.success.page.delete")
         ]);

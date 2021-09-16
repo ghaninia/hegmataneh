@@ -5,7 +5,7 @@ namespace App\Http\Requests\Serial;
 use App\Rules\EpisodesRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SerialRequest extends FormRequest
+class SerialStore extends FormRequest
 {
 
     public $user;
