@@ -20,6 +20,12 @@ class CreateFileablesTable extends Migration
             $table->string("fileables_type");
             $table->string("usage")->nullable();
             $table->timestamps();
+
+            $table->foreign("file_id")
+                ->references("id")
+                ->on("files")
+                ->onDelete("CASCADE")
+                ->onUpdate("CASCADE");
         });
     }
 

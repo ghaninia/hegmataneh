@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Artisan::call("passport:install") ;
         $this->call([
             PermissionSeeder::class,
             UserSeeder::class,
             OptionSeeder::class,
             TermSeeder::class
         ]);
+        Artisan::call("passport:install") ;
     }
 }
