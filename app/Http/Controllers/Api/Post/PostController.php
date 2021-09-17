@@ -172,7 +172,7 @@ class PostController extends Controller
      * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function force(User $user, Post $post)
+    public function forceDelete(User $user, Post $post)
     {
         $this->postService->forceDelete($post);
         return $this->success([

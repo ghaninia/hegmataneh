@@ -68,6 +68,9 @@ class RouteServiceProvider extends ServiceProvider
             Route::bind($name, function ($value) use ($detail) {
                 $class = $detail["class"];
                 $relationMethod = $detail["relationMethod"] ?? null;
+
+                $hasTrashed = method_exists(new $class, "trashed") ;
+
                 return
                     $class::query()
                     ->when(
@@ -78,6 +81,9 @@ class RouteServiceProvider extends ServiceProvider
                         $query
                             ->where("slug", $value)
                             ->orWhere("id", $value);
+                    })
+                    ->when($hasTrashed , function($query){
+                        $query->withTrashed() ;
                     })
                     ->firstOrFail();
             });

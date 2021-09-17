@@ -12,7 +12,9 @@ use App\Services\Product\Information\ProductInformationService;
 
 class ProductService implements ProductServiceInterface
 {
-    protected $postRepo, $productInformationService;
+    protected
+        $postRepo,
+        $productInformationService;
 
     public function __construct(
         PostRepository $postRepo,
@@ -92,12 +94,10 @@ class ProductService implements ProductServiceInterface
     /**
      * حذف اجباری محصولات
      * @param Post $product
-     * @return boolean
+     * @return void
      */
-    public function forceDelete(Post $product): bool
+    public function forceDelete(Post $product) : void
     {
-        $product->price()->delete();
-        $product->productInformation()->delete();
-        return $this->postRepo->forceDelete($product);
+        $this->postRepo->forceDelete($product);
     }
 }

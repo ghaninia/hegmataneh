@@ -32,11 +32,12 @@ class ProductStore extends FormRequest
         $statsSchedule = EnumsPost::STATUS_SCHEDULE;
 
         return [
+
             "title" => ["required", "string"],
             "slug" => [new SlugRule(Post::class, "title")],
-            "content" => ["nullable", "text"],
-            "excerpt" => ["nullable", "text"],
-            "faq" => ["nullable", "text"],
+            "content" => ["nullable", "string"],
+            "excerpt" => ["nullable", "string"],
+            "faq" => ["nullable", "string"],
             "status" => ["required", Rule::in(EnumsPost::status())],
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
@@ -61,6 +62,7 @@ class ProductStore extends FormRequest
 
             "skills" => ["nullable", "array"],
             "skills.*" => ["required", "exists:skills,id"]
+            
         ];
     }
 }

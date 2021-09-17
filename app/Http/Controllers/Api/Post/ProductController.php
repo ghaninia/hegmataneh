@@ -69,7 +69,8 @@ class ProductController extends Controller
                 "maximum_sell",
                 "expire_day",
                 "download_limit",
-            ])
+            ]),
+            $product
         );
 
         ### after create post , create price for it
@@ -147,8 +148,11 @@ class ProductController extends Controller
      */
     public function store(User $user,  ProductStore $request)
     {
+
         $product = $this->product($user, $request);
+
         return $this->success([
+            "msg" => trans("dashboard.success.product.create"),
             "data" => new ProductResource($product->load([
                 "price", "productInformation", "categories", "tags", "skills"
             ]))
@@ -164,11 +168,9 @@ class ProductController extends Controller
      */
     public function show(User $user, Post $product)
     {
-        return $this->success([
-            "data" => new ProductResource($product->load([
-                "price", "productInformation", "categories", "tags", "skills"
-            ]))
-        ]);
+        return new ProductResource($product->load([
+            "price", "productInformation", "categories", "tags", "skills"
+        ]));
     }
 
     /**
@@ -181,9 +183,10 @@ class ProductController extends Controller
     public function update(User $user, Post $product, ProductUpdate $request)
     {
 
-        $product = $this->product($user, $request , $product);
+        $product = $this->product($user, $request, $product);
 
         return $this->success([
+            "msg" => trans("dashboard.success.product.update"),
             "data" => new ProductResource($product->load([
                 "price", "productInformation", "categories", "tags", "skills"
             ]))
@@ -227,7 +230,7 @@ class ProductController extends Controller
      * @param Post $product
      * @return \Illuminate\Http\Response
      */
-    public function force(User $user, Post $product)
+    public function forceDelete(User $user, Post $product)
     {
         $this->productService->forceDelete($product);
 

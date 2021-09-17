@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Models\Post;
+use App\Rules\SlugRule;
 use App\Rules\Term\TagRule;
 use App\Core\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
@@ -10,6 +12,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductUpdate extends FormRequest
 {
+
+    protected $product;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -18,6 +23,11 @@ class ProductUpdate extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function prepareForValidation()
+    {
+        $this->product = $this->route("product");
     }
 
     /**
@@ -30,14 +40,16 @@ class ProductUpdate extends FormRequest
         $statsSchedule = EnumsPost::STATUS_SCHEDULE;
 
         return [
+
             "title" => ["required", "string"],
-            "slug" => ["nullable", "string"],
-            "content" => ["nullable", "text"],
-            "excerpt" => ["nullable", "text"],
-            "faq" => ["nullable", "text"],
-            "status" => ["nullable", Rule::in(EnumsPost::status())],
-            "comment_status" => ["nullable", "boolean"],
-            "vote_status" => ["nullable", "boolean"],
+            "slug" => [new SlugRule(Post::class, "title", $this->product)],
+
+            "content" => ["nullable", "string"],
+            "excerpt" => ["nullable", "string"],
+            "faq" => ["nullable", "string"],
+            "status" => ["required", Rule::in(EnumsPost::status())],
+            "comment_status" => ["required", "boolean"],
+            "vote_status" => ["required", "boolean"],
             "created_at" => ["nullable", "date"],
             "published_at" => ["nullable", "required_if:status,{$statsSchedule}", "date"],
 
@@ -50,7 +62,6 @@ class ProductUpdate extends FormRequest
             "amazing_from_date" => ["nullable", "required_with:amazing_to_date", "date"],
             "amazing_to_date" => ["nullable", "required_with:amazing_from_date", "date"],
 
-
             "tags" => ["nullable", "array"],
             "tags.*" => ["required", new TagRule],
 
@@ -59,6 +70,7 @@ class ProductUpdate extends FormRequest
 
             "skills" => ["nullable", "array"],
             "skills.*" => ["required", "exists:skills,id"]
+
         ];
     }
 }

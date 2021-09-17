@@ -92,6 +92,13 @@ Route::group([
         });
         Route::apiResource("serial", SerialController::class);
         Route::apiResource("product", ProductController::class);
+        Route::group([
+            "prefix" => "product/{product}",
+            "as" => "product."
+        ], function () {
+            Route::delete("force", [ProductController::class, "forceDelete"])->name("force");
+            Route::post("restore", [ProductController::class, "restore"])->name("restore");
+        });
     });
 
     #######
@@ -118,7 +125,6 @@ Route::group([
         Route::get("/", [OptionController::class, "index"])->name("index");
         Route::patch("/", [OptionController::class, "update"])->name("update");
     });
-
 
     #########
     #########

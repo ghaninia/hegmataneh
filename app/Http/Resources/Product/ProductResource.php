@@ -2,9 +2,12 @@
 
 namespace App\Http\Resources\Product;
 
+use App\Http\Resources\Tag\TagCollection;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\Price\PriceResource;
+use App\Http\Resources\Skill\SkillCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Product\Information\ProductInformationResource;
 
 class ProductResource extends JsonResource
@@ -25,7 +28,6 @@ class ProductResource extends JsonResource
             "vote_status" => $this->vote_status,
             "development" => $this->development,
             "title" => $this->title,
-            "goal_post" => $this->goal_post,
             "slug" => $this->slug,
             "content" => $this->content,
             "excerpt" => $this->excerpt,
@@ -38,7 +40,11 @@ class ProductResource extends JsonResource
 
             "user"  => new UserResource($this->whenLoaded("user")),
             "price" => new PriceResource($this->whenLoaded("price")),
-            "information" => new ProductInformationResource($this->whenLoaded("productInformation"))
+            "information" => new ProductInformationResource($this->whenLoaded("productInformation")),
+
+            "tags" => new TagCollection($this->whenLoaded("tags")),
+            "categories" => new CategoryCollection($this->whenLoaded("categories")),
+            "skills" => new SkillCollection($this->whenLoaded("skills")),
         ];
     }
 }

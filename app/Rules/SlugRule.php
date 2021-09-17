@@ -43,10 +43,11 @@ class SlugRule implements Rule
 
             return !$this->modelClass::query()
                 ->where("slug", $slug)
-                ->when($this->routeParameter, function ($qury) {
+                ->when( !! $this->routeParameter , function ($qury) {
                     $qury->where("id", "<>", $this->routeParameter->id);
                 })
                 ->exists();
+
         } catch (Exception $e) {
             return false;
         }

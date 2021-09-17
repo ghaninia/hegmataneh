@@ -25,5 +25,4 @@ trait ExteraQueriesTrait
     {
         return $this->model->forceDelete($post);
     }
-
 }

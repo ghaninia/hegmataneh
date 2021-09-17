@@ -109,10 +109,10 @@ class PostService implements PostServiceInterface
     /**
      * حذف اجباری پست
      * @param Post $post
-     * @return boolean
+     * @return void
      */
-    public function forceDelete(Post $post): bool
+    public function forceDelete(Post $post): void
     {
-        return $this->postRepo->forceDelete($post);
+        $this->postRepo->forceDelete($post);
     }
 }

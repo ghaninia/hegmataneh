@@ -38,6 +38,8 @@ class Post extends Model
     ];
 
     protected $casts = [
+        "vote_status" => "boolean" ,
+        "comment_status" => "boolean" ,
         "deleted_at" => "datetime" ,
         "published_at" => "datetime" ,
     ];
