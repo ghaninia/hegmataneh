@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Core\Enums\EnumsLanguage;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateLanguagesTable extends Migration
 {
@@ -17,9 +18,10 @@ class CreateLanguagesTable extends Migration
             $table->id();
             $table->string("code", 191)->unique();
             $table->string("name");
+            $table->string("direction")->default(EnumsLanguage::DIRECTION_RTL);
 
             $table->index([
-                "name" , "code"
+                "name", "code"
             ]);
         });
     }

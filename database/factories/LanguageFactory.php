@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Language;
+use Illuminate\Support\Arr;
+use App\Core\Enums\EnumsLanguage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LanguageFactory extends Factory
@@ -22,8 +24,9 @@ class LanguageFactory extends Factory
     public function definition()
     {
         return [
-            "code" => $this->faker->unique()->languageCode() ,
-            "name" => $this->faker->name()
+            "code" => $code = $this->faker->unique()->languageCode(),
+            "name" => $code,
+            "direction" => Arr::random(EnumsLanguage::direction())
         ];
     }
 }

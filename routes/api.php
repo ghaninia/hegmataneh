@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Post\ProductController;
 use App\Http\Controllers\Api\Option\OptionController;
 use App\Http\Controllers\Api\Serial\SerialController;
 use App\Http\Controllers\Api\Term\CategoryController;
+use App\Http\Controllers\Language\LanguageController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
 
 /*
@@ -58,6 +59,14 @@ Route::group([
     ##############
     ##############
     Route::apiResource("role", RoleController::class);
+
+    ##############
+    ##############
+    ##############
+    ### language route
+    ##############
+    ##############
+    Route::apiResource("language", LanguageController::class);
 
     ##############
     ##############

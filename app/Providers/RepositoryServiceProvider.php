@@ -41,6 +41,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Product\Information\ProductInformationRepositoryInterface::class, \App\Repositories\Product\Information\ProductInformationRepository::class);
         $this->app->bind(\App\Repositories\Translation\TranslationRepositoryInterface::class, \App\Repositories\Translation\TranslationRepository::class);
         $this->app->bind(\App\Repositories\Currency\CurrencyRepositoryInterface::class, \App\Repositories\Currency\CurrencyRepository::class);
+        $this->app->bind(\App\Repositories\Language\LanguageRepositoryInterface::class, \App\Repositories\Language\LanguageRepository::class);
         //:end-bindings:
     }
 }

@@ -32,6 +32,15 @@ abstract class Enum
     }
 
     /*
+    ** تمام تایپ های که با direction شروع میشود
+    ** @return array
+    */
+    public static function direction(): array
+    {
+        return self::reflaction("DIRECTION_");
+    }
+
+    /*
     ** تمام ثابت های داخل کلاس
     ** @return array
     */

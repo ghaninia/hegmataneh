@@ -174,6 +174,7 @@ return [
         "currencies.*.amazing_from_date" => "تاریخ شروع شگفت انگیز" ,
         "currencies.*.amazing_to_date" => "تاریخ پایان شگفت انگیز" ,
 
+        "code" => "کد" ,
         "name" => "نام" ,
     ],
 

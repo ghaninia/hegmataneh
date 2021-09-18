@@ -11,6 +11,7 @@ use App\Models\Skill;
 use App\Models\Option;
 use App\Models\Serial;
 use App\Models\Comment;
+use App\Models\Language;
 use App\Models\Portfolio;
 use App\Core\Classes\FilterBuilder;
 
@@ -36,6 +37,7 @@ trait HasFilterTrait
             Term::class => "App\\Contracts\\Filters\\TermFilters",
             Option::class => "App\\Contracts\\Filters\\OptionFilters",
             Serial::class => "App\\Contracts\\Filters\\SerialFilters",
+            Language::class => "App\\Contracts\\Filters\\LanguageFilters",
         ][__CLASS__] ?? null;
     }
 }
