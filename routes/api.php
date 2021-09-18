@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Serial\SerialController;
 use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Language\LanguageController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
+use App\Http\Controllers\Currency\CurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,14 @@ Route::group([
     ##############
     ##############
     Route::apiResource("language", LanguageController::class);
+
+    ##############
+    ##############
+    ##############
+    ### currency route
+    ##############
+    ##############
+    Route::apiResource("currency", CurrencyController::class);
 
     ##############
     ##############

@@ -17,7 +17,7 @@ class CurrencyResource extends JsonResource
         return [
             "id" => $this->id ,
             "code" => $this->code ,
-            "title" => $this->title
+            "name" => $this->name
         ];
     }
 }
