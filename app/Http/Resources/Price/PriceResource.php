@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Price;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Currency\CurrencyResource;
 
 class PriceResource extends JsonResource
 {
@@ -16,6 +17,7 @@ class PriceResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "currency" => new CurrencyResource($this->currency),
             "price" => $this->price,
             "amazing_status" => $this->amazing_status,
             "amazing_price" => $this->amazing_price,

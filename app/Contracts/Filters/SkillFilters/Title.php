@@ -5,10 +5,10 @@ namespace App\Contracts\Filters\SkillFilters;
 use App\Core\Abstracts\QueryFilter;
 use App\Core\Interfaces\FilterInterface;
 
-class TitleFa extends QueryFilter implements FilterInterface
+class Title extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {
-        $this->query->where("title_fa" , "like" , "%{$value}%");
+        $this->query->where("title" , "like" , "%{$value}%");
     }
 }

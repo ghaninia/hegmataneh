@@ -15,23 +15,10 @@ class CreateTranslationsTable extends Migration
     public function up()
     {
         Schema::create('translations', function (Blueprint $table) {
-
             $table->id();
-
-            $table->unsignedBigInteger("language_id");
-
             $table->morphs("translationable");
-
             $table->string("field");
-
-            $table->text("translate")->nullable();
-
-            $table
-                ->foreign("language_id")
-                ->references("id")
-                ->on("lagunages")
-                ->onDelete("CASCADE")
-                ->onUpdate("CASCADE");
+            $table->timestamps();
         });
     }
 

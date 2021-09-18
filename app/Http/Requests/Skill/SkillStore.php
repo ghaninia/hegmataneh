@@ -24,8 +24,7 @@ class SkillStore extends FormRequest
     public function rules()
     {
         return [
-            "title_fa" => ["required", "string"],
-            "title_en" => ["nullable", "string"],
+            "title" => ["required", "string"],
             "icon" => ["nullable", "string"]
         ];
     }

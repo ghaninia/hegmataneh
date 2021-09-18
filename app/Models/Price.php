@@ -11,13 +11,10 @@ class Price extends Model
     use HasFactory, HasFilterTrait;
 
     protected $fillable = [
-
-        "country_id" ,
-
+        "currency_id",
         "price",
         "priceable_id",
         "priceable_type",
-
         "amazing_status",
         "amazing_price",
         "amazing_from_date",
@@ -31,5 +28,10 @@ class Price extends Model
     public function priceable()
     {
         return $this->morphTo("priceable");
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 }

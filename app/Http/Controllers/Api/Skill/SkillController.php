@@ -30,8 +30,7 @@ class SkillController extends Controller
 
         $skills = $this->skillService->list(
             $request->only([
-                "title_fa",
-                "title_en",
+                "title"
             ])
         );
 
@@ -48,8 +47,7 @@ class SkillController extends Controller
     {
         $skill =
             $this->skillService->create($request->only([
-                "title_fa",
-                "title_en",
+                "title",
                 "icon",
             ]));
 
@@ -77,14 +75,13 @@ class SkillController extends Controller
      * @param  Skill $skill
      * @return \Illuminate\Http\Response
      */
-    public function update(SkillUpdate $request, Skill $skill)
+    public function update(Skill $skill , SkillUpdate $request)
     {
         $skill =
             $this->skillService->update(
                 $skill ,
                 $request->only([
-                    "title_fa",
-                    "title_en",
+                    "title",
                     "icon",
                 ])
             );

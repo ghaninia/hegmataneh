@@ -24,8 +24,7 @@ class SkillIndex extends FormRequest
     public function rules()
     {
         return [
-            "title_fa" => ["nullable" , "string"] ,
-            "title_en" => ["nullable" , "string"] ,
+            "title" => ["nullable" , "string"] ,
         ];
     }
 }

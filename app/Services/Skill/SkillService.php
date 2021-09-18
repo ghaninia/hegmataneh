@@ -39,8 +39,7 @@ class SkillService implements SkillServiceInterface
     {
         return
             $this->skillRepo->create([
-                "title_fa" => $data["title_fa"],
-                "title_en" => $data["title_en"] ?? null,
+                "title" => $data["title"],
                 "icon" => $data["icon"] ?? null
             ]);
     }
@@ -55,8 +54,7 @@ class SkillService implements SkillServiceInterface
     {
         return
             $this->skillRepo->updateById($skill->id, [
-                "title_fa" => $data["title_fa"],
-                "title_en" => $data["title_en"] ?? null,
+                "title" => $data["title"],
                 "icon" => $data["icon"] ?? null
             ]);
     }

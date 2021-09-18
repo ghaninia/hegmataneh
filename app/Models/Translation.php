@@ -10,17 +10,10 @@ class Translation extends Model
     use HasFactory;
 
     protected $fillable = [
-        "language_id",
         "translationable_id",
         "translationable_type",
-        "field",
-        "translate"
+        "field"
     ];
-
-    public function language()
-    {
-        return $this->belongsTo(Language::class);
-    }
 
     public function translationable()
     {

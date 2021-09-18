@@ -12,8 +12,7 @@ class Skill extends Model
     use HasFilterTrait , HasFactory ;
 
     protected $fillable = [
-        'title_fa' ,
-        'title_en' ,
+        'title' ,
         'icon'
     ] ;
 

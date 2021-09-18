@@ -15,6 +15,15 @@ class CreatePricesTable extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
+
+            $table
+                ->foreignId("currency_id")
+                ->index()
+                ->references("id")
+                ->on("currencies")
+                ->onDelete("CASCADE")
+                ->onUpdate("CASCADE");
+
             $table->morphs("priceable");
             $table->float("price", 20, 2)->nullable()->default(0);
 
