@@ -11,6 +11,9 @@ class Price extends Model
     use HasFactory, HasFilterTrait;
 
     protected $fillable = [
+
+        "country_id" ,
+
         "price",
         "priceable_id",
         "priceable_type",
