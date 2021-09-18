@@ -11,8 +11,8 @@ class Price extends Model
     use HasFactory, HasFilterTrait;
 
     protected $fillable = [
-        "currency_id",
         "price",
+        "currency_id",
         "priceable_id",
         "priceable_type",
         "amazing_status",

@@ -76,13 +76,7 @@ class ProductController extends Controller
         ### after create post , create price for it
         $this->priceService->create(
             $product,
-            $request->only([
-                "price",
-                "amazing_status",
-                "amazing_price",
-                "amazing_from_date",
-                "amazing_to_date"
-            ])
+            $request->input("currencies")
         );
 
         ### append tag
@@ -154,7 +148,7 @@ class ProductController extends Controller
         return $this->success([
             "msg" => trans("dashboard.success.product.create"),
             "data" => new ProductResource($product->load([
-                "price", "productInformation", "categories", "tags", "skills"
+                "prices", "productInformation", "categories", "tags", "skills"
             ]))
         ]);
     }
@@ -169,7 +163,7 @@ class ProductController extends Controller
     public function show(User $user, Post $product)
     {
         return new ProductResource($product->load([
-            "price", "productInformation", "categories", "tags", "skills"
+            "prices", "productInformation", "categories", "tags", "skills"
         ]));
     }
 
@@ -188,7 +182,7 @@ class ProductController extends Controller
         return $this->success([
             "msg" => trans("dashboard.success.product.update"),
             "data" => new ProductResource($product->load([
-                "price", "productInformation", "categories", "tags", "skills"
+                "prices", "productInformation", "categories", "tags", "skills"
             ]))
         ]);
     }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Price\PriceService;
 use App\Services\Serial\SerialService;
 use App\Http\Requests\Serial\SerialIndex;
-use App\Http\Requests\Serial\SerialStore;
+use App\Http\Requests\Serial\SerialRequest;
 use App\Http\Resources\Serial\SerialResource;
 use App\Http\Resources\Serial\SerialCollection;
 
@@ -55,17 +55,17 @@ class SerialController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, SerialStore $request)
+    public function store(User $user, SerialRequest $request)
     {
 
         $serial = $this->serialService->create($user,  $request->all());
         $this->serialService->episodes($serial, $request->input("episodes", []));
-        $this->priceService->create($serial,  $request->all());
+        $this->priceService->create($serial,  $request->input("currencies"));
 
         return $this->success([
             "msg" => trans("dashboard.success.serial.create"),
             "data" => new SerialResource(
-                $serial->load(["price", "episodes.post"])
+                $serial->load(["prices", "episodes.post"])
             )
         ]);
     }
@@ -80,7 +80,7 @@ class SerialController extends Controller
     public function show(User $user, Serial $serial)
     {
         return new SerialResource(
-            $serial->load(["price", "episodes.post"])
+            $serial->load(["prices", "episodes.post"])
         );
     }
 
@@ -96,12 +96,12 @@ class SerialController extends Controller
 
         $serial = $this->serialService->update($user, $serial, $request->all());
         $this->serialService->episodes($serial, $request->input("episodes", []));
-        $this->priceService->create($serial,  $request->all());
+        $this->priceService->create($serial,  $request->input("currencies"));
 
         return $this->success([
             "msg" => trans("dashboard.success.serial.update"),
             "data" => new SerialResource(
-                $serial->load(["price", "episodes.post"])
+                $serial->load(["prices", "episodes.post"])
             )
         ]);
     }
@@ -112,12 +112,10 @@ class SerialController extends Controller
      */
     public function destroy(User $user, Serial $serial)
     {
-        $this->serialService->delete($serial) ;
+        $this->serialService->delete($serial);
 
         return $this->success([
             "msg" => trans("dashboard.success.serial.delete")
         ]);
-
     }
-
 }

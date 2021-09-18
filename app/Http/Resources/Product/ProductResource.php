@@ -39,7 +39,7 @@ class ProductResource extends JsonResource
             "deleted_at" => $this->deleted_at,
 
             "user"  => new UserResource($this->whenLoaded("user")),
-            "price" => new PriceResource($this->whenLoaded("price")),
+            "prices" => PriceResource::collection($this->whenLoaded("prices")),
             "information" => new ProductInformationResource($this->whenLoaded("productInformation")),
 
             "tags" => new TagCollection($this->whenLoaded("tags")),

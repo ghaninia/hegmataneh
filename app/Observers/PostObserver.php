@@ -32,6 +32,7 @@ class PostObserver
         $post->votes()->detach();
         $post->comments()->delete();
         $post->orders()->delete();
+        $post->prices()->delete();
         $post->productInformation()->delete();
     }
 }

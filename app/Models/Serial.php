@@ -33,9 +33,9 @@ class Serial extends Model
             ]);
     }
 
-    public function price()
+    public function prices()
     {
-        return $this->morphOne(Price::class, "priceable");
+        return $this->morphMany(Price::class, "priceable");
     }
 
     public function user()

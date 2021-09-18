@@ -4,6 +4,7 @@ namespace App\Http\Requests\Product;
 
 use App\Models\Post;
 use App\Rules\SlugRule;
+use App\Rules\CurrencyRule;
 use App\Rules\Term\TagRule;
 use App\Core\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
@@ -48,11 +49,11 @@ class ProductStore extends FormRequest
             "expire_day" => ["nullable", "numeric"],
             "download_limit" => ["nullable", "numeric"],
 
-            "price" => ["nullable", "numeric"],
-            "amazing_price" => ["nullable", "numeric"],
-            "amazing_from_date" => ["nullable", "required_with:amazing_to_date", "date"],
-            "amazing_to_date" => ["nullable", "required_with:amazing_from_date", "date"],
-
+            "currencies" => ["nullable", "array", new CurrencyRule],
+            "currencies.*.price" => ["required", "numeric"],
+            "currencies.*.amazing_price" => ["nullable", "numeric"],
+            "currencies.*.amazing_from_date" => ["nullable", "required_with:amazing_to_date", "date"],
+            "currencies.*.amazing_to_date" => ["nullable", "required_with:amazing_from_date", "date"],
 
             "tags" => ["nullable", "array"],
             "tags.*" => ["required", new TagRule],
@@ -62,7 +63,7 @@ class ProductStore extends FormRequest
 
             "skills" => ["nullable", "array"],
             "skills.*" => ["required", "exists:skills,id"]
-            
+
         ];
     }
 }

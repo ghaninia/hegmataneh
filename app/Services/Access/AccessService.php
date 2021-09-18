@@ -63,8 +63,6 @@ class AccessService implements AccessServiceInterface
             )
             ->count();
 
-            dd($result , $operator) ;
-
         return empty($this->permissions) ? false : $result;
     }
 

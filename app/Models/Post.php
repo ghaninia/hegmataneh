@@ -53,11 +53,10 @@ class Post extends Model
         return $this->hasOne(ProductInformation::class);
     }
 
-    public function price()
+    public function prices()
     {
-        return $this->morphOne(Price::class , "priceable") ;
+        return $this->morphMany(Price::class, "priceable");
     }
-
 
     public function episodes()
     {

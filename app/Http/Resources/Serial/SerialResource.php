@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources\Serial;
 
-use App\Http\Resources\Episode\EpisodeResource;
-use App\Http\Resources\Post\PostResource;
 use App\Http\Resources\Price\PriceResource;
+use App\Http\Resources\Episode\EpisodeResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SerialResource extends JsonResource
@@ -24,7 +23,7 @@ class SerialResource extends JsonResource
             "episodes" => EpisodeResource::collection(
                 $this->whenLoaded("episodes")
             ),
-            "price" => new PriceResource($this->whenLoaded("price")),
+            "price" => PriceResource::collection($this->whenLoaded("prices")),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at
         ];

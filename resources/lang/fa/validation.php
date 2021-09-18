@@ -168,6 +168,13 @@ return [
         "episodes.*.is_locked" => "قفل اپیزود" ,
         "episodes.*.priority" => "اولویت اپیزود" ,
 
+
+        "currencies.*.price" => "قیمت" ,
+        "currencies.*.amazing_price" => "قیمت شگفت انگیز" ,
+        "currencies.*.amazing_from_date" => "تاریخ شروع شگفت انگیز" ,
+        "currencies.*.amazing_to_date" => "تاریخ پایان شگفت انگیز" ,
+
+        "name" => "نام" ,
     ],
 
 ];

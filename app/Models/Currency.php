@@ -14,7 +14,7 @@ class Currency extends Model
         "code"
     ];
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     public function prices()
     {

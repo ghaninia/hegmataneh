@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\Serial;
 
+use App\Rules\CurrencyRule;
 use App\Rules\EpisodesRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SerialStore extends FormRequest
+class SerialRequest extends FormRequest
 {
 
     public $user;
@@ -36,16 +37,17 @@ class SerialStore extends FormRequest
             "title" => ["required",  "string"],
             "description" => ["nullable", "string"],
 
-            "price" => ["nullable", "numeric"],
-            "amazing_price" => ["nullable", "numeric"],
-            "amazing_from_date" => ["nullable", "required_with:amazing_to_date", "date"],
-            "amazing_to_date" => ["nullable", "required_with:amazing_from_date", "date"],
-
             "episodes" => ["nullable", "array", "bail", new EpisodesRule($this->user)],
             "episodes.*.title" => ["required", "string"],
-            "episodes.*.description" => ["required", "string"],
+            "episodes.*.description" => ["nullable", "string"],
             "episodes.*.is_locked" => ["nullable", "boolean"],
             "episodes.*.priority" => ["nullable", "numeric"],
+
+            "currencies" => ["nullable", "array", new CurrencyRule],
+            "currencies.*.price" => ["required", "numeric"],
+            "currencies.*.amazing_price" => ["nullable", "numeric"],
+            "currencies.*.amazing_from_date" => ["nullable", "required_with:amazing_to_date", "date"],
+            "currencies.*.amazing_to_date" => ["nullable", "required_with:amazing_from_date", "date"],
         ];
     }
 }

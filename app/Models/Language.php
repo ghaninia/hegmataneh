@@ -15,7 +15,7 @@ class Language extends Model
         "direction"
     ];
 
-    protected $timestamps = false ;
+    public $timestamps = false;
 
     public function translations()
     {
