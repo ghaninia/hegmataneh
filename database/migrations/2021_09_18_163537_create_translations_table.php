@@ -6,7 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateTranslationsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -16,9 +15,18 @@ class CreateTranslationsTable extends Migration
     {
         Schema::create('translations', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId("language_id")
+                ->references("id")
+                ->on("languages")
+                ->onDelete("CASCADE")
+                ->onUpdate("CASCADE");
+
             $table->morphs("translationable");
+
             $table->string("field");
-            $table->timestamps();
+
+            $table->text("trans")->nullable();
         });
     }
 

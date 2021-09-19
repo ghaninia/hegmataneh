@@ -10,13 +10,20 @@ class Translation extends Model
     use HasFactory;
 
     protected $fillable = [
+        "language_id",
         "translationable_id",
         "translationable_type",
-        "field"
+        "field" ,
+        "trans"
     ];
 
     public function translationable()
     {
         return $this->morphTo();
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
     }
 }

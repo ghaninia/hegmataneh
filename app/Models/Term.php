@@ -20,9 +20,19 @@ class Term extends Model
         "description",
     ];
 
+    protected $translate = [
+        "name",
+        "description",
+    ];
+
     ###################
     #### RELATIONS ####
     ###################
+
+    public function translations()
+    {
+        return $this->morphMany(Translation::class, "translationable");
+    }
 
     public function posts()
     {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Category;
 
+use App\Http\Resources\Translation\TranslationCollection;
+use App\Http\Resources\Translation\TranslationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
@@ -23,6 +25,9 @@ class CategoryResource extends JsonResource
             "created_at" => $this->created_at,
             "parent" => new CategoryResource($this->whenLoaded("parent")),
             "childrens" => new CategoryCollection($this->whenLoaded("childrens")),
+            // "translations" => TranslationResource::collection( $this->translations )->collection->groupBy([
+            //     "language.code" , "field"
+            // ])
         ];
     }
 }

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Language extends Model
 {
-    use HasFactory , HasFilterTrait;
+    use HasFactory, HasFilterTrait;
 
     protected $fillable = [
         "name",
-        "code" ,
+        "code",
         "direction"
     ];
 
@@ -21,5 +21,10 @@ class Language extends Model
     public function translations()
     {
         return $this->hasMany(Translation::class);
+    }
+
+    public function translators()
+    {
+        return $this->hasMany(Translator::class);
     }
 }
