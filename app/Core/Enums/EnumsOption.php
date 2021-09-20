@@ -107,4 +107,8 @@ class EnumsOption extends Enum
     const LOGO  = "logo";
     ### فاوآیکون
     const FAVICON  = "favicon";
+    ### زبان دیفالت سیستم
+    const SYSTEM_DEFAULT_LANGUAGE = "system.default.language" ;
+    ### واحد پولی دیفالت
+    const SYSTEM_DEFAULT_CURRENCY = "system.default.currency" ;
 }

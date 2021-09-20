@@ -128,10 +128,11 @@ class UserController extends Controller
     {
         $user = $this->userService->update($user, $request->all());
 
-        return $this->success([
-            "msg"  => trans("dashboard.success.user.update"),
-            "data" => new UserResource($user)
-        ]);
+        return
+            $this->success([
+                "msg"  => trans("dashboard.success.user.update"),
+                "data" => new UserResource($user)
+            ]);
     }
 
     /**

@@ -30,6 +30,8 @@ class UserUpdate extends FormRequest
         $user = $this->route("user");
         return [
             "role_id" => ["required", "exists:roles,id"],
+            "language_id" => ["nullable", "exists:languages,id"],
+            "currency_id" => ["nullable", "exists:currencies,id"],
             "name" => ["nullable", "string", "max:255"],
             "email" => ["required", "email", Rule::unique("users")->ignore($user->id)],
             "mobile" => ["nullable", new MobileRule, Rule::unique("users")->ignore($user->id)],

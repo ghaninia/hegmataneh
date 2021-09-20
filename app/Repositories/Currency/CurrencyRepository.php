@@ -10,6 +10,7 @@ use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInterface
 {
     use ExteraQueriesTrait ;
+
     /**
      * Specify Model class name
      *

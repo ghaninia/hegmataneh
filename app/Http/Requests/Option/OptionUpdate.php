@@ -31,7 +31,6 @@ class OptionUpdate extends FormRequest
      */
     public function rules()
     {
-
         return [
             EnumsOption::TITLE => ["nullable", "string"],
             ### توضیحات داشبورد
@@ -133,6 +132,10 @@ class OptionUpdate extends FormRequest
             EnumsOption::LOGO  => ["nullable", "string"],
             ### فاوآیکون
             EnumsOption::FAVICON  => ["nullable", "string"],
+            ### زبان دیفالت سیستم
+            EnumsOption::SYSTEM_DEFAULT_LANGUAGE => ["nullable" , "exists:languages,id"] ,
+            ### واحد پولی دیفالت
+            EnumsOption::SYSTEM_DEFAULT_CURRENCY => ["nullable" , "exists:currencies,id"] ,
         ];
     }
 }

@@ -78,7 +78,9 @@ class RouteServiceProvider extends ServiceProvider
                     $class::query()
                     ->when(
                         !! $relationMethod,
-                        fn ($query) => $query->{$relationMethod}()
+                        function($query) use ($relationMethod){
+                            $query->{$relationMethod}();
+                        }
                     )
                     ->where(function ($query) use ($value) {
                         $query

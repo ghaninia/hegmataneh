@@ -2,6 +2,7 @@
 
 namespace App\Services\Basket;
 
+use App\Models\Currency;
 use App\Models\User;
 use App\Models\Basketable;
 use Illuminate\Http\Request;
@@ -50,9 +51,9 @@ class BasketService implements BasketServiceInterface
     }
 
     /**
-     * moved guest basket to user
      * @param Request $request
      * @param User $user
+     * @return $this
      */
     public function moveBasketItemGuestToUserWhenLoggin(Request  $request , User $user)
     {
@@ -86,15 +87,13 @@ class BasketService implements BasketServiceInterface
             $localBasket->delete() ;
         }
 
-
-        return $this->basket->refresh() ;
+        return $this;
     }
-
 
     /**
      * @param BasktableInterface $model
      * @param $unit
-     * @return mixed
+     * @return $this
      */
     public function appendItem(BasktableInterface $model , $unit )
     {
@@ -106,14 +105,13 @@ class BasketService implements BasketServiceInterface
             "unit" => DB::raw("unit + $unit")
         ]);
 
-        return $this->basket->refresh() ;
+        return $this;
     }
-
 
     /**
      * @param Basketable $basketable
      * @param $unit
-     * @return mixed
+     * @return $this
      */
     public function updateItem(Basketable $basketable , $unit )
     {
@@ -127,12 +125,12 @@ class BasketService implements BasketServiceInterface
         if ($unit === 0)
             $this->delete($basketable) ;
 
-        return $this->basket->refresh() ;
+        return $this;
     }
 
     /**
      * @param Basketable $basketable
-     * @return mixed
+     * @return $this
      */
     public function DeleteItem(Basketable $basketable )
     {
@@ -140,16 +138,20 @@ class BasketService implements BasketServiceInterface
             ->basketables()
             ->where("id" , $basketable->id )
             ->delete();
-        return $this->basket->refresh() ;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function list()
+    public function get()
     {
         return
-            $this->basket->refresh() ;
+            $this->basket->load([
+                "serials.prices",
+                "products.prices" ,
+            ]);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Core\Enums\EnumsOption;
 use App\Models\Permission;
 use App\Models\Portfolio;
 use App\Models\Post;

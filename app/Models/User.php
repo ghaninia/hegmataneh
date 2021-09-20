@@ -23,7 +23,9 @@ class User extends Authenticatable
         'password',
         "remember_token",
         "bio" ,
-        "verified_at"
+        "verified_at" ,
+        "currency_id" ,
+        "langauge_id"
     ];
 
     protected $hidden = [
@@ -92,6 +94,16 @@ class User extends Authenticatable
     public  function basket()
     {
         return $this->hasOne(Basket::class)->withDefault();
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
 }

@@ -7,6 +7,9 @@ use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsSort;
 use App\Core\Enums\EnumsAnchor;
 use App\Core\Enums\EnumsOption;
+use App\Repositories\Currency\CurrencyRepository;
+use App\Repositories\Language\LanguageRepository;
+use App\Services\Language\LanguageService;
 use Illuminate\Database\Seeder;
 use App\Core\Enums\EnumsAuthunticate;
 
@@ -19,6 +22,17 @@ class OptionSeeder extends Seeder
      */
     public function run()
     {
+
+        $languageDefault = app(LanguageRepository::class)->create([
+            "name" => "فارسی" ,
+            "code" => "ir"
+        ]);
+        
+        $currencyDefault = app(CurrencyRepository::class)->create([
+            "name" => "ریال" ,
+            "code" => "rial"
+        ]);
+
         array_map(function ($record) {
             Option::create([
                 "key" => $record["key"],
@@ -259,6 +273,16 @@ class OptionSeeder extends Seeder
                 ### فاوآیکون
                 'key' => EnumsOption::FAVICON,
                 'default' => NULL
+            ],
+            [
+                ### زبان دیفالت سیستم
+                'key' => EnumsOption::SYSTEM_DEFAULT_LANGUAGE,
+                'default' => $languageDefault->id
+            ],
+            [
+                ### واحد پولی دیفالت
+                'key' => EnumsOption::SYSTEM_DEFAULT_CURRENCY,
+                'default' => $currencyDefault->id
             ],
         ]);
     }

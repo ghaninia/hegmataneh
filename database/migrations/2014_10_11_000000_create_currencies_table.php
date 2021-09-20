@@ -17,7 +17,6 @@ class CreateCurrenciesTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("code", 191)->unique();
-
             $table->index([
                 "name", "code"
             ]);

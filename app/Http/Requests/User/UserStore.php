@@ -28,6 +28,8 @@ class UserStore extends FormRequest
     {
         return [
             "role_id" => ["required", "exists:roles,id"],
+            "language_id" => ["nullable", "exists:languages,id"],
+            "currency_id" => ["nullable", "exists:currencies,id"],
             "name" => ["nullable", "string", "max:255"],
             "email" => ["required", "email", "unique:users"],
             "mobile" => ["nullable", new MobileRule, "unique:users"],

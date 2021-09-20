@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Option extends Model
 {
     use HasFactory , HasFilterTrait ;
+
     public $fillable = [
         "key",
         "default",

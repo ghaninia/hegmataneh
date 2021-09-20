@@ -15,6 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id() ;
+
+            $table->unsignedBigInteger("currency_id")->nullable() ;
+            $table->unsignedBigInteger("language_id")->nullable() ;
+
             $table->string("name")->nullable();
             $table->unsignedBigInteger("role_id") ;
             $table->boolean("status")->default(false) ;
@@ -29,10 +33,25 @@ class CreateUsersTable extends Migration
             $table->softDeletes() ;
 
             $table->index([
+                "language_id",
+                "currency_id",
                 "username" ,
                 "mobile" ,
                 "email" ,
             ]);
+
+            $table->foreign("currency_id")
+                ->references("id")
+                ->on("currencies")
+                ->onDelete("SET NULL")
+                ->onUpdate("SET NULL");
+
+            $table->foreign("language_id")
+                ->references("id")
+                ->on("languages")
+                ->onDelete("SET NULL")
+                ->onUpdate("SET NULL");
+
         });
     }
 

@@ -23,7 +23,7 @@ class SerialResource extends JsonResource
             "episodes" => EpisodeResource::collection(
                 $this->whenLoaded("episodes")
             ),
-            "price" => PriceResource::collection($this->whenLoaded("prices")),
+            "prices" => PriceResource::collection($this->whenLoaded("prices")),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at
         ];

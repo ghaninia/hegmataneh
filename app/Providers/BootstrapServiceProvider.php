@@ -49,6 +49,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Currency\CurrencyServiceInterface::class, \App\Services\Currency\CurrencyService::class);
         $this->app->bind(\App\Services\Language\LanguageServiceInterface::class, \App\Services\Language\LanguageService::class);
         $this->app->bind(\App\Services\Basket\BasketServiceInterface::class, \App\Services\Basket\BasketService::class);
+        $this->app->bind(\App\Services\Guest\GuestServiceInterface::class, \App\Services\Guest\GuestService::class);
         //:end-bindings:
     }
 }

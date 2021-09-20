@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionSeeder::class,
             UserSeeder::class,
+            TermSeeder::class,
             OptionSeeder::class,
-            TermSeeder::class
         ]);
         Artisan::call("passport:install") ;
     }

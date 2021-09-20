@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api\Basket;
 
-use App\Core\Interfaces\BasktableInterface;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Basket\BasketStore;
 use App\Http\Resources\Basket\BasketResource;
+use App\Core\Interfaces\BasktableInterface;
+use App\Http\Requests\Basket\BasketStore;
 use App\Services\Authunticate\AuthService;
 use App\Services\Basket\BasketService;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class BasketController extends Controller
 {
@@ -28,10 +27,9 @@ class BasketController extends Controller
         $basket =
             $this->basketService
                 ->basket($request , $user)
-                ->appendItem($model , $unit );
+                ->appendItem($model , $unit )
+                ->get();
 
-        return $basket->load("basketables");
-
-//        return new BasketResource() ;
+        return new BasketResource($basket) ;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Core\Enums\EnumsOption;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Core\Enums\EnumsUser;
@@ -27,17 +28,20 @@ class UserService implements UserServiceInterface
      */
     public function create(array $data): User
     {
-        return $this->userRepo->create([
-            'name' => $data["name"] ?? null,
-            'status' => (bool) $data["status"],
-            'role_id' => $data["role_id"],
-            'email' => $data["email"],
-            'mobile' => $data["mobile"] ?? null,
-            "username" => $data["username"] ?? null,
-            'password' => bcrypt($data["password"]),
-            "remember_token"  => $this->rememberTokenGenerate(),
-            "bio" => $data["bio"] ?? null
-        ]);
+        return
+            $this->userRepo->create([
+                'name' => $data["name"] ?? null,
+                'status' => (bool) $data["status"],
+                'email' => $data["email"],
+                'mobile' => $data["mobile"] ?? null,
+                "username" => $data["username"] ?? null,
+                'password' => bcrypt($data["password"]),
+                "remember_token"  => $this->rememberTokenGenerate(),
+                "bio" => $data["bio"] ?? null,
+                'role_id' => $data["role_id"],
+                "currency_id" =>  $data["currency_id"] ?? null ,
+                "langauge_id" =>  $data["langauge_id"] ?? null ,
+            ]);
     }
 
     /**
@@ -51,12 +55,14 @@ class UserService implements UserServiceInterface
         $updateFields = [
             'name' => $data["name"] ?? null,
             'status' => (bool) $data["status"],
-            'role_id' => $data["role_id"],
             'email' => $data["email"],
             'mobile' => $data["mobile"] ?? null,
             "username" => $data["username"] ?? null,
             "remember_token"  => $this->rememberTokenGenerate(),
-            "bio" => $data["bio"] ?? null
+            "bio" => $data["bio"] ?? null ,
+            'role_id' => $data["role_id"],
+            "currency_id" =>  $data["currency_id"] ?? null ,
+            "langauge_id" =>  $data["langauge_id"] ?? null ,
         ];
 
         if (isset($data["password"]))
