@@ -16,13 +16,19 @@ trait ExteraQueriesTrait
         return $this->model->updateOrCreate($condition, $data);
     }
 
-    public function restore(Model $post)
+    public function restore(Model $model)
     {
-        return $this->model->restore($post);
+        return $this->model->restore($model);
     }
 
-    public function forceDelete(Model $post)
+    public function forceDelete(Model $model)
     {
-        return $this->model->forceDelete($post);
+        return $this->model->forceDelete($model);
     }
+
+    public function firstOrCreate(... $parameters )
+    {
+        return $this->model->firstOrCreate(...$parameters) ;
+    }
+
 }

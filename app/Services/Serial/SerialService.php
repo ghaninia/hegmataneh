@@ -87,7 +87,7 @@ class SerialService implements SerialServiceInterface
      */
     public function delete(Serial $serial): bool
     {
-        $serial->price()->delete();
+        $serial->prices()->delete();
         $serial->posts()->detach();
         return $serial->delete();
     }

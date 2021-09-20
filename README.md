@@ -1,3 +1,10 @@
+
+<div  align="center">
+
+![](public/hegmataneh.jpg)
+
+</div>
+
 <div dir="rtl" align="right">
 
 <h1 align="center">HEGMATANEH</h1>
@@ -34,6 +41,7 @@
 - ❌مدیریت فهرست ها
 - ❌مدیریت اسلایدر
 - ❌مدیریت تماسها
+- ✅مدیریت سبدخرید
 
 <br />
 

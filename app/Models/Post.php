@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsTerm;
+use App\Core\Interfaces\BasktableInterface;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Post extends Model
+class Post extends Model implements BasktableInterface
 {
     use SoftDeletes, HasFactory, HasFilterTrait;
 
@@ -120,6 +121,11 @@ class Post extends Model
     {
         return $this->morphToMany(Term::class, 'termables')
             ->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
+    }
+
+    public function baskets()
+    {
+        return $this->morphToMany(Basket::class , "basketable" , "basketables") ;
     }
 
     ###############

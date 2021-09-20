@@ -89,4 +89,9 @@ class User extends Authenticatable
         return $this->morphToMany(Skill::class, "skillable");
     }
 
+    public  function basket()
+    {
+        return $this->hasOne(Basket::class)->withDefault();
+    }
+
 }

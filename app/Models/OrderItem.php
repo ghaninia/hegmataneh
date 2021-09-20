@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class OrderItem extends Model
+class OrderItem extends Pivot
 {
     use HasFactory;
 
@@ -17,7 +17,6 @@ class OrderItem extends Model
         "price",
         "expire_at"
     ];
-
 
     protected $guarded = [
         "token",

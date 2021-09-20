@@ -17,6 +17,7 @@ class CreateSerialsTable extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id") ;
             $table->string("title")->nullable();
+            $table->string("slug")->unique();
             $table->longText("description")->nullable();
             $table->timestamps();
         });

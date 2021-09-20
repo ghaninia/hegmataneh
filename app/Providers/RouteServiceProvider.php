@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Post;
+use App\Models\Serial;
 use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         $this->configureRateLimiting();
 
         /**
@@ -44,6 +46,9 @@ class RouteServiceProvider extends ServiceProvider
          * به این منظور ما باید کلاس و نوع scopeRelationMethod را به سیستم دهیم
          */
         foreach ([
+            "serial" => [
+                "class" => Serial::class,
+            ],
             "tag" => [
                 "class" => Term::class,
                 "relationMethod" => "tags"
@@ -68,13 +73,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::bind($name, function ($value) use ($detail) {
                 $class = $detail["class"];
                 $relationMethod = $detail["relationMethod"] ?? null;
-
                 $hasTrashed = method_exists(new $class, "trashed") ;
-
                 return
                     $class::query()
                     ->when(
-                        !!$relationMethod,
+                        !! $relationMethod,
                         fn ($query) => $query->{$relationMethod}()
                     )
                     ->where(function ($query) use ($value) {

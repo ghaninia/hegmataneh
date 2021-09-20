@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Resources\Category\CategoryCollection;
-use App\Http\Resources\Translation\TranslationCollection;
-use App\Models\Term;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\Translation\TranslationCollection;
 
 Route::group([
     "as" => "guest.",
@@ -12,9 +10,21 @@ Route::group([
 });
 
 
-Route::get("test" , function(){
+Route::get("test" , function(\Illuminate\Http\Request  $request){
 
-    $terms = Term::with("translations")->get() ;
+    $product = \App\Models\Post::products()->first() ;
 
-    return new CategoryCollection($terms) ;
+    $user =  \App\Models\User::first() ;
+
+    $basket = app(\App\Services\Basket\BasketService::class)
+        ->basket($request , $user)
+        ->appendItem($product , 10 );
+
+//    $basketable =  $user->basket->basketables()->first() ;
+//
+//    $basket = app(\App\Services\Basket\BasketService::class)
+//        ->basket($request , $user)
+//        ->deleteItem($basketable);
+
+    return $basket->load("basketables") ;
 });

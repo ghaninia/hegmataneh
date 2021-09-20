@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\Term\CategoryController;
 use App\Http\Controllers\Language\LanguageController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
 use App\Http\Controllers\Currency\CurrencyController;
-
+use App\Http\Controllers\Api\Basket\BasketController ;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -162,5 +162,23 @@ Route::group([
         Route::get("/", [FileController::class, "index"])->name("index");
         Route::post("/", [FileController::class, "store"])->name("store");
         Route::delete("/", [FileController::class, "destroy"])->name("destroy");
+    });
+});
+
+
+Route::name("guest.")->group(function(){
+    Route::group([
+        "as" => "basket." ,
+        "prefix" => "basket"
+    ], function(){
+
+        Route::group([
+            "prefix" => "append" ,
+            "as" => "append."
+        ] , function(){
+            Route::get("product/{product}" , [BasketController::class , "append"]  )->name("product") ;
+            Route::get("serial/{serial}" , [BasketController::class , "append"]  )->name("serial") ;
+        });
+
     });
 });
