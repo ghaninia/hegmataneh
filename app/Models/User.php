@@ -22,10 +22,10 @@ class User extends Authenticatable
         "username",
         'password',
         "remember_token",
-        "bio" ,
-        "verified_at" ,
-        "currency_id" ,
-        "langauge_id"
+        "bio",
+        "verified_at",
+        "currency_id",
+        "language_id"
     ];
 
     protected $hidden = [
@@ -33,7 +33,7 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        "deleted_at" ,
+        "deleted_at",
         "verified_at"
     ];
 
@@ -73,17 +73,17 @@ class User extends Authenticatable
 
     public function views()
     {
-        return $this->hasMany(View::class) ;
+        return $this->hasMany(View::class);
     }
 
     public function votes()
     {
-        return $this->hasMany(Vote::class) ;
+        return $this->hasMany(Vote::class);
     }
 
     public function serials()
     {
-        return $this->hasMany(Vote::class) ;
+        return $this->hasMany(Vote::class);
     }
 
     public function skills()
@@ -105,5 +105,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Currency::class);
     }
-
 }

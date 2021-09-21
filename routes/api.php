@@ -12,9 +12,9 @@ use App\Http\Controllers\Api\Post\ProductController;
 use App\Http\Controllers\Api\Option\OptionController;
 use App\Http\Controllers\Api\Serial\SerialController;
 use App\Http\Controllers\Api\Term\CategoryController;
-use App\Http\Controllers\Language\LanguageController;
+use App\Http\Controllers\Api\Language\LanguageController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
-use App\Http\Controllers\Currency\CurrencyController;
+use App\Http\Controllers\Api\Currency\CurrencyController;
 use App\Http\Controllers\Api\Basket\BasketController ;
 /*
 |--------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 namespace App\Services\User;
 
-use App\Core\Enums\EnumsOption;
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Core\Enums\EnumsUser;
@@ -10,7 +10,6 @@ use App\Repositories\User\UserRepository;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Notifications\ConfirmAccountNotification;
-use Carbon\Carbon;
 
 class UserService implements UserServiceInterface
 {
@@ -40,7 +39,7 @@ class UserService implements UserServiceInterface
                 "bio" => $data["bio"] ?? null,
                 'role_id' => $data["role_id"],
                 "currency_id" =>  $data["currency_id"] ?? null ,
-                "langauge_id" =>  $data["langauge_id"] ?? null ,
+                "language_id" =>  $data["language_id"] ?? null ,
             ]);
     }
 
@@ -62,7 +61,7 @@ class UserService implements UserServiceInterface
             "bio" => $data["bio"] ?? null ,
             'role_id' => $data["role_id"],
             "currency_id" =>  $data["currency_id"] ?? null ,
-            "langauge_id" =>  $data["langauge_id"] ?? null ,
+            "language_id" =>  $data["language_id"] ?? null ,
         ];
 
         if (isset($data["password"]))
