@@ -77,8 +77,7 @@ class OptionService implements OptionServiceInterface
         $data = collect(self::$instances)->where("key", $key)->first();
 
         return (!!$data["value"] ? unserialize($data["value"]) : null) ??
-            $default ??
-            $data["default"];
+            $default ?? $data["default"];
     }
 
     /**

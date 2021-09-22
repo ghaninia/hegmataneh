@@ -2,7 +2,10 @@
 
 namespace App\Core\Interfaces;
 
-interface TranslationableInterface
+/**
+ * @property public translationable
+ */
+interface TranslationableInterface 
 {
     public function translations() ;
 }

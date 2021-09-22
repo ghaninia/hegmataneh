@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Resources\Translation;
+namespace App\Http\Resources\Slug;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TranslationResource extends JsonResource
+class SlugResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
         return [
-            "field" => $this->field ,
-            "trans" => $this->trans ,
+            "slug" => $this->slug 
         ];
     }
 }

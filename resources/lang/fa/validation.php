@@ -144,10 +144,7 @@ return [
         "vote_status" => "وضعیت امتیازدهی" ,
         "format" => "فرمت" ,
         "development" => "توسعه پذیری" ,
-        "title" => "تیتر" ,
-        "slug" => "لینک یکتا" ,
-        "faq" => "دستورالعمل" ,
-        "excerpt" => "خلاصه مطلب" ,
+
         "theme" => "پوسته" ,
         "published_at" => "زمان انتشار" ,
         "created_at" => "زمان ساخت" ,
@@ -177,6 +174,12 @@ return [
         "code" => "کد" ,
         "name" => "نام" ,
         "unit" => "تعداد" ,
+        "languages" => "زبان" ,
+        "languages.*.title" => "تیتر" ,
+        "languages.*.faq" => "دستورالعمل" ,
+        "languages.*.excerpt" => "خلاصه مطلب" ,
+        "languages.*.content" => "داستان" ,
+
     ],
 
 ];

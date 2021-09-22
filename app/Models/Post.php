@@ -4,15 +4,25 @@ namespace App\Models;
 
 use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsTerm;
-use App\Core\Interfaces\BasktableInterface;
+use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\SlugableInterface;
+use App\Core\Interfaces\BasktableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Post extends Model implements BasktableInterface
+class Post extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface
 {
-    use SoftDeletes, HasFactory, HasFilterTrait;
+
+    use
+        SoftDeletes,
+        HasFactory,
+        HasFilterTrait,
+        HasTranslationTrait,
+        HasSlugTrait;
 
     protected $fillable = [
         "type",
@@ -22,12 +32,6 @@ class Post extends Model implements BasktableInterface
         "vote_status",
         "format",
         "development",
-        "title",
-        "goal_post",
-        "slug",
-        "content",
-        "excerpt",
-        "faq",
         "theme",
         "published_at",
         "deleted_at"
@@ -39,10 +43,25 @@ class Post extends Model implements BasktableInterface
     ];
 
     protected $casts = [
-        "vote_status" => "boolean" ,
-        "comment_status" => "boolean" ,
-        "deleted_at" => "datetime" ,
-        "published_at" => "datetime" ,
+        "vote_status" => "boolean",
+        "comment_status" => "boolean",
+        "deleted_at" => "datetime",
+        "published_at" => "datetime",
+    ];
+
+    public $with = [
+        "translations",
+        "slugs",
+    ];
+
+    public string $slugable = "title";
+
+    public array $translationable = [
+        "title",
+        "goal_post",
+        "content",
+        "excerpt",
+        "faq",
     ];
 
     ###################
@@ -125,7 +144,7 @@ class Post extends Model implements BasktableInterface
 
     public function baskets()
     {
-        return $this->morphToMany(Basket::class , "basketable" , "basketables") ;
+        return $this->morphToMany(Basket::class, "basketable", "basketables");
     }
 
     ###############

@@ -2,10 +2,8 @@
 
 namespace App\Services\Translation;
 
-use App\Models\Language;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Interfaces\TranslationableInterface;
 use App\Repositories\Translation\TranslationRepository;
-use App\Services\Translation\TranslationServiceInterface;
 
 class TranslationService implements TranslationServiceInterface
 {
@@ -17,27 +15,44 @@ class TranslationService implements TranslationServiceInterface
     }
 
     /**
-     * ساخت یک فایل ترجمه جدید
-     * @param Language $language
-     * @param Model $translationable
-     * @param string $field
-     * @param string|null $translate
-     * @return TranslationRepository
+     * @param TranslationableInterface $model
+     * @param array $translations
+     * @return void
      */
-    public function create(
-        Language $language,
-        Model $translationable,
-        string $field,
-        ?string $translate = null
-    ) {
-        return
-            $this->translationRepo->updateOrCreate([
-                "translationable_id" => $translationable->id,
-                "translationable_type" => $translationable->getMorphClass(),
-                "language_id" => $language->id,
-                "field" => $field
-            ], [
-                "translate" => $translate
-            ]);
+    public function sync(TranslationableInterface $model, array $translations): void
+    {
+
+        ### when empty translations delete entity for it 
+        ### when not empty , used array keys translations and delete different 
+        $model->translations()->when(
+            $isEmpty = empty($translations),
+            function ($query) {
+                $query->delete();
+            },
+            function ($query) use ($translations) {
+                $query->whereNotIn("id", array_keys($translations))->delete();
+            }
+        );
+
+        if ($isEmpty) return;
+
+        array_walk($translations, function ($trans, $language) use ($model) {
+
+            $fields = $model->translationable;
+
+            foreach ($fields as $field) {
+
+                if (array_key_exists($field, $trans)) {
+                    $this->translationRepo->updateOrCreate([
+                        "language_id" => $language,
+                        "field" => $field,
+                        "translationable_id" => $model->id,
+                        "translationable_type" => $model->getMorphClass()
+                    ], [
+                        "trans" => $trans[$field] ?? null
+                    ]);
+                }
+            }
+        });
     }
 }

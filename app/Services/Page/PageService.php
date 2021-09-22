@@ -6,15 +6,25 @@ use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Core\Enums\EnumsPost;
+use App\Services\Slug\SlugService;
 use App\Repositories\Post\PostRepository;
-use App\Services\Page\PageServiceInterface;
+use App\Services\Translation\TranslationService;
 
 class PageService implements PageServiceInterface
 {
-    protected $postRepo;
-    public function __construct(PostRepository $postRepo)
-    {
+    protected
+        $postRepo,
+        $translationService,
+        $slugService;
+
+    public function __construct(
+        PostRepository $postRepo,
+        TranslationService $translationService,
+        SlugService $slugService
+    ) {
         $this->postRepo = $postRepo;
+        $this->slugService = $slugService;
+        $this->translationService = $translationService;
     }
 
     /**
@@ -28,6 +38,7 @@ class PageService implements PageServiceInterface
             $this->postRepo->query()
             ->where("type", EnumsPost::TYPE_PAGE)
             ->filterBy($filters)
+            ->with(["translations", "slugs"])
             ->paginate();
     }
 
@@ -38,11 +49,11 @@ class PageService implements PageServiceInterface
      * @param Post $post | null
      * @return Post
      */
-    public function updateOrCreate(User $user, array $data, ?Post $post = null): Post
+    public function updateOrCreate(User $user, array $data, ?Post $page = null): Post
     {
-        return
-            $this->postRepo->updateOrCreate([
-                "id" => $post->id ?? null
+        $page = $this->postRepo
+            ->updateOrCreate([
+                "id" => $page->id ?? null
             ], [
                 "type" => EnumsPost::TYPE_PAGE,
                 "status" => $data["status"],
@@ -51,16 +62,16 @@ class PageService implements PageServiceInterface
                 "vote_status" => $data["vote_status"] ?? false,
                 "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
                 "development" => $data["development"] ?? 0,
-                "title" => $data["title"],
-                "goal_post" => $data["goal_post"] ?? NULL,
-                "slug" => slug($data["slug"] ?? NULL, $data["title"]),
-                "content" => $data["content"] ?? NULL,
-                "faq" => $data["faq"] ?? NULL,
-                "excerpt" => $data["excerpt"] ?? NULL,
                 "theme" => $data["theme"] ?? NULL,
                 "published_at" => $data["published_at"] ?? NULL,
-                "created_at" => $post->created_at ?? $data["created_at"] ?? Carbon::now()
+                "created_at" => $page->created_at ?? $data["created_at"] ?? Carbon::now()
             ]);
+
+        $this->translationService->sync($page, $translations = $data["translations"]);
+
+        $this->slugService->sync($page, $translations);
+
+        return $page->load(["translations", "slugs"]);
     }
 
     /**

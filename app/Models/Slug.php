@@ -5,23 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Translation extends Model
+class Slug extends Model
 {
+
     use HasFactory;
 
     protected $fillable = [
+        "slugable_id",
+        "slugable_type",
         "language_id",
-        "translationable_id",
-        "translationable_type",
-        "field" ,
-        "trans"
+        "slug"
     ];
 
-    public $timestamps = false ;
+    public $timestamps = false;
 
-    protected $with = ["language"] ;
+    public $with = ["language"];
 
-    public function translationable()
+    public function slugable()
     {
         return $this->morphTo();
     }

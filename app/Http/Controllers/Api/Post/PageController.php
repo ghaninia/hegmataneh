@@ -15,7 +15,9 @@ use App\Http\Resources\Page\PageCollection;
 
 class PageController extends Controller
 {
+
     protected $pageService, $tagService;
+
     public function __construct(PageService $pageService, TagService $tagService)
     {
         $this->pageService = $pageService;
@@ -34,14 +36,18 @@ class PageController extends Controller
             ["user" => $user->id],
             $request->all()
         );
+
         $pages =
             $this->pageService
             ->list($filters)
             ->loadCount([
                 "views",
                 "comments",
-                "votes"
+                "votes",
+                "translations",
+                "slugs"
             ]);
+
         return new PageCollection($pages);
     }
 
@@ -54,12 +60,10 @@ class PageController extends Controller
      */
     public function store(User $user, PageStore $request)
     {
-
         $page = $this->pageService->updateOrCreate(
             $user,
             $request->all()
         );
-
         return $this->success([
             "data" => new PageResource($page),
             "msg" => trans("dashboard.success.page.create")
@@ -100,7 +104,7 @@ class PageController extends Controller
 
         return $this->success([
             "msg" => trans("dashboard.success.page.update"),
-            "data" => $page
+            "data" => new PageResource($page),
         ]);
     }
 
@@ -112,10 +116,11 @@ class PageController extends Controller
      */
     public function destroy(User $user, Post $page)
     {
+
         $this->pageService->delete(
             $page
         );
-        
+
         return $this->success([
             "msg" => trans("dashboard.success.page.delete")
         ]);

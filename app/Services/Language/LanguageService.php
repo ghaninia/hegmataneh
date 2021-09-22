@@ -2,11 +2,13 @@
 
 namespace App\Services\Language;
 
+use App\Core\Interfaces\LanguageableInterface;
 use App\Models\Language;
 use App\Core\Enums\EnumsLanguage;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Repositories\Language\LanguageRepository;
 use App\Services\Language\LanguageServiceInterface;
+use Illuminate\Database\Eloquent\Model;
 
 class LanguageService implements LanguageServiceInterface
 {
@@ -70,5 +72,6 @@ class LanguageService implements LanguageServiceInterface
     {
         return $this->languageRepo->delete($language);
     }
+
 
 }

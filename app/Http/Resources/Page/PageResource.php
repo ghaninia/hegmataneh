@@ -3,7 +3,10 @@
 namespace App\Http\Resources\Page;
 
 use App\Http\Resources\User\UserResource;
+use App\Http\Resources\Slug\SlugCollection;
+use App\Http\Resources\Slug\SlugResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Translation\TranslationCollection;
 
 class PageResource extends JsonResource
 {
@@ -16,6 +19,7 @@ class PageResource extends JsonResource
     public function toArray($request)
     {
         return [
+
             "id" => $this->id,
             "type" => $this->type,
             "status"  => $this->status,
@@ -24,12 +28,6 @@ class PageResource extends JsonResource
             "format" => $this->format,
             "theme" => $this->theme,
             "development" => $this->development,
-            "title" => $this->title,
-            "goal_post" => $this->goal_post,
-            "slug" => $this->slug,
-            "content" => $this->content,
-            "excerpt" => $this->excerpt,
-            "faq" => $this->faq,
             "theme" => $this->theme,
             "created_at" => $this->created_at,
             "user"  => new UserResource($this->whenLoaded("user")),
@@ -38,6 +36,8 @@ class PageResource extends JsonResource
             "votes_count" => $this->when(isset($this->votes_count), $this->votes_count),
             "comments_count" => $this->when(isset($this->comments_count), $this->comments_count),
 
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
+            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
         ];
     }
 }

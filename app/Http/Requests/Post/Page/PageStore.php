@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Post\Page;
 
-use App\Models\Post;
-use App\Rules\SlugRule;
+use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\TranslationableRule;
 use App\Core\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
 
 class PageStore extends FormRequest
 {
@@ -29,19 +28,20 @@ class PageStore extends FormRequest
     {
         $statsSchedule = EnumsPost::STATUS_SCHEDULE;
         return [
-            "title" => ["required", "string"],
-            "slug" => [new SlugRule(Post::class, "title")],
             "status" => ["required", Rule::in(EnumsPost::status())],
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
             "format" => ["required", Rule::in(EnumsPost::format())],
             "development" => ["nullable", "numeric"],
-            "content" => ["nullable", "string"],
-            "excerpt" => ["nullable", "string"],
-            "faq" => ["nullable", "string"],
             "theme" => ["nullable", "string"],
             "published_at" => [ "nullable" , "required_if:status,{$statsSchedule}", "date"],
             "created_at" => ["nullable", "date"],
+
+            "translations" => [ "required" , "array" , new TranslationableRule($this)] ,
+            "translations.*.title" => ["required" , "string"] ,
+            "translations.*.content" => ["nullable" , "string"] ,
+            "translations.*.excerpt" => ["nullable" , "string"] ,
+            "translations.*.faq" => ["nullable" , "string"] ,
         ];
     }
 }

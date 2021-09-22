@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Post;
 
 use App\Models\Post;
+use App\Rules\LanguageableRule;
 use App\Rules\SlugRule;
 use App\Core\Enums\EnumsPost;
 use App\Rules\Term\CategoryRule;
@@ -32,16 +33,15 @@ class PostStore extends FormRequest
         $statsSchedule = EnumsPost::STATUS_SCHEDULE;
 
         return [
-            "title" => ["required", "string"],
-            "slug" => [new SlugRule(Post::class, "title")],
+//            "title" => ["required", "string"],
 
             "status" => ["required", Rule::in(EnumsPost::status())],
             "comment_status" => ["required", "boolean"],
             "vote_status" => ["required", "boolean"],
             "format" => ["required", Rule::in(EnumsPost::format())],
-            "content" => ["nullable", "string"],
-            "excerpt" => ["nullable", "string"],
-            "faq" => ["nullable", "string"],
+//            "content" => ["nullable", "string"],
+//            "excerpt" => ["nullable", "string"],
+//            "faq" => ["nullable", "string"],
             "published_at" => [ "nullable" , "required_if:status,{$statsSchedule}", "date"],
             "created_at" => ["nullable", "date"],
 
@@ -50,6 +50,12 @@ class PostStore extends FormRequest
 
             "categories" => ["nullable", "array"],
             "categories.*" => ["required", new CategoryRule],
+
+            "languages" => [ "required" , "array" , new LanguageableRule($this) , "bail"] ,
+            "languages.*.title" => ["required" , "string"] ,
+            "languages.*.content" => ["nullable" , "string"] ,
+            "languages.*.excerpt" => ["nullable" , "string"] ,
+            "languages.*.faq" => ["nullable" , "string"] ,
         ];
     }
 }

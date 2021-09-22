@@ -17,13 +17,12 @@ function options(?string $key = null, $default = null)
 
 /**
  * ساخت اسلاگ
- * @param ?string  $text = null
- * @param ?string $alternateText = null
+ * @param $text
  * @return string
  */
-function slug(?string $text = null, ?string $alternateText = null): string
+function slug(string $text): string
 {
-    return !!$text ? Slugify::create($text) : Slugify::create($alternateText);
+    return sprintf("%s_%s", Slugify::create($text), time());
 }
 
 /**
@@ -40,7 +39,7 @@ function getEntireRoutesAction(): array
                 is_string($method) &&
                 str_starts_with($method, "App\Http\Controllers")
             )
-            $routes[] = $method;
+                $routes[] = $method;
         });
     return $routes;
 }
@@ -52,5 +51,5 @@ function getEntireRoutesAction(): array
 function logo()
 {
     ### ازدیتابیس باید خوانده شود
-    return "" ;
+    return "";
 }
