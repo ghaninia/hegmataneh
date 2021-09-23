@@ -22,37 +22,25 @@ class TranslationService implements TranslationServiceInterface
     public function sync(TranslationableInterface $model, array $translations): void
     {
 
+        $fields = (array) $model->translationable;
+
         ### when empty translations delete entity for it 
         ### when not empty , used array keys translations and delete different 
-        $model->translations()->when(
-            $isEmpty = empty($translations),
-            function ($query) {
-                $query->delete();
-            },
-            function ($query) use ($translations) {
-                $query->whereNotIn("id", array_keys($translations))->delete();
-            }
-        );
+        $model->translations()->delete();
+        $instances = [];
 
-        if ($isEmpty) return;
-
-        array_walk($translations, function ($trans, $language) use ($model) {
-
-            $fields = $model->translationable;
-
-            foreach ($fields as $field) {
-
+        foreach ($translations as $language => $trans)
+            foreach ($fields as $field)
                 if (array_key_exists($field, $trans)) {
-                    $this->translationRepo->updateOrCreate([
+                    $instances[] = [
                         "language_id" => $language,
                         "field" => $field,
                         "translationable_id" => $model->id,
-                        "translationable_type" => $model->getMorphClass()
-                    ], [
+                        "translationable_type" => $model->getMorphClass(),
                         "trans" => $trans[$field] ?? null
-                    ]);
+                    ];
                 }
-            }
-        });
+
+        app(TranslationRepository::class)->createMultiple($instances);
     }
 }

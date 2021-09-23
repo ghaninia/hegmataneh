@@ -180,6 +180,7 @@ return [
         "languages.*.excerpt" => "خلاصه مطلب" ,
         "languages.*.content" => "داستان" ,
 
+        "translations" => "زبان" ,
     ],
 
 ];

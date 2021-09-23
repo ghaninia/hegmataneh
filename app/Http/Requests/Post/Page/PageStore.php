@@ -5,6 +5,8 @@ namespace App\Http\Requests\Post\Page;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\TranslationableRule;
 use App\Core\Enums\EnumsPost;
+use App\Models\Post;
+use App\Rules\SlugRule;
 use Illuminate\Validation\Rule;
 
 class PageStore extends FormRequest
@@ -38,7 +40,7 @@ class PageStore extends FormRequest
             "created_at" => ["nullable", "date"],
 
             "translations" => [ "required" , "array" , new TranslationableRule($this)] ,
-            "translations.*.title" => ["required" , "string"] ,
+            "translations.*.title" => ["required" , "string" , new SlugRule(Post::class) ] ,
             "translations.*.content" => ["nullable" , "string"] ,
             "translations.*.excerpt" => ["nullable" , "string"] ,
             "translations.*.faq" => ["nullable" , "string"] ,

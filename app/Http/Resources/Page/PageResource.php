@@ -4,7 +4,6 @@ namespace App\Http\Resources\Page;
 
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\Slug\SlugCollection;
-use App\Http\Resources\Slug\SlugResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Translation\TranslationCollection;
 
@@ -28,7 +27,6 @@ class PageResource extends JsonResource
             "format" => $this->format,
             "theme" => $this->theme,
             "development" => $this->development,
-            "theme" => $this->theme,
             "created_at" => $this->created_at,
             "user"  => new UserResource($this->whenLoaded("user")),
 

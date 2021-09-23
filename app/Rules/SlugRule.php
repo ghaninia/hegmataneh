@@ -2,24 +2,21 @@
 
 namespace App\Rules;
 
-use Exception;
+use Illuminate\Database\Eloquent\Model;
+use App\Repositories\Slug\SlugRepository;
 use Illuminate\Contracts\Validation\Rule;
+use App\Core\Interfaces\SlugableInterface;
 
 class SlugRule implements Rule
 {
 
-    protected $modelClass, $field, $routeParameter;
+    protected Model|null $except;
+    protected SlugableInterface $class;
 
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct(string $modelClass, string $field, $routeParameter = null)
+    public function __construct(string $class, Model $except = null)
     {
-        $this->modelClass = $modelClass;
-        $this->field = $field;
-        $this->routeParameter = $routeParameter;
+        $this->class = new $class;
+        $this->except = $except;
     }
 
     /**
@@ -31,26 +28,28 @@ class SlugRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        try {
-            $field = request($this->field);
 
-            if (
-                (is_null($field) && is_null($value))
-            )
-                return false;
+        $morphClassName = (string) $this->class->getMorphClass();
 
-            $slug = slug($value, $field);
+        $result =
+            app(SlugRepository::class)->query()
+            ->where([
+                "slugable_type" => $morphClassName,
+                "slug" => slug($value)
+            ])
+            ->when(!!$this->except, function ($query) use ($morphClassName, $value) {
+                $query->where(function ($query)  use ($morphClassName, $value) {
+                    $query
+                        ->where([
+                            "slugable_type" => $morphClassName,
+                            "slug" => slug($value)
+                        ])
+                        ->where("slugable_id", "<>", $this->except->id);
+                });
+            })
+            ->exists();
 
-            return !$this->modelClass::query()
-                ->where("slug", $slug)
-                ->when( !! $this->routeParameter , function ($qury) {
-                    $qury->where("id", "<>", $this->routeParameter->id);
-                })
-                ->exists();
-
-        } catch (Exception $e) {
-            return false;
-        }
+        return !$result;
     }
 
     /**

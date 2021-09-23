@@ -15,6 +15,8 @@ class CreateSlugsTable extends Migration
     {
         Schema::create('slugs', function (Blueprint $table) {
             
+            $table->id();
+            
             $table->morphs("slugable");
             
             $table->foreignId("language_id")
@@ -22,7 +24,7 @@ class CreateSlugsTable extends Migration
                 ->onDelete("CASCADE")
                 ->onUpdate("CASCADE");
 
-            $table->string("slug")->unique();
+            $table->string("slug");
             
         });
     }

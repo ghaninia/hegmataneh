@@ -22,7 +22,7 @@ function options(?string $key = null, $default = null)
  */
 function slug(string $text): string
 {
-    return sprintf("%s_%s", Slugify::create($text), time());
+    return Slugify::create($text);
 }
 
 /**

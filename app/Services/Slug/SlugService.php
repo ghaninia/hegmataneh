@@ -17,39 +17,24 @@ class SlugService implements SlugServiceInterface
         $this->slugRepo = $slugRepo;
     }
 
-    public function sync(SlugableInterface $slugable, array $languages)
+    public function sync(SlugableInterface $slugable, array $languages = [])
     {
 
-        $slugableField = $slugable->slugable;
+        $slugableField = (string) $slugable->slugable;
+        
+        $slugable->slugs()->delete();
+        $translations = [];
 
-        $slugable->slugs()
-            ->when(
-                $isEmpty = empty($languages),
-                function ($query) {
-                    $query->delete();
-                },
-                function ($query) use ($languages) {
-                    $query
-                        ->whereNotIn("language_id", array_keys($languages))
-                        ->delete();
-                }
-            );
-
-        if ($isEmpty) return false;
-
-        array_walk(
-            $languages,
-            function ($trans, $language) use ($slugable, $slugableField) {
-                if (isset($trans[$slugableField])) {
-                    $slugable->slugs()->updateOrCreate([
-                        "language_id" => $language,
-                        "slugable_id" => $slugable->id,
-                        "slugable_type" => $slugable->getMorphClass()
-                    ], [
-                        "slug" => Slugify::create($trans[$slugableField])
-                    ]);
-                }
+        foreach ($languages as $language => $trans)
+            if (isset($trans[$slugableField])) {
+                $translations[] = [
+                    "language_id" => $language,
+                    "slugable_id" => $slugable->id,
+                    "slugable_type" => $slugable->getMorphClass(),
+                    "slug" => slug($trans[$slugableField])
+                ];
             }
-        );
+
+        app(SlugRepository::class)->createMultiple($translations);
     }
 }

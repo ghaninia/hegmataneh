@@ -64,6 +64,7 @@ class PageController extends Controller
             $user,
             $request->all()
         );
+        
         return $this->success([
             "data" => new PageResource($page),
             "msg" => trans("dashboard.success.page.create")
@@ -95,7 +96,7 @@ class PageController extends Controller
      */
     public function update(User $user, Post $page, PageUpdate $request)
     {
-
+        
         $page = $this->pageService->updateOrCreate(
             $user,
             $request->all(),
