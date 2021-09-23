@@ -34,5 +34,7 @@ class PostObserver
         $post->orders()->delete();
         $post->prices()->delete();
         $post->productInformation()->delete();
+        $post->slugs()->delete();
+        $post->translations()->delete();
     }
 }

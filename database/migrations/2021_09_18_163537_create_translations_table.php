@@ -26,7 +26,8 @@ class CreateTranslationsTable extends Migration
 
             $table->string("field");
 
-            $table->text("trans")->nullable();
+            $table->longText("trans")->nullable();
+
         });
     }
 

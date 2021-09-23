@@ -7,16 +7,26 @@ use App\Models\Post;
 use App\Models\User;
 use App\Core\Enums\EnumsPost;
 use App\Jobs\PublishedPostJob;
+use App\Services\Slug\SlugService;
 use App\Repositories\Post\PostRepository;
 use App\Services\Post\PostServiceInterface;
+use App\Services\Translation\TranslationService;
 
 class PostService implements PostServiceInterface
 {
-    protected $postRepo;
+    protected
+        $postRepo,
+        $translationService,
+        $slugService;
 
-    public function __construct(PostRepository $postRepo)
-    {
+    public function __construct(
+        PostRepository $postRepo,
+        TranslationService $translationService,
+        SlugService $slugService
+    ) {
         $this->postRepo = $postRepo;
+        $this->slugService = $slugService;
+        $this->translationService = $translationService;
     }
 
     /**
@@ -30,6 +40,7 @@ class PostService implements PostServiceInterface
             $this->postRepo->query()
             ->where("type", EnumsPost::TYPE_POST)
             ->filterBy($filters)
+            ->with(["translations", "slugs"])
             ->paginate();
     }
 
@@ -65,25 +76,25 @@ class PostService implements PostServiceInterface
      */
     public function updateOrCreate(User $user, array $data, ?Post $post = null): Post
     {
-        return
+        $post =
             $this->postRepo->updateOrCreate([
                 "id" => $post->id ?? null
             ], [
                 "user_id" => $user->id,
-                "title" => $data["title"],
-                "slug" => slug($data["slug"] ?? NULL, $data["title"]),
-                "content" => $data["content"] ?? NULL,
-                "faq" => $data["faq"] ?? NULL,
-                "excerpt" => $data["excerpt"] ?? NULL,
                 "type" => EnumsPost::TYPE_POST,
                 "status" => $data["status"],
                 "comment_status" => $data["comment_status"] ?? false,
                 "vote_status" => $data["vote_status"] ?? false,
                 "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
-                "goal_post" => $data["goal_post"] ?? NULL,
                 "published_at" => $data["published_at"] ?? NULL,
                 "created_at" => $post->created_at ?? $data["created_at"] ?? Carbon::now()
             ]);
+
+        $this->translationService->sync($post, $translations = $data["translations"]);
+
+        $this->slugService->sync($post, $translations);
+
+        return $post->load(["translations", "slugs"]);
     }
 
     /**

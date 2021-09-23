@@ -18,12 +18,12 @@ trait ExteraQueriesTrait
 
     public function restore(Model $model)
     {
-        return $this->model->restore($model);
+        return $model->restore($model);
     }
 
     public function forceDelete(Model $model)
     {
-        return $this->model->forceDelete($model);
+        return $model->forceDelete();
     }
 
     public function firstOrCreate(... $parameters )

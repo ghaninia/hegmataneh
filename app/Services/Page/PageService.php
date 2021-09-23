@@ -79,7 +79,7 @@ class PageService implements PageServiceInterface
      * @param Post $page
      * @return boolean
      */
-    public function delete(Post $page): bool
+    public function delete(Post $page)
     {
         return $this->postRepo->forceDelete($page);
     }
