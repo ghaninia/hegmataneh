@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Filters\PostFilters;
+namespace App\Contracts\Filters\PriceFilters;
 
 use App\Core\Abstracts\QueryFilter;
 use App\Core\Interfaces\FilterInterface;

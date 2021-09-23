@@ -18,4 +18,10 @@ class EnumsPost extends Enum
     const FORMAT_CONTEXT = "context";
     const FORMAT_PODCAST = "podcast";
     const FORMAT_VIDEO = "video";
+
+    const FIELD_CONTENT = "content";
+    const FIELD_FAQ = "faq";
+    const FIELD_GOAL_POST = "goal_post";
+    const FIELD_EXCERPT = "excerpt";
+    const FIELD_TITLE = "title";
 }

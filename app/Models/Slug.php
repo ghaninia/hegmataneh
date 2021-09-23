@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Slug extends Model
 {
 
-    use HasFactory;
+    use HasFactory , HasFilterTrait ;
 
     protected $fillable = [
         "slugable_id",

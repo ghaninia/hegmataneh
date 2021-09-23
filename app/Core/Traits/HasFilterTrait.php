@@ -3,6 +3,7 @@
 namespace App\Core\Traits;
 
 use App\Models\Post;
+use App\Models\Slug;
 use App\Models\Term;
 use App\Models\User;
 use App\Models\View;
@@ -14,6 +15,7 @@ use App\Models\Comment;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Portfolio;
+use App\Models\Translation;
 use App\Core\Classes\FilterBuilder;
 
 trait HasFilterTrait
@@ -40,6 +42,8 @@ trait HasFilterTrait
             Serial::class => "App\\Contracts\\Filters\\SerialFilters",
             Language::class => "App\\Contracts\\Filters\\LanguageFilters",
             Currency::class => "App\\Contracts\\Filters\\CurrencyFilters",
+            Slug::class => "App\\Contracts\\Filters\\SlugFilters",
+            Translation::class => "App\\Contracts\\Filters\\TranslationFilters",
         ][__CLASS__] ?? null;
     }
 }
