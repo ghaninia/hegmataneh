@@ -71,15 +71,7 @@ class PostController extends Controller
                 $request->all()
             );
 
-        $this->tagService->sync(
-            $post,
-            $request->input("tags", [])
-        );
 
-        $this->categoryService->sync(
-            $post,
-            $request->input("categories", [])
-        );
 
         return $this->success([
             "data" => new PostResource($post),

@@ -16,7 +16,7 @@ class PriceService implements PriceServiceInterface
         $this->priceRepo = $priceRepo;
     }
 
-    public function create(Model $model, array $currencies)
+    public function create(Model $model, array $currencies) : void 
     {
         array_walk($currencies, function ($data, $currencyID) use ($model) {
             $this->priceRepo->updateOrCreate([

@@ -6,22 +6,47 @@ use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Core\Enums\EnumsPost;
+use App\Services\Tag\TagService;
+use App\Services\Slug\SlugService;
+use Illuminate\Support\Facades\DB;
+use App\Services\Skill\SkillService;
 use App\Repositories\Post\PostRepository;
+use App\Services\Category\CategoryService;
+use App\Services\Price\PriceServiceInterface;
+use App\Services\Translation\TranslationService;
 use App\Services\Product\ProductServiceInterface;
 use App\Services\Product\Information\ProductInformationService;
 
 class ProductService implements ProductServiceInterface
 {
     protected
-        $postRepo,
-        $productInformationService;
+        $productInformationService,
+        $translationService,
+        $categoryService,
+        $priceService,
+        $skillService,
+        $slugService,
+        $tagService,
+        $postRepo;
 
     public function __construct(
+        ProductInformationService $productInformationService,
+        TranslationService $translationService,
+        PriceServiceInterface $priceService,
+        CategoryService $categoryService,
+        SkillService $skillService,
         PostRepository $postRepo,
-        ProductInformationService $productInformationService
+        SlugService $slugService,
+        TagService $tagService
     ) {
-        $this->postRepo = $postRepo;
         $this->productInformationService = $productInformationService;
+        $this->translationService = $translationService;
+        $this->categoryService = $categoryService;
+        $this->priceService = $priceService;
+        $this->skillService = $skillService;
+        $this->slugService = $slugService;
+        $this->tagService = $tagService;
+        $this->postRepo = $postRepo;
     }
 
     /**
@@ -35,6 +60,7 @@ class ProductService implements ProductServiceInterface
             $this->postRepo->query()
             ->where("type", EnumsPost::TYPE_PRODUCT)
             ->filterBy($filters)
+            ->with(["translations", "slugs", "prices", "categories", "tags", "skills"])
             ->paginate();
     }
 
@@ -46,20 +72,16 @@ class ProductService implements ProductServiceInterface
      */
     public function updateOrCreate(User $user, array $data, ?Post $product = null): Post
     {
+        DB::beginTransaction();
+
         $product =
             $this->postRepo->updateOrCreate([
                 "id" => $product->id ?? null
             ], [
                 "user_id" => $user->id,
-                "title" => $data["title"],
-                "slug" => slug($data["slug"] ?? NULL, $data["title"]),
-                "content" => $data["content"] ?? NULL,
-                "faq" => $data["faq"] ?? NULL,
-                "excerpt" => $data["excerpt"] ?? NULL,
                 "status" => $data["status"],
                 "comment_status" => $data["comment_status"] ?? false,
                 "vote_status" => $data["vote_status"] ?? false,
-                "goal_post" => $data["goal_post"] ?? NULL,
                 "published_at" => $data["published_at"] ?? NULL,
                 "created_at" => $product->created_at ?? $data["created_at"] ?? Carbon::now(),
                 "type" => EnumsPost::TYPE_PRODUCT,
@@ -68,7 +90,38 @@ class ProductService implements ProductServiceInterface
 
         $this->productInformationService->updateOrCreate($product, $data);
 
-        return $product;
+
+
+        $this->translationService->sync($product, $translations = $data["translations"] ?? []);
+        $this->slugService->sync($product, $translations);
+
+        $this->tagService->sync(
+            $product,
+            $data["tags"] ?? []
+        );
+
+        $this->categoryService->sync(
+            $product,
+            $data["categories"] ?? []
+        );
+
+        ### after create post , create price for it
+        if (isset($data["currencies"]))
+            $this->priceService->create(
+                $product,
+                $data["currencies"]
+            );
+
+        ### append skill
+        if (isset($data["skills"]))
+            $this->skillService->sync(
+                $product,
+                $data["skills"]
+            );
+
+        DB::commit();
+
+        return $product->load(["translations", "slugs", "prices"]);
     }
 
     /**
@@ -96,7 +149,7 @@ class ProductService implements ProductServiceInterface
      * @param Post $product
      * @return void
      */
-    public function forceDelete(Post $product) : void
+    public function forceDelete(Post $product): void
     {
         $this->postRepo->forceDelete($product);
     }

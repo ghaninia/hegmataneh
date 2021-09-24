@@ -5,9 +5,12 @@ namespace App\Http\Resources\Product;
 use App\Http\Resources\Tag\TagCollection;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\Price\PriceResource;
+use App\Http\Resources\Slug\SlugCollection;
+use App\Http\Resources\Price\PriceCollection;
 use App\Http\Resources\Skill\SkillCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Category\CategoryCollection;
+use App\Http\Resources\Translation\TranslationCollection;
 use App\Http\Resources\Product\Information\ProductInformationResource;
 
 class ProductResource extends JsonResource
@@ -27,11 +30,6 @@ class ProductResource extends JsonResource
             "comment_status" => $this->comment_status,
             "vote_status" => $this->vote_status,
             "development" => $this->development,
-            "title" => $this->title,
-            "slug" => $this->slug,
-            "content" => $this->content,
-            "excerpt" => $this->excerpt,
-            "faq" => $this->faq,
             "theme" => $this->theme,
 
             "published_at" => $this->published_at,
@@ -39,12 +37,15 @@ class ProductResource extends JsonResource
             "deleted_at" => $this->deleted_at,
 
             "user"  => new UserResource($this->whenLoaded("user")),
-            "prices" => PriceResource::collection($this->whenLoaded("prices")),
             "information" => new ProductInformationResource($this->whenLoaded("productInformation")),
 
             "tags" => new TagCollection($this->whenLoaded("tags")),
             "categories" => new CategoryCollection($this->whenLoaded("categories")),
             "skills" => new SkillCollection($this->whenLoaded("skills")),
+            
+            "prices" => new PriceCollection($this->whenLoaded("prices")),
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
+            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
         ];
     }
 }

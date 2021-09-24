@@ -16,8 +16,6 @@ class PriceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "currency" => new CurrencyResource($this->currency),
             "price" => $this->price,
             "amazing_status" => $this->amazing_status,
             "amazing_price" => $this->amazing_price,

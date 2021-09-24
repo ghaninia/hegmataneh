@@ -27,7 +27,7 @@ class CreateTranslationsTable extends Migration
 
             $table->string("field");
 
-            $table->string('trans');
+            $table->longText('trans');
         });
 
         DB::statement('ALTER TABLE `translations` ADD FULLTEXT INDEX translation_trans_index (trans)');

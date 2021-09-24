@@ -4,14 +4,8 @@ namespace App\Http\Controllers\Api\Post;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Services\Tag\TagService;
-use App\Services\Post\PostService;
 use App\Http\Controllers\Controller;
-use App\Services\Price\PriceService;
-use App\Services\Skill\SkillService;
 use App\Services\Product\ProductService;
-use App\Services\Category\CategoryService;
 use App\Http\Requests\Product\ProductIndex;
 use App\Http\Requests\Product\ProductStore;
 use App\Http\Requests\Product\ProductUpdate;
@@ -21,84 +15,13 @@ use App\Http\Resources\Product\ProductCollection;
 class ProductController extends Controller
 {
     protected
-        $tagService,
-        $categoryService,
-        $productService,
-        $priceService,
-        $skillService;
+        $productService;
 
-    public function __construct(
-        ProductService $productService,
-        TagService $tagService,
-        CategoryService $categoryService,
-        PriceService $priceService,
-        SkillService $skillService,
-        PostService $postService
-    ) {
-        $this->productService = $productService;
-        $this->priceService = $priceService;
-        $this->tagService = $tagService;
-        $this->categoryService = $categoryService;
-        $this->skillService = $skillService;
-        $this->postService = $postService;
-    }
-
-    /**
-     * ساخت یا ویرایش یک محصول جدید
-     * @param User $user
-     * @param Request $request
-     * @param Post $product
-     * @return Product
-     */
-    private function product(User $user,  Request $request, Post $product = null)
+    public function __construct(ProductService $productService)
     {
-        ### create new product
-        $product = $this->productService->updateOrCreate(
-            $user,
-            $request->only([
-                "title",
-                "slug",
-                "content",
-                "excerpt",
-                "faq",
-                "status",
-                "comment_status",
-                "vote_status",
-                "created_at",
-                "published_at",
-                "maximum_sell",
-                "expire_day",
-                "download_limit",
-            ]),
-            $product
-        );
-
-        ### after create post , create price for it
-        $this->priceService->create(
-            $product,
-            $request->input("currencies")
-        );
-
-        ### append tag
-        $this->tagService->sync(
-            $product,
-            $request->input("tags", [])
-        );
-
-        ### append category
-        $this->categoryService->sync(
-            $product,
-            $request->input("categories", [])
-        );
-
-        ### append skill
-        $this->skillService->sync(
-            $product,
-            $request->input("skills", [])
-        );
-
-        return $product;
+        $this->productService = $productService;
     }
+
 
     /**
      * Display a listing of the resource.
@@ -126,11 +49,7 @@ class ProductController extends Controller
 
         $products = $this->productService->list($filters);
 
-        return new ProductCollection(
-            $products->load([
-                "user", "price", "productInformation"
-            ])
-        );
+        return new ProductCollection($products);
     }
 
     /**
@@ -142,8 +61,11 @@ class ProductController extends Controller
      */
     public function store(User $user,  ProductStore $request)
     {
-
-        $product = $this->product($user, $request);
+        ### create new product
+        $product = $this->productService->updateOrCreate(
+            $user,
+            $request->all(),
+        );
 
         return $this->success([
             "msg" => trans("dashboard.success.product.create"),
@@ -177,7 +99,12 @@ class ProductController extends Controller
     public function update(User $user, Post $product, ProductUpdate $request)
     {
 
-        $product = $this->product($user, $request, $product);
+        ### update product
+        $product = $this->productService->updateOrCreate(
+            $user,
+            $request->all(),
+            $product
+        );
 
         return $this->success([
             "msg" => trans("dashboard.success.product.update"),

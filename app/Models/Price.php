@@ -25,6 +25,8 @@ class Price extends Model
         "amazing_status" => "boolean"
     ];
 
+    protected $with = ["currency"];
+
     public function priceable()
     {
         return $this->morphTo("priceable");

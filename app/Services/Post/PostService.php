@@ -7,26 +7,35 @@ use App\Models\Post;
 use App\Models\User;
 use App\Core\Enums\EnumsPost;
 use App\Jobs\PublishedPostJob;
+use App\Services\Tag\TagService;
 use App\Services\Slug\SlugService;
 use App\Repositories\Post\PostRepository;
+use App\Services\Category\CategoryService;
 use App\Services\Post\PostServiceInterface;
 use App\Services\Translation\TranslationService;
 
 class PostService implements PostServiceInterface
 {
+
     protected
-        $postRepo,
         $translationService,
-        $slugService;
+        $categoryService,
+        $slugService,
+        $tagService,
+        $postRepo;
 
     public function __construct(
-        PostRepository $postRepo,
         TranslationService $translationService,
-        SlugService $slugService
+        CategoryService $categoryService,
+        SlugService $slugService,
+        PostRepository $postRepo,
+        TagService $tagService
     ) {
-        $this->postRepo = $postRepo;
-        $this->slugService = $slugService;
         $this->translationService = $translationService;
+        $this->categoryService = $categoryService;
+        $this->slugService = $slugService;
+        $this->tagService = $tagService;
+        $this->postRepo = $postRepo;
     }
 
     /**
@@ -90,9 +99,18 @@ class PostService implements PostServiceInterface
                 "created_at" => $post->created_at ?? $data["created_at"] ?? Carbon::now()
             ]);
 
-        $this->translationService->sync($post, $translations = $data["translations"]);
-
+        $this->translationService->sync($post, $translations = $data["translations"] ?? []);
         $this->slugService->sync($post, $translations);
+
+        $this->tagService->sync(
+            $post,
+            $data["tags"] ?? []
+        );
+
+        $this->categoryService->sync(
+            $post,
+            $data["categories"] ?? []
+        );
 
         return $post->load(["translations", "slugs"]);
     }
