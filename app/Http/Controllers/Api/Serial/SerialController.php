@@ -14,7 +14,9 @@ use App\Http\Resources\Serial\SerialCollection;
 
 class SerialController extends Controller
 {
+
     protected $serialService, $priceService;
+
     public function __construct(SerialService $serialService, PriceService $priceService)
     {
         $this->serialService = $serialService;
@@ -58,15 +60,14 @@ class SerialController extends Controller
     public function store(User $user, SerialRequest $request)
     {
 
-        $serial = $this->serialService->create($user,  $request->all());
-        $this->serialService->episodes($serial, $request->input("episodes", []));
-        $this->priceService->create($serial,  $request->input("currencies"));
+        $serial = $this->serialService->updateOrCreate(
+            $user,
+            $request->all()
+        );
 
         return $this->success([
             "msg" => trans("dashboard.success.serial.create"),
-            "data" => new SerialResource(
-                $serial->load(["prices", "episodes.post"])
-            )
+            "data" => new SerialResource($serial)
         ]);
     }
 
@@ -94,15 +95,15 @@ class SerialController extends Controller
     public function update(User $user, Serial $serial, SerialRequest $request)
     {
 
-        $serial = $this->serialService->update($user, $serial, $request->all());
-        $this->serialService->episodes($serial, $request->input("episodes", []));
-        $this->priceService->create($serial,  $request->input("currencies"));
+        $serial = $this->serialService->updateOrCreate(
+            $user,
+            $request->all(),
+            $serial
+        );
 
         return $this->success([
             "msg" => trans("dashboard.success.serial.update"),
-            "data" => new SerialResource(
-                $serial->load(["prices", "episodes.post"])
-            )
+            "data" => new SerialResource($serial)
         ]);
     }
 

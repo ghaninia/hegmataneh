@@ -16,9 +16,9 @@ class CreateSerialsTable extends Migration
         Schema::create('serials', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id") ;
-            $table->string("title")->nullable();
-            $table->string("slug")->unique();
-            $table->longText("description")->nullable();
+            // $table->string("title")->nullable();
+            // $table->string("slug")->unique();
+            // $table->longText("description")->nullable();
             $table->timestamps();
         });
     }

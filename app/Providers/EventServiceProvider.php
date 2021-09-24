@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Post;
 use App\Models\Term;
+use App\Models\Episode;
 use App\Observers\PostObserver;
 use App\Observers\TermObserver;
+use App\Observers\EpisodeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -32,5 +34,6 @@ class EventServiceProvider extends ServiceProvider
     {
         Term::observe(TermObserver::class);
         Post::observe(PostObserver::class);
+        Episode::observe(EpisodeObserver::class);
     }
 }

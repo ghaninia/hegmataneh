@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostSerialTable extends Migration
+class CreateEpisodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePostSerialTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_serial', function (Blueprint $table) {
+        Schema::create('episodes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("post_id");
             $table->unsignedBigInteger("serial_id");
-            $table->string("title");
+            // $table->string("title");
+            // $table->longText("description")->nullable();
             $table->boolean("is_locked")->default(TRUE);
             $table->tinyInteger("priority")->nullable();
-            $table->longText("description")->nullable();
 
             $table->foreign("post_id")
                 ->references("id")
@@ -43,6 +43,6 @@ class CreatePostSerialTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_serial');
+        Schema::dropIfExists('episodes');
     }
 }

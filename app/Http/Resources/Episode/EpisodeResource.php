@@ -2,7 +2,10 @@
 
 namespace App\Http\Resources\Episode;
 
+use App\Http\Resources\Post\PostResource;
+use App\Http\Resources\Serial\SerialResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Translation\TranslationCollection;
 
 class EpisodeResource extends JsonResource
 {
@@ -15,17 +18,13 @@ class EpisodeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            
-            "id" => $this->id,
 
-            "title" => $this->title,
+            "id" => $this->id,
             "is_locked" => $this->is_locked,
             "priority" => $this->priority,
-            "description" => $this->description,
-
-            "post" => $this->whenLoaded("post"),
-            "serial" => $this->whenLoaded("serial"),
-
+            "post" => new PostResource($this->whenLoaded("post")),
+            "serial" => new SerialResource($this->whenLoaded("serial")),
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
         ];
     }
 }

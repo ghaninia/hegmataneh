@@ -17,7 +17,7 @@ class SlugService implements SlugServiceInterface
         $this->slugRepo = $slugRepo;
     }
 
-    public function sync(SlugableInterface $slugable, array $languages = [])
+    public function sync(SlugableInterface $slugable, array $languages = []) : void 
     {
 
         $slugableField = (string) $slugable->slugable;

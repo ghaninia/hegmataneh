@@ -24,23 +24,22 @@ class TranslationService implements TranslationServiceInterface
 
         $fields = (array) $model->translationable;
 
-        ### when empty translations delete entity for it 
-        ### when not empty , used array keys translations and delete different 
-        $model->translations()->delete();
-        $instances = [];
+        $model
+            ->translations()
+            ->delete();
 
         foreach ($translations as $language => $trans)
             foreach ($fields as $field)
                 if (array_key_exists($field, $trans)) {
-                    $instances[] = [
-                        "language_id" => $language,
-                        "field" => $field,
+                    $instaces[] = [
                         "translationable_id" => $model->id,
                         "translationable_type" => $model->getMorphClass(),
+                        "language_id" => $language,
+                        "field" => $field,
                         "trans" => $trans[$field] ?? null
                     ];
                 }
 
-        app(TranslationRepository::class)->createMultiple($instances);
+        $this->translationRepo->createMultiple($instaces);
     }
 }

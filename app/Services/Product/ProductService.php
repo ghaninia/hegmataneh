@@ -13,8 +13,8 @@ use App\Services\Skill\SkillService;
 use App\Repositories\Post\PostRepository;
 use App\Services\Category\CategoryService;
 use App\Services\Price\PriceServiceInterface;
-use App\Services\Translation\TranslationService;
 use App\Services\Product\ProductServiceInterface;
+use App\Services\Translation\TranslationServiceInterface;
 use App\Services\Product\Information\ProductInformationService;
 
 class ProductService implements ProductServiceInterface
@@ -31,7 +31,7 @@ class ProductService implements ProductServiceInterface
 
     public function __construct(
         ProductInformationService $productInformationService,
-        TranslationService $translationService,
+        TranslationServiceInterface $translationService,
         PriceServiceInterface $priceService,
         CategoryService $categoryService,
         SkillService $skillService,
@@ -89,8 +89,6 @@ class ProductService implements ProductServiceInterface
             ]);
 
         $this->productInformationService->updateOrCreate($product, $data);
-
-
 
         $this->translationService->sync($product, $translations = $data["translations"] ?? []);
         $this->slugService->sync($product, $translations);

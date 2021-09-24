@@ -71,8 +71,6 @@ class PostController extends Controller
                 $request->all()
             );
 
-
-
         return $this->success([
             "data" => new PostResource($post),
             "msg"  => trans("dashboard.success.post.create")
@@ -112,18 +110,8 @@ class PostController extends Controller
                 $post
             );
 
-        $this->tagService->sync(
-            $post,
-            $request->input("tags", [])
-        );
-
-        $this->categoryService->sync(
-            $post,
-            $request->input("categories", [])
-        );
-
         return $this->success([
-            "data" => new PostResource($post->load(["categories" , "tags"])),
+            "data" => new PostResource($post),
             "msg"  => trans("dashboard.success.post.update")
         ]);
     }

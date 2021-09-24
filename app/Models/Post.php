@@ -81,10 +81,8 @@ class Post extends Model implements BasktableInterface, TranslationableInterface
     public function episodes()
     {
         return $this
-            ->belongsToMany(Serial::class)
+            ->belongsToMany(Serial::class, "episodes")
             ->withPivot([
-                "title",
-                "description",
                 "is_locked",
                 "priority",
             ]);

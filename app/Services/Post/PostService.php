@@ -112,7 +112,7 @@ class PostService implements PostServiceInterface
             $data["categories"] ?? []
         );
 
-        return $post->load(["translations", "slugs"]);
+        return $post->load(["translations", "slugs" , "categories" , "tags"]);
     }
 
     /**

@@ -139,48 +139,52 @@ return [
     */
 
     'attributes' => [
-        "status" => "وضعیت" ,
-        "comment_status" => "وضعیت دیدگاه" ,
-        "vote_status" => "وضعیت امتیازدهی" ,
-        "format" => "فرمت" ,
-        "development" => "توسعه پذیری" ,
+        "status" => "وضعیت",
+        "comment_status" => "وضعیت دیدگاه",
+        "vote_status" => "وضعیت امتیازدهی",
+        "format" => "فرمت",
+        "development" => "توسعه پذیری",
 
-        "theme" => "پوسته" ,
-        "published_at" => "زمان انتشار" ,
-        "created_at" => "زمان ساخت" ,
-        "links" => "لینک‌های پیوستی" ,
-        "links.*" => "لینک‌ پیوستی" ,
-        "attachments" => "فایل‌های پیوستی" ,
-        "attachments.*" => "فایل پیوستی" ,
+        "theme" => "پوسته",
+        "published_at" => "زمان انتشار",
+        "created_at" => "زمان ساخت",
+        "links" => "لینک‌های پیوستی",
+        "links.*" => "لینک‌ پیوستی",
+        "attachments" => "فایل‌های پیوستی",
+        "attachments.*" => "فایل پیوستی",
 
-        "categories" => "دسته‌بندی‌ها" ,
-        "categories.*" => "دسته‌بندی‌" ,
+        "categories" => "دسته‌بندی‌ها",
+        "categories.*" => "دسته‌بندی‌",
 
-        "tags" => "برچسب‌ها" ,
-        "tags.*" => "برچسب" ,
-
-
-        "episodes.*.title" => "عنوان اپیزود" ,
-        "episodes.*.description" => "توضیحات اپیزود" ,
-        "episodes.*.is_locked" => "قفل اپیزود" ,
-        "episodes.*.priority" => "اولویت اپیزود" ,
+        "tags" => "برچسب‌ها",
+        "tags.*" => "برچسب",
 
 
-        "currencies.*.price" => "قیمت" ,
-        "currencies.*.amazing_price" => "قیمت شگفت انگیز" ,
-        "currencies.*.amazing_from_date" => "تاریخ شروع شگفت انگیز" ,
-        "currencies.*.amazing_to_date" => "تاریخ پایان شگفت انگیز" ,
+        "episodes.*.title" => "عنوان اپیزود",
+        "episodes.*.description" => "توضیحات اپیزود",
+        "episodes.*.is_locked" => "قفل اپیزود",
+        "episodes.*.priority" => "اولویت اپیزود",
 
-        "code" => "کد" ,
-        "name" => "نام" ,
-        "unit" => "تعداد" ,
-        "languages" => "زبان" ,
-        "languages.*.title" => "تیتر" ,
-        "languages.*.faq" => "دستورالعمل" ,
-        "languages.*.excerpt" => "خلاصه مطلب" ,
-        "languages.*.content" => "داستان" ,
 
-        "translations" => "زبان" ,
+        "currencies.*.price" => "قیمت",
+        "currencies.*.amazing_price" => "قیمت شگفت انگیز",
+        "currencies.*.amazing_from_date" => "تاریخ شروع شگفت انگیز",
+        "currencies.*.amazing_to_date" => "تاریخ پایان شگفت انگیز",
+
+        "code" => "کد",
+        "name" => "نام",
+        "unit" => "تعداد",
+        "translations" => "زبان",
+        "translations.*.title" => "تیتر",
+        "translations.*.faq" => "دستورالعمل",
+        "translations.*.excerpt" => "خلاصه مطلب",
+        "translations.*.content" => "داستان",
+
+        "translations" => "زبان",
+
+        "episodes.*.translations" => "ترجمه اپیزود" ,
+        "episodes.*.translations.*.title" => "تیتر",
+        "episodes.*.translations.*.description" => "توضیحات",
     ],
 
 ];

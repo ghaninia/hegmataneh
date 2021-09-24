@@ -44,6 +44,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Language\LanguageRepositoryInterface::class, \App\Repositories\Language\LanguageRepository::class);
         $this->app->bind(\App\Repositories\Basket\BasketRepositoryInterface::class, \App\Repositories\Basket\BasketRepository::class);
         $this->app->bind(\App\Repositories\Slug\SlugRepositoryInterface::class, \App\Repositories\Slug\SlugRepository::class);
+        $this->app->bind(\App\Repositories\PostSerial\PostSerialRepositoryInterface::class, \App\Repositories\PostSerial\PostSerialRepository::class);
+        $this->app->bind(\App\Repositories\Episode\EpisodeRepositoryInterface::class, \App\Repositories\Episode\EpisodeRepository::class);
         //:end-bindings:
     }
 }
