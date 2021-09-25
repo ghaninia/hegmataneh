@@ -40,15 +40,10 @@ class SerialController extends Controller
                 "amazing_price",
             ])
         );
-
+        
         $serials = $this->serialService->list($filters);
 
-        return  new SerialCollection(
-            $serials->load([
-                "posts",
-                "price"
-            ])
-        );
+        return  new SerialCollection($serials);
     }
 
     /**

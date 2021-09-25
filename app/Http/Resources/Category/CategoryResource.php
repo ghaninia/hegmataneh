@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Category;
 
-use App\Http\Resources\Translation\TranslationCollection;
-use App\Http\Resources\Translation\TranslationResource;
+use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Translation\TranslationCollection;
 
 class CategoryResource extends JsonResource
 {
@@ -18,16 +18,13 @@ class CategoryResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->name,
             "color" => $this->color,
-            "slug" => $this->slug,
-            "description" => $this->description,
             "created_at" => $this->created_at,
             "parent" => new CategoryResource($this->whenLoaded("parent")),
             "childrens" => new CategoryCollection($this->whenLoaded("childrens")),
-            // "translations" => TranslationResource::collection( $this->translations )->collection->groupBy([
-            //     "language.code" , "field"
-            // ])
+            
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
+            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
         ];
     }
 }

@@ -6,8 +6,7 @@ use App\Models\Term;
 use App\Http\Controllers\Controller;
 use App\Services\Category\CategoryService;
 use App\Http\Requests\Category\CategoryIndex;
-use App\Http\Requests\Category\CategoryStore;
-use App\Http\Requests\Category\CategoryUpdate;
+use App\Http\Requests\Category\CategoryRequest;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Category\CategoryCollection;
 
@@ -29,7 +28,7 @@ class CategoryController extends Controller
     {
         $terms = $this->categoryService->list(
             $request->only([
-                "name", "description", "slug" , "color" , "term_id"
+                "name", "description", "slug", "color", "term_id"
             ])
         );
         return new CategoryCollection($terms);
@@ -41,15 +40,15 @@ class CategoryController extends Controller
      * @param  CategoryStore $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryStore $request)
+    public function store(CategoryRequest $request)
     {
-        $category = $this->categoryService->create(
+
+        $category = $this->categoryService->updateOrCreate(
             $request->only([
-                "color" ,
-                "term_id" ,
-                "name",
-                "description",
-                "slug"
+                "color",
+                "term_id",
+                "slug",
+                "translations"
             ])
         );
 
@@ -67,7 +66,7 @@ class CategoryController extends Controller
      */
     public function show(Term $category)
     {
-        return new CategoryResource($category->load("childrens" , "parent"));
+        return new CategoryResource($category->load("childrens", "parent"));
     }
 
     /**
@@ -77,20 +76,22 @@ class CategoryController extends Controller
      * @param  Term $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryUpdate $request, Term $category)
+    public function update(Term $category, CategoryRequest $request)
     {
-        $category = $this->categoryService->update($category, $request->only([
-            "color" ,
-            "term_id" ,
-            "name",
-            "description",
-            "slug"
-        ]));
+        $category = $this->categoryService->updateOrCreate(
+            $request->only([
+                "color",
+                "term_id",
+                "slug",
+                "translations"
+            ]),
+            $category
+        );
 
         return
             $this->success([
                 "msg" => trans("dashboard.success.category.update"),
-                "data" => new CategoryResource($category->load("childrens" , "parent"))
+                "data" => new CategoryResource($category->load("childrens", "parent"))
             ]);
     }
 

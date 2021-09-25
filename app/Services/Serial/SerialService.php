@@ -53,6 +53,7 @@ class SerialService implements SerialServiceInterface
         return
             $this->serialRepo->query()
             ->filterBy($filters)
+            ->with(["prices"])
             ->paginate();
     }
 

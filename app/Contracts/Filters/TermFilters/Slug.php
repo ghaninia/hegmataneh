@@ -9,6 +9,10 @@ class Slug extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {
-        $this->query->where('slug', $value);
+        $this->query->whereHas("slugs", function ($query) use ($value) {
+            $query->filterBy([
+                "slug" => $value
+            ]);
+        });
     }
 }

@@ -38,9 +38,11 @@ class AuthController extends Controller
                 $request->input("remember", FALSE)
             );
 
+        $user = $this->authService->user() ;
+
         if ($user)
             return $this->success([
-                "user"  => new UserResource($user = $this->authService->user()),
+                "user"  => new UserResource( $user->load("role") ),
                 "token" => $user->createToken("authunticate")->accessToken
             ]);
 

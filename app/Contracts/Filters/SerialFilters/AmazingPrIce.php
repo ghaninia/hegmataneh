@@ -11,7 +11,7 @@ class AmazingPrIce extends QueryFilter implements FilterInterface
     public function handle($value): void
     {
         $this->query->whereHas(
-            "price",
+            "prices",
             fn ($query) => $query->where("price", $value)
         );
     }
@@ -20,7 +20,7 @@ class AmazingPrIce extends QueryFilter implements FilterInterface
     {
         foreach ($values as $value) {
             $this->query->whereHas(
-                "price",
+                "prices",
                 fn ($query) => $query->where("price", ...$value)
             );
         }

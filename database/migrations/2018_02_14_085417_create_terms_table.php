@@ -19,10 +19,7 @@ class CreateTermsTable extends Migration
             $table->unsignedBigInteger("term_id")->nullable()->index();
             $table->unsignedBigInteger("file_id")->nullable()->index() ;
             $table->enum("type" ,EnumsTerm::type())->default(EnumsTerm::TYPE_TAG) ;
-            $table->string("slug")->unique() ;
-            $table->string("name") ;
             $table->string("color")->nullable();
-            $table->text("description")->nullable() ;
 
             $table->timestamps() ;
         });

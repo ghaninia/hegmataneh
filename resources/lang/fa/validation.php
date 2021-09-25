@@ -179,12 +179,19 @@ return [
         "translations.*.faq" => "دستورالعمل",
         "translations.*.excerpt" => "خلاصه مطلب",
         "translations.*.content" => "داستان",
+        "translations.*.name" => "نام" ,
+        "translations.*.description" => "توضیحات" ,
 
         "translations" => "زبان",
 
         "episodes.*.translations" => "ترجمه اپیزود" ,
         "episodes.*.translations.*.title" => "تیتر",
         "episodes.*.translations.*.description" => "توضیحات",
+
+        "price.gte" => "قیمت" ,
+        "price.gt" => "قیمت" ,
+        "price.lt" => "قیمت" ,
+        "price.lte" => "قیمت" ,
     ],
 
 ];

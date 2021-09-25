@@ -3,13 +3,17 @@
 namespace App\Models;
 
 use App\Core\Enums\EnumsTerm;
+use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\SlugableInterface;
+use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Term extends Model
+class Term extends Model implements SlugableInterface , TranslationableInterface
 {
-    use HasFilterTrait, HasFactory;
+    use HasFilterTrait, HasFactory , HasTranslationTrait , HasSlugTrait ;
 
     protected $fillable = [
         "name",
@@ -20,7 +24,14 @@ class Term extends Model
         "description",
     ];
 
-    protected $translate = [
+    public $with = [
+        "translations",
+        "slugs",
+    ];
+
+    public string $slugable = "name";
+
+    public array $translationable = [
         "name",
         "description",
     ];
@@ -28,11 +39,6 @@ class Term extends Model
     ###################
     #### RELATIONS ####
     ###################
-
-    public function translations()
-    {
-        return $this->morphMany(Translation::class, "translationable");
-    }
 
     public function posts()
     {

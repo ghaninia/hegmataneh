@@ -4,11 +4,14 @@ namespace App\Http\Requests\Tag;
 
 use App\Models\Term;
 use App\Rules\SlugRule;
-use App\Core\Enums\EnumsFileable;
+use App\Rules\TranslationableRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TagStore extends FormRequest
+class TagRequest extends FormRequest
 {
+    
+    protected $tag ;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -19,6 +22,11 @@ class TagStore extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $this->tag = $this->route("tag") ?? null ;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,9 +35,9 @@ class TagStore extends FormRequest
     public function rules()
     {
         return [
-            "name" => ["required", "max:255"],
-            "content" => ["nullable", "string"],
-            "slug" => [new SlugRule(Term::class, "name")],
+            "translations" => [ "required" , "array" , new TranslationableRule($this)] ,
+            "translations.*.name" => ["required" , "string" , new SlugRule(Term::class , $this->tag) ] ,
+            "translations.*.description" => ["nullable" , "string"] ,
         ];
     }
 }

@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api\Term;
 use App\Models\Term;
 use App\Services\Tag\TagService;
 use App\Http\Requests\Tag\TagIndex;
-use App\Http\Requests\Tag\TagStore;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tag\TagUpdate;
+use App\Http\Requests\Tag\TagRequest;
 use App\Services\Upload\UploadService;
 use App\Http\Resources\Tag\TagResource;
 use App\Http\Resources\Tag\TagCollection;
@@ -43,14 +42,10 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagStore $request)
+    public function store(TagRequest $request)
     {
-        $tag = $this->tagService->create(
-            $request->only([
-                "name",
-                "description",
-                "slug"
-            ])
+        $tag = $this->tagService->updateOrCreate(
+            $request->all()
         );
 
         return $this->success([
@@ -77,14 +72,10 @@ class TagController extends Controller
      * @param  Term $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(TagUpdate $request, Term $tag)
+    public function update(Term $tag, TagRequest $request)
     {
-        $tag = $this->tagService->update($tag, $request->only([
-            "name",
-            "description",
-            "slug"
-        ]));
 
+        $tag = $this->tagService->updateOrCreate($request->all() , $tag );
         return
             $this->success([
                 "msg" => trans("dashboard.success.tag.update"),

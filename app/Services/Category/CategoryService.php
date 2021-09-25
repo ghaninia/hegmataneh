@@ -6,15 +6,22 @@ use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
+use App\Services\Slug\SlugServiceInterface;
 use App\Services\Category\CategoryServiceInterface;
+use App\Services\Translation\TranslationServiceInterface;
 
 class CategoryService implements CategoryServiceInterface
 {
-    protected $termRepo;
+    protected $termRepo, $translationService, $slugService;
 
-    public function __construct(TermRepository $termRepo)
-    {
+    public function __construct(
+        TermRepository $termRepo,
+        TranslationServiceInterface $translationService,
+        SlugServiceInterface $slugService
+    ) {
         $this->termRepo = $termRepo;
+        $this->translationService = $translationService;
+        $this->slugService = $slugService;
     }
 
     /**
@@ -22,37 +29,23 @@ class CategoryService implements CategoryServiceInterface
      * @param array $data
      * @return Term
      */
-    public function create(array $data): Term
+    public function updateOrCreate(array $data, Term $category = NULL): Term
     {
-        return
-            $this->termRepo->create([
+        $term =
+            $this->termRepo->updateOrCreate([
+                "id" => $category->id ?? null 
+            ], [
                 "term_id" => $data["term_id"] ?? null,
-                "name" => $data["name"],
-                "slug" => slug($data["slug"] ?? null, $data["name"]),
-                "description" => $data["description"] ?? null,
                 "color" => $data["color"] ?? null,
                 "type" => EnumsTerm::TYPE_CATEGORY
             ]);
+
+        $this->translationService->sync($term, $translations = $data["translations"] ?? []);
+        $this->slugService->sync($term, $translations);
+
+        return $term->load(["translations", "slugs"]);
     }
 
-    /**
-     * ویرایش دسته بندی
-     * @param Term $category
-     * @param array $data
-     * @return Term
-     */
-    public function update(Term $category, array $data): Term
-    {
-        return
-            $this->termRepo
-            ->updateById($category->id, [
-                "term_id" => $data["term_id"] ?? null,
-                "name" => $data["name"],
-                "slug" => slug($data["slug"] ?? null, $data["name"]),
-                "description" => $data["description"] ?? null,
-                "color" => $data["color"] ?? null,
-            ]);
-    }
 
     /**
      * حذف دسته بندی

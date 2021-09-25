@@ -13,6 +13,10 @@ class Role extends Model
         "name",
     ];
 
+    protected $with = [
+        "permissions"
+    ];
+
     ###################
     #### RELATIONS ####
     ###################

@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources\Tag;
 
+use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Translation\TranslationCollection;
 
 class TagResource extends JsonResource
 {
@@ -16,10 +18,10 @@ class TagResource extends JsonResource
     {
         return [
             "id" => $this->id ,
-            "name" => $this->name ,
-            "slug" => $this->slug ,
-            "description" => $this->description ,
-            "created_at" => $this->created_at
+            "created_at" => $this->created_at ,
+            
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
+            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
         ];
     }
 }

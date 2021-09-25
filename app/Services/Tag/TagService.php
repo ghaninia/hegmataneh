@@ -7,14 +7,21 @@ use App\Core\Enums\EnumsTerm;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
 use App\Services\Tag\TagServiceInterface;
+use App\Services\Slug\SlugServiceInterface;
+use App\Services\Translation\TranslationServiceInterface;
 
 class TagService implements TagServiceInterface
 {
-    protected $termRepo;
+    protected $termRepo, $translationService, $slugService;
 
-    public function __construct(TermRepository $termRepo)
-    {
+    public function __construct(
+        TermRepository $termRepo,
+        TranslationServiceInterface $translationService,
+        SlugServiceInterface $slugService
+    ) {
         $this->termRepo = $termRepo;
+        $this->translationService = $translationService;
+        $this->slugService = $slugService;
     }
 
     /**
@@ -22,33 +29,21 @@ class TagService implements TagServiceInterface
      * @param array $data
      * @return Term
      */
-    public function create(array $data): Term
+    public function updateOrCreate(array $data, Term $tag = null): Term
     {
-        return
-            $this->termRepo->create([
-                "name" => $data["name"],
-                "slug" => slug($data["slug"] ?? null, $data["name"]),
-                "description" => $data["description"] ?? null,
+        $term =
+            $this->termRepo->updateOrCreate([
+                "id" => $tag->id ?? null
+            ], [
                 "type" => EnumsTerm::TYPE_TAG
             ]);
+
+        $this->translationService->sync($term, $translations = $data["translations"] ?? []);
+        $this->slugService->sync($term, $translations);
+
+        return $term->load(["translations", "slugs"]);
     }
 
-    /**
-     * ویرایش برچسب
-     * @param Term $tag
-     * @param array $data
-     * @return Term
-     */
-    public function update(Term $tag, array $data): Term
-    {
-        return
-            $this->termRepo
-            ->updateById($tag->id, [
-                "name" => $data["name"],
-                "slug" => slug($data["slug"] ?? null, $data["name"]),
-                "description" => $data["description"] ?? null,
-            ]);
-    }
 
     /**
      * حذف برچسب
@@ -83,7 +78,7 @@ class TagService implements TagServiceInterface
     {
         ### ست کردن تایپ در جدول واسط
         array_map(function ($item) use (&$items) {
-            $items[$item] = ["type" => EnumsTerm::TYPE_TAG] ;
+            $items[$item] = ["type" => EnumsTerm::TYPE_TAG];
         }, $data);
 
         $model->tags()->sync($items);
