@@ -5,16 +5,24 @@ namespace App\Services\Skill;
 use App\Models\Skill;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Skill\SkillRepository;
+use App\Services\Slug\SlugServiceInterface;
 use App\Services\Skill\SkillServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
+use App\Services\Translation\TranslationServiceInterface;
 
 class SkillService implements SkillServiceInterface
 {
 
-    protected $skillRepo;
-    public function __construct(SkillRepository $skillRepo)
-    {
+    protected $skillRepo, $translationService, $slugService;
+
+    public function __construct(
+        SkillRepository $skillRepo,
+        TranslationServiceInterface $translationService,
+        SlugServiceInterface $slugService
+    ) {
         $this->skillRepo = $skillRepo;
+        $this->translationService = $translationService;
+        $this->slugService = $slugService;
     }
 
     /**
@@ -35,29 +43,21 @@ class SkillService implements SkillServiceInterface
      * @param array $data
      * @return Skill
      */
-    public function create(array $data): Skill
+    public function updateOrCreate(array $data, Skill $skill = null): Skill
     {
-        return
-            $this->skillRepo->create([
-                "title" => $data["title"],
+        $skill =
+            $this->skillRepo->updateOrCreate([
+                "id" => $skill->id ?? null
+            ], [
                 "icon" => $data["icon"] ?? null
             ]);
+
+        $this->translationService->sync($skill, $translations = $data["translations"] ?? []);
+        $this->slugService->sync($skill, $translations);
+
+        return $skill->load(["translations", "slugs"]);
     }
 
-    /**
-     * ویرایش مهارت
-     * @param Skill $skill
-     * @param array $data
-     * @return Skill
-     */
-    public function update(Skill $skill, array $data): Skill
-    {
-        return
-            $this->skillRepo->updateById($skill->id, [
-                "title" => $data["title"],
-                "icon" => $data["icon"] ?? null
-            ]);
-    }
 
     /**
      * حذف مهارت

@@ -22,8 +22,7 @@ class SkillFactory extends Factory
     public function definition()
     {
         return [
-            'title_fa' => $this->faker->jobTitle() ,
-            'title_en' => $this->faker->unique()->slug() ,
+            "icon" => null 
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources\Skill;
 
+use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Translation\TranslationCollection;
 
 class SkillResource extends JsonResource
 {
@@ -16,8 +18,10 @@ class SkillResource extends JsonResource
     {
         return [
             "id" => $this->id ,
-            'title' => $this->title ,
             'icon' => $this->icon ,
+            
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
+            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
         ];
     }
 }

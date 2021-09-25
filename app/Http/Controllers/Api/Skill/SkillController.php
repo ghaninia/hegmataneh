@@ -6,8 +6,7 @@ use App\Models\Skill;
 use App\Http\Controllers\Controller;
 use App\Services\Skill\SkillService;
 use App\Http\Requests\Skill\SkillIndex;
-use App\Http\Requests\Skill\SkillStore;
-use App\Http\Requests\Skill\SkillUpdate;
+use App\Http\Requests\Skill\SkillRequest;
 use App\Http\Resources\Skill\SkillResource;
 use App\Http\Resources\Skill\SkillCollection;
 
@@ -30,7 +29,8 @@ class SkillController extends Controller
 
         $skills = $this->skillService->list(
             $request->only([
-                "title"
+                "name",
+                "description"
             ])
         );
 
@@ -43,13 +43,10 @@ class SkillController extends Controller
      * @param  SkillStore $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SkillStore $request)
+    public function store(SkillRequest $request)
     {
         $skill =
-            $this->skillService->create($request->only([
-                "title",
-                "icon",
-            ]));
+            $this->skillService->updateOrCreate($request->all());
 
         return $this->success([
             "msg" => trans("dashboard.success.skill.create"),
@@ -75,15 +72,12 @@ class SkillController extends Controller
      * @param  Skill $skill
      * @return \Illuminate\Http\Response
      */
-    public function update(Skill $skill , SkillUpdate $request)
+    public function update(Skill $skill, SkillRequest $request)
     {
         $skill =
-            $this->skillService->update(
-                $skill ,
-                $request->only([
-                    "title",
-                    "icon",
-                ])
+            $this->skillService->updateOrCreate(
+                $request->all(),
+                $skill
             );
 
         return $this->success([
@@ -100,7 +94,7 @@ class SkillController extends Controller
      */
     public function destroy(Skill $skill)
     {
-        $this->skillService->delete($skill) ;
+        $this->skillService->delete($skill);
 
         return $this->success([
             "msg" => trans("dashboard.success.skill.delete")
