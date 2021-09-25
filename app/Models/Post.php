@@ -54,14 +54,14 @@ class Post extends Model implements BasktableInterface, TranslationableInterface
         "slugs",
     ];
 
-    public string $slugable = "title";
+    public string $slugable = EnumsPost::FIELD_TITLE ;
 
     public array $translationable = [
-        "title",
-        "goal_post",
-        "content",
-        "excerpt",
-        "faq",
+        EnumsPost::FIELD_TITLE ,
+        EnumsPost::FIELD_FAQ ,
+        EnumsPost::FIELD_GOAL_POST,
+        EnumsPost::FIELD_CONTENT ,
+        EnumsPost::FIELD_EXCERPT ,
     ];
 
     ###################
