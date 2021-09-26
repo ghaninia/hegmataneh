@@ -4,7 +4,14 @@ namespace Tests\Unit\Services;
 
 use Tests\TestCase;
 use App\Models\Post;
+use App\Models\Term;
 use App\Models\Serial;
+use App\Models\Currency;
+use App\Models\Language;
+use App\Core\Enums\EnumsPost;
+use App\Core\Enums\EnumsTerm;
+use App\Core\Enums\EnumsSerial;
+use App\Core\Enums\EnumsEpisode;
 use App\Services\Serial\SerialService;
 use Tests\Configuration\Classes\Generate;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -23,12 +30,51 @@ class SerialTest extends TestCase
 
     public function test_create_new_serial()
     {
-        $serial = Serial::factory()->make();
         $user  = (new Generate)->user();
 
-        $result = $this->serialService->create($user, [
-            "title" => $serial->title,
-            "description" => $serial->description
+        $language = Language::factory()->create();
+        $currency = Currency::factory()->create();
+
+        $tags = Term::factory()->state(["type" => EnumsTerm::TYPE_TAG])->count(5)->create();
+        $tags = $tags->pluck("id")->toArray();
+
+        $categories = Term::factory()->state(["type" => EnumsTerm::TYPE_CATEGORY])->count(5)->create();
+        $categories = $categories->pluck("id")->toArray();
+
+        $posts = Post::factory()
+            ->for($user)
+            ->state(["type" => EnumsPost::TYPE_POST])
+            ->count(random_int(1, 3))
+            ->create();
+
+        $episodes = [];
+
+        $posts->each(function ($post) use (&$episodes, $language) {
+            $episodes[$post->id] = [
+                "translations" => [
+                    $language->id => [
+                        EnumsEpisode::FIELD_TITLE => $this->faker->title(),
+                        EnumsEpisode::FIELD_DESCRIPTION => $this->faker->text()
+                    ]
+                ]
+            ];
+        });
+
+        $result = $this->serialService->updateOrCreate($user, [
+            "episodes" => [],
+            "translations" => [
+                $language->id => [
+                    EnumsSerial::FIELD_TITLE => $this->faker->text(),
+                    EnumsSerial::FIELD_DESCRIPTION => $this->faker->text(),
+                ],
+            ],
+            "currencies" => [
+                $currency->id => [
+                    "price" => $this->faker->numerify("######")
+                ]
+            ],
+            "tags" => $tags,
+            "categories" => $categories,
         ]);
 
         $this->assertInstanceOf(Serial::class, $result);
@@ -39,16 +85,21 @@ class SerialTest extends TestCase
     {
         $user = (new Generate)->user();
         $serial = Serial::factory()->for($user)->create();
-        $posts  =  Post::factory()->for($user)->count(5)->create();
-
+        $posts = Post::factory()->for($user)->count(5)->create();
+        $language = Language::factory()->create() ;
+        
         $datas = [];
 
-        $posts->map(function ($post) use (&$datas) {
+        $posts->map(function ($post) use (&$datas , $language ) {
             $datas[$post->id] = [
-                "title" => $this->faker->title(),
                 "is_locked" => $this->faker->boolean(),
                 "priority" => $this->faker->numerify("#"),
-                "description" => $this->faker->realText()
+                "translations" => [
+                    $language->id => [
+                        EnumsEpisode::FIELD_TITLE => $this->faker->title() ,
+                        EnumsEpisode::FIELD_DESCRIPTION => $this->faker->text() 
+                    ]
+                ]
             ];
         });
 

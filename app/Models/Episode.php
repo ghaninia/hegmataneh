@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Core\Enums\EnumsEpisode;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\TranslationableInterface;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Episode extends Model implements TranslationableInterface
@@ -27,8 +27,8 @@ class Episode extends Model implements TranslationableInterface
     ];
 
     public array $translationable = [
-        "title",
-        "description",
+        EnumsEpisode::FIELD_TITLE,
+        EnumsEpisode::FIELD_DESCRIPTION,
     ];
 
     public $with = [

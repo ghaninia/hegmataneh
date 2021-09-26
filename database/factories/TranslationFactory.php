@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Serial;
+use App\Models\Translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SerialFactory extends Factory
+class TranslationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Serial::class;
+    protected $model = Translation::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,8 @@ class SerialFactory extends Factory
     public function definition()
     {
         return [
-         
+            "field" => $this->faker->slug(),
+            "trans" => $this->faker->realText()
         ];
     }
 }
