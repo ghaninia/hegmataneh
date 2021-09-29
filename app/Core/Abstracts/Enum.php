@@ -41,6 +41,15 @@ abstract class Enum
     }
 
     /*
+    ** تمام فیلدهای ثابت داخل کلاس
+    ** @return array
+    */
+    public static function field(): array
+    {
+        return self::reflaction("FIELD_");
+    }
+
+    /*
     ** تمام ثابت های داخل کلاس
     ** @return array
     */

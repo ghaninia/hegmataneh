@@ -7,11 +7,10 @@ use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsSort;
 use App\Core\Enums\EnumsAnchor;
 use App\Core\Enums\EnumsOption;
-use App\Repositories\Currency\CurrencyRepository;
-use App\Repositories\Language\LanguageRepository;
-use App\Services\Language\LanguageService;
 use Illuminate\Database\Seeder;
 use App\Core\Enums\EnumsAuthunticate;
+use App\Repositories\Currency\CurrencyRepository;
+use App\Repositories\Language\LanguageRepository;
 
 class OptionSeeder extends Seeder
 {

@@ -24,10 +24,10 @@ class Term extends Model implements SlugableInterface , TranslationableInterface
         "description",
     ];
 
-    public $with = [
-        "translations",
-        "slugs",
-    ];
+    // public $with = [
+    //     "translations",
+    //     "slugs",
+    // ];
 
     public string $slugable = EnumsTerm::FIELD_NAME ;
 

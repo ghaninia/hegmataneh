@@ -11,14 +11,17 @@ class Order extends Model
 
     protected $fillable = [
         "user_id",
+        "currency_id",
+        "gateway_id",
         "ipv4",
         "status",
         "ref_id",
         "transaction_id",
         "tracking_code",
-        "price"
+        "total_price", ### قیمت بدون احتساب تخفیف
+        "total_discount", ### مجموع تخفیف
+        "total_final_price", ### قیمت نهایی
     ];
-
 
     public $dates = [
         "deleted_at"
@@ -40,6 +43,10 @@ class Order extends Model
         return $this->belongsTo(OrderItem::class);
     }
 
+    public function gateway()
+    {
+        return $this->belongsTo(Gateway::class) ;
+    }
 
     ################
     #### SCOPES ####

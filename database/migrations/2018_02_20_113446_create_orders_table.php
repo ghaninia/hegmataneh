@@ -16,9 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id() ;
             $table->unsignedBigInteger("user_id")->index();
+            $table->unsignedBigInteger("gateway_id")->index();
             $table->ipAddress("ipv4");
             $table->string("status")->nullable();
-            $table->float("price", 20, 2);
+            $table->float("total_price", 20, 2);
+            $table->float("total_discount", 20, 2);
+            $table->float("total_final_price", 20, 2);
             $table->string("tracking_code")->nullable();
             $table->unsignedBigInteger("transaction_id")->nullable();
             $table->unsignedBigInteger('ref_id')->nullable();
