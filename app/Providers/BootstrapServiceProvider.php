@@ -51,6 +51,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Basket\BasketServiceInterface::class, \App\Services\Basket\BasketService::class);
         $this->app->bind(\App\Services\Guest\GuestServiceInterface::class, \App\Services\Guest\GuestService::class);
         $this->app->bind(\App\Services\Slug\SlugServiceInterface::class, \App\Services\Slug\SlugService::class);
+        $this->app->bind(\App\Services\Widget\WidgetServiceInterface::class, \App\Services\Widget\WidgetService::class);
         //:end-bindings:
     }
 }

@@ -11,7 +11,7 @@ class Contact extends Model
         "email",
         "phone",
         "question",
-        "ip",
+        "ipv4",
         "user_agent",
         "tracking_code"
     ];

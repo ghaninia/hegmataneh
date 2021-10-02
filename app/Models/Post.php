@@ -9,12 +9,13 @@ use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\SlugableInterface;
+use App\Core\Interfaces\ViewableInterface;
 use App\Core\Interfaces\BasktableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Post extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface
+class Post extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface , ViewableInterface
 {
 
     use

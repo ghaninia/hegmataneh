@@ -30,12 +30,6 @@ class PostFactory extends Factory
             "vote_status" => $this->faker->boolean() ,
             "format" => $format = Arr::random(EnumsPost::format()),
             "development" => $this->faker->numberBetween(0,100),
-            // "title" => $this->faker->realText(50) ,
-            // "goal_post" => $this->faker->realText(100),
-            // "slug" => $this->faker->unique()->slug() ,
-            // "content" => $this->faker->realText(500),
-            // "excerpt" => $this->faker->realText(100),
-
             "published_at" => $this->faker->dateTime() ,
             "created_at"   => $this->faker->dateTime()
         ];

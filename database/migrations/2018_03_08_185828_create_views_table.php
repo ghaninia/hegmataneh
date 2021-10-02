@@ -14,13 +14,15 @@ class CreateViewsTable extends Migration
     public function up()
     {
         Schema::create('views', function (Blueprint $table) {
-            $table->id() ;
-            $table->unsignedBigInteger("viewable_id") ;
-            $table->string("viewable_type") ;
-            $table->unsignedBigInteger("user_id")->index()->nullable() ;
-            $table->ipAddress("user_ip") ;
-            $table->boolean("marked")->default(false);
+            $table->id();
+            $table->morphs("viewable");
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->ipAddress("ipv4")->nullable();
             $table->timestamps();
+
+            $table->index([
+                "user_id", "ipv4"
+            ]);
         });
     }
 

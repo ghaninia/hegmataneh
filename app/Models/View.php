@@ -8,15 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class View extends Model
 {
-
     use HasFilterTrait , HasFactory;
 
     protected $fillable = [
         'viewable_id',
         'viewable_type',
         'user_id',
-        'user_ip',
-        'marked'
+        'ipv4',
     ];
 
     ###################

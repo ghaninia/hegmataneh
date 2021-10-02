@@ -3,8 +3,8 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
 use App\Core\Traits\ExteraQueriesTrait;
+use App\Repositories\User\UserRepositoryInterface;
 use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface

@@ -20,7 +20,7 @@ class CreateContactsTable extends Migration
             $table->string("email")->nullable();
             $table->string("phone")->nullable();
             $table->text('question') ;
-            $table->ipAddress("ip") ;
+            $table->ipAddress("ipv4") ;
             $table->text('user_agent') ;
             $table->timestamps();
         });
