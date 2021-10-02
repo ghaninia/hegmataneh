@@ -24,7 +24,7 @@ class DetailUserViewStore extends FormRequest
     public function rules()
     {
         return [
-            "user_ip" => ["nullable" , "ipv4"]
+            "ipv4" => ["nullable" , "ipv4"]
         ];
     }
 }

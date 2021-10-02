@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     protected $fillable = [
-        'user_ip',
+        'ipv4',
         'user_id',
         'ipv4',
         'like',

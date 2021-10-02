@@ -14,7 +14,7 @@ class CreateLikesTable extends Migration
             $table->unsignedBigInteger("likeable_id") ;
             $table->string("likeable_type") ;
             $table->unsignedBigInteger("user_id")->nullable()->index() ;
-            $table->ipAddress("user_ip")->nullable() ;
+            $table->ipAddress("ipv4")->nullable() ;
             $table->boolean("like")->default(false) ;
             $table->boolean("unlike")->default(false) ;
             $table->timestamps() ;

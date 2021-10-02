@@ -17,7 +17,7 @@ class ViewResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "ipv4" => $this->user_ip,
+            "ipv4" => $this->ipv4,
             "viewable" => $this->whenLoaded("viewable"),
             "user" => new UserResource($this->whenLoaded("user")),
             "created_at" => $this->created_at

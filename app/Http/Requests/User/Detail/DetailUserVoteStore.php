@@ -25,7 +25,7 @@ class DetailUserVoteStore extends FormRequest
     {
         return [
             "post_id" => ["nullable" , "numeric" , "exists:posts"] ,
-            "user_ip" => ["nullable" , "ipv4"]
+            "ipv4" => ["nullable" , "ipv4"]
         ];
     }
 }

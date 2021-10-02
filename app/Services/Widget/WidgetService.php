@@ -92,12 +92,8 @@ class WidgetService implements WidgetServiceInterface
 
     /**
      * نمودار فعالیت جدول پست ها
-     * @param Carbon $from 
-     * @param Carbon $to 
-     * @param string $type 
-     * @param string $status
      */
-    public function chartPosts(Carbon $from = null, Carbon $to = null, string $type = null, string $status = null)
+    public function chartPosts(array $filters = [])
     {
         return
             $this->postRepo->query()
@@ -105,21 +101,7 @@ class WidgetService implements WidgetServiceInterface
                 DB::raw("COUNT(*) AS count"),
                 DB::raw('DATE_FORMAT(created_at , "%Y-%m-%d %H:%I") AS date')
             ])
-            ->when($this->user, function ($query) {
-                $query->where("user_id", $this->user->id);
-            })
-            ->when($type, function ($query) use ($type) {
-                $query->where("type", $type);
-            })
-            ->when($status, function ($query) use ($status) {
-                $query->where("status", $status);
-            })
-            ->when($from, function ($query) use ($from) {
-                $query->where("created_at", ">=", $from);
-            })
-            ->when($to, function ($query) use ($to) {
-                $query->where("created_at", "<=", $to);
-            })
+            ->filterBy($filters)
             ->groupBy("date")
             ->withOnly([])
             ->get();

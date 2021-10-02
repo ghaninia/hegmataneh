@@ -47,7 +47,7 @@ class UserController extends Controller
         $productService,
         $pageService,
         $skillService,
-        $portfolioService ,
+        $portfolioService,
         $commentService;
 
     public function __construct(
@@ -58,7 +58,7 @@ class UserController extends Controller
         ProductService $productService,
         PageService $pageService,
         SkillService $skillService,
-        PortfolioService $portfolioService ,
+        PortfolioService $portfolioService,
         CommentService $commentService
     ) {
         $this->userService = $userService;
@@ -68,8 +68,8 @@ class UserController extends Controller
         $this->productService = $productService;
         $this->pageService = $pageService;
         $this->skillService = $skillService;
-        $this->portfolioService = $portfolioService ;
-        $this->commentService = $commentService ;
+        $this->portfolioService = $portfolioService;
+        $this->commentService = $commentService;
     }
 
     /**
@@ -161,9 +161,9 @@ class UserController extends Controller
     {
 
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
-                "user", "user_ip"
+                "user", "ipv4"
             ])
         );
 
@@ -183,9 +183,9 @@ class UserController extends Controller
     {
 
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
-                "user", "user_ip", "post_id"
+                "user", "ipv4", "post_id"
             ])
         );
 
@@ -204,7 +204,7 @@ class UserController extends Controller
     public function posts(User $user, DetailUserPostStore $request): JsonResource
     {
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
                 "user",
                 "status",
@@ -214,7 +214,7 @@ class UserController extends Controller
                 "slug",
                 "title",
                 "content",
-                "created_at" ,
+                "created_at",
             ])
         );
 
@@ -233,7 +233,7 @@ class UserController extends Controller
     public function products(User $user, DetailUserProductStore $request): JsonResource
     {
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
                 "user",
                 "status",
@@ -262,7 +262,7 @@ class UserController extends Controller
     public function pages(User $user, DetailUserPageStore $request): JsonResource
     {
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
                 "user",
                 "status",
@@ -290,7 +290,7 @@ class UserController extends Controller
     public function skills(User $user, DetailUserSkillStore $request): JsonResource
     {
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
                 "title_fa",
                 "title_en",
@@ -311,7 +311,7 @@ class UserController extends Controller
     public function portfolios(User $user, DetailUserPortfolioStore $request): JsonResource
     {
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
                 "name",
                 "description",
@@ -337,7 +337,7 @@ class UserController extends Controller
     public function comments(User $user, DetailUserCommentStore $request): JsonResource
     {
         $filters = array_merge(
-            ["user" => $user->id],
+            ["user" => ["id" => $user->id]],
             $request->only([
                 'comment_id',
                 'post_id',
@@ -355,5 +355,4 @@ class UserController extends Controller
             $this->commentService->list($filters)
         );
     }
-
 }

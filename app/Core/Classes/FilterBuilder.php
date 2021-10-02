@@ -27,7 +27,6 @@ class FilterBuilder
             if (!class_exists($class)) {
                 continue;
             }
-
             ########################
             ### range method handler
             ########################

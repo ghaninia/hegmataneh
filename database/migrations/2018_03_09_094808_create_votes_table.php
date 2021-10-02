@@ -17,7 +17,7 @@ class CreateVotesTable extends Migration
             $table->id() ;
             $table->unsignedBigInteger("post_id")->index() ;
             $table->unsignedBigInteger("user_id")->index()->nullable() ;
-            $table->ipAddress("user_ip") ;
+            $table->ipAddress("ipv4") ;
             $table->integer("vote") ;
             $table->timestamps();
         });

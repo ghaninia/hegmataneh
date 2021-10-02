@@ -33,8 +33,7 @@ class ViewFactory extends Factory
         return [
             "viewable_id" => $class->id,
             "viewable_type" => $class->getMorphClass(),
-            "user_ip" => $this->faker->ipv4(),
-            "marked" => $this->faker->boolean() ,
+            "ipv4" => $this->faker->ipv4(),
             "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
         ];
     }

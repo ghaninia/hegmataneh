@@ -24,7 +24,7 @@ class VoteFactory extends Factory
     {
         $post = Post::inRandomOrder()->first() ;
         return [
-            'user_ip' => $this->faker->ipv4(),
+            'ipv4' => $this->faker->ipv4(),
             'post_id' => $post->id ,
             'vote' => $this->faker->numberBetween(1,5) ,
             "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')

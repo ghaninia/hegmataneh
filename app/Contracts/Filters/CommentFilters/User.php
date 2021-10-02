@@ -9,6 +9,9 @@ class User extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {
-        $this->query->where('user_id', $value);
+        $this->query->whereHas(
+            "user",
+            fn ($query) => $query->filterBy($value)
+        );
     }
 }

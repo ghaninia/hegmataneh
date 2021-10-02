@@ -17,7 +17,7 @@ class VoteResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            'user_ip' => $this->user_ip,
+            'ipv4' => $this->ipv4,
             'vote' => $this->vote,
             'user' => new UserResource($this->whenLoaded("user")),
             'post' => new UserResource($this->whenLoaded("post")),
