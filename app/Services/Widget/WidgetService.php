@@ -2,28 +2,30 @@
 
 namespace App\Services\Widget;
 
-use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Post\PostRepository;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
+use App\Repositories\View\ViewRepository;
 use App\Services\Widget\WidgetServiceInterface;
 
 class WidgetService implements WidgetServiceInterface
 {
-    protected $postRepo, $userRepo, $roleRepo;
+    protected $postRepo, $userRepo, $roleRepo, $viewRepo;
     private $user;
 
     public function __construct(
         PostRepository $postRepo,
         UserRepository $userRepo,
-        RoleRepository $roleRepo
+        RoleRepository $roleRepo,
+        ViewRepository $viewRepo
     ) {
         $this->postRepo = $postRepo;
         $this->userRepo = $userRepo;
         $this->roleRepo = $roleRepo;
+        $this->viewRepo = $viewRepo;
     }
 
     /**
@@ -97,6 +99,23 @@ class WidgetService implements WidgetServiceInterface
     {
         return
             $this->postRepo->query()
+            ->select([
+                DB::raw("COUNT(*) AS count"),
+                DB::raw('DATE_FORMAT(created_at , "%Y-%m-%d %H:%I") AS date')
+            ])
+            ->filterBy($filters)
+            ->groupBy("date")
+            ->withOnly([])
+            ->get();
+    }
+
+    /**
+     * نمودار فعالیت جدول بازدید ها
+     */
+    public function chartViews(array $filters = [])
+    {
+        return
+            $this->viewRepo->query()
             ->select([
                 DB::raw("COUNT(*) AS count"),
                 DB::raw('DATE_FORMAT(created_at , "%Y-%m-%d %H:%I") AS date')

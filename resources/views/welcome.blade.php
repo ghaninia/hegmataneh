@@ -134,7 +134,7 @@
         <h1 class="shock" data-label="AMEN">AMEN</h1>
         <ul>
             <li>
-                <a href="https://github.com/ghaninia/amen">github</a>
+                <a href="https://github.com/ghaninia/hegmataneh">github</a>
             </li>
             <li>
                 <a href="https://documenter.getpostman.com/view/14577533/TzmBCtDy">api Document</a>

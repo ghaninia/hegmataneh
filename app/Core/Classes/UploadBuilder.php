@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 abstract class UploadBuilder
 {
+    private const SALT = "_*_._*_._*_";
     private string $basePath = "uploads";
     public $user, $file, $usage;
 
@@ -114,8 +115,16 @@ abstract class UploadBuilder
      */
     public function basePath(): string
     {
-        $userPath = $this->trimSeparator($this->userPath());
+
+        $userPath = $this->userPath();
+
+        ### append salt :)
+        $userPath = md5(self::SALT . $userPath);
+
+        $userPath = $this->trimSeparator($userPath);
+
         $path  = $this->addSeparator($this->basePath);
+
         $path .= !!$userPath ? $this->addSeparator($userPath) : NULL;
 
         return Storage::path($path);
