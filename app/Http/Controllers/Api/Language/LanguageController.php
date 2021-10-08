@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Language\Api;
+namespace App\Http\Controllers\Api\Language;
 
 use App\Models\Language;
 use App\Http\Controllers\Controller;
