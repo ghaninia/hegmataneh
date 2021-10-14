@@ -10,12 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\ViewableInterface;
+use App\Core\Interfaces\VoteableInterface;
 use App\Core\Interfaces\BasktableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Post extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface , ViewableInterface
+class Post extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface, ViewableInterface, VoteableInterface
 {
 
     use
@@ -55,14 +56,14 @@ class Post extends Model implements BasktableInterface, TranslationableInterface
         "slugs",
     ];
 
-    public string $slugable = EnumsPost::FIELD_TITLE ;
+    public string $slugable = EnumsPost::FIELD_TITLE;
 
     public array $translationable = [
-        EnumsPost::FIELD_TITLE ,
-        EnumsPost::FIELD_FAQ ,
+        EnumsPost::FIELD_TITLE,
+        EnumsPost::FIELD_FAQ,
         EnumsPost::FIELD_GOAL_POST,
-        EnumsPost::FIELD_CONTENT ,
-        EnumsPost::FIELD_EXCERPT ,
+        EnumsPost::FIELD_CONTENT,
+        EnumsPost::FIELD_EXCERPT,
     ];
 
     ###################
@@ -111,7 +112,7 @@ class Post extends Model implements BasktableInterface, TranslationableInterface
 
     public function votes()
     {
-        return $this->hasMany(Vote::class);
+        return $this->morphMany(Vote::class, "voteable");
     }
 
     public function comments()

@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AMEN</title>
+    <title>hegmataneh</title>
     <style>
         @media screen {
             body , html {
                 margin : 0 ;
                 height: 100% ;
-                background : #0000009a
+                background: #FF416C;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #FF4B2B, #FF416C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             }
             a , body {
                 font-family: Verdana ;
@@ -127,11 +129,22 @@
             }
 
         }
+        @media(max-width : 720px){
+            .shock {
+                font-size : 20px ;
+                margin: 20px auto;
+            }
+            .centeral ul li a{
+                padding: 2px 10px;
+                font-size: 10px;
+                border-radius: 4px;
+            }
+        }
     </style>
 </head>
 <body>
     <section class="centeral">
-        <h1 class="shock" data-label="AMEN">AMEN</h1>
+        <h1 class="shock" data-label="HEGMAT">HEGMAT</h1>
         <ul>
             <li>
                 <a href="https://github.com/ghaninia/hegmataneh">github</a>

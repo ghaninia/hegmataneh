@@ -9,7 +9,6 @@ class Like extends Model
     protected $fillable = [
         'ipv4',
         'user_id',
-        'ipv4',
         'like',
         'unlike'
     ];
