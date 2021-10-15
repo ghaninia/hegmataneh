@@ -4,48 +4,72 @@ namespace App\Core\Classes;
 
 use Illuminate\Support\Str;
 
+
 class FilterBuilder
 {
-    protected $query;
-    protected $filters;
-    protected $namespace;
-
-    public function __construct($query, array $filters, string $namespace)
-    {
+    public function __construct(
+        protected $query,
+        protected array $filters,
+        protected string $namespace,
+        protected bool $sensitiveNullValue
+    ) {
         $this->query = $query;
         $this->filters = $filters;
         $this->namespace = $namespace;
+        $this->sensitiveNullValue = $sensitiveNullValue;
     }
 
     public function apply()
     {
         foreach ($this->filters as $name => $value) {
-            $normailizedName = Str::camel($name);
-            $normailizedName = Str::ucfirst($normailizedName);
-            $class = $this->namespace . "\\{$normailizedName}";
+
+            $normailizedName = ucwords(Str::camel($name));
+
+            $class = sprintf("%s\\%s", $this->namespace, $normailizedName);
 
             if (!class_exists($class)) {
                 continue;
             }
-            ########################
-            ### range method handler
-            ########################
 
-            if (
-                is_array($value) &&
-                method_exists($class, "rangeHandle") &&
-                !! $range = $this->rangeSupport($value)
-            ) {
-                (new $class($this->query))->rangeHandle($range);
-                continue;
+            ###########################
+            ### حساسیت به نال نداشته باشد
+            ###########################
+
+            if (!$this->sensitiveNullValue) {
+                if (is_array($value)) {
+                    $value = array_filter($value, fn ($item) => !!$item);
+                } elseif (
+                    is_string($value) && is_null($value)
+                ) {
+                    continue;
+                }
             }
 
-            #######################
-            ### default method
-            #######################
-            (new $class($this->query))->handle($value);
 
+            ########################
+            ### در صورتی که بازده باشد آنگاه اعمال شود
+            ########################
+
+            if (is_array($value)) {
+                if (
+                    !!($range = $this->rangeFilter($value)) &&
+                    method_exists($class, "rangeHandle")
+                ) {
+
+                    (new $class($this->query))->rangeHandle($range);
+
+                    continue;
+                }
+            }
+
+
+            ########################
+            ### در صورتی که غیر بازده باشد اعمال شود
+            ########################
+
+            empty($value) ?: (new $class($this->query))->handle($value);
         }
+
         return $this->query;
     }
 
@@ -55,17 +79,17 @@ class FilterBuilder
      * @param array $keys
      * @return ?array
      */
-    private function rangeSupport(array $keys): ?array
+    private function rangeFilter(array $keys): ?array
     {
         $filters = [];
 
-        foreach ($keys as $key => $value) {
-            if (!!$operator = $this->operator($key)) {
+        array_walk($keys, function ($value, $key) use (&$filters) {
+            if ($operator = $this->operator($key)) {
                 $filters[] = [
                     $operator, $value
                 ];
             }
-        }
+        });
 
         return count($filters) ? $filters : null;
     }

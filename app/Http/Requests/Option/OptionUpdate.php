@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsSort;
-use App\Core\Enums\EnumsAnchor;
+use App\Core\Enums\EnumsSystem;
 use App\Core\Enums\EnumsOption;
 use Illuminate\Validation\Rule;
 use App\Core\Enums\EnumsAuthunticate;
@@ -125,7 +125,7 @@ class OptionUpdate extends FormRequest
             EnumsOption::CAN_LIKE_COMMENTS . ".*" =>  ["required", Rule::in(EnumsAuthunticate::type()) ] ,
             ### توانایی لایک برای چه کسایی وجود دارد؟
             EnumsOption::LIKE_ITEMS_ENABLE  => ["nullable", "array"],
-            EnumsOption::LIKE_ITEMS_ENABLE.".*"  => ["required", Rule::in(EnumsAnchor::type())],
+            EnumsOption::LIKE_ITEMS_ENABLE.".*"  => ["required", Rule::in(EnumsSystem::type())],
             ### افراد میتوانند لایک های خود را عوض کنند؟
             EnumsOption::MEMBER_CAN_EDIT_LIKE  => ["nullable", "boolean"],
             ### لوگو

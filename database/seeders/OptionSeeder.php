@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Option;
 use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsSort;
-use App\Core\Enums\EnumsAnchor;
+use App\Core\Enums\EnumsSystem;
 use App\Core\Enums\EnumsOption;
 use Illuminate\Database\Seeder;
 use App\Core\Enums\EnumsAuthunticate;
@@ -256,7 +256,7 @@ class OptionSeeder extends Seeder
             [
                 ### توانایی لایک برای چه کسایی وجود دارد؟
                 'key' => EnumsOption::LIKE_ITEMS_ENABLE,
-                'default' => EnumsAnchor::type()
+                'default' => EnumsSystem::type()
             ],
             [
                 ### افراد میتوانند لایک های خود را عوض کنند؟

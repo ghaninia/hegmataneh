@@ -15,9 +15,9 @@ class CreateGatewaysTable extends Migration
     {
         Schema::create('gateways', function (Blueprint $table) {
             $table->id();
-            $table->string("key")->unique() ;
-            $table->string("name") ;
-            $table->unsignedBigInteger("currency_id")->index();
+            $table->string("code")->unique();
+            $table->boolean("status")->default(TRUE);
+            $table->string("name");
             $table->timestamps();
         });
     }

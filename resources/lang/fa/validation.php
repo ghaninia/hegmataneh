@@ -166,6 +166,8 @@ return [
         "episodes.*.priority" => "اولویت اپیزود",
 
 
+        "currencies" => "قیمت گذاری" ,
+        "currencies.*" => "قیمت گذاری" ,
         "currencies.*.price" => "قیمت",
         "currencies.*.amazing_price" => "قیمت شگفت انگیز",
         "currencies.*.amazing_from_date" => "تاریخ شروع شگفت انگیز",

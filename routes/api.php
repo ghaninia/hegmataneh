@@ -9,13 +9,15 @@ use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Skill\SkillController;
 use App\Http\Controllers\Api\Post\ProductController;
+use App\Http\Controllers\Api\Basket\BasketController;
 use App\Http\Controllers\Api\Option\OptionController;
 use App\Http\Controllers\Api\Serial\SerialController;
 use App\Http\Controllers\Api\Term\CategoryController;
-use App\Http\Controllers\Api\Language\LanguageController;
+use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
 use App\Http\Controllers\Api\Currency\CurrencyController;
-use App\Http\Controllers\Api\Basket\BasketController ;
+use App\Http\Controllers\Api\Language\LanguageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -55,13 +57,19 @@ Route::group([
 
     ##############
     ##############
-    ##############
     ### role route
     ##############
     ##############
     Route::apiResource("role", RoleController::class);
 
+
     ##############
+    ##############
+    ### role route
+    ##############
+    ##############
+    Route::apiResource("gateway", GatewayController::class);
+
     ##############
     ##############
     ### language route
@@ -69,7 +77,6 @@ Route::group([
     ##############
     Route::apiResource("language", LanguageController::class);
 
-    ##############
     ##############
     ##############
     ### currency route
@@ -87,15 +94,6 @@ Route::group([
         "prefix" => "user/{user}",
         "as" => "user."
     ], function () {
-        Route::get("views", [UserController::class, "views"])->name("views");
-        Route::get("votes", [UserController::class, "votes"])->name("votes");
-        Route::get("posts", [UserController::class, "posts"])->name("posts");
-        Route::get("pages", [UserController::class, "pages"])->name("pages");
-        Route::get("products", [UserController::class, "products"])->name("products");
-        Route::get("skills", [UserController::class, "skills"])->name("skills");
-        Route::get("portfolios", [UserController::class, "portfolios"])->name("portfolios");
-        Route::get("comments", [UserController::class, "comments"])->name("comments");
-
         ########
         ### page
         ########
@@ -151,7 +149,6 @@ Route::group([
     #########
     Route::apiResource("skill", SkillController::class);
 
-
     ########
     ### file
     ########
@@ -166,19 +163,18 @@ Route::group([
 });
 
 
-Route::name("guest.")->group(function(){
+Route::name("guest.")->group(function () {
     Route::group([
-        "as" => "basket." ,
+        "as" => "basket.",
         "prefix" => "basket"
-    ], function(){
+    ], function () {
 
         Route::group([
-            "prefix" => "append" ,
+            "prefix" => "append",
             "as" => "append."
-        ] , function(){
-            Route::get("product/{product}" , [BasketController::class , "append"]  )->name("product") ;
-            Route::get("serial/{serial}" , [BasketController::class , "append"]  )->name("serial") ;
+        ], function () {
+            Route::get("product/{product}", [BasketController::class, "append"])->name("product");
+            Route::get("serial/{serial}", [BasketController::class, "append"])->name("serial");
         });
-
     });
 });

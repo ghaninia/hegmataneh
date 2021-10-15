@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Currency extends Model
 {
-    use HasFactory , HasFilterTrait;
+    use HasFactory, HasFilterTrait;
 
     protected $fillable = [
         "name",
@@ -20,5 +20,10 @@ class Currency extends Model
     public function prices()
     {
         return $this->hasMany(Price::class);
+    }
+
+    public function gateways()
+    {
+        return $this->belongsToMany(Gateway::class);
     }
 }
