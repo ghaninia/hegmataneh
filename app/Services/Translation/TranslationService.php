@@ -28,6 +28,8 @@ class TranslationService implements TranslationServiceInterface
             ->translations()
             ->delete();
 
+        $instaces = [];
+
         foreach ($translations as $language => $trans)
             foreach ($fields as $field)
                 if (array_key_exists($field, $trans)) {

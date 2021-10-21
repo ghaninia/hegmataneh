@@ -2,7 +2,6 @@
 
 namespace App\Services\Basket;
 
-use App\Models\Currency;
 use App\Models\User;
 use App\Models\Basketable;
 use Illuminate\Http\Request;

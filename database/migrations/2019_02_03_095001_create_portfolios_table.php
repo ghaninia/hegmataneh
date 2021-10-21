@@ -16,13 +16,9 @@ class CreatePortfoliosTable extends Migration
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id() ;
             $table->unsignedBigInteger("user_id") ;
-            $table->unsignedBigInteger("file_id")->nullable() ;
-            $table->string("name") ;
-            $table->text("description") ;
-            $table->text("excerpt")->nullable() ;
             $table->integer("percent")->default(0) ;
             $table->text("demo")->nullable() ;
-            $table->timestamp("started_at")->nullable() ;
+            $table->timestamp("launched_at")->nullable() ;
             $table->timestamps();
         });
     }

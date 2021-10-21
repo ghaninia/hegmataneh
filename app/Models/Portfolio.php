@@ -2,22 +2,29 @@
 
 namespace App\Models;
 
+use App\Core\Enums\EnumsPortfolio;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Portfolio extends Model
+class Portfolio extends Model implements TranslationableInterface
 {
-    use HasFactory , HasFilterTrait ;
+    use HasFactory, HasFilterTrait, HasTranslationTrait;
 
     protected $fillable = [
         "user_id",
-        "name",
-        "description",
         "demo",
-        "excerpt",
         "percent",
         "launched_at"
+    ];
+
+    public array $translationable = [
+        EnumsPortfolio::FIELD_NAME,
+        EnumsPortfolio::FIELD_SUB_NAME,
+        EnumsPortfolio::FIELD_CONTENT,
+        EnumsPortfolio::FIELD_EXCERPT,
     ];
 
     protected $dates = [

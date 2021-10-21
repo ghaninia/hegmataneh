@@ -166,8 +166,8 @@ return [
         "episodes.*.priority" => "اولویت اپیزود",
 
 
-        "currencies" => "قیمت گذاری" ,
-        "currencies.*" => "قیمت گذاری" ,
+        "currencies" => "قیمت گذاری",
+        "currencies.*" => "قیمت گذاری",
         "currencies.*.price" => "قیمت",
         "currencies.*.amazing_price" => "قیمت شگفت انگیز",
         "currencies.*.amazing_from_date" => "تاریخ شروع شگفت انگیز",
@@ -181,19 +181,20 @@ return [
         "translations.*.faq" => "دستورالعمل",
         "translations.*.excerpt" => "خلاصه مطلب",
         "translations.*.content" => "داستان",
-        "translations.*.name" => "نام" ,
-        "translations.*.description" => "توضیحات" ,
+        "translations.*.name" => "نام",
+        "translations.*.description" => "توضیحات",
+        "translations.*.sub_name" => "نام مختصر",
 
         "translations" => "زبان",
 
-        "episodes.*.translations" => "ترجمه اپیزود" ,
+        "episodes.*.translations" => "ترجمه اپیزود",
         "episodes.*.translations.*.title" => "تیتر",
         "episodes.*.translations.*.description" => "توضیحات",
 
-        "price.gte" => "قیمت" ,
-        "price.gt" => "قیمت" ,
-        "price.lt" => "قیمت" ,
-        "price.lte" => "قیمت" ,
+        "price.gte" => "قیمت",
+        "price.gt" => "قیمت",
+        "price.lt" => "قیمت",
+        "price.lte" => "قیمت",
     ],
 
 ];

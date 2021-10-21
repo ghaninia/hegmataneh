@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Authunticate\AuthController;
 use App\Http\Controllers\Api\Currency\CurrencyController;
 use App\Http\Controllers\Api\Language\LanguageController;
+use App\Http\Controllers\Api\Portfolio\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,49 +56,53 @@ Route::group([
     ]
 ], function () {
 
-    ##############
+
     ##############
     ### role route
-    ##############
     ##############
     Route::apiResource("role", RoleController::class);
 
 
-    ##############
+
     ##############
     ### role route
     ##############
-    ##############
     Route::apiResource("gateway", GatewayController::class);
 
-    ##############
+
     ##############
     ### language route
-    ##############
     ##############
     Route::apiResource("language", LanguageController::class);
 
     ##############
-    ##############
     ### currency route
-    ##############
     ##############
     Route::apiResource("currency", CurrencyController::class);
 
     ##############
-    ##############
     ### user route
-    ##############
     ##############
     Route::apiResource("user", UserController::class);
     Route::group([
         "prefix" => "user/{user}",
         "as" => "user."
     ], function () {
+
+        ############
+        ### portfolio
+        ############
+        Route::apiResource("portfolio", PortfolioController::class);
+
+
         ########
         ### page
         ########
         Route::apiResource("page", PageController::class);
+
+        ########
+        ### post
+        ########
         Route::apiResource("post", PostController::class);
         Route::group([
             "prefix" => "post/{post}",
@@ -106,7 +111,15 @@ Route::group([
             Route::delete("force", [PostController::class, "forceDelete"])->name("force");
             Route::post("restore", [PostController::class, "restore"])->name("restore");
         });
+
+        ##########
+        ### serial
+        ##########
         Route::apiResource("serial", SerialController::class);
+
+        ###########
+        ### product
+        ###########
         Route::apiResource("product", ProductController::class);
         Route::group([
             "prefix" => "product/{product}",
@@ -118,16 +131,12 @@ Route::group([
     });
 
     #######
-    #######
     ### tag
-    #######
     #######
     Route::apiResource("tag", TagController::class);
 
     ############
-    ############
     ### category
-    ############
     ############
     Route::apiResource("category", CategoryController::class);
 
@@ -143,9 +152,7 @@ Route::group([
     });
 
     #########
-    #########
     ### skill
-    #########
     #########
     Route::apiResource("skill", SkillController::class);
 

@@ -47,6 +47,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\PostSerial\PostSerialRepositoryInterface::class, \App\Repositories\PostSerial\PostSerialRepository::class);
         $this->app->bind(\App\Repositories\Episode\EpisodeRepositoryInterface::class, \App\Repositories\Episode\EpisodeRepository::class);
         $this->app->bind(\App\Repositories\Gateway\GatewayRepositoryInterface::class, \App\Repositories\Gateway\GatewayRepository::class);
+        $this->app->bind(\App\Repositories\Experience\ExperienceRepositoryInterface::class, \App\Repositories\Experience\ExperienceRepository::class);
         //:end-bindings:
     }
 }

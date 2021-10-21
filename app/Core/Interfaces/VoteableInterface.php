@@ -2,7 +2,7 @@
 
 namespace App\Core\Interfaces;
 
-interface VoteableInterface
+interface VoteableInterface extends ModelableInterface
 {
     public function votes();
 }

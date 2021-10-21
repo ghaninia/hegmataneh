@@ -2,9 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
 use App\Models\User;
-use App\Services\Access\AccessService;
+use App\Models\Serial;
+use App\Models\Portfolio;
+use App\Policies\PostPolicy;
+use App\Policies\SerialPolicy;
 use Laravel\Passport\Passport;
+use App\Policies\PortfolioPolicy;
+use App\Services\Access\AccessService;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,7 +21,11 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [];
+    protected $policies = [
+        Post::class => PostPolicy::class,
+        Portfolio::class => PortfolioPolicy::class,
+        Serial::class => SerialPolicy::class,
+    ];
 
     /**
      * Register any authentication / authorization services.
@@ -26,6 +36,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        ############
+        ### GATE ###
+        ############
+
         $gate->define("f_ability", function (User $user, ...$permissions) {
             return
                 app(AccessService::class)
@@ -34,8 +48,10 @@ class AuthServiceProvider extends ServiceProvider
                 ->fullAbility();
         });
 
-        if (!$this->app->routesAreCached()) {
-            Passport::routes();
-        }
+        #######################
+        ### Passport Routes ###
+        #######################
+
+        Passport::routes();
     }
 }

@@ -22,12 +22,9 @@ class PortfolioFactory extends Factory
     public function definition()
     {
         return [
-            "name" => $this->faker->company() ,
-            "description" => $this->faker->realText(100) ,
-            "demo" => $this->faker->url ,
-            "excerpt" => $this->faker->realText(300),
-            "percent" => $this->faker->numberBetween(0,100),
-            "started_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
+            "demo" => $this->faker->url,
+            "percent" => $this->faker->numberBetween(0, 100),
+            "launched_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
         ];
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Core\Interfaces;
 
-interface SlugableInterface
+interface SlugableInterface extends ModelableInterface
 {
     public function slugs();
-    public function getMorphClass() ;
 }

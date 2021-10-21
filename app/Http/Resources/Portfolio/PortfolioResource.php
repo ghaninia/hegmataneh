@@ -4,6 +4,7 @@ namespace App\Http\Resources\Portfolio;
 
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Translation\TranslationCollection;
 
 class PortfolioResource extends JsonResource
 {
@@ -16,15 +17,13 @@ class PortfolioResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id ,
-            "name" => $this->name ,
-            "description" => $this->description ,
-            "demo" => $this->demo ,
-            "excerpt" => $this->excerpt ,
-            "percent" => $this->percent ,
-            "launched_at" => $this->launched_at ,
-            "created_at" => $this->created_at ,
-            "user" => new UserResource( $this->whenLoaded("user"))
+            "id" => $this->id,
+            "demo" => $this->demo,
+            "percent" => $this->percent,
+            "launched_at" => $this->launched_at,
+            "created_at" => $this->created_at,
+            "user" => new UserResource($this->whenLoaded("user")),
+            "translations" => new TranslationCollection($this->whenLoaded("translations")),
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Core\Interfaces;
 
-interface ViewableInterface
+interface ViewableInterface extends ModelableInterface
 {
     public function views();
 }
