@@ -56,19 +56,15 @@ Route::group([
     ]
 ], function () {
 
-
     ##############
     ### role route
     ##############
     Route::apiResource("role", RoleController::class);
 
-
-
     ##############
-    ### role route
+    ### gatway route
     ##############
     Route::apiResource("gateway", GatewayController::class);
-
 
     ##############
     ### language route
@@ -93,7 +89,6 @@ Route::group([
         ### portfolio
         ############
         Route::apiResource("portfolio", PortfolioController::class);
-
 
         ########
         ### page
@@ -143,6 +138,7 @@ Route::group([
     ###########
     ### options
     ###########
+    
     Route::group([
         "prefix" => "option",
         "as" => "option.",
@@ -183,5 +179,6 @@ Route::name("guest.")->group(function () {
             Route::get("product/{product}", [BasketController::class, "append"])->name("product");
             Route::get("serial/{serial}", [BasketController::class, "append"])->name("serial");
         });
+
     });
 });

@@ -2,23 +2,47 @@
 
 namespace App\Services\File;
 
+use App\Core\Interfaces\FileableInterface;
 use App\Services\Upload\UploadService;
 use App\Repositories\File\FileRepository;
+use App\Repositories\Fileable\FileableRepository;
 use App\Services\File\FileServiceInterface;
 
 class FileService implements FileServiceInterface
 {
-    protected $uploadService, $fileRepo;
+
+    public function __construct(
+        protected UploadService $uploadService,
+        protected FileableRepository $fileableRepo,
+        protected FileRepository $fileRepo
+    ) {
+    }
 
     /**
-     * @param UploadService $uploadService
+     * 
+     * @param FileableInterface $fileable
+     * @param array|int|null $files
+     * @param string $usage
      */
-    public function __construct(
-        UploadService $uploadService,
-        FileRepository $fileRepo
-    ) {
-        $this->uploadService = $uploadService;
-        $this->fileRepo = $fileRepo;
+    public function fileables(FileableInterface $fileable, array|int|null $files, string $usage)
+    {
+
+        $fileable->files()->where("usage", $usage)->each->delete();
+
+        $files = is_int($files) ? [$files] : $files;
+
+        if (is_null($files)) return;
+
+        $files =
+            array_map(fn ($file) => [
+                "file_id" => $file,
+                "fileable_type" => $fileable->getMorphClass(),
+                "fileable_id" => $fileable->id,
+                "usage" => $usage,
+            ], $files);
+
+
+        $this->fileableRepo->createMultiple($files);
     }
 
     /**

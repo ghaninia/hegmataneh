@@ -14,7 +14,9 @@ class CreateSkillablesTable extends Migration
     public function up()
     {
         Schema::create('skillables', function (Blueprint $table) {
-            $table->id();
+            
+            $table->uuid("id")->index();
+
             $table->unsignedBigInteger("skill_id");
             $table->unsignedBigInteger("skillable_id");
             $table->string("skillable_type");
@@ -26,6 +28,7 @@ class CreateSkillablesTable extends Migration
                 ->on("skills")
                 ->onDelete("CASCADE")
                 ->onUpdate("CASCADE");
+        
         });
     }
 

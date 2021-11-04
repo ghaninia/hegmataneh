@@ -4,6 +4,8 @@ namespace App\Services\Category;
 
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
+use App\Core\Enums\EnumsFileable;
+use App\Services\File\FileService;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
 use App\Services\Slug\SlugServiceInterface;
@@ -12,16 +14,13 @@ use App\Services\Translation\TranslationServiceInterface;
 
 class CategoryService implements CategoryServiceInterface
 {
-    protected $termRepo, $translationService, $slugService;
 
     public function __construct(
-        TermRepository $termRepo,
-        TranslationServiceInterface $translationService,
-        SlugServiceInterface $slugService
+        protected TermRepository $termRepo,
+        protected TranslationServiceInterface $translationService,
+        protected SlugServiceInterface $slugService,
+        protected FileService $fileService
     ) {
-        $this->termRepo = $termRepo;
-        $this->translationService = $translationService;
-        $this->slugService = $slugService;
     }
 
     /**
@@ -33,7 +32,7 @@ class CategoryService implements CategoryServiceInterface
     {
         $term =
             $this->termRepo->updateOrCreate([
-                "id" => $category->id ?? null 
+                "id" => $category->id ?? null
             ], [
                 "term_id" => $data["term_id"] ?? null,
                 "color" => $data["color"] ?? null,
@@ -41,7 +40,10 @@ class CategoryService implements CategoryServiceInterface
             ]);
 
         $this->translationService->sync($term, $translations = $data["translations"] ?? []);
+        
         $this->slugService->sync($term, $translations);
+
+        $this->fileService->fileables($term, $data["thumbnail"] ?? NULL, EnumsFileable::USAGE_THUMBNAIL);
 
         return $term->load(["translations", "slugs"]);
     }
@@ -83,7 +85,6 @@ class CategoryService implements CategoryServiceInterface
         array_map(function ($item) use (&$items) {
             $items[$item] = ["type" => EnumsTerm::TYPE_CATEGORY];
         }, $data);
-
 
         $model->categories()->sync($items);
     }

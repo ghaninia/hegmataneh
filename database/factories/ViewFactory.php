@@ -29,7 +29,7 @@ class ViewFactory extends Factory
             // Post::class,
             Portfolio::class
         ]);
-        $class = $class::inRandomOrder()->first() ;
+        $class = $class::inRandomOrder()->first();
         return [
             "viewable_id" => $class->id,
             "viewable_type" => $class->getMorphClass(),

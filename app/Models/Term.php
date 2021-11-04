@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use App\Core\Enums\EnumsTerm;
+use App\Core\Traits\HasFileTrait;
 use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\FileableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Term extends Model implements SlugableInterface , TranslationableInterface
+class Term extends Model implements SlugableInterface, TranslationableInterface, FileableInterface
 {
-    use HasFilterTrait, HasFactory , HasTranslationTrait , HasSlugTrait ;
+    use HasFilterTrait, HasFactory, HasTranslationTrait, HasSlugTrait, HasFileTrait;
 
     protected $fillable = [
         "name",
@@ -24,15 +26,10 @@ class Term extends Model implements SlugableInterface , TranslationableInterface
         "description",
     ];
 
-    // public $with = [
-    //     "translations",
-    //     "slugs",
-    // ];
-
-    public string $slugable = EnumsTerm::FIELD_NAME ;
+    public string $slugable = EnumsTerm::FIELD_NAME;
 
     public array $translationable = [
-        EnumsTerm::FIELD_NAME ,
+        EnumsTerm::FIELD_NAME,
         EnumsTerm::FIELD_DESCRIPTION
     ];
 

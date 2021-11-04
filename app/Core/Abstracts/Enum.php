@@ -67,6 +67,16 @@ abstract class Enum
         return array_merge(...self::reflaction("MIME_TYPE_"));
     }
 
+    
+    /*
+    ** لیست بکارگیری فایل ها
+    ** @return array
+    */
+    public static function usages(): array
+    {
+        return self::reflaction("USAGE_");
+    }
+
     /*
     ** تمام ثابت های کلاس فعلی را دریافت مینماییم
     ** @param string    $key

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Casts\UuidCast;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
     protected $fillable = [
+        "id",
         "user_id",
         "type",
         "path",

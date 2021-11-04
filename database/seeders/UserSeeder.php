@@ -28,18 +28,18 @@ class UserSeeder extends Seeder
                     ->has(
                         Portfolio::factory()
                     )
-                    ->has(
-                        Post::factory()
-                    )
-                    ->has(
-                        View::factory()
-                    )
-                    ->has(
-                        Vote::factory()
-                    )
-                    ->has(
-                        Skill::factory()
-                    )
+                    // ->has(
+                    //     Post::factory()
+                    // )
+                    // ->has(
+                    //     View::factory()
+                    // )
+                    // ->has(
+                    //     Vote::factory()
+                    // )
+                    // ->has(
+                    //     Skill::factory()
+                    // )
             )
             ->create();
     }

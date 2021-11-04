@@ -48,7 +48,8 @@ class CategoryController extends Controller
                 "color",
                 "term_id",
                 "slug",
-                "translations"
+                "translations",
+                "thumbnail"
             ])
         );
 
@@ -83,7 +84,8 @@ class CategoryController extends Controller
                 "color",
                 "term_id",
                 "slug",
-                "translations"
+                "translations",
+                "thumbnail"
             ]),
             $category
         );

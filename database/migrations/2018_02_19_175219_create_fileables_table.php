@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Enums\EnumsFileable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,18 +15,14 @@ class CreateFileablesTable extends Migration
     public function up()
     {
         Schema::create('fileables', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('file_id')->index();
-            $table->string("fileables_id")->index();;
-            $table->string("fileables_type");
-            $table->string("usage")->nullable();
-            $table->timestamps();
 
-            $table->foreign("file_id")
-                ->references("id")
-                ->on("files")
-                ->onDelete("CASCADE")
-                ->onUpdate("CASCADE");
+            $table->increments("id") ;
+
+            $table->uuid('file_id');
+            $table->morphs("fileable");
+            $table->enum("usage", EnumsFileable::usages());
+
+            $table->timestamps();
         });
     }
 

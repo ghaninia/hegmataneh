@@ -46,6 +46,7 @@ class CategoryRequest extends FormRequest
             "translations.*.name" => ["required" , "string" , new SlugRule(Term::class , $this->category) ] ,
             "translations.*.description" => ["nullable" , "string"] ,
 
+            "thumbnail" => ["nullable" , ]
         ];
     }
 }

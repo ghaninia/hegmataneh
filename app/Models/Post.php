@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsTerm;
+use App\Core\Traits\HasFileTrait;
 use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\FileableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\ViewableInterface;
 use App\Core\Interfaces\VoteableInterface;
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Post extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface, ViewableInterface, VoteableInterface
+class Post extends Model implements FileableInterface, BasktableInterface, TranslationableInterface, SlugableInterface, ViewableInterface, VoteableInterface
 {
 
     use
@@ -24,7 +26,8 @@ class Post extends Model implements BasktableInterface, TranslationableInterface
         HasFactory,
         HasFilterTrait,
         HasTranslationTrait,
-        HasSlugTrait;
+        HasSlugTrait,
+        HasFileTrait;
 
     protected $fillable = [
         "type",
@@ -93,11 +96,6 @@ class Post extends Model implements BasktableInterface, TranslationableInterface
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function files()
-    {
-        return $this->morphToMany(File::class, 'fileables');
     }
 
     public function skills()

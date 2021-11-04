@@ -41,4 +41,5 @@ class EnumsFile extends Enum
         "application/zip",
         "video/3gpp"
     ];
+
 }
