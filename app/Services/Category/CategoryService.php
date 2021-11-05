@@ -59,7 +59,6 @@ class CategoryService implements CategoryServiceInterface
         return $category->delete();
     }
 
-
     /**
      * لیست تمام فیلتر
      * @param array $filters
@@ -81,6 +80,7 @@ class CategoryService implements CategoryServiceInterface
      */
     public function sync(Model $model, array $data = [])
     {
+        $items = []; 
         ### ست کردن تایپ در جدول واسط
         array_map(function ($item) use (&$items) {
             $items[$item] = ["type" => EnumsTerm::TYPE_CATEGORY];

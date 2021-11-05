@@ -39,7 +39,7 @@ class Term extends Model implements SlugableInterface, TranslationableInterface,
 
     public function posts()
     {
-        return $this->morphedByMany(Post::class, "termables");
+        return $this->morphedByMany(Post::class, "termable");
     }
 
     public function parent()

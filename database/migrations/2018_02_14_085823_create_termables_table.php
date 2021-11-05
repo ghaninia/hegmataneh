@@ -17,8 +17,7 @@ class CreateTermablesTable extends Migration
         Schema::create('termables', function (Blueprint $table) {
             $table->id() ;
             $table->unsignedBigInteger("term_id")->index() ;
-            $table->unsignedBigInteger("termables_id") ;
-            $table->string("termables_type");
+            $table->morphs("termable") ;
             $table->enum("type" , EnumsTerm::type() );
             $table->timestamps() ;
         });

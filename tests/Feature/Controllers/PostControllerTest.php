@@ -17,7 +17,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 class PostControllerTest extends TestCase
 {
 
-    use WithFaker ;
+    use WithFaker;
 
     protected function setUp(): void
     {
@@ -66,7 +66,7 @@ class PostControllerTest extends TestCase
 
         $post = post::factory()->make();
 
-        $language = Language::factory()->create() ;
+        $language = Language::factory()->create();
 
         $response = $this->postJson(route("user.post.store", $user->id), [
             "status" =>  $post->status,
@@ -76,12 +76,12 @@ class PostControllerTest extends TestCase
             "published_at" => $post->published_at,
             "created_at" => $post->created_at,
             "tags" => $tags,
-            "categories" => $categories , 
+            "categories" => $categories,
             "translations" => [
                 $language->id => [
-                    EnumsPost::FIELD_TITLE => $this->faker->slug() ,
-                    EnumsPost::FIELD_CONTENT => $this->faker->realText() ,
-                    EnumsPost::FIELD_EXCERPT => $this->faker->realText() ,
+                    EnumsPost::FIELD_TITLE => $this->faker->slug(),
+                    EnumsPost::FIELD_CONTENT => $this->faker->realText(),
+                    EnumsPost::FIELD_EXCERPT => $this->faker->realText(),
                     EnumsPost::FIELD_FAQ => $this->faker->text()
                 ]
             ]
@@ -96,6 +96,7 @@ class PostControllerTest extends TestCase
     public function test_show_post()
     {
         $this->withoutMiddleware(AccessMiddleware::class);
+
         $post = Post::factory()
             ->state([
                 "type" => EnumsPost::TYPE_POST
@@ -128,7 +129,7 @@ class PostControllerTest extends TestCase
             ->create();
 
         $fakePost = Post::factory()->make();
-        $language = Language::factory()->create() ;
+        $language = Language::factory()->create();
 
         $response = $this->putJson(route("user.post.update", [
             "user" => $post->user->id,
@@ -142,12 +143,12 @@ class PostControllerTest extends TestCase
             "published_at" => $fakePost->published_at,
             "created_at" => $fakePost->created_at,
             "tags" => [],
-            "categories" => [] ,
+            "categories" => [],
             "translations" => [
                 $language->id => [
-                    EnumsPost::FIELD_TITLE => $this->faker->slug() ,
-                    EnumsPost::FIELD_CONTENT => $this->faker->realText() ,
-                    EnumsPost::FIELD_EXCERPT => $this->faker->realText() ,
+                    EnumsPost::FIELD_TITLE => $this->faker->slug(),
+                    EnumsPost::FIELD_CONTENT => $this->faker->realText(),
+                    EnumsPost::FIELD_EXCERPT => $this->faker->realText(),
                     EnumsPost::FIELD_FAQ => $this->faker->text()
                 ]
             ]
@@ -156,6 +157,5 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee("ok");
         $response->assertSee("msg");
-     
     }
 }

@@ -156,7 +156,7 @@ class TagTest extends TestCase
 
         $this->assertEquals(count($tags) , $post->tags()->count() ) ;
             
-        $this->assertDatabaseHas("termsable" , [
+        $this->assertDatabaseHas("termables" , [
             "termable_id"   => $post->id , 
             "termable_type" => $post->getMorphClass() 
         ]);

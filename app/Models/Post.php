@@ -133,18 +133,18 @@ class Post extends Model implements
 
     public function terms()
     {
-        return $this->morphToMany(Term::class, 'termables');
+        return $this->morphToMany(Term::class, 'termable');
     }
 
     public function tags()
     {
-        return $this->morphToMany(Term::class, 'termables')
+        return $this->morphToMany(Term::class, 'termable')
             ->wherePivot("type", EnumsTerm::TYPE_TAG);
     }
 
     public function categories()
     {
-        return $this->morphToMany(Term::class, 'termables')
+        return $this->morphToMany(Term::class, 'termable')
             ->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
     }
 

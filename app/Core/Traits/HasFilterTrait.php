@@ -24,7 +24,7 @@ use App\Core\Classes\FilterBuilder;
 
 trait HasFilterTrait
 {
-    public function scopeFilterBy($query, $filters, $sensitiveNullValue = false)
+    public function scopeFilterBy($query,array $filters = [], $sensitiveNullValue = false)
     {
         $namespace = $this->register();
         $filter = new FilterBuilder($query, $filters, $namespace, $sensitiveNullValue);

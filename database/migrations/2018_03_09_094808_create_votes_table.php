@@ -14,11 +14,11 @@ class CreateVotesTable extends Migration
     public function up()
     {
         Schema::create('votes', function (Blueprint $table) {
-            $table->id() ;
-            $table->unsignedBigInteger("post_id")->index() ;
-            $table->unsignedBigInteger("user_id")->index()->nullable() ;
-            $table->ipAddress("ipv4") ;
-            $table->integer("vote") ;
+            $table->id();
+            $table->morphs("voteable");
+            $table->unsignedBigInteger("user_id")->index()->nullable();
+            $table->ipAddress("ipv4");
+            $table->integer("vote");
             $table->timestamps();
         });
     }

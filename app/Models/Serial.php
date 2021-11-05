@@ -7,12 +7,17 @@ use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\TagableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\BasktableInterface;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Serial extends Model implements BasktableInterface, TranslationableInterface, SlugableInterface
+class Serial extends Model implements
+    BasktableInterface,
+    TranslationableInterface,
+    SlugableInterface,
+    TagableInterface
 {
     use
         HasFactory,
@@ -73,15 +78,13 @@ class Serial extends Model implements BasktableInterface, TranslationableInterfa
 
     public function tags()
     {
-        return $this->morphToMany(Term::class, 'termables')
+        return $this->morphToMany(Term::class, 'termable')
             ->wherePivot("type", EnumsTerm::TYPE_TAG);
     }
 
     public function categories()
     {
-        return $this->morphToMany(Term::class, 'termables')
+        return $this->morphToMany(Term::class, 'termable')
             ->wherePivot("type", EnumsTerm::TYPE_CATEGORY);
     }
-
-
 }
