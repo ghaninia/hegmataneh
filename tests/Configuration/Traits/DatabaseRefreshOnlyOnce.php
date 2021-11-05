@@ -12,10 +12,10 @@ trait DatabaseRefreshOnlyOnce
     protected function setUpTraits()
     {
         parent::setUpTraits();
-        if (!self::$databaseRefreshTurnOn) {
-            Artisan::call("migrate:fresh");
-            $this->seed(DatabaseSeeder::class);
-            self::$databaseRefreshTurnOn = true;
-        }
+        // if (!self::$databaseRefreshTurnOn) {
+        //     Artisan::call("migrate:fresh");
+        //     $this->seed(DatabaseSeeder::class);
+        //     self::$databaseRefreshTurnOn = true;
+        // }
     }
 }

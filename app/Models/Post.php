@@ -9,6 +9,7 @@ use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\TagableInterface;
 use App\Core\Interfaces\FileableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\ViewableInterface;
@@ -18,7 +19,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Post extends Model implements FileableInterface, BasktableInterface, TranslationableInterface, SlugableInterface, ViewableInterface, VoteableInterface
+class Post extends Model implements
+    FileableInterface,
+    BasktableInterface,
+    TranslationableInterface,
+    SlugableInterface,
+    ViewableInterface,
+    VoteableInterface,
+    TagableInterface
 {
 
     use

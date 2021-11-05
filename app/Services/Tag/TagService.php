@@ -5,6 +5,7 @@ namespace App\Services\Tag;
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
 use Illuminate\Database\Eloquent\Model;
+use App\Core\Interfaces\TagableInterface;
 use App\Repositories\Term\TermRepository;
 use App\Services\Tag\TagServiceInterface;
 use App\Services\Slug\SlugServiceInterface;
@@ -71,11 +72,15 @@ class TagService implements TagServiceInterface
 
     /**
      * مدیریت برچسب های
-     * @param Model $model
+     * @param TagableInterface $model
      * @param array $data
+     * 
+     * @return void 
      */
-    public function sync(Model $model, array $data = [])
+    public function sync(TagableInterface $model, array $data = []) : void 
     {
+        $items = [] ;
+
         ### ست کردن تایپ در جدول واسط
         array_map(function ($item) use (&$items) {
             $items[$item] = ["type" => EnumsTerm::TYPE_TAG];
@@ -83,4 +88,5 @@ class TagService implements TagServiceInterface
 
         $model->tags()->sync($items);
     }
+
 }

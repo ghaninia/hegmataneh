@@ -10,9 +10,11 @@ class TermObserver
      * @param Term $term
      * @return void
      */
-    public function deleted(Term $term) : void
+    public function deleted(Term $term): void
     {
-        $term->posts()->delete();
+        $term->posts()->detach();
         $term->childrens()->delete();
+        $term->translations()->delete();
+        $term->slugs()->delete();
     }
 }
