@@ -24,7 +24,7 @@ class LanguageFactory extends Factory
     public function definition()
     {
         return [
-            "code" => $code = $this->faker->unique()->languageCode(),
+            "code" => $code = $this->faker->unique()->slug(),
             "name" => $code,
             "direction" => Arr::random(EnumsLanguage::direction())
         ];

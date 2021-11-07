@@ -8,13 +8,5 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PageControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-
-    }
+    
 }

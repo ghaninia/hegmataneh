@@ -46,6 +46,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('dir', [FilePolicy::class, 'dir']);    ### access to dir
         Gate::define('file', [FilePolicy::class, 'file']); ### access to file or folder
 
+        Gate::define("f_ability", function (User $user, ...$permissions) {
+            return
+                app(AccessService::class)
+                ->setUser($user)
+                ->setPermissions($permissions)
+                ->fullAbility();
+        });
+
         #######################
         ### Passport Routes ###
         #######################
