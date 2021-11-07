@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
+use App\Models\File;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Serial;
 use App\Models\Portfolio;
+use App\Policies\FilePolicy;
 use App\Policies\PostPolicy;
 use App\Policies\SerialPolicy;
 use Laravel\Passport\Passport;
 use App\Policies\PortfolioPolicy;
+use Illuminate\Support\Facades\Gate;
 use App\Services\Access\AccessService;
-use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Portfolio::class => PortfolioPolicy::class,
         Serial::class => SerialPolicy::class,
+        File::class => FilePolicy::class
     ];
 
     /**
@@ -32,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Gate $gate)
+    public function boot()
     {
         $this->registerPolicies();
 
@@ -40,13 +43,8 @@ class AuthServiceProvider extends ServiceProvider
         ### GATE ###
         ############
 
-        $gate->define("f_ability", function (User $user, ...$permissions) {
-            return
-                app(AccessService::class)
-                ->setUser($user)
-                ->setPermissions($permissions)
-                ->fullAbility();
-        });
+        Gate::define('dir', [FilePolicy::class, 'dir']);    ### access to dir
+        Gate::define('file', [FilePolicy::class, 'file']); ### access to file or folder
 
         #######################
         ### Passport Routes ###

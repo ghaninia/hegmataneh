@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\File;
 use App\Models\Post;
 use App\Models\Term;
 use App\Models\Episode;
+use App\Observers\FileObserver;
 use App\Observers\PostObserver;
 use App\Observers\TermObserver;
 use App\Observers\EpisodeObserver;
@@ -33,6 +35,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Term::observe(TermObserver::class);
+        File::observe(FileObserver::class);
         Post::observe(PostObserver::class);
         Episode::observe(EpisodeObserver::class);
     }

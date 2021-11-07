@@ -39,7 +39,6 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Category\CategoryServiceInterface::class, \App\Services\Category\CategoryService::class);
         $this->app->bind(\App\Services\Tag\TagServiceInterface::class, \App\Services\Tag\TagService::class);
         $this->app->bind(\App\Services\Upload\UploadServiceInterface::class, \App\Services\Upload\UploadService::class);
-        $this->app->bind(\App\Services\File\FileServiceInterface::class, \App\Services\File\FileService::class);
         $this->app->bind(\App\Services\AccessServiceServiceInterface::class, \App\Services\AccessServiceService::class);
         $this->app->bind(\App\Services\Access\AccessServiceInterface::class, \App\Services\Access\AccessService::class);
         $this->app->bind(\App\Services\Serial\SerialServiceInterface::class, \App\Services\Serial\SerialService::class);
@@ -53,6 +52,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Slug\SlugServiceInterface::class, \App\Services\Slug\SlugService::class);
         $this->app->bind(\App\Services\Widget\WidgetServiceInterface::class, \App\Services\Widget\WidgetService::class);
         $this->app->bind(\App\Services\Gateway\GatewayServiceInterface::class, \App\Services\Gateway\GatewayService::class);
+        $this->app->bind(\App\Services\File\FileServiceInterface::class, \App\Services\File\FileService::class);
         //:end-bindings:
     }
 }

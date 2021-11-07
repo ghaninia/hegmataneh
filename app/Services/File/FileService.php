@@ -2,112 +2,251 @@
 
 namespace App\Services\File;
 
-use App\Core\Interfaces\FileableInterface;
-use App\Services\Upload\UploadService;
-use App\Repositories\File\FileRepository;
-use App\Repositories\Fileable\FileableRepository;
+use App\Models\File;
+use App\Models\User;
+use Illuminate\Support\Str;
+use App\Core\Enums\EnumsFile;
+use App\Core\Enums\EnumsSystem;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use App\Services\File\FileServiceInterface;
 
 class FileService implements FileServiceInterface
 {
+    protected const SLUG = ".-_.-_.-_.";
+    protected const BASE_PATH = "uploads";
+    protected $basePath, $userId;
 
-    public function __construct(
-        protected UploadService $uploadService,
-        protected FileableRepository $fileableRepo,
-        protected FileRepository $fileRepo
-    ) {
+    /**
+     * set user 
+     * @param int $userId
+     * @return self 
+     */
+    public function setUser(int $userId): self
+    {
+        $this->userId = $userId;
+        return $this;
     }
 
     /**
-     * 
-     * @param FileableInterface $fileable
-     * @param array|int|null $files
-     * @param string $usage
+     * get file path
+     * @param string $fileID 
+     * @param string $ext 
+     * @return string 
      */
-    public function fileables(FileableInterface $fileable, array|int|null $files, string $usage)
+    public function link(string $fileID, string $ext): string
     {
+        $url = Storage::url(
+            sprintf(
+                "%s%s%s",
+                $this->getBasePath(),
+                DIRECTORY_SEPARATOR,
+                $this->getFileName($fileID, $ext)
+            )
+        );
 
-        $fileable->files()->where("usage", $usage)->each->delete();
-
-        $files = is_int($files) ? [$files] : $files;
-
-        if (is_null($files)) return;
-
-        $files =
-            array_map(fn ($file) => [
-                "file_id" => $file,
-                "fileable_type" => $fileable->getMorphClass(),
-                "fileable_id" => $fileable->id,
-                "usage" => $usage,
-            ], $files);
-
-
-        $this->fileableRepo->createMultiple($files);
+        return str_replace(DIRECTORY_SEPARATOR, "/", $url);
     }
 
     /**
-     * get all uploads list
-     * @param ?string $baseDirectiory
-     * @param ?string $basePath
-     * @return array
+     * get file path
+     * @param array $filters 
+     * @param array $options 
      */
-    public function list(?string $baseDirectiory = null, ?string $basePath = null)
+    public function list(File $baseDir = null, array $filters, array $options = [])
     {
 
-        $path = $this->uploadService->trimSeparator(
-            $basePath ?? $this->uploadService->basePath()
-        );
+        $isRecursive = $options["has_recursive"] ?? FALSE;
 
-        $path = $this->uploadService->addSeparator(
-            $path
-        );
+        $orderBy = $options["order_by"] ?? "type";
+        $order = $options["order"] ?? EnumsSystem::ORDER_ASC;
 
-        $baseDirectiory = $this->uploadService->trimSeparator($baseDirectiory);
+        return
+            File::query()
+            ->filterBy($filters)
+            ->withCount([
+                "fileables"
+            ])
+            ->when(
+                $baseDir,
+                fn ($query) => $query->where("file_id", $baseDir->id),
+                fn ($query) => $query->whereNull("file_id")
+            )
+            ->when(
+                $isRecursive,
+                fn ($query) => $query->with("childrens")
+            )
+            ->orderBy($orderBy, $order)
+            ->get();
+    }
 
-        $path = !!$baseDirectiory ? $this->uploadService->addSeparator(
-            $path . $baseDirectiory
-        ) : $path;
+    /**
+     * get user base folder
+     * @return string 
+     */
+    private function getBasePath(): string
+    {
 
-        $includes = [];
-
-        foreach (glob($path . "*") as $file) {
-            $includes[] = array_merge(
-                [
-                    "is_dir" => $isDir = is_dir($file),
-                    "size" => !$isDir ? filesize($file) : 0,
-                    "name" => basename($file),
-                    "link" => $this->uploadService->link($file),
-                    "time" => $this->uploadService->time($file),
-                    "perm" => $this->uploadService->per($file),
-                ],
-                $isDir ? ["childrens" => $this->list(null, $file)] : []
-            );
+        if (is_null($this->basePath)) {
+            $path = sprintf("%s%s%s", self::SLUG, $this->userId, self::SLUG);
+            $this->basePath = sprintf("%s%s%s", self::BASE_PATH, DIRECTORY_SEPARATOR, md5($path));
         }
 
-        return $includes;
+        return $this->basePath;
     }
 
     /**
-     * delete files
-     * @param array $link
+     * generate id for file
+     * @return string
+     */
+    private function generateID(): string
+    {
+        return Str::uuid()->toString();
+    }
+
+    /**
+     * create new folder
+     * @param string $name
+     * @param string|null $parentFolder
+     * @return void
+     */
+    public function newFolder(string $name, File $parentFolder = null): void
+    {
+        File::updateOrCreate([
+            "id" => $this->generateID(),
+            "type" => EnumsFile::TYPE_FOLDER,
+            "user_id" => $this->userId,
+            "file_id" => $parentFolder?->id,
+            "name" => $name,
+        ], []);
+    }
+
+    /**
+     * user directory exists ?
+     * 
+     * @return bool 
+     */
+    private function userDirExists(): bool
+    {
+        return Storage::exists($this->getBasePath());
+    }
+
+    /**
+     * create new folder for user
+     * 
+     * @return void 
+     */
+    private function userDirCreate(): void
+    {
+        Storage::makeDirectory($this->getBasePath());
+    }
+
+    /**
+     * create new directory when user dir not exists
+     * 
+     * @return void 
+     */
+    private function whenUserDirNotExistsCreateNew(): void
+    {
+        if (!$this->userDirExists())
+            $this->userDirCreate();
+    }
+
+    /**
+     * upload file to server and save to database
+     * @param UploadedFile $file
+     * @param string|null $parentDirectoryId
+     */
+    public function upload(UploadedFile $file, File $parentDir = null): void
+    {
+
+        $this->whenUserDirNotExistsCreateNew();
+
+        File::create([
+            "id" => $fileID = $this->generateID(),
+            "file_id" => $parentDir?->id,
+            "user_id" => $this->userId,
+            "type" => EnumsFile::TYPE_FILE,
+            "name" => $file->getClientOriginalName(),
+            "extension" => $ext = $file->getClientOriginalExtension(),
+            "mime_type" => $file->getClientMimeType(),
+            "size" => $file->getSize(),
+        ]);
+
+        $file->storeAs(
+            $this->getBasePath(),
+            $this->getFileName($fileID, $ext)
+        );
+    }
+
+    /**
+     * generate file name
+     * @param string $fileID
+     * @param string $ext
+     * 
+     * @return string
+     */
+    private function getFileName(string $fileID, string $ext)
+    {
+        return sprintf("%s.%s", $fileID, $ext);
+    }
+
+    /**
+     * file exists in user directory ? if exists delete it
+     * @param File $file
+     * @return bool 
+     */
+    private function whenFileExistsInUserDirDeleteIt(File $file): bool
+    {
+        $filePath = sprintf("%s%s%s", $this->getBasePath(), DIRECTORY_SEPARATOR, $file->path);
+
+        return Storage::exists($filePath) ? Storage::delete($filePath) : false;
+    }
+
+    /**
+     * delete file from server
+     * @param File $file
+     * @return bool 
+     */
+    private function recursiveDelete(File $file): void
+    {
+        $this->whenFileExistsInUserDirDeleteIt($file);
+
+        if ($file->type == EnumsFile::TYPE_FOLDER) {
+            foreach ($file->childrens as $file) {
+                $this->recursiveDelete($file);
+            }
+        }
+    }
+
+    /**
+     * delete file or folder
+     * @param File $file
      * @return boolean
      */
-    public function remove(array $links): bool
+    public function remove(File $file): bool
     {
-        $paths = $result = [];
+        $this->recursiveDelete($file);
+        return $file->delete();
+    }
 
-        array_walk($links, function ($link) use (&$paths, &$result) {
-            $result[] = $this->uploadService->delete(
-                $paths[] = $this->uploadService->cleanFormatAddress($link, true)
-            );
-        });
+    /**
+     * rename file or folder
+     * @return boolean 
+     */
+    public function rename(File $file, string $newName)
+    {
+        return $file->update(["name" => $newName]);
+    }
 
-        $this->fileRepo->query()
-            ->whereIn("path", $paths)
-            ->delete();
-
-        return count(
-            array_filter($result, fn ($item) => $item)
-        );
+    /**
+     * move file or folder
+     * @param File $file
+     * @param File $parentFolder
+     * @return boolean
+     */
+    public function move(File $file, File $parentFolder = null): bool
+    {
+        return $file->update(["file_id" => $parentFolder?->id]);
     }
 }

@@ -18,7 +18,7 @@ class CreateFileablesTable extends Migration
 
             $table->increments("id") ;
 
-            $table->uuid('file_id');
+            $table->uuid('file_id')->index();
             $table->morphs("fileable");
             $table->enum("usage", EnumsFileable::usages());
 

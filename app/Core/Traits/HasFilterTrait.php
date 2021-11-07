@@ -15,6 +15,7 @@ use App\Models\{
     Comment,
     Gateway,
     Currency,
+    File,
     Language,
     Portfolio,
     Translation
@@ -49,6 +50,7 @@ trait HasFilterTrait
             Slug::class => "App\\Contracts\\Filters\\SlugFilters",
             Translation::class => "App\\Contracts\\Filters\\TranslationFilters",
             Gateway::class =>  "App\\Contracts\\Filters\\GatewayFilters",
+            File::class =>  "App\\Contracts\\Filters\\FileFilters",
         ][__CLASS__] ?? null;
     }
 }

@@ -6,9 +6,8 @@ use App\Core\Abstracts\Enum;
 
 class EnumsFile extends Enum
 {
-
-    const TYPE_FILE = "files";
-    const TYPE_IMAGE = "images";
+    const TYPE_FOLDER = "folder" ;
+    const TYPE_FILE = "file";
 
     const MIME_TYPE_IMAGE = [
         "image/jpeg",

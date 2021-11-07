@@ -123,6 +123,18 @@ Route::group([
             Route::delete("force", [ProductController::class, "forceDelete"])->name("force");
             Route::post("restore", [ProductController::class, "restore"])->name("restore");
         });
+
+        ########
+        ### file
+        ########
+        Route::prefix("gallery")->name("gallery.")->group(function () {
+            Route::post("newfolder/{folder?}", [FileController::class, "newFolder"])->name("new_folder");
+            Route::post("upload/{folder?}", [FileController::class, "upload"])->name("upload");
+            Route::put("move/{file}/{folder?}", [FileController::class, "move"])->name("move");
+            Route::put("rename/{file}", [FileController::class, "rename"])->name("rename");
+            Route::delete("{file}", [FileController::class, "remove"])->name("remove");
+            Route::get("{folder?}", [FileController::class, "index"])->name("index");
+        });
     });
 
     #######
@@ -138,7 +150,7 @@ Route::group([
     ###########
     ### options
     ###########
-    
+
     Route::group([
         "prefix" => "option",
         "as" => "option.",
@@ -151,18 +163,6 @@ Route::group([
     ### skill
     #########
     Route::apiResource("skill", SkillController::class);
-
-    ########
-    ### file
-    ########
-    Route::group([
-        "as" => "file",
-        "prefix" => "file"
-    ], function () {
-        Route::get("/", [FileController::class, "index"])->name("index");
-        Route::post("/", [FileController::class, "store"])->name("store");
-        Route::delete("/", [FileController::class, "destroy"])->name("destroy");
-    });
 });
 
 
@@ -179,6 +179,5 @@ Route::name("guest.")->group(function () {
             Route::get("product/{product}", [BasketController::class, "append"])->name("product");
             Route::get("serial/{serial}", [BasketController::class, "append"])->name("serial");
         });
-
     });
 });
