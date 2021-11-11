@@ -4,12 +4,10 @@ namespace Tests\Feature\Controllers;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Core\Enums\EnumsUser;
 use App\Core\Enums\EnumsOption;
 use Tests\Configuration\Classes\Generate;
 use App\Services\Authunticate\AuthService;
 use Illuminate\Support\Facades\Notification;
-use App\Contracts\Filters\PortfolioFilters\Name;
 
 class AuthunticateControllerTest extends TestCase
 {

@@ -8,6 +8,7 @@ use App\Models\Term;
 use App\Models\Language;
 use App\Core\Enums\EnumsTerm;
 use App\Models\Post;
+use App\Models\Role;
 use App\Models\Slug;
 use App\Models\Translation;
 use App\Models\User;
@@ -131,7 +132,7 @@ class TagTest extends TestCase
         $language = Language::factory();
 
         $post = Post::factory()
-            ->for(User::factory())
+            ->for(User::factory()->for(Role::factory()))
             ->has(
                 Translation::factory()->for($language)->state(["field" => EnumsPost::FIELD_TITLE])
             )
