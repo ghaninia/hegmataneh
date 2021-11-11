@@ -43,7 +43,7 @@ class CategoryService implements CategoryServiceInterface
         
         $this->slugService->sync($term, $translations);
 
-        $this->fileService->fileables($term, $data["thumbnail"] ?? NULL, EnumsFileable::USAGE_THUMBNAIL);
+        // $this->fileService->fileables($term, $data["thumbnail"] ?? NULL, EnumsFileable::USAGE_THUMBNAIL);
 
         return $term->load(["translations", "slugs"]);
     }

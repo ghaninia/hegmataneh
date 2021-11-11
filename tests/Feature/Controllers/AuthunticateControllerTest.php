@@ -58,8 +58,7 @@ class AuthunticateControllerTest extends TestCase
             "bio" => $user->bio ,
         ]));
 
-        $response->dump() ;
-        // $response->assertStatus(200);
-        // $response->assertSee("ok");
+        $response->assertStatus(200);
+        $response->assertSee("ok");
     }
 }
