@@ -10,11 +10,13 @@ use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\TagableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\BasktableInterface;
+use App\Core\Interfaces\CategoryableInterface;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Serial extends Model implements
     BasktableInterface,
+    CategoryableInterface,
     TranslationableInterface,
     SlugableInterface,
     TagableInterface

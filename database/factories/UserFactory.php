@@ -29,7 +29,7 @@ class UserFactory extends Factory
             "mobile" => $this->faker->unique()->numerify("0911#######"),
             'status' => Arr::random(EnumsUser::status()),
             'email' => $this->faker->unique()->email,
-            "username" => $this->faker->unique()->userName() . uniqid() ,
+            "username" => uniqid("USER"),
             'password' => bcrypt("secret"),
             "remember_token" => Str::random(10),
             "bio" => $this->faker->realText(1000)
