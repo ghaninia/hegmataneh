@@ -2,7 +2,7 @@
 
 namespace App\Core\Abstracts;
 
-class GatewayDriver
+abstract class GatewayDriver
 {
     private $tracking_code, $transaction_id;
 

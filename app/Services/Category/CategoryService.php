@@ -4,7 +4,7 @@ namespace App\Services\Category;
 
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
-use App\Core\Enums\EnumsFileable;
+use App\Core\Interfaces\CategoryableInterface;
 use App\Services\File\FileService;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
@@ -78,7 +78,7 @@ class CategoryService implements CategoryServiceInterface
      * @param Model $model
      * @param array $data
      */
-    public function sync(Model $model, array $data = [])
+    public function sync(CategoryableInterface $model, array $data = [])
     {
         $items = []; 
         ### ست کردن تایپ در جدول واسط

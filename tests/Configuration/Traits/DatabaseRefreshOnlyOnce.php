@@ -13,8 +13,8 @@ trait DatabaseRefreshOnlyOnce
     {
         parent::setUpTraits();
         if (!self::$databaseRefreshTurnOn) {
-            Artisan::call("migrate:fresh");
-            $this->seed(DatabaseSeeder::class);
+            // Artisan::call("migrate:fresh");
+            // $this->seed(DatabaseSeeder::class);
             self::$databaseRefreshTurnOn = true;
         }
     }

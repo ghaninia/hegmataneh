@@ -15,14 +15,16 @@ use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\ViewableInterface;
 use App\Core\Interfaces\VoteableInterface;
 use App\Core\Interfaces\BasktableInterface;
+use App\Core\Interfaces\CategoryableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model implements
+    CategoryableInterface,
+    TranslationableInterface,
     FileableInterface,
     BasktableInterface,
-    TranslationableInterface,
     SlugableInterface,
     ViewableInterface,
     VoteableInterface,

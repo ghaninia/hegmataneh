@@ -25,7 +25,7 @@ class TermFactory extends Factory
     {
         return [
             "type" => $type = Arr::random(EnumsTerm::type()),
-            "color" => $type === EnumsTerm::TYPE_CATEGORY ? $this->faker->hexColor() : null ,
+            "color" => $type === EnumsTerm::TYPE_CATEGORY ? $this->faker->hexColor() : null,
             "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
         ];
     }
