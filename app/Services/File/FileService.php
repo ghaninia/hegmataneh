@@ -3,11 +3,14 @@
 namespace App\Services\File;
 
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Core\Enums\EnumsFile;
 use App\Core\Enums\EnumsSystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\File\FileRepository;
+use App\Core\Interfaces\FileableInterface;
 use App\Services\File\FileServiceInterface;
 
 class FileService implements FileServiceInterface
@@ -15,6 +18,41 @@ class FileService implements FileServiceInterface
     protected const SLUG = ".-_.-_.-_.";
     protected const BASE_PATH = "uploads";
     protected $basePath, $userId;
+
+    public function __construct(public FileRepository $fileRepo)
+    {
+    }
+
+    /**
+     * can i use file for my fileable model ?
+     * @param User|null $user 
+     * @param string $fileUuid 
+     * @param array $mimes 
+     */
+    public function canUseFile(?User $user = null, string $fileUuid, array $mimes)
+    {
+        return
+            $this->fileRepo->query()
+            ->where('id', $fileUuid)
+            ->whereIn("mime_type", $mimes)
+            ->when($user, fn ($query) => $query->where('user_id', $user->id))
+            ->exists();
+    }
+
+    /**
+     * sync files to model fileable
+     * @param FileableInterface $fileable
+     * @param string $usage
+     * @param array $files
+     * @return void
+     */
+    public function sync(FileableInterface $fileable, string $usage, ...$files)
+    {
+        $fileable
+            ->files()
+            ->wherePivot('usage', $usage)
+            ->syncWithPivotValues($files, ['usage' => $usage]);
+    }
 
     /**
      * set user 

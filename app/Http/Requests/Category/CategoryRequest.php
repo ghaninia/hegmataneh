@@ -2,17 +2,20 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Core\Enums\EnumsFile;
+use App\Core\Enums\EnumsFileable;
 use App\Models\Term;
 use App\Rules\SlugRule;
 use App\Rules\ColorRule;
+use App\Rules\FileFilterRule;
 use App\Rules\TermParentRule;
 use App\Rules\TranslationableRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryRequest extends FormRequest
 {
-    
-    protected $category ;
+
+    protected $category;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +24,12 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return true ;
+        return true;
     }
 
     public function prepareForValidation()
     {
-        $this->category = $this->route("category") ;
+        $this->category = $this->route("category");
     }
 
     /**
@@ -39,14 +42,15 @@ class CategoryRequest extends FormRequest
 
         return [
 
-            "term_id" => [ new TermParentRule( $this->category ) ] ,
-            "color" => [ "nullable" , new ColorRule ] ,
-            
-            "translations" => [ "required" , "array" , new TranslationableRule($this)] ,
-            "translations.*.name" => ["required" , "string" , new SlugRule(Term::class , $this->category) ] ,
-            "translations.*.description" => ["nullable" , "string"] ,
+            "term_id" => [new TermParentRule($this->category)],
+            "color" => ["nullable", new ColorRule],
 
-            "thumbnail" => ["nullable" , ]
+            "translations" => ["required", "array", new TranslationableRule($this)],
+            "translations.*.name" => ["required", "string", new SlugRule(Term::class, $this->category)],
+            "translations.*.description" => ["nullable", "string"],
+
+            "thumbnail" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)]
+
         ];
     }
 }

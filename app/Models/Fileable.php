@@ -16,5 +16,4 @@ class Fileable extends Model
         "fileable_type" ,
         "fileable_id" ,
     ];
-
 }

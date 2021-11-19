@@ -2,6 +2,7 @@
 
 namespace App\Core\Classes;
 
+use App\Exceptions\NotFoundModelForFilter;
 use Illuminate\Support\Str;
 
 
@@ -27,8 +28,9 @@ class FilterBuilder
 
             $class = sprintf("%s\\%s", $this->namespace, $normailizedName);
 
+
             if (!class_exists($class)) {
-                continue;
+                throw new NotFoundModelForFilter($class);
             }
 
             ###########################
@@ -65,9 +67,11 @@ class FilterBuilder
 
             ########################
             ### در صورتی که غیر بازده باشد اعمال شود
+            ### پشتیبانی از false , null و غیره
             ########################
 
-            empty($value) ?: (new $class($this->query))->handle($value);
+            $condition = is_bool($value) ? FALSE : empty($value) ;
+            $condition ?: (new $class($this->query))->handle($value);
         }
 
         return $this->query;

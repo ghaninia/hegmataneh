@@ -2,6 +2,7 @@
 
 namespace App\Services\Category;
 
+use App\Core\Enums\EnumsFileable;
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Interfaces\CategoryableInterface;
@@ -38,13 +39,14 @@ class CategoryService implements CategoryServiceInterface
                 "color" => $data["color"] ?? null,
                 "type" => EnumsTerm::TYPE_CATEGORY
             ]);
-
-        $this->translationService->sync($term, $translations = $data["translations"] ?? []);
         
+        ### ترجمه
+        $this->translationService->sync($term, $translations = $data["translations"] ?? []);
+        ### لینک پیوند
         $this->slugService->sync($term, $translations);
-
-        // $this->fileService->fileables($term, $data["thumbnail"] ?? NULL, EnumsFileable::USAGE_THUMBNAIL);
-
+        ### تصویر شاخص
+        $this->fileService->sync($term, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
+        
         return $term->load(["translations", "slugs"]);
     }
 
@@ -70,6 +72,7 @@ class CategoryService implements CategoryServiceInterface
             $this->termRepo->query()
             ->where("type", EnumsTerm::TYPE_CATEGORY)
             ->filterBy($filters)
+            ->with(["files"])
             ->paginate();
     }
 
@@ -80,7 +83,7 @@ class CategoryService implements CategoryServiceInterface
      */
     public function sync(CategoryableInterface $model, array $data = [])
     {
-        $items = []; 
+        $items = [];
         ### ست کردن تایپ در جدول واسط
         array_map(function ($item) use (&$items) {
             $items[$item] = ["type" => EnumsTerm::TYPE_CATEGORY];

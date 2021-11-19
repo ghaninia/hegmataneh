@@ -18,6 +18,7 @@ use App\Models\{
     File,
     Language,
     Portfolio,
+    Price,
     Translation
 };
 
@@ -25,14 +26,14 @@ use App\Core\Classes\FilterBuilder;
 
 trait HasFilterTrait
 {
-    public function scopeFilterBy($query,array $filters = [], $sensitiveNullValue = false)
+    public function scopeFilterBy($query, array|string $filters = [], $sensitiveNullValue = false)
     {
         $namespace = $this->register();
         $filter = new FilterBuilder($query, $filters, $namespace, $sensitiveNullValue);
         return $filter->apply();
     }
 
-    public function register()
+    public function locationFilters(): array
     {
         return [
             Post::class => "App\\Contracts\\Filters\\PostFilters",
@@ -51,6 +52,12 @@ trait HasFilterTrait
             Translation::class => "App\\Contracts\\Filters\\TranslationFilters",
             Gateway::class =>  "App\\Contracts\\Filters\\GatewayFilters",
             File::class =>  "App\\Contracts\\Filters\\FileFilters",
-        ][__CLASS__] ?? null;
+            Price::class =>  "App\\Contracts\\Filters\\PriceFilters",
+        ];
+    }
+
+    public function register()
+    {
+        return $this->locationFilters()[__CLASS__] ?? null;
     }
 }

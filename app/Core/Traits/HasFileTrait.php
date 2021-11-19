@@ -8,6 +8,6 @@ trait HasFileTrait
 {
     public function files()
     {
-        return $this->morphToMany(File::class, 'fileables');
+        return $this->morphToMany(File::class, "fileable")->withPivot("usage");
     }
 }

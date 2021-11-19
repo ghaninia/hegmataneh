@@ -52,11 +52,6 @@ class Term extends Model implements SlugableInterface, TranslationableInterface,
         return $this->hasMany(Term::class, "term_id", "id");
     }
 
-    public function files()
-    {
-        return $this->morphToMany(File::class, "fileables");
-    }
-
     ###############
     #### SCOPES ####
     ################

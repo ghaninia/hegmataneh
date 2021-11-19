@@ -9,7 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
-    use MessageTrait ;
+    use MessageTrait;
 
     /**
      * A list of the exception types that are not reported.
@@ -17,7 +17,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        NotFoundModelForFilterNotFoundModelForFilter::class
     ];
 
     /**
@@ -43,12 +43,10 @@ class Handler extends ExceptionHandler
         });
     }
 
-
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return $this->error([
             "msg" => trans("dashboard.error.authunticate.unauthunticate")
         ]);
     }
-
 }

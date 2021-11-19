@@ -31,6 +31,7 @@ class CategoryController extends Controller
                 "name", "description", "slug", "color", "term_id"
             ])
         );
+
         return new CategoryCollection($terms);
     }
 
@@ -67,7 +68,7 @@ class CategoryController extends Controller
      */
     public function show(Term $category)
     {
-        return new CategoryResource($category->load("childrens", "parent"));
+        return new CategoryResource($category->load("childrens", "parent" , "files" , "translations" ));
     }
 
     /**

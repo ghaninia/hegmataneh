@@ -195,6 +195,8 @@ return [
         "price.gt" => "قیمت",
         "price.lt" => "قیمت",
         "price.lte" => "قیمت",
+
+        "attachment" => "فایل پیوستی" ,
     ],
 
 ];

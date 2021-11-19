@@ -30,7 +30,7 @@ class CreateTranslationsTable extends Migration
             $table->longText('trans');
         });
 
-        // DB::statement('ALTER TABLE `translations` ADD FULLTEXT INDEX translation_trans_index (trans)');
+        DB::statement('ALTER TABLE `translations` ADD FULLTEXT INDEX translation_trans_index (trans)');
     }
 
     /**
@@ -40,9 +40,9 @@ class CreateTranslationsTable extends Migration
      */
     public function down()
     {
-        // Schema::table('translations', function ($table) {
-        //     $table->dropIndex('translation_trans_index');
-        // });
+        Schema::table('translations', function ($table) {
+            $table->dropIndex('translation_trans_index');
+        });
         Schema::dropIfExists('translations');
     }
 }

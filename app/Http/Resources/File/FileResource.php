@@ -18,7 +18,6 @@ class FileResource extends JsonResource
     public function toArray($request)
     {
 
-
         $hasRecursive = $request->has_recursive && ($this->type === EnumsFile::TYPE_FOLDER);
 
         return [
