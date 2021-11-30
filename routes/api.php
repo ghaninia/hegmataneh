@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Public\Translation\TranslationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Term\TagController;
 use App\Http\Controllers\Api\File\FileController;
@@ -31,34 +32,32 @@ use App\Http\Controllers\Api\Portfolio\PortfolioController;
 |
 */
 
-Route::group([
-    "as" => "public." ,
-] ,function (){
-    Route::post("translations" , \App\Http\Controllers\Public\Translation\TranslationController::class )->name("translations");
-});
 
-Route::group([
-    "prefix" => "authunticate",
-    "as" => "authunticate.",
-    "middleware" => [
-        "throttle:10,1"
-    ]
-], function () {
-    ### ورود به حساب کاربری
-    Route::post("login", [AuthController::class, "login"])->name("login");
-    ### ثبت نام در سیستم
-    Route::group([
-        "prefix" => "register",
-        "as" => "register.",
-    ], function () {
-        Route::post("/", [AuthController::class, "register"])->name("store");
-        Route::get("verify/{token}", [AuthController::class, "verify"])->name("verify");
-    });
-});
 
 Route::group([
     "prefix" => "v1",
 ], function () {
+
+    Route::group([
+        "prefix" => "authunticate",
+        "as" => "authunticate.",
+        "middleware" => [
+            "throttle:10,1"
+        ]
+    ], function () {
+        ### ورود به حساب کاربری
+        Route::post("login", [AuthController::class, "login"])->name("login");
+        ### ثبت نام در سیستم
+        Route::group([
+            "prefix" => "register",
+            "as" => "register.",
+        ], function () {
+            Route::post("/", [AuthController::class, "register"])->name("store");
+            Route::get("verify/{token}", [AuthController::class, "verify"])->name("verify");
+        });
+    });
+
+    Route::get("translations" , TranslationController::class )->name("translations");
 
     ##############
     ### role route

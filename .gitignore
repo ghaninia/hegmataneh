@@ -12,3 +12,5 @@ yarn-error.log
 /.idea
 /composer.lock
 /.vscode
+/.idea
+/.github

@@ -2,7 +2,14 @@
 
 return [
 
+    "login" => [
+        "submit" => "ورود به حساب کاربری",
+    ],
+
     "fields" => [
+        "languages" => "زبان ها",
+        "language" => "زبان",
+        "last_login" => "آخرین ورود",
         "main_root" => "پوشه اصلی" ,
         "username" => "نام کاربری" ,
         "password" => "کلمه عبور" ,
