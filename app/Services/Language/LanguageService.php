@@ -9,6 +9,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use App\Repositories\Language\LanguageRepository;
 use App\Services\Language\LanguageServiceInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class LanguageService implements LanguageServiceInterface
 {
@@ -24,12 +25,16 @@ class LanguageService implements LanguageServiceInterface
      * @param array $filters
      * @return Paginator
      */
-    public function list(array $filters): Paginator
+    public function list(array $filters , bool $isPaginate = true ): Paginator|Collection
     {
         return
             $this->languageRepo->query()
             ->filterBy($filters)
-            ->paginate();
+            ->when(
+                $isPaginate ,
+                fn($query) => $query->paginate() ,
+                fn($query) => $query->get()
+            );
     }
 
     /**

@@ -33,7 +33,8 @@ class LanguageController extends Controller
                 "name",
                 "code",
                 "direction"
-            ])
+            ]) ,
+            $request->get("is_paginate" , false )
         );
 
         return new LanguageCollection($languages);

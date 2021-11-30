@@ -28,7 +28,9 @@ class LanguageIndex extends FormRequest
         return [
             "name" => ["nullable", "string"],
             "code" => ["nullable", "string"],
-            "direction" => ["nullable", Rule::in(EnumsLanguage::direction())]
+            "direction" => ["nullable", Rule::in(EnumsLanguage::direction())] ,
+
+            "is_paginate" => ["nullable", "boolean"],
         ];
     }
 }

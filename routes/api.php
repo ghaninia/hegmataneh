@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Currency\CurrencyController;
 use App\Http\Controllers\Api\Language\LanguageController;
 use App\Http\Controllers\Api\Portfolio\PortfolioController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +30,12 @@ use App\Http\Controllers\Api\Portfolio\PortfolioController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::group([
+    "as" => "public." ,
+] ,function (){
+    Route::post("translations" , \App\Http\Controllers\Public\Translation\TranslationController::class )->name("translations");
+});
 
 Route::group([
     "prefix" => "authunticate",
@@ -51,9 +58,6 @@ Route::group([
 
 Route::group([
     "prefix" => "v1",
-    "middleware" => [
-        "auth:api",
-    ]
 ], function () {
 
     ##############

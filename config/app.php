@@ -166,7 +166,6 @@ return [
          * Package Service Providers...
          */
         NamTran\LaravelMakeRepositoryService\RepositoryServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
