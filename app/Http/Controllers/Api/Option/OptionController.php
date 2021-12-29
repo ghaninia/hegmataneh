@@ -45,9 +45,6 @@ class OptionController extends Controller
             OptionService::getInstance()->put($key,  $value);
         }
 
-        if(!empty($options))
-            OptionService::getInstance()->forget() ;
-
         return $this->success([
             "msg" => trans("dashboard.success.option.update")
         ]);

@@ -10,13 +10,6 @@ use App\Services\Option\OptionServiceInterface;
 
 class OptionService implements OptionServiceInterface
 {
-
-    ## زمان اکسپایر شدن بر اساس ثانیه
-    const EXPIRE_TIME = 600;
-
-    ## نام قراردادی کش
-    const CACHE_NAME = "options_cache";
-
     protected static $instances;
 
     private function __construct()
@@ -27,7 +20,7 @@ class OptionService implements OptionServiceInterface
     {
         $cls = new self();
         if (is_null(self::$instances)) {
-            self::$instances = $cls->getRecordsInCache();
+            self::$instances = $cls->getRecordesInDatabase();
         }
         return $cls;
     }
@@ -42,30 +35,18 @@ class OptionService implements OptionServiceInterface
     }
 
     /**
-     * دریافت اطلاعات از کش
+     * دریافت اطلاعات از دیتابیس
      * @return mixed
-     */
-    protected function getRecordsInCache()
-    {
-        if (!Cache::has(self::CACHE_NAME)) {
-            $records = $this->getRecordesInDatabase();
-            $records = serialize($records);
-            Cache::put(self::CACHE_NAME, $records, self::EXPIRE_TIME);
-        }
-        $cache = Cache::get(self::CACHE_NAME);
-        return unserialize($cache);
-    }
-
-    /**
-     * رکورد مای مورد نظر جهت ذخیره در کش
-     * @return Collection
      */
     public function getRecordesInDatabase(): array
     {
-        return $this->service()->all([
-            "key", "value", "default"
-        ])->toArray();
+
+        return
+            $this->service()->all([
+                "key", "value", "default"
+            ])->toArray();
     }
+
 
     /**
      * @param string $key
@@ -76,8 +57,13 @@ class OptionService implements OptionServiceInterface
     {
         $data = collect(self::$instances)->where("key", $key)->first();
 
-        return (!!$data["value"] ? unserialize($data["value"]) : null) ??
-            $default ?? $data["default"];
+        $value = isset($data["value"]) ? unserialize($data["value"]) : null;
+
+        $defaultData = isset($data["default"]) ? $data["default"] : null;
+
+        $result = $value ?? $default ?? $defaultData ?? null;
+
+        return $result;
     }
 
     /**
@@ -87,15 +73,7 @@ class OptionService implements OptionServiceInterface
      */
     public function put(string $key,  $value): Option
     {
-        return $this->service()->updateOrCreate(["key" => $key], ["value" => serialize($value)]);
-    }
-
-
-    /**
-     * @return boolean
-     */
-    public function forget(): bool
-    {
-        return Cache::forget(self::CACHE_NAME);
+        $config = $this->service()->updateOrCreate(["key" => $key], ["value" => serialize($value)]);
+        return $config;
     }
 }

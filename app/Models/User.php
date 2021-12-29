@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Core\Traits\HasFileTrait;
 use Laravel\Passport\HasApiTokens;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Notifications\Notifiable;
+use App\Core\Interfaces\FileableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FileableInterface
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasFilterTrait;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasFilterTrait , HasFileTrait;
 
     protected $fillable = [
         'name',
@@ -41,10 +43,6 @@ class User extends Authenticatable
         "status" => "boolean"
     ];
 
-    public function files()
-    {
-        return $this->morphToMany(File::class, 'fileables');
-    }
 
     public function role()
     {

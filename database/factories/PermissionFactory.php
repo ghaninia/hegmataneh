@@ -22,9 +22,8 @@ class PermissionFactory extends Factory
      */
     public function definition()
     {
-        $actions = getEntireRoutesAction();
         return [
-            "action" => $this->faker->unique()->numberBetween(0, count($actions)),
+            "action" => $this->faker->numerify("##########"),
             "key" => null
         ];
     }
