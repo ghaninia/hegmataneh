@@ -9,6 +9,7 @@ use App\Models\Serial;
 use App\Models\Episode;
 use App\Models\Portfolio;
 use App\Models\Quotation;
+use App\Models\Skill;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
             "quotation" => Quotation::class,
             "serial" => Serial::class,
             "episode" => Episode::class,
+            "skill" => Skill::class ,
         ]);
     }
 

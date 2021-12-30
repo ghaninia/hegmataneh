@@ -2,9 +2,11 @@
 
 namespace App\Services\Skill;
 
+use App\Core\Enums\EnumsFileable;
 use App\Models\Skill;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Skill\SkillRepository;
+use App\Services\File\FileService;
 use App\Services\Slug\SlugServiceInterface;
 use App\Services\Skill\SkillServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -12,17 +14,12 @@ use App\Services\Translation\TranslationServiceInterface;
 
 class SkillService implements SkillServiceInterface
 {
-
-    protected $skillRepo, $translationService, $slugService;
-
     public function __construct(
-        SkillRepository $skillRepo,
-        TranslationServiceInterface $translationService,
-        SlugServiceInterface $slugService
+        public SkillRepository $skillRepo,
+        public TranslationServiceInterface $translationService,
+        public SlugServiceInterface $slugService ,
+        public FileService $fileService
     ) {
-        $this->skillRepo = $skillRepo;
-        $this->translationService = $translationService;
-        $this->slugService = $slugService;
     }
 
     /**
@@ -54,8 +51,10 @@ class SkillService implements SkillServiceInterface
 
         $this->translationService->sync($skill, $translations = $data["translations"] ?? []);
         $this->slugService->sync($skill, $translations);
+        ### تصویر شاخص
+        $this->fileService->sync($skill, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
 
-        return $skill->load(["translations", "slugs"]);
+        return $skill->load(["translations", "slugs" , "files"]);
     }
 
 

@@ -7,5 +7,6 @@ class EpisodeObserver
     public function delete($model)
     {
         $model->translations()->delete();
+        $model->slugs()->delete();
     }
 }

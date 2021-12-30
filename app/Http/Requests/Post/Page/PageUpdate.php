@@ -4,7 +4,9 @@ namespace App\Http\Requests\Post\Page;
 
 use App\Models\Post;
 use App\Rules\SlugRule;
+use App\Core\Enums\EnumsFile;
 use App\Core\Enums\EnumsPost;
+use App\Rules\FileFilterRule;
 use Illuminate\Validation\Rule;
 use App\Rules\TranslationableRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -37,7 +39,7 @@ class PageUpdate extends FormRequest
      */
     public function rules()
     {
-        
+
         $statsSchedule = EnumsPost::STATUS_SCHEDULE;
 
         return [
@@ -55,6 +57,9 @@ class PageUpdate extends FormRequest
             "translations.*.content" => ["nullable", "string"],
             "translations.*.excerpt" => ["nullable", "string"],
             "translations.*.faq" => ["nullable", "string"],
+
+            "thumbnail" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)],
+            "cover" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)]
         ];
     }
 }

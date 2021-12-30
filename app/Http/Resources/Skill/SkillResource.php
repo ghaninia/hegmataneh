@@ -4,6 +4,7 @@ namespace App\Http\Resources\Skill;
 
 use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\File\Guest\FileCollection;
 use App\Http\Resources\Translation\TranslationCollection;
 
 class SkillResource extends JsonResource
@@ -17,11 +18,12 @@ class SkillResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id ,
-            'icon' => $this->icon ,
-            
+            "id" => $this->id,
+            'icon' => $this->icon,
+
             "translations" => new TranslationCollection($this->whenLoaded("translations")),
-            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
+            "slugs" => new SlugCollection($this->whenLoaded("slugs")),
+            "files" => new FileCollection($this->whenLoaded("files")),
         ];
     }
 }

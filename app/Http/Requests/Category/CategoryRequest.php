@@ -49,7 +49,9 @@ class CategoryRequest extends FormRequest
             "translations.*.name" => ["required", "string", new SlugRule(Term::class, $this->category)],
             "translations.*.description" => ["nullable", "string"],
 
-            "thumbnail" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)]
+
+            "thumbnail" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)],
+            "cover" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)]
 
         ];
     }

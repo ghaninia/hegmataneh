@@ -15,8 +15,8 @@ use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\ViewableInterface;
 use App\Core\Interfaces\VoteableInterface;
 use App\Core\Interfaces\BasktableInterface;
-use App\Core\Interfaces\CategoryableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Core\Interfaces\CategoryableInterface;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -67,6 +67,7 @@ class Post extends Model implements
     public $with = [
         "translations",
         "slugs",
+        "files"
     ];
 
     public string $slugable = EnumsPost::FIELD_TITLE;

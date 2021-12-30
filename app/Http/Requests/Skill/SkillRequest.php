@@ -4,6 +4,8 @@ namespace App\Http\Requests\Skill;
 
 use App\Models\Skill;
 use App\Rules\SlugRule;
+use App\Core\Enums\EnumsFile;
+use App\Rules\FileFilterRule;
 use App\Rules\TranslationableRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -39,6 +41,8 @@ class SkillRequest extends FormRequest
             "translations" => ["required", "array", new TranslationableRule($this)],
             "translations.*.name" => ["required", "string", new SlugRule(Skill::class, $this->skill)],
             "translations.*.description" => ["nullable", "string"],
+
+            "thumbnail" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)],
         ];
     }
 }

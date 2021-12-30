@@ -5,6 +5,7 @@ namespace App\Http\Resources\Page;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\File\Guest\FileCollection;
 use App\Http\Resources\Translation\TranslationCollection;
 
 class PageResource extends JsonResource
@@ -35,7 +36,8 @@ class PageResource extends JsonResource
             "comments_count" => $this->when(isset($this->comments_count), $this->comments_count),
 
             "translations" => new TranslationCollection($this->whenLoaded("translations")),
-            "slugs" => new SlugCollection($this->whenLoaded("slugs"))
+            "slugs" => new SlugCollection($this->whenLoaded("slugs")) ,
+            "files" => new FileCollection($this->whenLoaded("files")),
         ];
     }
 }

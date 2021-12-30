@@ -54,4 +54,9 @@ class File extends Model
     {
         return $this->morphedByMany(Term::class, "fileable");
     }
+
+    public function skills()
+    {
+        return $this->morphedByMany(Skill::class, "fileable");
+    }
 }

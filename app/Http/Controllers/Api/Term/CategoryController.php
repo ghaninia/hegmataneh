@@ -50,7 +50,8 @@ class CategoryController extends Controller
                 "term_id",
                 "slug",
                 "translations",
-                "thumbnail"
+                "thumbnail",
+                "cover",
             ])
         );
 
@@ -68,7 +69,7 @@ class CategoryController extends Controller
      */
     public function show(Term $category)
     {
-        return new CategoryResource($category->load("childrens", "parent" , "files" , "translations" ));
+        return new CategoryResource($category->load("childrens", "parent"));
     }
 
     /**
@@ -86,7 +87,8 @@ class CategoryController extends Controller
                 "term_id",
                 "slug",
                 "translations",
-                "thumbnail"
+                "thumbnail",
+                "cover",
             ]),
             $category
         );

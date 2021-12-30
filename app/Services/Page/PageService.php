@@ -2,29 +2,25 @@
 
 namespace App\Services\Page;
 
+use App\Core\Enums\EnumsFileable;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Core\Enums\EnumsPost;
 use App\Services\Slug\SlugService;
 use App\Repositories\Post\PostRepository;
+use App\Services\File\FileService;
 use App\Services\Translation\TranslationService;
 
 class PageService implements PageServiceInterface
 {
-    protected
-        $postRepo,
-        $translationService,
-        $slugService;
 
     public function __construct(
-        PostRepository $postRepo,
-        TranslationService $translationService,
-        SlugService $slugService
+        protected PostRepository $postRepo,
+        protected TranslationService $translationService,
+        protected SlugService $slugService,
+        protected FileService $fileService
     ) {
-        $this->postRepo = $postRepo;
-        $this->slugService = $slugService;
-        $this->translationService = $translationService;
     }
 
     /**
@@ -38,7 +34,6 @@ class PageService implements PageServiceInterface
             $this->postRepo->query()
             ->where("type", EnumsPost::TYPE_PAGE)
             ->filterBy($filters)
-            ->with(["translations", "slugs"])
             ->paginate();
     }
 
@@ -71,7 +66,12 @@ class PageService implements PageServiceInterface
 
         $this->slugService->sync($page, $translations);
 
-        return $page->load(["translations", "slugs"]);
+        ### تصویر شاخص
+        $this->fileService->sync($page, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
+        ### تصویر کاور
+        $this->fileService->sync($page, EnumsFileable::USAGE_COVER ,  $data["cover"] ?? NULL);
+
+        return $page->load(["translations", "slugs", "files"]);
     }
 
     /**

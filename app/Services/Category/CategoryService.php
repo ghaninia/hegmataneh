@@ -39,14 +39,16 @@ class CategoryService implements CategoryServiceInterface
                 "color" => $data["color"] ?? null,
                 "type" => EnumsTerm::TYPE_CATEGORY
             ]);
-        
+
         ### ترجمه
         $this->translationService->sync($term, $translations = $data["translations"] ?? []);
         ### لینک پیوند
         $this->slugService->sync($term, $translations);
         ### تصویر شاخص
         $this->fileService->sync($term, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
-        
+        #### تصویر کاور
+        $this->fileService->sync($term, EnumsFileable::USAGE_COVER,  $data["cover"] ?? NULL);
+
         return $term->load(["translations", "slugs"]);
     }
 

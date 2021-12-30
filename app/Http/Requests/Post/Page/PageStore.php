@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Post\Page;
 
+use App\Core\Enums\EnumsFile;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\TranslationableRule;
 use App\Core\Enums\EnumsPost;
 use App\Models\Post;
+use App\Rules\FileFilterRule;
 use App\Rules\SlugRule;
 use Illuminate\Validation\Rule;
 
@@ -44,6 +46,9 @@ class PageStore extends FormRequest
             "translations.*.content" => ["nullable" , "string"] ,
             "translations.*.excerpt" => ["nullable" , "string"] ,
             "translations.*.faq" => ["nullable" , "string"] ,
+
+            "thumbnail" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)],
+            "cover" => ["nullable", new FileFilterRule(null, EnumsFile::MIME_TYPE_IMAGE)]
         ];
     }
 }

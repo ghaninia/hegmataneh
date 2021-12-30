@@ -25,9 +25,9 @@ class FileService implements FileServiceInterface
 
     /**
      * can i use file for my fileable model ?
-     * @param User|null $user 
-     * @param string $fileUuid 
-     * @param array $mimes 
+     * @param User|null $user
+     * @param string $fileUuid
+     * @param array $mimes
      */
     public function canUseFile(?User $user = null, string $fileUuid, array $mimes)
     {
@@ -55,9 +55,9 @@ class FileService implements FileServiceInterface
     }
 
     /**
-     * set user 
+     * set user
      * @param int $userId
-     * @return self 
+     * @return self
      */
     public function setUser(int $userId): self
     {
@@ -67,9 +67,9 @@ class FileService implements FileServiceInterface
 
     /**
      * get file path
-     * @param string $fileID 
-     * @param string $ext 
-     * @return string 
+     * @param string $fileID
+     * @param string $ext
+     * @return string
      */
     public function link(string $fileID, string $ext): string
     {
@@ -87,8 +87,8 @@ class FileService implements FileServiceInterface
 
     /**
      * get file path
-     * @param array $filters 
-     * @param array $options 
+     * @param array $filters
+     * @param array $options
      */
     public function list(File $baseDir = null, array $filters, array $options = [])
     {
@@ -119,7 +119,7 @@ class FileService implements FileServiceInterface
 
     /**
      * get user base folder
-     * @return string 
+     * @return string
      */
     private function getBasePath(): string
     {
@@ -160,8 +160,8 @@ class FileService implements FileServiceInterface
 
     /**
      * user directory exists ?
-     * 
-     * @return bool 
+     *
+     * @return bool
      */
     private function userDirExists(): bool
     {
@@ -170,8 +170,8 @@ class FileService implements FileServiceInterface
 
     /**
      * create new folder for user
-     * 
-     * @return void 
+     *
+     * @return void
      */
     private function userDirCreate(): void
     {
@@ -180,8 +180,8 @@ class FileService implements FileServiceInterface
 
     /**
      * create new directory when user dir not exists
-     * 
-     * @return void 
+     *
+     * @return void
      */
     private function whenUserDirNotExistsCreateNew(): void
     {
@@ -220,7 +220,7 @@ class FileService implements FileServiceInterface
      * generate file name
      * @param string $fileID
      * @param string $ext
-     * 
+     *
      * @return string
      */
     private function getFileName(string $fileID, string $ext)
@@ -231,7 +231,7 @@ class FileService implements FileServiceInterface
     /**
      * file exists in user directory ? if exists delete it
      * @param File $file
-     * @return bool 
+     * @return bool
      */
     private function whenFileExistsInUserDirDeleteIt(File $file): bool
     {
@@ -243,7 +243,7 @@ class FileService implements FileServiceInterface
     /**
      * delete file from server
      * @param File $file
-     * @return bool 
+     * @return bool
      */
     private function recursiveDelete(File $file): void
     {
@@ -269,7 +269,7 @@ class FileService implements FileServiceInterface
 
     /**
      * rename file or folder
-     * @return boolean 
+     * @return boolean
      */
     public function rename(File $file, string $newName)
     {

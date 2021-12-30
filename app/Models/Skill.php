@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use App\Core\Enums\EnumsSkill;
+use App\Core\Traits\HasFileTrait;
 use App\Core\Traits\HasSlugTrait;
 use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
+use App\Core\Interfaces\FileableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Skill extends Model implements SlugableInterface, TranslationableInterface
+class Skill extends Model implements SlugableInterface, TranslationableInterface, FileableInterface
 {
 
-    use HasFilterTrait, HasFactory, HasTranslationTrait, HasSlugTrait;
+    use HasFilterTrait, HasFactory, HasTranslationTrait, HasSlugTrait, HasFileTrait;
 
     protected $fillable = [
         'icon'
@@ -23,12 +25,13 @@ class Skill extends Model implements SlugableInterface, TranslationableInterface
     public $with = [
         "translations",
         "slugs",
+        "files"
     ];
 
     public string $slugable = EnumsSkill::FIELD_NAME;
 
     public array $translationable = [
-        EnumsSkill::FIELD_NAME ,
+        EnumsSkill::FIELD_NAME,
         EnumsSkill::FIELD_DESCRIPTION
     ];
 
@@ -51,8 +54,4 @@ class Skill extends Model implements SlugableInterface, TranslationableInterface
         return $this->morphedByMany(User::class, "skillable");
     }
 
-    public function files()
-    {
-        return $this->morphToMany(File::class, 'fileables');
-    }
 }

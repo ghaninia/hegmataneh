@@ -33,6 +33,12 @@ class Term extends Model implements SlugableInterface, TranslationableInterface,
         EnumsTerm::FIELD_DESCRIPTION
     ];
 
+    public $with = [
+        "slugs" ,
+        "files" ,
+        "translations"
+    ];
+
     ###################
     #### RELATIONS ####
     ###################
