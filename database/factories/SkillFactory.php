@@ -22,7 +22,7 @@ class SkillFactory extends Factory
     public function definition()
     {
         return [
-            "icon" => null 
+            "icon" => $this->faker->numerify()
         ];
     }
 }

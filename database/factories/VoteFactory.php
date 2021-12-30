@@ -22,11 +22,9 @@ class VoteFactory extends Factory
      */
     public function definition()
     {
-        $post = Post::inRandomOrder()->first() ;
         return [
             'ipv4' => $this->faker->ipv4(),
-            'post_id' => $post->id ,
-            'vote' => $this->faker->numberBetween(1,5) ,
+            'vote' => $this->faker->numberBetween(1, 5),
             "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
         ];
     }

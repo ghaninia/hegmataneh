@@ -24,15 +24,7 @@ class ViewFactory extends Factory
      */
     public function definition()
     {
-
-        $class = Arr::random([
-            // Post::class,
-            Portfolio::class
-        ]);
-        $class = $class::inRandomOrder()->first();
         return [
-            "viewable_id" => $class->id,
-            "viewable_type" => $class->getMorphClass(),
             "ipv4" => $this->faker->ipv4(),
             "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
         ];
