@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Core\Enums\EnumsUser;
+use Illuminate\Support\Collection;
 use App\Repositories\User\UserRepository;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -21,26 +22,33 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * ساخت کاربر جدید
+     * ساخت و ویرایش کاربر
      * @param array $data
      * @return User
      */
-    public function create(array $data): User
+    public function updateOrCreate(array $data, User $user = null): User
     {
+
+        $insertData = [
+            'name' => $data["name"] ?? null,
+            'status' => (bool) $data["status"],
+            'email' => $data["email"],
+            'mobile' => $data["mobile"] ?? null,
+            "username" => $data["username"] ?? null,
+            "bio" => $data["bio"] ?? null,
+            'role_id' => $data["role_id"],
+            "currency_id" =>  $data["currency_id"] ?? null,
+            "language_id" =>  $data["language_id"] ?? null,
+        ];
+
+        if (is_null($user)) {
+            $insertData['password'] = bcrypt($data["password"]);
+            $insertData["remember_token"]  = $this->rememberTokenGenerate();
+        }
         return
-            $this->userRepo->create([
-                'name' => $data["name"] ?? null,
-                'status' => (bool) $data["status"],
-                'email' => $data["email"],
-                'mobile' => $data["mobile"] ?? null,
-                "username" => $data["username"] ?? null,
-                'password' => bcrypt($data["password"]),
-                "remember_token"  => $this->rememberTokenGenerate(),
-                "bio" => $data["bio"] ?? null,
-                'role_id' => $data["role_id"],
-                "currency_id" =>  $data["currency_id"] ?? null ,
-                "language_id" =>  $data["language_id"] ?? null ,
-            ]);
+            $this->userRepo->updateOrCreate([
+                "id" => $user?->id
+            ], $insertData);
     }
 
     /**
@@ -58,10 +66,10 @@ class UserService implements UserServiceInterface
             'mobile' => $data["mobile"] ?? null,
             "username" => $data["username"] ?? null,
             "remember_token"  => $this->rememberTokenGenerate(),
-            "bio" => $data["bio"] ?? null ,
+            "bio" => $data["bio"] ?? null,
             'role_id' => $data["role_id"],
-            "currency_id" =>  $data["currency_id"] ?? null ,
-            "language_id" =>  $data["language_id"] ?? null ,
+            "currency_id" =>  $data["currency_id"] ?? null,
+            "language_id" =>  $data["language_id"] ?? null,
         ];
 
         if (isset($data["password"]))
@@ -119,7 +127,7 @@ class UserService implements UserServiceInterface
                 ]
             );
 
-        return $user ;
+        return $user;
     }
 
     /**
@@ -136,10 +144,14 @@ class UserService implements UserServiceInterface
      * @param array $filters
      * @return Paginator
      */
-    public function list(array $filters): Paginator
+    public function list(array $filters): Paginator|Collection
     {
         return
             $this->userRepo->query()
+            ->with([
+                "currency", "language", "role"
+            ])
+            ->withTrashed()
             ->filterBy($filters)
             ->paginate();
     }

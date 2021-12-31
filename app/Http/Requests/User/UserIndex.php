@@ -30,8 +30,9 @@ class UserIndex extends FormRequest
             "username" => ["nullable", new UsernameRule],
             "email" => ["nullable", "email"],
             "mobile" => ["nullable", new MobileRule],
-            "role" => ["nullable", "exists:roles,id"],
-            "status" => ["nullable" , "boolean"]
+            "role_id" => ["nullable", "exists:roles,id"],
+            "status" => ["nullable", "boolean"],
+            "just_trashed" => ["nullable", "boolean"]
         ];
     }
 }

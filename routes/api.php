@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Public\Translation\TranslationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Term\TagController;
 use App\Http\Controllers\Api\File\FileController;
@@ -19,6 +18,7 @@ use App\Http\Controllers\Api\Authunticate\AuthController;
 use App\Http\Controllers\Api\Currency\CurrencyController;
 use App\Http\Controllers\Api\Language\LanguageController;
 use App\Http\Controllers\Api\Portfolio\PortfolioController;
+use App\Http\Controllers\Public\Translation\TranslationController;
 
 
 /*
@@ -36,6 +36,7 @@ use App\Http\Controllers\Api\Portfolio\PortfolioController;
 
 Route::group([
     "prefix" => "v1",
+    "as" => "api.v1."
 ], function () {
 
     Route::group([

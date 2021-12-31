@@ -5,21 +5,19 @@ namespace App\Http\Controllers\Api\Authunticate;
 use App\Core\Enums\EnumsUser;
 use App\Core\Enums\EnumsOption;
 use Illuminate\Http\JsonResponse;
-use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
-use App\Services\Authunticate\AuthService;
+use App\Services\User\UserServiceInterface;
 use App\Http\Requests\Authunticate\LoginStore;
 use App\Http\Requests\Authunticate\RegisterStore;
+use App\Services\Authunticate\AuthServiceInterface;
 
 class AuthController extends Controller
 {
-    protected $authService, $userService;
-
-    public function __construct(AuthService $authService, UserService $userService)
-    {
-        $this->authService = $authService;
-        $this->userService = $userService;
+    public function __construct(
+        protected AuthServiceInterface $authService,
+        protected UserServiceInterface $userService
+    ) {
     }
 
     /**
@@ -38,11 +36,11 @@ class AuthController extends Controller
                 $request->input("remember", FALSE)
             );
 
-        $user = $this->authService->user() ;
+        $user = $this->authService->user();
 
         if ($user)
             return $this->success([
-                "user"  => new UserResource( $user->load("role") ),
+                "user"  => new UserResource($user->load("role")),
                 "token" => $user->createToken("authunticate")->accessToken
             ]);
 
@@ -58,7 +56,7 @@ class AuthController extends Controller
      */
     public function register(RegisterStore $request)
     {
-        $user = $this->userService->create(
+        $user = $this->userService->updateOrCreate(
             array_merge($request->all(), [
                 "status" => EnumsUser::STATUS_DISABLE,
                 'role_id' => options(EnumsOption::DASHBOARD_REGISTER_RULE),

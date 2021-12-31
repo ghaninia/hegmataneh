@@ -14,15 +14,15 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id() ;
+            $table->id();
 
-            $table->unsignedBigInteger("currency_id")->nullable() ;
-            $table->unsignedBigInteger("language_id")->nullable() ;
+            $table->unsignedBigInteger("currency_id")->nullable();
+            $table->unsignedBigInteger("language_id")->nullable();
+            $table->unsignedBigInteger("role_id");
 
             $table->string("name")->nullable();
-            $table->unsignedBigInteger("role_id") ;
-            $table->boolean("status")->default(false) ;
-            $table->string("username" , 100)->unique()->nullable() ;
+            $table->boolean("status")->default(false);
+            $table->string("username", 100)->unique()->nullable();
             $table->string('email')->unique();
             $table->string('mobile')->unique()->nullable();
             $table->text('bio')->nullable();
@@ -30,15 +30,13 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp("verified_at")->nullable();
-            $table->softDeletes() ;
+            $table->softDeletes();
 
-            $table->index([
-                "language_id",
-                "currency_id",
-                "username" ,
-                "mobile" ,
-                "email" ,
-            ]);
+            $table->index("language_id");
+            $table->index("currency_id");
+            $table->index("username");
+            $table->index("mobile");
+            $table->index("email");
 
             $table->foreign("currency_id")
                 ->references("id")

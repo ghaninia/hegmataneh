@@ -19,14 +19,19 @@ class CurrencyService implements CurrencyServiceInterface
     /**
      * لیست واحد پولی ها
      * @param array $filters
+     * @param bool $isPaginate
      * @return Paginator
      */
-    public function list(array $filters): Paginator
+    public function list(array $filters,bool $isPaginate = true): Paginator
     {
         return
             $this->currencyRepo->query()
             ->filterBy($filters)
-            ->paginate();
+            ->when(
+                $isPaginate,
+                fn ($query) => $query->paginate(),
+                fn ($query) => $query->get()
+            );
     }
 
     /**
@@ -39,7 +44,7 @@ class CurrencyService implements CurrencyServiceInterface
         return
             $this->currencyRepo->create([
                 "name" => $data["name"],
-                "code" => $data["code"] ?? null ,
+                "code" => $data["code"] ?? null,
             ]);
     }
 
@@ -54,7 +59,7 @@ class CurrencyService implements CurrencyServiceInterface
         return
             $this->currencyRepo->updateById($currency->id, [
                 "name" => $data["name"],
-                "code" => $data["code"] ?? null ,
+                "code" => $data["code"] ?? null,
             ]);
     }
 

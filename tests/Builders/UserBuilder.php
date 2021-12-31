@@ -2,6 +2,8 @@
 
 namespace Tests\Builders;
 
+use App\Models\Currency;
+use App\Models\Language;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Permission;
@@ -24,6 +26,12 @@ class UserBuilder
             ->for(
                 Role::factory()
                     ->hasAttached($this->getPermissions(), [], "permissions")
+            )
+            ->for(
+                Currency::factory()
+            )
+            ->for(
+                Language::factory()
             )
             ->state($state);
 

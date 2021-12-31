@@ -3,18 +3,14 @@
 namespace Tests\Feature\Controllers\Auth;
 
 use Tests\TestCase;
-use App\Models\Option;
-use App\Core\Enums\EnumsOption;
-use App\Core\Enums\EnumsUser;
 use App\Models\User;
-use App\Notifications\ConfirmAccountNotification;
+use App\Core\Enums\EnumsUser;
+use App\Core\Enums\EnumsOption;
 use Tests\Builders\UserBuilder;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Services\Authunticate\AuthServiceInterface;
-use App\Services\Option\OptionService;
-use Illuminate\Support\Facades\Notification;
 use Tests\Builders\OptionBuilder;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ConfirmAccountNotification;
+use App\Services\Authunticate\AuthServiceInterface;
 
 class AuthControllerTest extends TestCase
 {
@@ -35,7 +31,7 @@ class AuthControllerTest extends TestCase
 
         $field = app(AuthServiceInterface::class)->field();
 
-        $response = $this->post(route("authunticate.login"), [
+        $response = $this->post(route("api.v1.authunticate.login"), [
             $field => $user->{$field},
             "password" => $password,
         ]);
@@ -58,7 +54,7 @@ class AuthControllerTest extends TestCase
         OptionBuilder::set(EnumsOption::DASHBOARD_REGISTER_RULE, $user->role_id);
 
         $response = $this->postJson(
-            route("authunticate.register.store"),
+            route("api.v1.authunticate.register.store"),
             $data = array_merge($user->toArray(), [
                 "password" => "123456",
             ])

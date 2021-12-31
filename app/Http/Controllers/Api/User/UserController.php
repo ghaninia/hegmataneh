@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Models\User;
-use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserIndex;
 use App\Http\Requests\User\UserStore;
 use App\Http\Requests\User\UserUpdate;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserCollection;
+use App\Services\User\UserServiceInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserController extends Controller
 {
 
     public function __construct(
-        public UserService $userService
+        public UserServiceInterface $userService
     ) {
     }
 
@@ -29,7 +29,13 @@ class UserController extends Controller
     {
         $users = $this->userService->list(
             $request->only([
-                "name", "username", "email", "mobile", "role"
+                "name",
+                "username",
+                "email",
+                "mobile",
+                "role_id",
+                "status",
+                "just_trashed"
             ])
         );
 
@@ -44,7 +50,7 @@ class UserController extends Controller
      */
     public function store(UserStore $request)
     {
-        $user = $this->userService->create(
+        $user = $this->userService->updateOrCreate(
             $request->all()
         );
 
@@ -62,7 +68,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return
+            new UserResource(
+                $user->load([
+                    "currency", "language", "role"
+                ])
+            );
     }
 
     /**
@@ -74,12 +85,13 @@ class UserController extends Controller
      */
     public function update(UserUpdate $request, User $user)
     {
-        $user = $this->userService->update($user, $request->all());
+
+        $user = $this->userService->updateOrCreate($request->all(), $user);
 
         return
             $this->success([
                 "msg"  => trans("dashboard.success.user.update"),
-                "data" => new UserResource($user)
+                "data" => new UserResource($user->load(["currency", "language", "role"]))
             ]);
     }
 
