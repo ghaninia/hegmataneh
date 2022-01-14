@@ -26,6 +26,7 @@ class CurrencyIndex extends FormRequest
         return [
             "name" => ["nullable" , "string"] ,
             "code" => ["nullable" , "string"] ,
+            "is_paginate" => ["nullable" , "boolean"] ,
         ];
     }
 }

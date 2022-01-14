@@ -2,10 +2,10 @@
 
 namespace Tests\Builders;
 
-use App\Models\Currency;
-use App\Models\Language;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Currency;
+use App\Models\Language;
 use App\Models\Permission;
 use Illuminate\Support\Collection;
 
@@ -43,7 +43,7 @@ class UserBuilder
     private function getPermissions()
     {
         $keyColumn = $this->isAction ? 'action' : 'key';
-        $permissions = count($this->permissions) ? getEntireRoutesAction() : $this->permissions;
+        $permissions = count($this->permissions) ? $this->permissions : getEntireRoutesAction();
 
         $pers =
             array_map(
@@ -53,8 +53,14 @@ class UserBuilder
                 $permissions
             );
 
-        Permission::insert($pers);
+        $instancePermissions = new Collection();
 
-        return Permission::whereIn($keyColumn, $permissions)->get();
+        array_map(function ($permission) use (&$instancePermissions) {
+            $instancePermissions->push(
+                Permission::updateOrCreate($permission)
+            );
+        }, $pers);
+
+        return $instancePermissions;
     }
 }

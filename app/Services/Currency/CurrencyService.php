@@ -3,6 +3,7 @@
 namespace App\Services\Currency;
 
 use App\Models\Currency;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Repositories\Currency\CurrencyRepository;
 use App\Services\Currency\CurrencyServiceInterface;
@@ -22,7 +23,7 @@ class CurrencyService implements CurrencyServiceInterface
      * @param bool $isPaginate
      * @return Paginator
      */
-    public function list(array $filters,bool $isPaginate = true): Paginator
+    public function list(array $filters, bool $isPaginate = true): Paginator|Collection
     {
         return
             $this->currencyRepo->query()
@@ -35,29 +36,17 @@ class CurrencyService implements CurrencyServiceInterface
     }
 
     /**
-     * ساخت واحد پولی جدید
+     * ساخت و ویرایش واحد پولی
      * @param array $data
+     * @param Currency|null $currency
      * @return Currency
      */
-    public function create(array $data): Currency
+    public function updateOrCreate(array $data, Currency $currency = null): Currency
     {
         return
-            $this->currencyRepo->create([
-                "name" => $data["name"],
-                "code" => $data["code"] ?? null,
-            ]);
-    }
-
-    /**
-     * ویرایش واحد پولی
-     * @param Currency $currency
-     * @param array $data
-     * @return Currency
-     */
-    public function update(Currency $currency, array $data): Currency
-    {
-        return
-            $this->currencyRepo->updateById($currency->id, [
+            $this->currencyRepo->updateOrCreate([
+                "id" => $currency?->id
+            ], [
                 "name" => $data["name"],
                 "code" => $data["code"] ?? null,
             ]);

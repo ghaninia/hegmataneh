@@ -41,6 +41,7 @@ function getEntireRoutesAction(): array
             )
                 $routes[] = $method;
         });
+
     return $routes;
 }
 

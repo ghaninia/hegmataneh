@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Api\Currency;
 
 use App\Models\Currency;
 use App\Http\Controllers\Controller;
-use App\Services\Currency\CurrencyService;
 use App\Http\Requests\Currency\CurrencyIndex;
 use App\Http\Requests\Currency\CurrencyStore;
 use App\Http\Requests\Currency\CurrencyUpdate;
 use App\Http\Resources\Currency\CurrencyResource;
 use App\Http\Resources\Currency\CurrencyCollection;
+use App\Services\Currency\CurrencyServiceInterface;
 
 class CurrencyController extends Controller
 {
     protected $currencyService;
 
-    public function __construct(CurrencyService $currencyService)
+    public function __construct(CurrencyServiceInterface $currencyService)
     {
         $this->currencyService = $currencyService;
     }
@@ -32,7 +32,8 @@ class CurrencyController extends Controller
             $request->only([
                 "name",
                 "code",
-            ])
+            ]),
+            $request->input("is_paginate") ?? FALSE
         );
 
         return new CurrencyCollection($currencies);
@@ -47,10 +48,12 @@ class CurrencyController extends Controller
     public function store(CurrencyStore $request)
     {
         $currency =
-            $this->currencyService->create($request->only([
-                "name",
-                "code",
-            ]));
+            $this->currencyService->updateOrCreate(
+                $request->only([
+                    "name",
+                    "code",
+                ])
+            );
 
         return $this->success([
             "msg" => trans("dashboard.success.currency.create"),
@@ -78,12 +81,12 @@ class CurrencyController extends Controller
     public function update(Currency $currency, CurrencyUpdate $request)
     {
         $currency =
-            $this->currencyService->update(
-                $currency,
+            $this->currencyService->updateOrCreate(
                 $request->only([
                     "name",
                     "code",
-                ])
+                ]),
+                $currency,
             );
 
         return $this->success([

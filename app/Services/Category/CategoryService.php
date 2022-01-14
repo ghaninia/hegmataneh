@@ -2,14 +2,14 @@
 
 namespace App\Services\Category;
 
-use App\Core\Enums\EnumsFileable;
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
-use App\Core\Interfaces\CategoryableInterface;
+use App\Core\Enums\EnumsFileable;
 use App\Services\File\FileService;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Term\TermRepository;
 use App\Services\Slug\SlugServiceInterface;
+use App\Core\Interfaces\CategoryableInterface;
 use App\Services\Category\CategoryServiceInterface;
 use App\Services\Translation\TranslationServiceInterface;
 
