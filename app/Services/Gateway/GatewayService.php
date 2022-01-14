@@ -14,11 +14,12 @@ class GatewayService implements GatewayServiceInterface
     }
 
     /**
-     * @param array $filters 
-     * @param bool|null $isPaginate
-     * @param array|null $withs
+     * دریافت لیست درگاه ها
+     * @param array $filters
+     * @param bool $isPaginate
+     * @param array $withs
      */
-    public function list(array $filters, bool|null $isPaginate = true, array|null $withs = [])
+    public function list(array $filters, bool $isPaginate = true, array $withs = [])
     {
         return
             $this->gatewayRepo->query()
@@ -36,7 +37,7 @@ class GatewayService implements GatewayServiceInterface
 
     /**
      * ویرایش و آپدیت درگاه های بانکی
-     * @param array $data 
+     * @param array $data
      * @param Gateway|null $gateway
      */
     public function updateOrCreate(array $data, Gateway $gateway = null)
@@ -57,12 +58,12 @@ class GatewayService implements GatewayServiceInterface
     }
 
     /**
-     * 
+     *
      * @param Gateway $gateway
      */
     public function delete(Gateway $gateway)
     {
-        return $gateway->delete() ;
+        return $gateway->delete();
     }
 
 
@@ -70,9 +71,8 @@ class GatewayService implements GatewayServiceInterface
      * آیا فاکتوری با این درگاه صادر شده است ؟
      * @param Gateway $gateway
      */
-     public function hasOrders(Gateway $gateway)
-     {
-        return (bool) $gateway->orders()->count() ;
-     }
-
+    public function hasOrders(Gateway $gateway)
+    {
+        return (bool) $gateway->orders()->count();
+    }
 }

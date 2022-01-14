@@ -25,11 +25,12 @@ class GatewayController extends Controller
      */
     public function index(GatewayIndex $request)
     {
+        
         $gateways = $this->gatewayService->list(
             $request->only([
                 "id", "key", "name", "status"
             ]),
-            NULL,
+            $request->input("is_paginate") ?? FALSE,
             ["currencies"]
         );
 
@@ -93,7 +94,7 @@ class GatewayController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * 
+     *
      * @param  \App\Models\Gateway  $gateway
      * @return \Illuminate\Http\Response
      */
