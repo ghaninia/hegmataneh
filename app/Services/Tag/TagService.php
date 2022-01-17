@@ -13,16 +13,11 @@ use App\Services\Translation\TranslationServiceInterface;
 
 class TagService implements TagServiceInterface
 {
-    protected $termRepo, $translationService, $slugService;
-
     public function __construct(
-        TermRepository $termRepo,
-        TranslationServiceInterface $translationService,
-        SlugServiceInterface $slugService
+        protected TermRepository $termRepo,
+        protected TranslationServiceInterface $translationService,
+        protected SlugServiceInterface $slugService
     ) {
-        $this->termRepo = $termRepo;
-        $this->translationService = $translationService;
-        $this->slugService = $slugService;
     }
 
     /**
@@ -59,27 +54,34 @@ class TagService implements TagServiceInterface
     /**
      * لیست تمام فیلتر
      * @param array $filters
+     * @param bool $isPaginate
+     * @param array $relations
      * @return Paginator
      */
-    public function list(array $filters)
+    public function list(array $filters, bool $isPaginate = TRUE, array $relations = [])
     {
         return
             $this->termRepo->query()
-            ->where("type", EnumsTerm::TYPE_TAG)
+            ->tags()
             ->filterBy($filters)
-            ->paginate();
+            ->with($relations)
+            ->when(
+                $isPaginate,
+                fn ($query) => $query->paginate(),
+                fn ($query) => $query->get()
+            );
     }
 
     /**
      * مدیریت برچسب های
      * @param TagableInterface $model
      * @param array $data
-     * 
-     * @return void 
+     *
+     * @return void
      */
-    public function sync(TagableInterface $model, array $data = []) : void 
+    public function sync(TagableInterface $model, array $data = []): void
     {
-        $items = [] ;
+        $items = [];
 
         ### ست کردن تایپ در جدول واسط
         array_map(function ($item) use (&$items) {
@@ -88,5 +90,4 @@ class TagService implements TagServiceInterface
 
         $model->tags()->sync($items);
     }
-
 }

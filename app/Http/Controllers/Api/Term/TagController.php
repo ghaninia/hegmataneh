@@ -3,22 +3,18 @@
 namespace App\Http\Controllers\Api\Term;
 
 use App\Models\Term;
-use App\Services\Tag\TagService;
 use App\Http\Requests\Tag\TagIndex;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\TagRequest;
-use App\Services\Upload\UploadService;
 use App\Http\Resources\Tag\TagResource;
 use App\Http\Resources\Tag\TagCollection;
+use App\Services\Tag\TagServiceInterface;
 
 class TagController extends Controller
 {
-    protected $tagService, $uploadService;
-
-    public function __construct(TagService $tagService, UploadService $uploadService)
-    {
-        $this->tagService = $tagService;
-        $this->uploadService = $uploadService;
+    public function __construct(
+        protected TagServiceInterface $tagService
+    ) {
     }
 
     /**
@@ -30,9 +26,10 @@ class TagController extends Controller
     {
         $terms = $this->tagService->list(
             $request->only([
-                "name", "description", "slug"
+                "id", "name", "description", "slug"
             ])
         );
+
         return new TagCollection($terms);
     }
 
@@ -44,9 +41,8 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-        $tag = $this->tagService->updateOrCreate(
-            $request->all()
-        );
+
+        $tag = $this->tagService->updateOrCreate($request->all());
 
         return $this->success([
             "msg" => trans("dashboard.success.tag.create"),
@@ -75,7 +71,7 @@ class TagController extends Controller
     public function update(Term $tag, TagRequest $request)
     {
 
-        $tag = $this->tagService->updateOrCreate($request->all() , $tag );
+        $tag = $this->tagService->updateOrCreate($request->all(), $tag);
         return
             $this->success([
                 "msg" => trans("dashboard.success.tag.update"),

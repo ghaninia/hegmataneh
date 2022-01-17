@@ -13,7 +13,7 @@ class TagIndex extends FormRequest
      */
     public function authorize()
     {
-        return true ;
+        return true;
     }
 
     /**
@@ -24,9 +24,10 @@ class TagIndex extends FormRequest
     public function rules()
     {
         return [
-            "name" => ["nullable" , "string"] ,
-            "slug" => ["nullable" , "string"] ,
-            "description" => ["nullable" , "string"]
+            "id" => ["nullable", "exists:terms,id"],
+            "name" => ["nullable", "string"],
+            "slug" => ["nullable", "string"],
+            "description" => ["nullable", "string"],
         ];
     }
 }
