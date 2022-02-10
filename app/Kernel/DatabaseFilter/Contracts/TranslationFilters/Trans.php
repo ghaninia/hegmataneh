@@ -9,6 +9,6 @@ class Trans extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {
-        $this->query->whereRaw("MATCH(trans) AGAINST(?)", [$value]);
+        $this->query->whereFullText("trans", $value);
     }
 }
