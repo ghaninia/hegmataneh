@@ -2,20 +2,15 @@
 
 namespace App\Services\Access;
 
+use App\Models\Role;
 use App\Models\User;
-use App\Repositories\Role\RoleRepository;
 use App\Services\Access\AccessServiceInterface;
 
 class AccessService implements AccessServiceInterface
 {
 
-    public $user, $permissions, $roleRepo;
+    public $user, $permissions;
 
-    public function __construct(
-        RoleRepository $roleRepo
-    ) {
-        $this->roleRepo = $roleRepo;
-    }
 
     /**
      * user setter
@@ -46,7 +41,7 @@ class AccessService implements AccessServiceInterface
     private function checkLogic(string $operator): bool
     {
         $result =
-            $this->roleRepo->query()
+            Role::query()
             ->whereHas(
                 "users",
                 fn ($query) => $query->where("users.id", $this->user->id)

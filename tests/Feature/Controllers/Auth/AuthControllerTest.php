@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers\Auth;
 use Tests\TestCase;
 use App\Models\User;
 use App\Core\Enums\EnumsUser;
+use Illuminate\Http\Response;
 use App\Core\Enums\EnumsOption;
 use Tests\Builders\UserBuilder;
 use Tests\Builders\OptionBuilder;
@@ -59,6 +60,9 @@ class AuthControllerTest extends TestCase
                 "password" => "123456",
             ])
         );
+
+        $response->assertStatus(Response::HTTP_OK) ;
+
 
         $this->assertDatabaseHas( "users" ,[
             "status" => EnumsUser::STATUS_DISABLE,

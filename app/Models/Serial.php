@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasSlugTrait;
-use App\Core\Traits\HasFilterTrait;
+use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\TagableInterface;

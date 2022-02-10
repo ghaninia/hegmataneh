@@ -3,48 +3,41 @@
 namespace App\Services\Basket;
 
 use App\Models\User;
+use App\Models\Basket;
 use App\Models\Basketable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Core\Interfaces\BasktableInterface;
-use App\Repositories\Basket\BasketRepository;
 
 class BasketService implements BasketServiceInterface
 {
-    protected $basketRepo ;
-
-    protected $user , $request , $basket;
-
-    public function __construct(BasketRepository $basketRepo)
-    {
-        $this->basketRepo = $basketRepo ;
-    }
+    protected $user, $request, $basket;
 
     /**
      * @param Request $request
      * @param User|null $user
      * @return $this
      */
-    public  function basket( Request  $request , ?User $user = null ) : self
+    public  function basket(Request  $request, ?User $user = null): self
     {
-        $this->user = $user ;
-        $this->request = $request ;
+        $this->user = $user;
+        $this->request = $request;
 
-        if( !! $user )
-            $data["user_id"] = $user->id ;
+        if (!!$user)
+            $data["user_id"] = $user->id;
         else
             $data["secret_key"] = $this->generateSecretKey($request);
 
-       $this->basket = $this->basketRepo->firstOrCreate($data);
+        $this->basket = Basket::query()->firstOrCreate($data);
 
-       return $this ;
+        return $this;
     }
 
     /**
      * @param Request $request
      * @return string
      */
-    private function generateSecretKey(Request $request )
+    private function generateSecretKey(Request $request)
     {
         return md5($request->ip());
     }
@@ -54,36 +47,33 @@ class BasketService implements BasketServiceInterface
      * @param User $user
      * @return $this
      */
-    public function moveBasketItemGuestToUserWhenLoggin(Request  $request , User $user)
+    public function moveBasketItemGuestToUserWhenLoggin(Request  $request, User $user)
     {
 
-        $localBasket = $this->basketRepo
-            ->query()
-            ->where(["secret_key" => $this->generateSecretKey($request) ])
-            ->first() ;
+        $localBasket = Basket::query()
+            ->where(["secret_key" => $this->generateSecretKey($request)])
+            ->first();
 
-        $this->basket($request , $user) ;
+        $this->basket($request, $user);
 
-        if(isset($localBasket))
-        {
+        if (isset($localBasket)) {
 
-            $userBasketables = $this->basket->basketables() ;
-            $localBasketables = $localBasket->basketables ;
+            $userBasketables = $this->basket->basketables();
+            $localBasketables = $localBasket->basketables;
 
-            $localBasketables->map(function($item) use ($user ,$userBasketables) {
+            $localBasketables->map(function ($item) use ($user, $userBasketables) {
 
-                $unit = $item->unit ;
+                $unit = $item->unit;
 
                 $userBasketables->updateOrCreate([
-                    "basketable_id" => $item->basketable_id ,
+                    "basketable_id" => $item->basketable_id,
                     "basketable_type" => $item->basketable_type
-                ],[
+                ], [
                     "unit" => DB::raw("unit + {$unit}")
                 ]);
-
             });
 
-            $localBasket->delete() ;
+            $localBasket->delete();
         }
 
         return $this;
@@ -94,13 +84,13 @@ class BasketService implements BasketServiceInterface
      * @param $unit
      * @return $this
      */
-    public function appendItem(BasktableInterface $model , $unit )
+    public function appendItem(BasktableInterface $model, $unit)
     {
 
         $this->basket->basketables()->updateOrCreate([
-            "basketable_id" => $model->id ,
+            "basketable_id" => $model->id,
             "basketable_type" => $model->getMorphClass()
-        ],[
+        ], [
             "unit" => DB::raw("unit + $unit")
         ]);
 
@@ -112,17 +102,17 @@ class BasketService implements BasketServiceInterface
      * @param $unit
      * @return $this
      */
-    public function updateItem(Basketable $basketable , $unit )
+    public function updateItem(Basketable $basketable, $unit)
     {
         $this->basket
             ->basketables()
-            ->where("id" , $basketable->id)
+            ->where("id", $basketable->id)
             ->update([
                 "unit" => $unit
             ]);
 
         if ($unit === 0)
-            $this->delete($basketable) ;
+            $this->delete($basketable);
 
         return $this;
     }
@@ -131,11 +121,11 @@ class BasketService implements BasketServiceInterface
      * @param Basketable $basketable
      * @return $this
      */
-    public function DeleteItem(Basketable $basketable )
+    public function DeleteItem(Basketable $basketable)
     {
         $this->basket
             ->basketables()
-            ->where("id" , $basketable->id )
+            ->where("id", $basketable->id)
             ->delete();
 
         return $this;
@@ -149,8 +139,7 @@ class BasketService implements BasketServiceInterface
         return
             $this->basket->load([
                 "serials.prices",
-                "products.prices" ,
+                "products.prices",
             ]);
     }
-
 }

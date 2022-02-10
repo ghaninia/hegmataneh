@@ -5,12 +5,12 @@ namespace App\Models;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasFileTrait;
 use App\Core\Traits\HasSlugTrait;
-use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\FileableInterface;
 use App\Core\Interfaces\SlugableInterface;
 use App\Core\Interfaces\TranslationableInterface;
+use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Term extends Model implements SlugableInterface, TranslationableInterface, FileableInterface

@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Api\Option;
 
+use App\Models\Option;
 use App\Core\Enums\EnumsOption;
 use App\Http\Controllers\Controller;
 use App\Services\Option\OptionService;
 use App\Http\Requests\Option\OptionUpdate;
-use App\Repositories\Option\OptionRepository;
 use App\Http\Resources\Option\OptionCollection;
 
 class OptionController extends Controller
 {
 
-    protected $optionRepo;
 
-    public function __construct(OptionRepository $optionRepo)
+    public function __construct()
     {
-        $this->optionRepo = $optionRepo;
     }
 
     /**
@@ -26,7 +24,7 @@ class OptionController extends Controller
      */
     public function index()
     {
-        $options = $this->optionRepo->all();
+        $options = Option::all();
         return new OptionCollection($options);
     }
 

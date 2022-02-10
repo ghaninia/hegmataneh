@@ -9,7 +9,6 @@ use App\Core\Enums\EnumsFile;
 use App\Core\Enums\EnumsSystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use App\Repositories\File\FileRepository;
 use App\Core\Interfaces\FileableInterface;
 use App\Services\File\FileServiceInterface;
 
@@ -18,10 +17,6 @@ class FileService implements FileServiceInterface
     protected const SLUG = ".-_.-_.-_.";
     protected const BASE_PATH = "uploads";
     protected $basePath, $userId;
-
-    public function __construct(public FileRepository $fileRepo)
-    {
-    }
 
     /**
      * can i use file for my fileable model ?

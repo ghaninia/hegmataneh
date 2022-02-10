@@ -7,19 +7,12 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use App\Core\Enums\EnumsUser;
 use Illuminate\Support\Collection;
-use App\Repositories\User\UserRepository;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Notifications\ConfirmAccountNotification;
 
 class UserService implements UserServiceInterface
 {
-    protected $userRepo;
-
-    public function __construct(UserRepository $userRepo)
-    {
-        $this->userRepo = $userRepo;
-    }
 
     /**
      * ساخت و ویرایش کاربر
@@ -45,10 +38,12 @@ class UserService implements UserServiceInterface
             $insertData['password'] = bcrypt($data["password"]);
             $insertData["remember_token"]  = $this->rememberTokenGenerate();
         }
+
         return
-            $this->userRepo->updateOrCreate([
-                "id" => $user?->id
-            ], $insertData);
+            User::updateOrCreate(
+                ["id" => $user?->id],
+                $insertData
+            );
     }
 
     /**
@@ -75,10 +70,9 @@ class UserService implements UserServiceInterface
         if (isset($data["password"]))
             $updateFields['password'] = bcrypt($data["password"]);
 
-        return $this->userRepo->updateById(
-            $user->id,
-            $updateFields
-        );
+        $user->update($updateFields);
+
+        return $user->refresh();
     }
 
     /**
@@ -88,7 +82,7 @@ class UserService implements UserServiceInterface
      */
     public function delete(User $user): bool
     {
-        return $this->userRepo->deleteById($user->id);
+        return $user->delete();
     }
 
     /**
@@ -111,23 +105,18 @@ class UserService implements UserServiceInterface
      */
     public function verify(string $token): ?User
     {
-        $user = $this->userRepo->query()
+        $user = User::query()
             ->whereNull("verified_at")
             ->where("remember_token", $token)
             ->first();
 
-        $user =
-            is_null($user) ? NULL :
-            $this->userRepo->updateById(
-                $user->id,
-                [
-                    "remember_token"  => $this->rememberTokenGenerate(),
-                    "status" => EnumsUser::STATUS_ENABLE,
-                    "verified_at" => Carbon::now()
-                ]
-            );
+        $user?->update([
+            "remember_token"  => $this->rememberTokenGenerate(),
+            "status" => EnumsUser::STATUS_ENABLE,
+            "verified_at" => Carbon::now()
+        ]);
 
-        return $user;
+        return $user ?? false;
     }
 
     /**
@@ -147,7 +136,7 @@ class UserService implements UserServiceInterface
     public function list(array $filters): Paginator|Collection
     {
         return
-            $this->userRepo->query()
+            User::query()
             ->with([
                 "currency", "language", "role"
             ])

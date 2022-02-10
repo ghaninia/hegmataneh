@@ -2,16 +2,11 @@
 
 namespace App\Services\Comment;
 
-use App\Repositories\Comment\CommentRepository;
+use App\Models\Comment;
 use App\Services\Comment\CommentServiceInterface;
 
 class CommentService implements CommentServiceInterface
 {
-    protected $commentRepo;
-    public function __construct(CommentRepository $commentRepo)
-    {
-        $this->commentRepo = $commentRepo;
-    }
 
     /**
      * لیست تمام کامنت ها
@@ -21,7 +16,7 @@ class CommentService implements CommentServiceInterface
     public function list(array $filters)
     {
         return
-            $this->commentRepo->query()
+            Comment::query()
             ->filterBy($filters)
             ->paginate();
     }

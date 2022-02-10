@@ -2,38 +2,29 @@
 
 namespace App\Services\Language;
 
-use App\Core\Interfaces\LanguageableInterface;
 use App\Models\Language;
 use App\Core\Enums\EnumsLanguage;
-use Illuminate\Contracts\Pagination\Paginator;
-use App\Repositories\Language\LanguageRepository;
-use App\Services\Language\LanguageServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\Paginator;
+use App\Services\Language\LanguageServiceInterface;
 
 class LanguageService implements LanguageServiceInterface
 {
-    protected $languageRepo;
-
-    public function __construct(LanguageRepository $languageRepo)
-    {
-        $this->languageRepo = $languageRepo;
-    }
 
     /**
      * لیست زبان ها
      * @param array $filters
      * @return Paginator
      */
-    public function list(array $filters , bool $isPaginate = true ): Paginator|Collection
+    public function list(array $filters, bool $isPaginate = true): Paginator|Collection
     {
         return
-            $this->languageRepo->query()
+            Language::query()
             ->filterBy($filters)
             ->when(
-                $isPaginate ,
-                fn($query) => $query->paginate() ,
-                fn($query) => $query->get()
+                $isPaginate,
+                fn ($query) => $query->paginate(),
+                fn ($query) => $query->get()
             );
     }
 
@@ -45,9 +36,9 @@ class LanguageService implements LanguageServiceInterface
     public function create(array $data): Language
     {
         return
-            $this->languageRepo->create([
+            Language::create([
                 "name" => $data["name"],
-                "code" => $data["code"] ?? null ,
+                "code" => $data["code"] ?? null,
                 "direction" => $data["direction"] ?? EnumsLanguage::DIRECTION_RTL
             ]);
     }
@@ -61,9 +52,9 @@ class LanguageService implements LanguageServiceInterface
     public function update(Language $language, array $data): Language
     {
         return
-            $this->languageRepo->updateById($language->id, [
+            Language::whereId($language->id)->update([
                 "name" => $data["name"],
-                "code" => $data["code"] ?? null ,
+                "code" => $data["code"] ?? null,
                 "direction" => $data["direction"] ?? EnumsLanguage::DIRECTION_RTL
             ]);
     }
@@ -75,8 +66,6 @@ class LanguageService implements LanguageServiceInterface
      */
     public function delete(Language $language): bool
     {
-        return $this->languageRepo->delete($language);
+        return Language::whereId($language->id)->delete();
     }
-
-
 }

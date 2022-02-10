@@ -3,23 +3,17 @@
 namespace App\Services\Translation;
 
 use App\Core\Interfaces\TranslationableInterface;
-use App\Repositories\Translation\TranslationRepository;
+use App\Models\Translation;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 
 class TranslationService implements TranslationServiceInterface
 {
-    protected $translationRepo;
-
-    public function __construct(TranslationRepository $translationRepo)
-    {
-        $this->translationRepo = $translationRepo;
-    }
 
     public function getTranslations()
     {
         $translations = [];
-        $langBasePath = resource_path("lang") ;
+        $langBasePath = resource_path("lang");
         $locatePath = glob($langBasePath . '/*');
 
         $includeFiles = [
@@ -28,24 +22,24 @@ class TranslationService implements TranslationServiceInterface
 
         foreach ($locatePath as $locale) {
             $pathName = basename($locale);
-            $files = collect(File::allFiles($locale)) ;
+            $files = collect(File::allFiles($locale));
 
             ### filter files
             $files = $files->filter(function ($file) use ($includeFiles) {
-                $fileName = basename($file->getPathname() , ".php");
+                $fileName = basename($file->getPathname(), ".php");
                 return in_array($fileName, $includeFiles);
             });
 
             ### get translations
-            $translations[$pathName]  = $files->flatMap(function($file) use ($pathName){
-                $baseName = basename($file->getPathname() , ".php");
+            $translations[$pathName]  = $files->flatMap(function ($file) use ($pathName) {
+                $baseName = basename($file->getPathname(), ".php");
                 return [
                     $baseName => trans($baseName, [], $pathName)
                 ];
             });
         }
 
-        return $translations ;
+        return $translations;
     }
 
     /**
@@ -76,6 +70,6 @@ class TranslationService implements TranslationServiceInterface
                     ];
                 }
 
-        $this->translationRepo->createMultiple($instaces);
+        Translation::insert($instaces);
     }
 }

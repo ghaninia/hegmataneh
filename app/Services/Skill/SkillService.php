@@ -5,7 +5,6 @@ namespace App\Services\Skill;
 use App\Core\Enums\EnumsFileable;
 use App\Models\Skill;
 use Illuminate\Database\Eloquent\Model;
-use App\Repositories\Skill\SkillRepository;
 use App\Services\File\FileService;
 use App\Services\Slug\SlugServiceInterface;
 use App\Services\Skill\SkillServiceInterface;
@@ -15,9 +14,8 @@ use App\Services\Translation\TranslationServiceInterface;
 class SkillService implements SkillServiceInterface
 {
     public function __construct(
-        public SkillRepository $skillRepo,
         public TranslationServiceInterface $translationService,
-        public SlugServiceInterface $slugService ,
+        public SlugServiceInterface $slugService,
         public FileService $fileService
     ) {
     }
@@ -30,7 +28,7 @@ class SkillService implements SkillServiceInterface
     public function list(array $filters): Paginator
     {
         return
-            $this->skillRepo->query()
+            Skill::query()
             ->filterBy($filters)
             ->paginate();
     }
@@ -43,7 +41,7 @@ class SkillService implements SkillServiceInterface
     public function updateOrCreate(array $data, Skill $skill = null): Skill
     {
         $skill =
-            $this->skillRepo->updateOrCreate([
+            Skill::updateOrCreate([
                 "id" => $skill->id ?? null
             ], [
                 "icon" => $data["icon"] ?? null
@@ -54,7 +52,7 @@ class SkillService implements SkillServiceInterface
         ### تصویر شاخص
         $this->fileService->sync($skill, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
 
-        return $skill->load(["translations", "slugs" , "files"]);
+        return $skill->load(["translations", "slugs", "files"]);
     }
 
 
@@ -65,7 +63,7 @@ class SkillService implements SkillServiceInterface
      */
     public function delete(Skill $skill): bool
     {
-        return $this->skillRepo->delete($skill);
+        return $skill->delete() ;
     }
 
     /**

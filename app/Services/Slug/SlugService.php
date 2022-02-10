@@ -2,26 +2,19 @@
 
 namespace App\Services\Slug;
 
-use App\Core\Classes\Slugify;
-use App\Repositories\Slug\SlugRepository;
 use App\Core\Interfaces\SlugableInterface;
+use App\Models\Slug;
 use App\Services\Slug\SlugServiceInterface;
 
 class SlugService implements SlugServiceInterface
 {
 
-    protected $slugRepo;
 
-    public function __construct(SlugRepository $slugRepo)
-    {
-        $this->slugRepo = $slugRepo;
-    }
-
-    public function sync(SlugableInterface $slugable, array $languages = []) : void 
+    public function sync(SlugableInterface $slugable, array $languages = []): void
     {
 
         $slugableField = (string) $slugable->slugable;
-        
+
         $slugable->slugs()->delete();
         $translations = [];
 
@@ -35,6 +28,6 @@ class SlugService implements SlugServiceInterface
                 ];
             }
 
-        app(SlugRepository::class)->createMultiple($translations);
+        Slug::insert($translations);
     }
 }

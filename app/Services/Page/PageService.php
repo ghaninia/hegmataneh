@@ -2,21 +2,19 @@
 
 namespace App\Services\Page;
 
-use App\Core\Enums\EnumsFileable;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Core\Enums\EnumsPost;
-use App\Services\Slug\SlugService;
-use App\Repositories\Post\PostRepository;
+use App\Core\Enums\EnumsFileable;
 use App\Services\File\FileService;
+use App\Services\Slug\SlugService;
 use App\Services\Translation\TranslationService;
 
 class PageService implements PageServiceInterface
 {
 
     public function __construct(
-        protected PostRepository $postRepo,
         protected TranslationService $translationService,
         protected SlugService $slugService,
         protected FileService $fileService
@@ -31,7 +29,7 @@ class PageService implements PageServiceInterface
     public function list(array $filters)
     {
         return
-            $this->postRepo->query()
+            Post::query()
             ->where("type", EnumsPost::TYPE_PAGE)
             ->filterBy($filters)
             ->paginate();
@@ -46,21 +44,20 @@ class PageService implements PageServiceInterface
      */
     public function updateOrCreate(User $user, array $data, ?Post $page = null): Post
     {
-        $page = $this->postRepo
-            ->updateOrCreate([
-                "id" => $page->id ?? null
-            ], [
-                "type" => EnumsPost::TYPE_PAGE,
-                "status" => $data["status"],
-                "user_id" => $user->id,
-                "comment_status" => $data["comment_status"] ?? false,
-                "vote_status" => $data["vote_status"] ?? false,
-                "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
-                "development" => $data["development"] ?? 0,
-                "theme" => $data["theme"] ?? NULL,
-                "published_at" => $data["published_at"] ?? NULL,
-                "created_at" => $page->created_at ?? $data["created_at"] ?? Carbon::now()
-            ]);
+        $page = Post::updateOrCreate([
+            "id" => $page->id ?? null
+        ], [
+            "type" => EnumsPost::TYPE_PAGE,
+            "status" => $data["status"],
+            "user_id" => $user->id,
+            "comment_status" => $data["comment_status"] ?? false,
+            "vote_status" => $data["vote_status"] ?? false,
+            "format" => $data["format"] ?? EnumsPost::FORMAT_CONTEXT,
+            "development" => $data["development"] ?? 0,
+            "theme" => $data["theme"] ?? NULL,
+            "published_at" => $data["published_at"] ?? NULL,
+            "created_at" => $page->created_at ?? $data["created_at"] ?? Carbon::now()
+        ]);
 
         $this->translationService->sync($page, $translations = $data["translations"]);
 
@@ -69,7 +66,7 @@ class PageService implements PageServiceInterface
         ### تصویر شاخص
         $this->fileService->sync($page, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
         ### تصویر کاور
-        $this->fileService->sync($page, EnumsFileable::USAGE_COVER ,  $data["cover"] ?? NULL);
+        $this->fileService->sync($page, EnumsFileable::USAGE_COVER,  $data["cover"] ?? NULL);
 
         return $page->load(["translations", "slugs", "files"]);
     }
@@ -81,6 +78,6 @@ class PageService implements PageServiceInterface
      */
     public function delete(Post $page)
     {
-        return $this->postRepo->forceDelete($page);
+        return Post::whereId($page->id)->forceDelete();
     }
 }

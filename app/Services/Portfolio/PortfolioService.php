@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Portfolio;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Services\Translation\TranslationService;
-use App\Repositories\Portfolio\PortfolioRepository;
 use App\Services\Portfolio\PortfolioServiceInterface;
 
 class PortfolioService implements PortfolioServiceInterface
@@ -14,7 +13,6 @@ class PortfolioService implements PortfolioServiceInterface
 
     public function __construct(
         public TranslationService $translationService,
-        public PortfolioRepository $portfolioRepo
     ) {
     }
 
@@ -26,7 +24,7 @@ class PortfolioService implements PortfolioServiceInterface
     public function list(array $filters): Paginator
     {
         return
-            $this->portfolioRepo->query()
+            Portfolio::query()
             ->filterBy($filters)
             ->with(["translations"])
             ->paginate();
@@ -35,7 +33,7 @@ class PortfolioService implements PortfolioServiceInterface
 
     /**
      * ویرایش و حذف نمونه کار
-     * @param User $user 
+     * @param User $user
      * @param array $data
      * @param Portfolio|null $portfolio
      */
@@ -43,7 +41,7 @@ class PortfolioService implements PortfolioServiceInterface
     {
 
         $portfolio =
-            $this->portfolioRepo->updateOrCreate(
+            Portfolio::updateOrCreate(
                 ["id" => $portfolio?->id],
                 [
                     "user_id" => $user->id,

@@ -3,15 +3,10 @@
 namespace App\Services\Gateway;
 
 use App\Models\Gateway;
-use App\Repositories\Gateway\GatewayRepository;
 use App\Services\Gateway\GatewayServiceInterface;
 
 class GatewayService implements GatewayServiceInterface
 {
-
-    public function __construct(protected GatewayRepository $gatewayRepo)
-    {
-    }
 
     /**
      * دریافت لیست درگاه ها
@@ -22,7 +17,7 @@ class GatewayService implements GatewayServiceInterface
     public function list(array $filters, bool $isPaginate = true, array $withs = [])
     {
         return
-            $this->gatewayRepo->query()
+            Gateway::query()
             ->filterBy($filters)
             ->when(
                 count($withs),
@@ -44,7 +39,7 @@ class GatewayService implements GatewayServiceInterface
     {
 
         $gateway =
-            $this->gatewayRepo->updateOrCreate([
+            Gateway::updateOrCreate([
                 "id" => $gateway?->id
             ], [
                 "status" => $data["status"],

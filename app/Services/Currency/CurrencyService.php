@@ -5,17 +5,10 @@ namespace App\Services\Currency;
 use App\Models\Currency;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Pagination\Paginator;
-use App\Repositories\Currency\CurrencyRepository;
 use App\Services\Currency\CurrencyServiceInterface;
 
 class CurrencyService implements CurrencyServiceInterface
 {
-    protected $currencyRepo;
-
-    public function __construct(CurrencyRepository $currencyRepo)
-    {
-        $this->currencyRepo = $currencyRepo;
-    }
 
     /**
      * لیست واحد پولی ها
@@ -26,7 +19,7 @@ class CurrencyService implements CurrencyServiceInterface
     public function list(array $filters, bool $isPaginate = true): Paginator|Collection
     {
         return
-            $this->currencyRepo->query()
+            Currency::query()
             ->filterBy($filters)
             ->when(
                 $isPaginate,
@@ -44,7 +37,7 @@ class CurrencyService implements CurrencyServiceInterface
     public function updateOrCreate(array $data, Currency $currency = null): Currency
     {
         return
-            $this->currencyRepo->updateOrCreate([
+            Currency::updateOrCreate([
                 "id" => $currency?->id
             ], [
                 "name" => $data["name"],
@@ -59,6 +52,6 @@ class CurrencyService implements CurrencyServiceInterface
      */
     public function delete(Currency $currency): bool
     {
-        return $this->currencyRepo->delete($currency);
+        return Currency::whereId($currency->id)->delete();
     }
 }

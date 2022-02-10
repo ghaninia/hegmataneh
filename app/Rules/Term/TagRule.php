@@ -2,22 +2,12 @@
 
 namespace App\Rules\Term;
 
-use App\Repositories\Term\TermRepository;
+use App\Models\Term;
 use Illuminate\Contracts\Validation\Rule;
 
 class TagRule implements Rule
 {
-    protected $termRepo;
 
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->termRepo = app(TermRepository::class);
-    }
 
     /**
      * Determine if the validation rule passes.
@@ -29,8 +19,7 @@ class TagRule implements Rule
     public function passes($attribute, $value)
     {
         return
-            $this->termRepo
-            ->query()
+            Term::query()
             ->tags()
             ->where("id", $value)
             ->exists();

@@ -2,10 +2,10 @@
 
 namespace App\Rules;
 
-use App\Core\Enums\EnumsOption;
-use App\Repositories\Language\LanguageRepository;
-use Illuminate\Contracts\Validation\Rule;
+use App\Models\Language;
 use Illuminate\Http\Request;
+use App\Core\Enums\EnumsOption;
+use Illuminate\Contracts\Validation\Rule;
 
 class TranslationableRule implements Rule
 {
@@ -38,7 +38,7 @@ class TranslationableRule implements Rule
 
         $languages = array_keys($value) ;
 
-        $countLangs = app(LanguageRepository::class)->query()->whereIn("id" , $languages)->count() ;
+        $countLangs = Language::query()->whereIn("id" , $languages)->count() ;
 
         if($countLangs !== count($languages)) {
 
@@ -47,12 +47,6 @@ class TranslationableRule implements Rule
             $result = false ;
 
         }
-
-//        if(! in_array($this->systemDefaultLanguage , $languages))
-//        {
-//            $this->message = trans("dashboard.error.validation.language.not_found_default_lang") ;
-//            $result = false ;
-//        }
 
         return $result;
     }

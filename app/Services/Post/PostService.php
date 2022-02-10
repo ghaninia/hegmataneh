@@ -9,7 +9,6 @@ use App\Core\Enums\EnumsPost;
 use App\Jobs\PublishedPostJob;
 use App\Services\Tag\TagService;
 use App\Services\Slug\SlugService;
-use App\Repositories\Post\PostRepository;
 use App\Services\Category\CategoryService;
 use App\Services\Post\PostServiceInterface;
 use App\Services\Translation\TranslationService;
@@ -21,21 +20,18 @@ class PostService implements PostServiceInterface
         $translationService,
         $categoryService,
         $slugService,
-        $tagService,
-        $postRepo;
+        $tagService;
 
     public function __construct(
         TranslationService $translationService,
         CategoryService $categoryService,
         SlugService $slugService,
-        PostRepository $postRepo,
         TagService $tagService
     ) {
         $this->translationService = $translationService;
         $this->categoryService = $categoryService;
         $this->slugService = $slugService;
         $this->tagService = $tagService;
-        $this->postRepo = $postRepo;
     }
 
     /**
@@ -46,7 +42,7 @@ class PostService implements PostServiceInterface
     public function list(array $filters)
     {
         return
-            $this->postRepo->query()
+            Post::query()
             ->where("type", EnumsPost::TYPE_POST)
             ->filterBy($filters)
             ->with(["translations", "slugs"])
@@ -86,7 +82,7 @@ class PostService implements PostServiceInterface
     public function updateOrCreate(User $user, array $data, ?Post $post = null): Post
     {
         $post =
-            $this->postRepo->updateOrCreate([
+            Post::updateOrCreate([
                 "id" => $post->id ?? null
             ], [
                 "user_id" => $user->id,
@@ -112,7 +108,7 @@ class PostService implements PostServiceInterface
             $data["categories"] ?? []
         );
 
-        return $post->load(["translations", "slugs" , "categories" , "tags"]);
+        return $post->load(["translations", "slugs", "categories", "tags"]);
     }
 
     /**
@@ -122,7 +118,7 @@ class PostService implements PostServiceInterface
      */
     public function delete(Post $post)
     {
-        return $this->postRepo->delete($post);
+        return $post->delete();
     }
 
     /**
@@ -132,16 +128,15 @@ class PostService implements PostServiceInterface
      */
     public function restore(Post $post)
     {
-        return $this->postRepo->restore($post);
+        return $post->restore();
     }
 
     /**
      * حذف اجباری پست
      * @param Post $post
-     * @return void
      */
-    public function forceDelete(Post $post): void
+    public function forceDelete(Post $post)
     {
-        $this->postRepo->forceDelete($post);
+        return $post->forceDelete();
     }
 }

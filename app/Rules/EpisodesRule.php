@@ -2,13 +2,13 @@
 
 namespace App\Rules;
 
+use App\Models\Post;
 use App\Models\User;
-use App\Repositories\Post\PostRepository;
 use Illuminate\Contracts\Validation\Rule;
 
 class EpisodesRule implements Rule
 {
-    protected $user, $postRepo;
+    protected $user;
 
     /**
      * Create a new rule instance.
@@ -18,7 +18,6 @@ class EpisodesRule implements Rule
     public function __construct(?User $user = null)
     {
         $this->user = $user;
-        $this->postRepo = app(PostRepository::class);
     }
 
     /**
@@ -35,9 +34,7 @@ class EpisodesRule implements Rule
             is_array($value) ? $value : [$value]
         );
 
-        $countPosts = $this
-            ->postRepo
-            ->query()
+        $countPosts = Post::query()
             ->posts()
             ->withTrashed()
             ->where("user_id", $this->user->id)

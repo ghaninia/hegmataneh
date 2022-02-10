@@ -6,7 +6,6 @@ use App\Core\Enums\EnumsPost;
 use App\Core\Enums\EnumsTerm;
 use App\Core\Traits\HasFileTrait;
 use App\Core\Traits\HasSlugTrait;
-use App\Core\Traits\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\HasTranslationTrait;
 use App\Core\Interfaces\TagableInterface;
@@ -18,6 +17,7 @@ use App\Core\Interfaces\BasktableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Interfaces\CategoryableInterface;
 use App\Core\Interfaces\TranslationableInterface;
+use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model implements

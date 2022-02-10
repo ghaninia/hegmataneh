@@ -7,7 +7,6 @@ use App\Core\Enums\EnumsTerm;
 use App\Core\Enums\EnumsFileable;
 use App\Services\File\FileService;
 use Illuminate\Database\Eloquent\Model;
-use App\Repositories\Term\TermRepository;
 use App\Services\Slug\SlugServiceInterface;
 use App\Core\Interfaces\CategoryableInterface;
 use App\Services\Category\CategoryServiceInterface;
@@ -17,7 +16,6 @@ class CategoryService implements CategoryServiceInterface
 {
 
     public function __construct(
-        protected TermRepository $termRepo,
         protected TranslationServiceInterface $translationService,
         protected SlugServiceInterface $slugService,
         protected FileService $fileService
@@ -32,7 +30,7 @@ class CategoryService implements CategoryServiceInterface
     public function updateOrCreate(array $data, Term $category = NULL): Term
     {
         $term =
-            $this->termRepo->updateOrCreate([
+            Term::updateOrCreate([
                 "id" => $category->id ?? null
             ], [
                 "term_id" => $data["term_id"] ?? null,
@@ -71,7 +69,7 @@ class CategoryService implements CategoryServiceInterface
     public function list(array $filters)
     {
         return
-            $this->termRepo->query()
+            Term::query()
             ->where("type", EnumsTerm::TYPE_CATEGORY)
             ->filterBy($filters)
             ->with(["files"])

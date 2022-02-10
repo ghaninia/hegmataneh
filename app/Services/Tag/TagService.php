@@ -4,9 +4,7 @@ namespace App\Services\Tag;
 
 use App\Models\Term;
 use App\Core\Enums\EnumsTerm;
-use Illuminate\Database\Eloquent\Model;
 use App\Core\Interfaces\TagableInterface;
-use App\Repositories\Term\TermRepository;
 use App\Services\Tag\TagServiceInterface;
 use App\Services\Slug\SlugServiceInterface;
 use App\Services\Translation\TranslationServiceInterface;
@@ -14,7 +12,6 @@ use App\Services\Translation\TranslationServiceInterface;
 class TagService implements TagServiceInterface
 {
     public function __construct(
-        protected TermRepository $termRepo,
         protected TranslationServiceInterface $translationService,
         protected SlugServiceInterface $slugService
     ) {
@@ -28,7 +25,7 @@ class TagService implements TagServiceInterface
     public function updateOrCreate(array $data, Term $tag = null): Term
     {
         $term =
-            $this->termRepo->updateOrCreate([
+            Term::updateOrCreate([
                 "id" => $tag->id ?? null
             ], [
                 "type" => EnumsTerm::TYPE_TAG
@@ -61,7 +58,7 @@ class TagService implements TagServiceInterface
     public function list(array $filters, bool $isPaginate = TRUE, array $relations = [])
     {
         return
-            $this->termRepo->query()
+            Term::query()
             ->tags()
             ->filterBy($filters)
             ->with($relations)

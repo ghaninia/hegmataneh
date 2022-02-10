@@ -2,45 +2,26 @@
 
 namespace App\Services\Serial;
 
+use App\Models\Episode;
 use App\Models\User;
 use App\Models\Serial;
 use App\Services\Tag\TagService;
 use App\Services\Category\CategoryService;
 use App\Services\Slug\SlugServiceInterface;
-use App\Repositories\Serial\SerialRepository;
 use App\Services\Price\PriceServiceInterface;
-use App\Repositories\Episode\EpisodeRepository;
 use App\Services\Serial\SerialServiceInterface;
 use App\Services\Translation\TranslationService;
 
 class SerialService implements SerialServiceInterface
 {
 
-    protected
-        $translationService,
-        $categoryService,
-        $slugService,
-        $episodeRepo,
-        $serialRepo,
-        $tagService,
-        $priceService;
-
     public function __construct(
-        SerialRepository $serialRepo,
-        TranslationService $translationService,
-        EpisodeRepository $episodeRepo,
-        SlugServiceInterface $slugService,
-        CategoryService $categoryService,
-        TagService $tagService,
-        PriceServiceInterface $priceService
+        protected TranslationService $translationService,
+        protected SlugServiceInterface $slugService,
+        protected CategoryService $categoryService,
+        protected TagService $tagService,
+        protected PriceServiceInterface $priceService
     ) {
-        $this->serialRepo = $serialRepo;
-        $this->episodeRepo = $episodeRepo;
-        $this->translationService = $translationService;
-        $this->slugService = $slugService;
-        $this->categoryService = $categoryService;
-        $this->tagService = $tagService;
-        $this->priceService = $priceService;
     }
 
     /**
@@ -51,7 +32,7 @@ class SerialService implements SerialServiceInterface
     public function list(array $filters)
     {
         return
-            $this->serialRepo->query()
+            Serial::query()
             ->filterBy($filters)
             ->with(["prices"])
             ->paginate();
@@ -66,7 +47,7 @@ class SerialService implements SerialServiceInterface
     public function updateOrCreate(User $user, array $data, Serial $serial = null)
     {
         $serial =
-            $this->serialRepo->updateOrCreate(
+            Serial::updateOrCreate(
                 ["id" => $serial->id ?? null],
                 ["user_id" => $user->id],
             );
@@ -124,7 +105,7 @@ class SerialService implements SerialServiceInterface
         if ($isEmptyPosts) return;
 
         array_walk($data, function ($item, $post) use ($serial) {
-            $episode = $this->episodeRepo->updateOrCreate([
+            $episode = Episode::updateOrCreate([
                 "serial_id" => $serial->id,
                 "post_id" => $post
             ], [

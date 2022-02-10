@@ -2,21 +2,12 @@
 
 namespace App\Rules\Term;
 
-use App\Repositories\Term\TermRepository;
+use App\Models\Term;
 use Illuminate\Contracts\Validation\Rule;
 
 class CategoryRule implements Rule
 {
-    protected $termRepo;
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->termRepo = app(TermRepository::class);
-    }
+
 
     /**
      * Determine if the validation rule passes.
@@ -28,8 +19,7 @@ class CategoryRule implements Rule
     public function passes($attribute, $value)
     {
         return
-            $this->termRepo
-            ->query()
+            Term::query()
             ->categories()
             ->where("id", $value)
             ->exists();

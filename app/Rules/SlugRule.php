@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
+use App\Models\Slug;
 use Illuminate\Database\Eloquent\Model;
-use App\Repositories\Slug\SlugRepository;
 use Illuminate\Contracts\Validation\Rule;
 use App\Core\Interfaces\SlugableInterface;
 
@@ -32,7 +32,7 @@ class SlugRule implements Rule
         $morphClassName = (string) $this->class->getMorphClass();
 
         $result =
-            app(SlugRepository::class)->query()
+            Slug::query()
             ->where([
                 "slugable_type" => $morphClassName,
                 "slug" => slug($value)

@@ -3,18 +3,12 @@
 namespace App\Services\View;
 
 use App\Models\User;
-use App\Repositories\View\ViewRepository;
+use App\Models\View;
 use App\Core\Interfaces\ViewableInterface;
 use App\Services\View\ViewServiceInterface;
 
 class ViewService implements ViewServiceInterface
 {
-    protected $viewRepo;
-
-    public function __construct(ViewRepository $viewRepo)
-    {
-        $this->viewRepo = $viewRepo;
-    }
 
     /**
      * لیست تمام امتیازها
@@ -24,7 +18,7 @@ class ViewService implements ViewServiceInterface
     public function list(array $filters)
     {
         return
-            $this->viewRepo->query()
+            View::query()
             ->filterBy($filters)
             ->paginate();
     }
@@ -37,12 +31,11 @@ class ViewService implements ViewServiceInterface
      */
     public function create(ViewableInterface $viewable, string $ipv4, User $user = null): void
     {
-        $this->viewRepo->query()
-            ->firstOrCreate([
-                "viewable_id" => $viewable->viewable_id,
-                "viewable_type" => $viewable->viewable_type,
-                "ipv4" => $ipv4,
-                "user_id" => optional($user)->id
-            ]);
+        View::firstOrCreate([
+            "viewable_id" => $viewable->viewable_id,
+            "viewable_type" => $viewable->viewable_type,
+            "ipv4" => $ipv4,
+            "user_id" => optional($user)->id
+        ]);
     }
 }

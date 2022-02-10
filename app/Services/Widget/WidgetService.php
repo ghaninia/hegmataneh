@@ -2,13 +2,12 @@
 
 namespace App\Services\Widget;
 
+use App\Models\Post;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\Post\PostRepository;
-use App\Repositories\Role\RoleRepository;
-use App\Repositories\User\UserRepository;
-use App\Repositories\View\ViewRepository;
 use App\Services\Widget\WidgetServiceInterface;
 
 class WidgetService implements WidgetServiceInterface
@@ -16,20 +15,8 @@ class WidgetService implements WidgetServiceInterface
     protected $postRepo, $userRepo, $roleRepo, $viewRepo;
     private $user;
 
-    public function __construct(
-        PostRepository $postRepo,
-        UserRepository $userRepo,
-        RoleRepository $roleRepo,
-        ViewRepository $viewRepo
-    ) {
-        $this->postRepo = $postRepo;
-        $this->userRepo = $userRepo;
-        $this->roleRepo = $roleRepo;
-        $this->viewRepo = $viewRepo;
-    }
-
     /**
-     * @param User $user 
+     * @param User $user
      */
     public function setUser(User $user)
     {
@@ -43,7 +30,7 @@ class WidgetService implements WidgetServiceInterface
     public function statisticPosts(): Collection
     {
 
-        return $this->postRepo->query()
+        return Post::query()
             ->select([
                 DB::raw("COUNT(*) AS count"),
                 "status",
@@ -64,7 +51,7 @@ class WidgetService implements WidgetServiceInterface
      */
     public function statisticUsers(): Collection
     {
-        return $this->userRepo->query()
+        return User::query()
             ->select([
                 DB::raw("COUNT(*) AS count"),
                 "status"
@@ -79,7 +66,7 @@ class WidgetService implements WidgetServiceInterface
      */
     public function statisticRoles(): Collection
     {
-        return $this->roleRepo->query()
+        return Role::query()
             ->select([
                 "roles.id",
                 "roles.name",
@@ -98,7 +85,7 @@ class WidgetService implements WidgetServiceInterface
     public function chartPosts(array $filters = [])
     {
         return
-            $this->postRepo->query()
+            Post::query()
             ->select([
                 DB::raw("COUNT(*) AS count"),
                 DB::raw('DATE_FORMAT(created_at , "%Y-%m-%d %H:%I") AS date')
@@ -115,7 +102,7 @@ class WidgetService implements WidgetServiceInterface
     public function chartViews(array $filters = [])
     {
         return
-            $this->viewRepo->query()
+            View::query()
             ->select([
                 DB::raw("COUNT(*) AS count"),
                 DB::raw('DATE_FORMAT(created_at , "%Y-%m-%d %H:%I") AS date')

@@ -19,8 +19,11 @@ class UserControllerTest extends TestCase
 
     public function testGetAllSystemUsersWithFilters()
     {
+
         $users = $this->userBuilder->create(true, [], $total = random_int(1, 10));
+
         $user = $users->first();
+
         $response = $this->getJson(
             route("api.v1.user.index", [
                 "name" => $user->name,

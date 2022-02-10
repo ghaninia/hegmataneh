@@ -3,19 +3,10 @@
 namespace App\Services\Role;
 
 use App\Models\Role;
-use App\Repositories\Role\RoleRepository;
 use App\Services\Role\RoleServiceInterface;
 
 class RoleService implements RoleServiceInterface
 {
-
-    protected $roleRepo;
-
-    public function __construct(
-        RoleRepository $roleRepo
-    ) {
-        $this->roleRepo = $roleRepo;
-    }
 
     /**
      * نمایش لیست تمام نقش ها
@@ -23,7 +14,7 @@ class RoleService implements RoleServiceInterface
      */
     public function all()
     {
-        return $this->roleRepo->all();
+        return Role::all();
     }
 
     /**
@@ -33,7 +24,7 @@ class RoleService implements RoleServiceInterface
      */
     public function create(array $data): Role
     {
-        $role = $this->roleRepo->create([
+        $role = Role::create([
                 "name" => $data["name"],
             ]);
 

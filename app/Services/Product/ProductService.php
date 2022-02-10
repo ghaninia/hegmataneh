@@ -10,7 +10,6 @@ use App\Services\Tag\TagService;
 use App\Services\Slug\SlugService;
 use Illuminate\Support\Facades\DB;
 use App\Services\Skill\SkillService;
-use App\Repositories\Post\PostRepository;
 use App\Services\Category\CategoryService;
 use App\Services\Price\PriceServiceInterface;
 use App\Services\Product\ProductServiceInterface;
@@ -19,34 +18,15 @@ use App\Services\Product\Information\ProductInformationService;
 
 class ProductService implements ProductServiceInterface
 {
-    protected
-        $productInformationService,
-        $translationService,
-        $categoryService,
-        $priceService,
-        $skillService,
-        $slugService,
-        $tagService,
-        $postRepo;
-
     public function __construct(
-        ProductInformationService $productInformationService,
-        TranslationServiceInterface $translationService,
-        PriceServiceInterface $priceService,
-        CategoryService $categoryService,
-        SkillService $skillService,
-        PostRepository $postRepo,
-        SlugService $slugService,
-        TagService $tagService
+        protected ProductInformationService $productInformationService,
+        protected TranslationServiceInterface $translationService,
+        protected PriceServiceInterface $priceService,
+        protected CategoryService $categoryService,
+        protected SkillService $skillService,
+        protected SlugService $slugService,
+        protected TagService $tagService
     ) {
-        $this->productInformationService = $productInformationService;
-        $this->translationService = $translationService;
-        $this->categoryService = $categoryService;
-        $this->priceService = $priceService;
-        $this->skillService = $skillService;
-        $this->slugService = $slugService;
-        $this->tagService = $tagService;
-        $this->postRepo = $postRepo;
     }
 
     /**
@@ -57,7 +37,7 @@ class ProductService implements ProductServiceInterface
     public function list(array $filters)
     {
         return
-            $this->postRepo->query()
+            Post::query()
             ->where("type", EnumsPost::TYPE_PRODUCT)
             ->filterBy($filters)
             ->with(["translations", "slugs", "prices", "categories", "tags", "skills"])
@@ -75,7 +55,7 @@ class ProductService implements ProductServiceInterface
         DB::beginTransaction();
 
         $product =
-            $this->postRepo->updateOrCreate([
+            Post::updateOrCreate([
                 "id" => $product->id ?? null
             ], [
                 "user_id" => $user->id,
@@ -129,7 +109,7 @@ class ProductService implements ProductServiceInterface
      */
     public function delete(Post $product)
     {
-        return $this->postRepo->delete($product);
+        return $product->delete();
     }
 
     /**
@@ -139,7 +119,7 @@ class ProductService implements ProductServiceInterface
      */
     public function restore(Post $product)
     {
-        return $this->postRepo->restore($product);
+        return $product->restore();
     }
 
     /**
@@ -149,6 +129,6 @@ class ProductService implements ProductServiceInterface
      */
     public function forceDelete(Post $product): void
     {
-        $this->postRepo->forceDelete($product);
+        $$product->forceDelete();
     }
 }

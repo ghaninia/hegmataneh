@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Casts\UuidCast;
-use App\Core\Traits\HasFilterTrait;
+use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model

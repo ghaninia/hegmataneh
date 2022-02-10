@@ -2,24 +2,17 @@
 
 namespace App\Services\Price;
 
+use App\Models\Price;
 use Illuminate\Database\Eloquent\Model;
-use App\Repositories\Price\PriceRepository;
 use App\Services\Price\PriceServiceInterface;
 
 class PriceService implements PriceServiceInterface
 {
 
-    protected $priceRepo;
-
-    public function __construct(PriceRepository $priceRepo)
-    {
-        $this->priceRepo = $priceRepo;
-    }
-
-    public function create(Model $model, array $currencies) : void 
+    public function create(Model $model, array $currencies) : void
     {
         array_walk($currencies, function ($data, $currencyID) use ($model) {
-            $this->priceRepo->updateOrCreate([
+            Price::updateOrCreate([
                 "priceable_id" => $model->id,
                 "priceable_type" => $model->getMorphClass(),
                 "currency_id" => $currencyID

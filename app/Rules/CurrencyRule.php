@@ -2,24 +2,11 @@
 
 namespace App\Rules;
 
+use App\Models\Currency;
 use Illuminate\Contracts\Validation\Rule;
-use App\Repositories\Currency\CurrencyRepository;
 
 class CurrencyRule implements Rule
 {
-
-    protected $currencyRepo ;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->currencyRepo = app(CurrencyRepository::class);
-    }
-
     /**
      * Determine if the validation rule passes.
      *
@@ -33,9 +20,7 @@ class CurrencyRule implements Rule
             is_array($value) ? $value : [$value]
         );
 
-        $countCurrencies = $this
-            ->currencyRepo
-            ->query()
+        $countCurrencies = Currency::query()
             ->whereIn("id", $keys)
             ->count();
 

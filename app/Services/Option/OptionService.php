@@ -3,9 +3,6 @@
 namespace App\Services\Option;
 
 use App\Models\Option;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use App\Repositories\Option\OptionRepository;
 use App\Services\Option\OptionServiceInterface;
 
 class OptionService implements OptionServiceInterface
@@ -26,15 +23,6 @@ class OptionService implements OptionServiceInterface
     }
 
     /**
-     * سرویسی که قرار است روی آن سینگلتون را اجرا نماییم
-     * @return OptionRepository
-     */
-    public function service(): OptionRepository
-    {
-        return app(OptionRepository::class);
-    }
-
-    /**
      * دریافت اطلاعات از دیتابیس
      * @return mixed
      */
@@ -42,7 +30,7 @@ class OptionService implements OptionServiceInterface
     {
 
         return
-            $this->service()->all([
+            Option::all([
                 "key", "value", "default"
             ])->toArray();
     }
@@ -73,7 +61,7 @@ class OptionService implements OptionServiceInterface
      */
     public function put(string $key,  $value): Option
     {
-        $config = $this->service()->updateOrCreate(["key" => $key], ["value" => serialize($value)]);
+        $config = Option::updateOrCreate(["key" => $key], ["value" => serialize($value)]);
         return $config;
     }
 }

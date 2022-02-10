@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Core\Traits\HasFileTrait;
 use Laravel\Passport\HasApiTokens;
-use App\Core\Traits\HasFilterTrait;
 use Illuminate\Notifications\Notifiable;
 use App\Core\Interfaces\FileableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
