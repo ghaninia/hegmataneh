@@ -83,16 +83,5 @@ class TermControllerTest extends TestCase
 
     public function testCreateNewTag()
     {
-
-        $translations = Translation::factory()
-            ->for(
-                Language::factory()
-            )
-            ->state([
-                "field" => EnumsTerm::FIELD_NAME,
-            ])
-            ->count(2)
-            ->create();
-
     }
 }
