@@ -1,24 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Term\TagController;
-use App\Http\Controllers\Api\File\FileController;
-use App\Http\Controllers\Api\Post\PageController;
-use App\Http\Controllers\Api\Post\PostController;
-use App\Http\Controllers\Api\Role\RoleController;
-use App\Http\Controllers\Api\User\UserController;
-use App\Http\Controllers\Api\Skill\SkillController;
-use App\Http\Controllers\Api\Post\ProductController;
-use App\Http\Controllers\Api\Basket\BasketController;
-use App\Http\Controllers\Api\Option\OptionController;
-use App\Http\Controllers\Api\Serial\SerialController;
-use App\Http\Controllers\Api\Term\CategoryController;
-use App\Http\Controllers\Api\Gateway\GatewayController;
-use App\Http\Controllers\Api\Authunticate\AuthController;
-use App\Http\Controllers\Api\Currency\CurrencyController;
-use App\Http\Controllers\Api\Language\LanguageController;
-use App\Http\Controllers\Api\Portfolio\PortfolioController;
-use App\Http\Controllers\Public\Translation\TranslationController;
+use App\Http\Controllers\Dashboard\Term\TagController;
+use App\Http\Controllers\Dashboard\File\FileController;
+use App\Http\Controllers\Dashboard\Post\PageController;
+use App\Http\Controllers\Dashboard\Post\PostController;
+use App\Http\Controllers\Dashboard\Role\RoleController;
+use App\Http\Controllers\Dashboard\User\UserController;
+use App\Http\Controllers\Dashboard\Skill\SkillController;
+use App\Http\Controllers\Dashboard\Post\ProductController;
+use App\Http\Controllers\Dashboard\Basket\BasketController;
+use App\Http\Controllers\Dashboard\Option\OptionController;
+use App\Http\Controllers\Dashboard\Serial\SerialController;
+use App\Http\Controllers\Dashboard\Term\CategoryController;
+use App\Http\Controllers\Dashboard\Gateway\GatewayController;
+use App\Http\Controllers\Dashboard\Authunticate\AuthController;
+use App\Http\Controllers\Dashboard\Currency\CurrencyController;
+use App\Http\Controllers\Dashboard\Language\LanguageController;
+use App\Http\Controllers\Dashboard\Portfolio\PortfolioController;
+use App\Http\Controllers\Guest\Translation\TranslationController;
 
 
 /*
@@ -58,7 +58,17 @@ Route::group([
         });
     });
 
-    Route::get("translations" , TranslationController::class )->name("translations");
+    Route::get(
+        "routes",
+        fn () => getRoutes()->map(function ($route) {
+            return [
+                "uri" => url($route["uri"]),
+                "as" => $route["as"],
+            ];
+        })
+    );
+
+    Route::get("translations", TranslationController::class)->name("translations");
 
     ##############
     ### role route
@@ -171,6 +181,8 @@ Route::group([
 
 
 Route::name("guest.")->group(function () {
+
+
     Route::group([
         "as" => "basket.",
         "prefix" => "basket"

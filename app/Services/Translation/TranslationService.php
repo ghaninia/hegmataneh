@@ -13,8 +13,10 @@ class TranslationService implements TranslationServiceInterface
     public function getTranslations()
     {
         $translations = [];
-        $langBasePath = resource_path("lang");
-        $locatePath = glob($langBasePath . '/*');
+
+        $langBasePath = lang_path();
+
+        $locatePath = glob($langBasePath . '/*' , GLOB_ONLYDIR );
 
         $includeFiles = [
             "dashboard"

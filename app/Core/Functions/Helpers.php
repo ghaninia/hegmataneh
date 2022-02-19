@@ -27,9 +27,8 @@ function slug(string $text): string
 
 /**
  * دریافت تمام اکشن مسیرها
- * @return array
  */
-function getEntireRoutesAction(): array
+function getRoutes()
 {
     $routes = [];
     collect(Route::getRoutes())
@@ -39,10 +38,14 @@ function getEntireRoutesAction(): array
                 is_string($method) &&
                 str_starts_with($method, "App\Http\Controllers")
             )
-                $routes[] = $method;
+                $routes[] = [
+                        "uri" => $route->uri() ,
+                        "as"  => $route->action["as"] ,
+                        "method" => $method ,
+                ];
         });
 
-    return $routes;
+    return collect($routes);
 }
 
 /**
