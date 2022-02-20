@@ -14,9 +14,11 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::insert($actions = array_map(
-            fn ($action) => ["action" => $action],
-            getEntireRoutesAction()
-        ));
+        getRoutes()->map(function($data){
+            Permission::updateOrCreate([
+                "action" => $data["method"]
+            ]);
+        });
+
     }
 }

@@ -23,7 +23,7 @@ class UserService implements UserServiceInterface
     {
 
         $insertData = [
-            'name' => $data["name"] ?? null,
+            'name' => $data["name"] ,
             'status' => (bool) $data["status"],
             'email' => $data["email"],
             'mobile' => $data["mobile"] ?? null,
@@ -46,34 +46,6 @@ class UserService implements UserServiceInterface
             );
     }
 
-    /**
-     * ویرایش کاربر
-     * @param User $user
-     * @param array $data
-     * @return User
-     */
-    public function update(User $user, array $data): User
-    {
-        $updateFields = [
-            'name' => $data["name"] ?? null,
-            'status' => (bool) $data["status"],
-            'email' => $data["email"],
-            'mobile' => $data["mobile"] ?? null,
-            "username" => $data["username"] ?? null,
-            "remember_token"  => $this->rememberTokenGenerate(),
-            "bio" => $data["bio"] ?? null,
-            'role_id' => $data["role_id"],
-            "currency_id" =>  $data["currency_id"] ?? null,
-            "language_id" =>  $data["language_id"] ?? null,
-        ];
-
-        if (isset($data["password"]))
-            $updateFields['password'] = bcrypt($data["password"]);
-
-        $user->update($updateFields);
-
-        return $user->refresh();
-    }
 
     /**
      * حذف امن کاربر :)

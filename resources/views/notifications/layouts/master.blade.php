@@ -53,7 +53,7 @@
                                                                                                         style="text-decoration:none;color:#ffffff"><a
                                                                                                             href="{{ route('guest.main') }}"
                                                                                                             style="text-decoration:none;color:rgb(255,255,255)"
-                                                                                                            target="_blank">{{ trans("guest.menu.main") }}</a></span>
+                                                                                                            target="_blank">{{ options($enumsOption::TITLE) }}</a></span>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </tbody>
@@ -256,12 +256,12 @@
                                                                                                         style="text-decoration:none;color:#a3a2a2"><a
                                                                                                             href="#"
                                                                                                             style="text-decoration:none;color:rgb(163,162,162)"
-                                                                                                            target="_blank">{{ trans("guest.menu.contactus") }}</a></span>
+                                                                                                            target="_blank">{{ trans("dashboard.mail.contactus") }}</a></span>
                                                                                                     &nbsp;&nbsp; <span
                                                                                                         style="text-decoration:none;color:#a3a2a2"><a
                                                                                                             href="#"
                                                                                                             style="text-decoration:none;color:rgb(163,162,162)"
-                                                                                                            target="_blank">{{ trans("guest.menu.aboutus") }}</a></span>
+                                                                                                            target="_blank">{{ trans("dashboard.mail.aboutus") }}</a></span>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </tbody>
@@ -399,7 +399,7 @@
                                                                                     <span
                                                                                         style="text-decoration:none;color:#EB5E28">
                                                                                         <b style="font-size:12px"> <span
-                                                                                                style="color:#444">{{ trans("guest.with-respect") }}</span> <a
+                                                                                                style="color:#444">{{ trans("dashboard.mail.with-respect") }}</span> <a
                                                                                                 href="{{ route("guest.main") }}"
                                                                                                 style="color:#EB5E28;text-decoration:none"
                                                                                                 target="_blank" href="">{{ options($enumsOption::TITLE) }}</a></b>

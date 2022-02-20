@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Authunticate;
 
-use App\Core\Enums\EnumsOption;
 use App\Rules\MobileRule;
 use App\Rules\PasswordRule;
 use App\Rules\UsernameRule;
+use App\Core\Enums\EnumsOption;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterStore extends FormRequest
@@ -17,8 +17,7 @@ class RegisterStore extends FormRequest
      */
     public function authorize()
     {
-        return true ;
-        // return options(EnumsOption::DASHBOARD_CAN_REGISTER);
+        return options(EnumsOption::DASHBOARD_CAN_REGISTER);
     }
 
     /**
@@ -29,12 +28,12 @@ class RegisterStore extends FormRequest
     public function rules()
     {
         return [
-            "name" => ["nullable", "string", "max:255"],
+            "name" => ["required", "string", "max:255"],
             "email" => ["required", "email", "unique:users"],
-            "mobile" => ["nullable", new MobileRule, "unique:users"],
-            "username" => ["nullable", new UsernameRule, "unique:users"],
+            // "mobile" => ["nullable", new MobileRule, "unique:users"],
+            // "username" => ["nullable", new UsernameRule, "unique:users"],
             "password" => ["required", new PasswordRule],
-            "bio" => ["nullable", "string"],
+            // "bio" => ["nullable", "string"],
         ];
     }
 }

@@ -9,10 +9,10 @@ use App\Services\Option\OptionService;
  * @param ?string $key
  * @param $default
  */
-function options(?string $key = null, $default = null)
+function options(?string $key = null)
 {
     $instance =  OptionService::getInstance();
-    return !!$key ? $instance->get($key, $default) : $instance;
+    return !!$key ? $instance->get($key) : $instance;
 }
 
 /**
@@ -33,7 +33,7 @@ function getRoutes()
     $routes = [];
     collect(Route::getRoutes())
         ->map(function ($route) use (&$routes) {
-            $method = $route->action['uses'];
+        $method = $route->action['uses'];
             if (
                 is_string($method) &&
                 str_starts_with($method, "App\Http\Controllers")

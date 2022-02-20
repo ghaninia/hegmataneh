@@ -41,17 +41,11 @@ class OptionService implements OptionServiceInterface
      * @param $default
      * @return array|string
      */
-    public function get(string $key, $default = null)
+    public function get(string $key)
     {
         $data = collect(self::$instances)->where("key", $key)->first();
 
-        $value = isset($data["value"]) ? unserialize($data["value"]) : null;
-
-        $defaultData = isset($data["default"]) ? $data["default"] : null;
-
-        $result = $value ?? $default ?? $defaultData ?? null;
-
-        return $result;
+        return $data["value"] ?? $data["default"] ;
     }
 
     /**

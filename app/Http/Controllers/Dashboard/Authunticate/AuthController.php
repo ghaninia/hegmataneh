@@ -40,7 +40,10 @@ class AuthController extends Controller
 
         if ($user)
             return $this->success([
-                "user"  => new UserResource($user->load("role")),
+            "msg" => trans("dashboard.success.authunticate.login" , [
+                "attributes" => $user->name
+            ]),
+            "user"  => new UserResource($user->load("role")),
                 "token" => $user->createToken("authunticate")->accessToken
             ]);
 
@@ -56,19 +59,22 @@ class AuthController extends Controller
      */
     public function register(RegisterStore $request)
     {
+
         $user = $this->userService->updateOrCreate(
             array_merge($request->all(), [
                 "status" => EnumsUser::STATUS_DISABLE,
-                'role_id' => options(EnumsOption::DASHBOARD_REGISTER_RULE),
+                'role_id' => options(EnumsOption::DASHBOARD_DEFAULT_REGISTER_ROLE),
             ])
         );
+
+
 
         $this->userService->sendVerifyNotification($user);
 
         return $this->success([
             "msg" => trans("dashboard.success.register.create"),
-            "data" => new UserResource($user)
         ]);
+
     }
 
 

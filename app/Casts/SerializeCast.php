@@ -17,7 +17,7 @@ class SerializeCast implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        return unserialize($value);
+        return is_null($value) ? null : unserialize($value) ;
     }
 
     /**
@@ -31,6 +31,6 @@ class SerializeCast implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        return serialize($value);
+        return is_null($value) ? null : serialize($value);
     }
 }
