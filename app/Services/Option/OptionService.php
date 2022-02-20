@@ -28,7 +28,6 @@ class OptionService implements OptionServiceInterface
      */
     public function getRecordesInDatabase(): array
     {
-
         return
             Option::all([
                 "key", "value", "default"
@@ -45,7 +44,7 @@ class OptionService implements OptionServiceInterface
     {
         $data = collect(self::$instances)->where("key", $key)->first();
 
-        return $data["value"] ?? $data["default"] ;
+        return !! $data ? ($data["value"] ?? $data["default"]) : null ;
     }
 
     /**

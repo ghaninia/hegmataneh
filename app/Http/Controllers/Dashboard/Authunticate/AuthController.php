@@ -59,7 +59,6 @@ class AuthController extends Controller
      */
     public function register(RegisterStore $request)
     {
-
         $user = $this->userService->updateOrCreate(
             array_merge($request->all(), [
                 "status" => EnumsUser::STATUS_DISABLE,
@@ -67,12 +66,11 @@ class AuthController extends Controller
             ])
         );
 
-
-
         $this->userService->sendVerifyNotification($user);
 
         return $this->success([
             "msg" => trans("dashboard.success.register.create"),
+            "data" => new UserResource($user)
         ]);
 
     }

@@ -52,7 +52,8 @@ class AuthControllerTest extends TestCase
         $user = $this->userBuilder->create(FALSE,);
 
         ### custom role
-        OptionBuilder::set(EnumsOption::DASHBOARD_REGISTER_RULE, $user->role_id);
+        OptionBuilder::set(EnumsOption::DASHBOARD_DEFAULT_REGISTER_ROLE, $user->role_id);
+        OptionBuilder::set(EnumsOption::DASHBOARD_CAN_REGISTER, true );
 
         $response = $this->postJson(
             route("api.v1.authunticate.register.store"),
@@ -62,7 +63,6 @@ class AuthControllerTest extends TestCase
         );
 
         $response->assertStatus(Response::HTTP_OK) ;
-
 
         $this->assertDatabaseHas( "users" ,[
             "status" => EnumsUser::STATUS_DISABLE,

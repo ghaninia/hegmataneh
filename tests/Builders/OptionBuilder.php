@@ -12,7 +12,7 @@ class OptionBuilder
             Option::updateOrCreate([
                 "key" => $key
             ], [
-                "value" => serialize($value)
+                "value" => $value
             ]);
     }
 

@@ -43,7 +43,7 @@ class UserBuilder
     private function getPermissions()
     {
         $keyColumn = $this->isAction ? 'action' : 'key';
-        $permissions = count($this->permissions) ? $this->permissions : getEntireRoutesAction();
+        $permissions = count($this->permissions) ? $this->permissions : getRoutes()->pluck("method")->toArray() ;
 
         $pers =
             array_map(
