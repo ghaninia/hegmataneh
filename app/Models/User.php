@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Traits\HasFileTrait;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use App\Core\Interfaces\FileableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;

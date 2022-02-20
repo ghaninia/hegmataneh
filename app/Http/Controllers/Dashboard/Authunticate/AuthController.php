@@ -43,8 +43,8 @@ class AuthController extends Controller
             "msg" => trans("dashboard.success.authunticate.login" , [
                 "attributes" => $user->name
             ]),
-            "user"  => new UserResource($user->load("role")),
-                "token" => $user->createToken("authunticate")->accessToken
+            "data"  => new UserResource($user->load("role")),
+                "token" => $user->createToken("authunticate")->plainTextToken
             ]);
 
         return $this->error([

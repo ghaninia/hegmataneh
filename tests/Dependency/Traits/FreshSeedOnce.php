@@ -21,7 +21,6 @@ trait FreshSeedOnce
     {
         parent::setUp();
         $seeders = [
-            "passport:install",
             "cache:clear"
         ];
         array_walk($seeders, function ($seed) {

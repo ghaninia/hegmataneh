@@ -10,7 +10,6 @@ use App\Models\Portfolio;
 use App\Policies\FilePolicy;
 use App\Policies\PostPolicy;
 use App\Policies\SerialPolicy;
-use Laravel\Passport\Passport;
 use App\Policies\PortfolioPolicy;
 use Illuminate\Support\Facades\Gate;
 use App\Services\Access\AccessService;
@@ -53,11 +52,5 @@ class AuthServiceProvider extends ServiceProvider
                 ->setPermissions($permissions)
                 ->fullAbility();
         });
-
-        #######################
-        ### Passport Routes ###
-        #######################
-
-        Passport::routes();
     }
 }

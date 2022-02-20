@@ -36,7 +36,7 @@ use App\Http\Controllers\Guest\Translation\TranslationController;
 
 Route::group([
     "prefix" => "v1",
-    "as" => "api.v1."
+    "as" => "api.v1." ,
 ], function () {
 
     Route::group([

@@ -20,6 +20,5 @@ class DatabaseSeeder extends Seeder
             TermSeeder::class,
             OptionSeeder::class,
         ]);
-        Artisan::call("passport:install") ;
     }
 }

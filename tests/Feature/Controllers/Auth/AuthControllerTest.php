@@ -37,11 +37,13 @@ class AuthControllerTest extends TestCase
             "password" => $password,
         ]);
 
-        $response->assertJsonStructure([
-            "user",
-            "token",
-            "ok"
-        ]);
+        $response
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                "data",
+                "token",
+                "ok"
+            ]);
     }
 
     public function testRegisterOnTheSite()
@@ -53,7 +55,7 @@ class AuthControllerTest extends TestCase
 
         ### custom role
         OptionBuilder::set(EnumsOption::DASHBOARD_DEFAULT_REGISTER_ROLE, $user->role_id);
-        OptionBuilder::set(EnumsOption::DASHBOARD_CAN_REGISTER, true );
+        OptionBuilder::set(EnumsOption::DASHBOARD_CAN_REGISTER, true);
 
         $response = $this->postJson(
             route("api.v1.authunticate.register.store"),
@@ -62,17 +64,17 @@ class AuthControllerTest extends TestCase
             ])
         );
 
-        $response->assertStatus(Response::HTTP_OK) ;
+        $response->assertStatus(Response::HTTP_OK);
 
-        $this->assertDatabaseHas( "users" ,[
+        $this->assertDatabaseHas("users", [
             "status" => EnumsUser::STATUS_DISABLE,
-            'role_id' => $user->role_id ,
+            'role_id' => $user->role_id,
             "email" => $user->email,
             "username" => $user->username,
             "mobile" => $user->mobile,
         ]);
 
-        $userId = $response->json("data.id") ;
+        $userId = $response->json("data.id");
 
         Notification::assertSentTo(
             User::find($userId),
