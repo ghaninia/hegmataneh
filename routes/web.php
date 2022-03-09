@@ -11,9 +11,5 @@ Route::group([
 
 
 Route::get("test" , function(){
-    dd(
-        // options()->put(EnumsOption::DASHBOARD_REGISTER_RULE , "1") ,
-        options(EnumsOption::DASHBOARD_DEFAULT_REGISTER_ROLE)
-    ) ;
 });
 

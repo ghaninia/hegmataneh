@@ -18,6 +18,7 @@ use App\Http\Controllers\Dashboard\Authunticate\AuthController;
 use App\Http\Controllers\Dashboard\Currency\CurrencyController;
 use App\Http\Controllers\Dashboard\Language\LanguageController;
 use App\Http\Controllers\Dashboard\Portfolio\PortfolioController;
+use App\Http\Controllers\Dashboard\Widget\WidgetController;
 use App\Http\Controllers\Guest\Translation\TranslationController;
 
 
@@ -177,6 +178,17 @@ Route::group([
     ### skill
     #########
     Route::apiResource("skill", SkillController::class);
+
+    Route::prefix("widget")->name("widget.")->group(function(){
+
+
+        Route::name("statistic.")->prefix("statistic")->group(function(){
+            Route::get("posts" , [ WidgetController::class , "statisticPosts"])->name("posts") ;
+        });
+
+
+    });
+
 });
 
 

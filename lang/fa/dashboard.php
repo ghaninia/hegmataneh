@@ -2,12 +2,25 @@
 
 return [
 
+    "sidebar" => [
+        "main" => "داشبورد" ,
+        "users" => [
+            "label" => "کاربران" ,
+            "create" => "کاربر جدید" ,
+            "profile" => [
+                "label" => "پروفایل کاربری" ,
+                "setting" => "تنظیمات" ,
+                "signout" => "خروج" ,
+            ]
+        ]
+    ],
+
+
 
     "mail" => [
         "verify" => [
             "submit" => "تایید حساب کاربری" ,
         ] ,
-
         "main" => "صفحه اصلی" ,
         "aboutus" => "درباره ما" ,
         "contactus" => "تماس با ما" ,

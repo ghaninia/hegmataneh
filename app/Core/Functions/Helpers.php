@@ -41,7 +41,7 @@ function getRoutes()
                 $routes[] = [
                         "uri" => $route->uri() ,
                         "as"  => $route->action["as"] ,
-                        "method" => $method ,
+                        "method" => md5( $method ),
                 ];
         });
 

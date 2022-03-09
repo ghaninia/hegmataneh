@@ -12,8 +12,7 @@ use App\Services\Widget\WidgetServiceInterface;
 
 class WidgetService implements WidgetServiceInterface
 {
-    protected $postRepo, $userRepo, $roleRepo, $viewRepo;
-    private $user;
+    private $user = null ;
 
     /**
      * @param User $user
