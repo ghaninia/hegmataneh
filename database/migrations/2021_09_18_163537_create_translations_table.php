@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -27,10 +26,9 @@ class CreateTranslationsTable extends Migration
 
             $table->string("field");
 
-            $table->longText('trans');
+            $table->text('trans')->nullable();
         });
 
-        DB::statement('ALTER TABLE `translations` ADD FULLTEXT INDEX translation_trans_index (trans)');
     }
 
     /**
@@ -40,9 +38,6 @@ class CreateTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('translations', function ($table) {
-            $table->dropIndex('translation_trans_index');
-        });
         Schema::dropIfExists('translations');
     }
 }
