@@ -37,7 +37,7 @@ use App\Http\Controllers\Guest\Translation\TranslationController;
 
 Route::group([
     "prefix" => "v1",
-    "as" => "api.v1." ,
+    "as" => "api.v1.",
 ], function () {
 
     Route::group([
@@ -71,124 +71,122 @@ Route::group([
 
     Route::get("translations", TranslationController::class)->name("translations");
 
-    ##############
-    ### role route
-    ##############
-    Route::apiResource("role", RoleController::class);
+    Route::middleware("auth:sanctum")->group(function () {
 
-    ##############
-    ### gatway route
-    ##############
-    Route::apiResource("gateway", GatewayController::class);
+        ##############
+        ### role route
+        ##############
+        Route::apiResource("role", RoleController::class);
 
-    ##############
-    ### language route
-    ##############
-    Route::apiResource("language", LanguageController::class);
+        ##############
+        ### gatway route
+        ##############
+        Route::apiResource("gateway", GatewayController::class);
 
-    ##############
-    ### currency route
-    ##############
-    Route::apiResource("currency", CurrencyController::class);
+        ##############
+        ### language route
+        ##############
+        Route::apiResource("language", LanguageController::class);
 
-    ##############
-    ### user route
-    ##############
-    Route::apiResource("user", UserController::class);
-    Route::group([
-        "prefix" => "user/{user}",
-        "as" => "user."
-    ], function () {
+        ##############
+        ### currency route
+        ##############
+        Route::apiResource("currency", CurrencyController::class);
+
+        ##############
+        ### user route
+        ##############
+        Route::apiResource("user", UserController::class);
+        Route::group([
+            "prefix" => "user/{user}",
+            "as" => "user."
+        ], function () {
+
+            ############
+            ### portfolio
+            ############
+            Route::apiResource("portfolio", PortfolioController::class);
+
+            ########
+            ### page
+            ########
+            Route::apiResource("page", PageController::class);
+
+            ########
+            ### post
+            ########
+            Route::apiResource("post", PostController::class);
+            Route::group([
+                "prefix" => "post/{post}",
+                "as" => "post."
+            ], function () {
+                Route::delete("force", [PostController::class, "forceDelete"])->name("force");
+                Route::post("restore", [PostController::class, "restore"])->name("restore");
+            });
+
+            ##########
+            ### serial
+            ##########
+            Route::apiResource("serial", SerialController::class);
+
+            ###########
+            ### product
+            ###########
+            Route::apiResource("product", ProductController::class);
+            Route::group([
+                "prefix" => "product/{product}",
+                "as" => "product."
+            ], function () {
+                Route::delete("force", [ProductController::class, "forceDelete"])->name("force");
+                Route::post("restore", [ProductController::class, "restore"])->name("restore");
+            });
+
+            ########
+            ### file
+            ########
+            Route::prefix("gallery")->name("gallery.")->group(function () {
+                Route::post("newfolder/{folder?}", [FileController::class, "newFolder"])->name("new_folder");
+                Route::post("upload/{folder?}", [FileController::class, "upload"])->name("upload");
+                Route::put("move/{file}/{folder?}", [FileController::class, "move"])->name("move");
+                Route::put("rename/{file}", [FileController::class, "rename"])->name("rename");
+                Route::delete("{file}", [FileController::class, "remove"])->name("remove");
+                Route::get("{folder?}", [FileController::class, "index"])->name("index");
+            });
+        });
+
+        #######
+        ### tag
+        #######
+        Route::apiResource("tag", TagController::class);
 
         ############
-        ### portfolio
+        ### category
         ############
-        Route::apiResource("portfolio", PortfolioController::class);
-
-        ########
-        ### page
-        ########
-        Route::apiResource("page", PageController::class);
-
-        ########
-        ### post
-        ########
-        Route::apiResource("post", PostController::class);
-        Route::group([
-            "prefix" => "post/{post}",
-            "as" => "post."
-        ], function () {
-            Route::delete("force", [PostController::class, "forceDelete"])->name("force");
-            Route::post("restore", [PostController::class, "restore"])->name("restore");
-        });
-
-        ##########
-        ### serial
-        ##########
-        Route::apiResource("serial", SerialController::class);
+        Route::apiResource("category", CategoryController::class);
 
         ###########
-        ### product
+        ### options
         ###########
-        Route::apiResource("product", ProductController::class);
+
         Route::group([
-            "prefix" => "product/{product}",
-            "as" => "product."
+            "prefix" => "option",
+            "as" => "option.",
         ], function () {
-            Route::delete("force", [ProductController::class, "forceDelete"])->name("force");
-            Route::post("restore", [ProductController::class, "restore"])->name("restore");
+            Route::get("/", [OptionController::class, "index"])->name("index");
+            Route::patch("/", [OptionController::class, "update"])->name("update");
         });
 
-        ########
-        ### file
-        ########
-        Route::prefix("gallery")->name("gallery.")->group(function () {
-            Route::post("newfolder/{folder?}", [FileController::class, "newFolder"])->name("new_folder");
-            Route::post("upload/{folder?}", [FileController::class, "upload"])->name("upload");
-            Route::put("move/{file}/{folder?}", [FileController::class, "move"])->name("move");
-            Route::put("rename/{file}", [FileController::class, "rename"])->name("rename");
-            Route::delete("{file}", [FileController::class, "remove"])->name("remove");
-            Route::get("{folder?}", [FileController::class, "index"])->name("index");
+        #########
+        ### skill
+        #########
+        Route::apiResource("skill", SkillController::class);
+
+        Route::prefix("widget")->name("widget.")->group(function () {
+            Route::name("statistic.")->prefix("statistic")->group(function () {
+                Route::get("posts", [WidgetController::class, "statisticPosts"])->name("posts");
+            });
         });
     });
-
-    #######
-    ### tag
-    #######
-    Route::apiResource("tag", TagController::class);
-
-    ############
-    ### category
-    ############
-    Route::apiResource("category", CategoryController::class);
-
-    ###########
-    ### options
-    ###########
-
-    Route::group([
-        "prefix" => "option",
-        "as" => "option.",
-    ], function () {
-        Route::get("/", [OptionController::class, "index"])->name("index");
-        Route::patch("/", [OptionController::class, "update"])->name("update");
-    });
-
-    #########
-    ### skill
-    #########
-    Route::apiResource("skill", SkillController::class);
-
-    Route::prefix("widget")->name("widget.")->group(function(){
-
-
-        Route::name("statistic.")->prefix("statistic")->group(function(){
-            Route::get("posts" , [ WidgetController::class , "statisticPosts"])->name("posts") ;
-        });
-
-
-    });
-
 });
 
 

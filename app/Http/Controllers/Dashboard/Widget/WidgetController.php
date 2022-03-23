@@ -26,7 +26,6 @@ class WidgetController extends Controller
             )
             ->statisticPosts();
 
-        return $statistics ;
-
+        return $statistics;
     }
 }
