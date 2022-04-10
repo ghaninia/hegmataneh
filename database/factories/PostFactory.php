@@ -32,7 +32,7 @@ class PostFactory extends Factory
             "format" => $format = Arr::random(EnumsPost::format()),
             "development" => $this->faker->numberBetween(0,100),
             "published_at" => $this->faker->dateTime() ,
-            "created_at" => Carbon::parse($this->faker->dateTimeBetween())
+            "created_at" => $this->faker->dateTimeBetween()
         ];
     }
 }

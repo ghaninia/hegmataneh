@@ -22,17 +22,16 @@ class UserService implements UserServiceInterface
      */
     public function updateOrCreate(array $data, User $user = null): User
     {
-
         $insertData = [
-            'name' => $data["name"] ,
-            'status' => (bool) $data["status"],
-            'email' => $data["email"],
-            'mobile' => $data["mobile"] ?? null,
-            "username" => $data["username"] ?? null,
-            "bio" => $data["bio"] ?? null,
-            'role_id' => $data["role_id"],
-            "currency_id" =>  $data["currency_id"] ?? null,
-            "language_id" =>  $data["language_id"] ?? null,
+            'name' => $data["name"] ?? $user->name ?? null  ,
+            'status' => $data["status"] ?? $user?->status ?? false ,
+            'email' => $data["email"] ?? $user->email ?? null ,
+            'mobile' => $data["mobile"] ?? $user->mobile ?? null ,
+            'username' => $data["username"] ?? $user->username ?? null ,
+            'bio' => $data["bio"] ?? $user->bio ?? null ,
+            'role_id' => $data["role_id"] ?? $user?->role_id ,
+            'currency_id' => $data["currency_id"] ?? $user?->currency_id ?? null  ,
+            'language_id' => $data["language_id"] ?? $user?->language_id ?? null  ,
         ];
 
         if (is_null($user)) {

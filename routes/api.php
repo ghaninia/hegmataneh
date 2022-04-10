@@ -58,19 +58,26 @@ Route::group([
         });
     });
 
-    Route::get(
-        "routes",
-        fn () => getRoutes()->map(function ($route) {
-            return [
-                "uri" => url($route["uri"]),
-                "as" => $route["as"],
-            ];
-        })
-    );
+    ##################
+    ### GET ALL ROUTES
+    ##################
+
+    Route::get("routes", function (){
+        return getRoutes()->map(fn ($route) => [
+            "uri" => url($route["uri"]),
+            "as" => $route["as"],
+        ]);
+    })->name("routes");
+
 
     Route::get("translations", TranslationController::class)->name("translations");
 
     Route::middleware("auth:sanctum")->group(function () {
+
+        Route::prefix("profile")->name("profile.")->group(function(){
+            Route::get("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "index"] )->name("index");
+            Route::put("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "update"] )->name("update");
+        });
 
         ##############
         ### role route

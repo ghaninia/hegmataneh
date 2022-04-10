@@ -27,7 +27,7 @@ class ViewFactory extends Factory
     {
         return [
             "ipv4" => $this->faker->ipv4(),
-            "created_at" => Carbon::parse($this->faker->dateTimeBetween())
+            "created_at" => $this->faker->dateTimeBetween()
         ];
     }
 }
