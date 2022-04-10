@@ -16,7 +16,11 @@ class WidgetController extends Controller
     ) {
     }
 
-
+    /**
+     * shpw post statistic form user
+     * @param StatisticPostsRequest $request
+     * @return mixed
+     */
     public function statisticPosts(StatisticPostsRequest $request)
     {
 

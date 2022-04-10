@@ -2,14 +2,17 @@
 
 namespace App\Services\Slug;
 
-use App\Core\Interfaces\SlugableInterface;
+use App\Kernel\Slug\Interfaces\SlugableInterface;
 use App\Models\Slug;
-use App\Services\Slug\SlugServiceInterface;
 
 class SlugService implements SlugServiceInterface
 {
 
-
+    /**
+     * reBuild a slug
+     * @param SlugableInterface $slugable
+     * @param array $languages
+     */
     public function sync(SlugableInterface $slugable, array $languages = []): void
     {
 
@@ -29,5 +32,6 @@ class SlugService implements SlugServiceInterface
             }
 
         Slug::insert($translations);
+
     }
 }

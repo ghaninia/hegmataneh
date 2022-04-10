@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Category;
 
-use App\Core\Enums\EnumsFile;
-use App\Core\Enums\EnumsFileable;
+use App\Kernel\Enums\EnumsFile;
 use App\Models\Term;
 use App\Rules\SlugRule;
 use App\Rules\ColorRule;

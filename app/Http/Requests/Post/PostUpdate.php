@@ -5,7 +5,7 @@ namespace App\Http\Requests\Post;
 use App\Models\Post;
 use App\Models\User;
 use App\Rules\SlugRule;
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
 use App\Rules\TranslationableRule;
 use Illuminate\Foundation\Http\FormRequest;

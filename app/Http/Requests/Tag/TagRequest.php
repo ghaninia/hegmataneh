@@ -9,9 +9,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class TagRequest extends FormRequest
 {
-    
-    protected $tag ;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,10 +19,6 @@ class TagRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation()
-    {
-        $this->tag = $this->route("tag") ?? null ;
-    }
 
     /**
      * Get the validation rules that apply to the request.

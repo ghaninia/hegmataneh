@@ -9,8 +9,8 @@ class RoleService implements RoleServiceInterface
 {
 
     /**
-     * نمایش لیست تمام نقش ها
-     * @return Collection
+     * get all roles
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function all()
     {
@@ -18,7 +18,7 @@ class RoleService implements RoleServiceInterface
     }
 
     /**
-     * ساخت نقش جدید
+     * create new role
      * @param array $data
      * @return Role
      */
@@ -34,9 +34,9 @@ class RoleService implements RoleServiceInterface
     }
 
     /**
-     * ویرایش نقش کاربری
+     * update role
      * @param Role $role
-     * @parma array $data
+     * @param array $data
      * @return Role
      */
     public function update(Role $role, array $data): Role
@@ -49,9 +49,9 @@ class RoleService implements RoleServiceInterface
     }
 
     /**
-     * حذف نقش کاربری
+     * delete role
      * @param Role $role
-     * @return boolean
+     * @return bool
      */
     public function delete(Role $role): bool
     {

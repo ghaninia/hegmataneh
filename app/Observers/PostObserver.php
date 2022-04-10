@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Post;
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use App\Services\Post\PostService;
 
 class PostObserver

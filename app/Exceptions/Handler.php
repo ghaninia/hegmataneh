@@ -2,14 +2,15 @@
 
 namespace App\Exceptions;
 
+use App\Kernel\DatabaseFilter\Exceptions\NotFoundModelForFilter;
+use App\Kernel\Response\Traits\ResponseMessageTrait;
 use Throwable;
-use App\Core\Traits\MessageTrait;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
-    use MessageTrait;
+    use ResponseMessageTrait;
 
     /**
      * A list of the exception types that are not reported.
@@ -17,7 +18,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        NotFoundModelForFilterNotFoundModelForFilter::class
+        NotFoundModelForFilter::class
     ];
 
     /**

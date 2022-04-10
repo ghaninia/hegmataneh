@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Rules\SlugRule;
 use App\Rules\CurrencyRule;
 use App\Rules\Term\TagRule;
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
 use App\Rules\Term\CategoryRule;
 use App\Rules\TranslationableRule;

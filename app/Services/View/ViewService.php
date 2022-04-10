@@ -2,18 +2,17 @@
 
 namespace App\Services\View;
 
+use App\Kernel\View\Interfaces\ViewableInterface;
 use App\Models\User;
 use App\Models\View;
-use App\Core\Interfaces\ViewableInterface;
-use App\Services\View\ViewServiceInterface;
 
 class ViewService implements ViewServiceInterface
 {
 
     /**
-     * لیست تمام امتیازها
+     * get all views
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -24,7 +23,7 @@ class ViewService implements ViewServiceInterface
     }
 
     /**
-     * ساخت یک لاگ نمایش جدید
+     * create new view for viewable model
      * @param ViewableInterface $viewable
      * @param string $ipv4
      * @param User|null $user

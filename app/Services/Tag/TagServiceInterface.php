@@ -2,8 +2,8 @@
 
 namespace App\Services\Tag;
 
+use App\Kernel\Tag\Interfaces\TagableInterface;
 use App\Models\Term;
-use App\Core\Interfaces\TagableInterface;
 
 interface TagServiceInterface
 {

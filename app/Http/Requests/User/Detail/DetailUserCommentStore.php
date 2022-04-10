@@ -4,7 +4,7 @@ namespace App\Http\Requests\User\Detail;
 
 use App\Rules\FilterRangeRule;
 use Illuminate\Validation\Rule;
-use App\Core\Enums\EnumsComment;
+use App\Kernel\Enums\EnumsComment;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DetailUserCommentStore extends FormRequest

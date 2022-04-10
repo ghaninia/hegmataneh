@@ -2,7 +2,7 @@
 
 namespace App\Kernel\DatabaseFilter\Contracts\SerialFilters;
 
-use App\Core\Enums\EnumsSerial;
+use App\Kernel\Enums\EnumsSerial;
 use App\Kernel\DatabaseFilter\Abstracts\QueryFilter;
 use App\Kernel\DatabaseFilter\Interfaces\FilterInterface;
 

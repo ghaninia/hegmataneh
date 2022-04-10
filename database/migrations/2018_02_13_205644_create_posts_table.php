@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;

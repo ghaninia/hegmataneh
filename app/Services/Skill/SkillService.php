@@ -2,12 +2,10 @@
 
 namespace App\Services\Skill;
 
-use App\Core\Enums\EnumsFileable;
 use App\Models\Skill;
+use App\Kernel\Enums\EnumsFileable;
 use Illuminate\Database\Eloquent\Model;
-use App\Services\File\FileService;
 use App\Services\Slug\SlugServiceInterface;
-use App\Services\Skill\SkillServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Services\Translation\TranslationServiceInterface;
 
@@ -15,13 +13,12 @@ class SkillService implements SkillServiceInterface
 {
     public function __construct(
         public TranslationServiceInterface $translationService,
-        public SlugServiceInterface $slugService,
-        public FileService $fileService
+        public SlugServiceInterface $slugService
     ) {
     }
 
     /**
-     * لیست مهارت ها
+     * get list skills
      * @param array $filters
      * @return Paginator
      */
@@ -34,8 +31,9 @@ class SkillService implements SkillServiceInterface
     }
 
     /**
-     * ساخت مهارت جدید
+     * create or update skill
      * @param array $data
+     * @param Skill|null $skill
      * @return Skill
      */
     public function updateOrCreate(array $data, Skill $skill = null): Skill
@@ -49,17 +47,15 @@ class SkillService implements SkillServiceInterface
 
         $this->translationService->sync($skill, $translations = $data["translations"] ?? []);
         $this->slugService->sync($skill, $translations);
-        ### تصویر شاخص
-        $this->fileService->sync($skill, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
 
         return $skill->load(["translations", "slugs", "files"]);
     }
 
 
     /**
-     * حذف مهارت
+     * delete skill
      * @param Skill $skill
-     * @return boolean
+     * @return bool
      */
     public function delete(Skill $skill): bool
     {
@@ -67,7 +63,7 @@ class SkillService implements SkillServiceInterface
     }
 
     /**
-     * مدیریت مهارتها
+     * Add and remove skills
      * @param Model $model
      * @param array $skills
      */

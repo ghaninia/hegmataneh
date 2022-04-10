@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsComment;
+use App\Kernel\Enums\EnumsComment;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

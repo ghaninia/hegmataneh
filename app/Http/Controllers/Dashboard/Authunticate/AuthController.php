@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard\Authunticate;
 
-use App\Core\Enums\EnumsUser;
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsUser;
+use App\Kernel\Enums\EnumsOption;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
@@ -43,7 +43,7 @@ class AuthController extends Controller
             "msg" => trans("dashboard.success.authunticate.login" , [
                 "attributes" => $user->name
             ]),
-            "data"  => new UserResource($user->load("role")),
+            "data"  => new UserResource($user->load(["role" , "files"])),
                 "token" => $user->createToken("authunticate")->plainTextToken
             ]);
 

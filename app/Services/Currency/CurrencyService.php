@@ -11,10 +11,10 @@ class CurrencyService implements CurrencyServiceInterface
 {
 
     /**
-     * لیست واحد پولی ها
+     * get list currencies
      * @param array $filters
      * @param bool $isPaginate
-     * @return Paginator
+     * @return Paginator|Collection
      */
     public function list(array $filters, bool $isPaginate = true): Paginator|Collection
     {
@@ -29,7 +29,7 @@ class CurrencyService implements CurrencyServiceInterface
     }
 
     /**
-     * ساخت و ویرایش واحد پولی
+     * create or update currency
      * @param array $data
      * @param Currency|null $currency
      * @return Currency
@@ -46,9 +46,9 @@ class CurrencyService implements CurrencyServiceInterface
     }
 
     /**
-     * حذف واحد پولی
+     * delete currency
      * @param Currency $currency
-     * @return boolean
+     * @return bool
      */
     public function delete(Currency $currency): bool
     {

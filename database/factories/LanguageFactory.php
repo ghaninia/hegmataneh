@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Language;
 use Illuminate\Support\Arr;
-use App\Core\Enums\EnumsLanguage;
+use App\Kernel\Enums\EnumsLanguage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LanguageFactory extends Factory

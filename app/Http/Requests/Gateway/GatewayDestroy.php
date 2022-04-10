@@ -2,23 +2,14 @@
 
 namespace App\Http\Requests\Gateway;
 
-use App\Core\Enums\EnumsSystem;
+use App\Kernel\Enums\EnumsSystem;
 use App\Services\Gateway\GatewayService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GatewayDestroy extends FormRequest
 {
 
-    protected $gateway;
-
-    public function __construct(public GatewayService $gatewayService)
-    {
-    }
-
-    public function prepareForValidation()
-    {
-        $this->gateway = $this->route(EnumsSystem::WALLCARD_GATEWAY);
-    }
+    public function __construct(protected GatewayService $gatewayService){}
 
     /**
      * Determine if the user is authorized to make this request.

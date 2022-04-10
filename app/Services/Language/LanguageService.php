@@ -3,7 +3,7 @@
 namespace App\Services\Language;
 
 use App\Models\Language;
-use App\Core\Enums\EnumsLanguage;
+use App\Kernel\Enums\EnumsLanguage;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Services\Language\LanguageServiceInterface;
@@ -12,9 +12,10 @@ class LanguageService implements LanguageServiceInterface
 {
 
     /**
-     * لیست زبان ها
+     * get languages list
      * @param array $filters
-     * @return Paginator
+     * @param bool $isPaginate
+     * @return Paginator|Collection
      */
     public function list(array $filters, bool $isPaginate = true): Paginator|Collection
     {
@@ -29,7 +30,7 @@ class LanguageService implements LanguageServiceInterface
     }
 
     /**
-     * ساخت زبان جدید
+     * create or update language
      * @param array $data
      * @return Language
      */
@@ -44,7 +45,7 @@ class LanguageService implements LanguageServiceInterface
     }
 
     /**
-     * ویرایش زبان
+     * update language
      * @param Language $language
      * @param array $data
      * @return Language
@@ -60,9 +61,9 @@ class LanguageService implements LanguageServiceInterface
     }
 
     /**
-     * حذف زبان
+     * delete language
      * @param Language $language
-     * @return boolean
+     * @return bool
      */
     public function delete(Language $language): bool
     {

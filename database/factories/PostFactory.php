@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Core\Enums\EnumsPost;
+use Carbon\Carbon;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
+use App\Kernel\Enums\EnumsPost;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
 {
@@ -31,7 +32,7 @@ class PostFactory extends Factory
             "format" => $format = Arr::random(EnumsPost::format()),
             "development" => $this->faker->numberBetween(0,100),
             "published_at" => $this->faker->dateTime() ,
-            "created_at"   => $this->faker->dateTime()
+            "created_at" => Carbon::parse($this->faker->dateTimeBetween())
         ];
     }
 }

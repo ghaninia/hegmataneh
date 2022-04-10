@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Core\Traits\HasFileTrait;
+use App\Kernel\UploadCenter\Interfaces\FileableInterface;
+use App\Kernel\UploadCenter\Traits\HasFileTrait;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use App\Core\Interfaces\FileableInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use App\Models\Language;
 use Illuminate\Http\Request;
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsOption;
 use Illuminate\Contracts\Validation\Rule;
 
 class TranslationableRule implements Rule

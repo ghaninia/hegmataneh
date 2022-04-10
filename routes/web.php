@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsOption;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

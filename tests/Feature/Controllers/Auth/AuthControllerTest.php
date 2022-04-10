@@ -4,9 +4,9 @@ namespace Tests\Feature\Controllers\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Core\Enums\EnumsUser;
+use App\Kernel\Enums\EnumsUser;
 use Illuminate\Http\Response;
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsOption;
 use Tests\Builders\UserBuilder;
 use Tests\Builders\OptionBuilder;
 use Illuminate\Support\Facades\Notification;

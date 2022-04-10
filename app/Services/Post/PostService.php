@@ -5,39 +5,34 @@ namespace App\Services\Post;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use App\Jobs\PublishedPostJob;
 use App\Services\Tag\TagService;
 use App\Services\Slug\SlugService;
 use App\Services\Category\CategoryService;
-use App\Services\Post\PostServiceInterface;
 use App\Services\Translation\TranslationService;
 
 class PostService implements PostServiceInterface
 {
 
-    protected
-        $translationService,
-        $categoryService,
-        $slugService,
-        $tagService;
-
+    /**
+     * @param TranslationService $translationService
+     * @param CategoryService $categoryService
+     * @param SlugService $slugService
+     * @param TagService $tagService
+     */
     public function __construct(
-        TranslationService $translationService,
-        CategoryService $categoryService,
-        SlugService $slugService,
-        TagService $tagService
+        protected TranslationService $translationService,
+        protected CategoryService $categoryService,
+        protected SlugService $slugService,
+        protected TagService $tagService
     ) {
-        $this->translationService = $translationService;
-        $this->categoryService = $categoryService;
-        $this->slugService = $slugService;
-        $this->tagService = $tagService;
     }
 
     /**
-     * لیست تمام پست ها
+     * list posts
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -50,9 +45,8 @@ class PostService implements PostServiceInterface
     }
 
     /**
-     * پابلیک کردن پست
+     * post to publish
      * @param Post $post
-     * @return void
      */
     public function published(Post $post): void
     {
@@ -62,9 +56,8 @@ class PostService implements PostServiceInterface
     }
 
     /**
-     * فراخوانی جاب جهت پابلیش کردن پست
+     * Publish the post queue
      * @param Post $post
-     * @return void
      */
     public function setPublishedJob(Post $post): void
     {
@@ -74,10 +67,12 @@ class PostService implements PostServiceInterface
     }
 
     /**
-     * ثبت پست جدید
+     * create or update posts
+     *
      * @param User $user
      * @param array $data
-     * @param Post $post|null
+     * @param Post|null $post
+     * @return Post
      */
     public function updateOrCreate(User $user, array $data, ?Post $post = null): Post
     {
@@ -112,9 +107,9 @@ class PostService implements PostServiceInterface
     }
 
     /**
-     * حذف پست
+     * delete post
      * @param Post $post
-     * @return boolean
+     * @return bool|null
      */
     public function delete(Post $post)
     {
@@ -122,9 +117,9 @@ class PostService implements PostServiceInterface
     }
 
     /**
-     * رستور کردن پست حذف شده
+     * restore post
      * @param Post $post
-     * @return boolean
+     * @return bool|null
      */
     public function restore(Post $post)
     {
@@ -132,8 +127,9 @@ class PostService implements PostServiceInterface
     }
 
     /**
-     * حذف اجباری پست
+     * force delete post
      * @param Post $post
+     * @return bool|null
      */
     public function forceDelete(Post $post)
     {

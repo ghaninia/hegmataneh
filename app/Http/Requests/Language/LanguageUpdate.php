@@ -3,13 +3,11 @@
 namespace App\Http\Requests\Language;
 
 use Illuminate\Validation\Rule;
-use App\Core\Enums\EnumsLanguage;
+use App\Kernel\Enums\EnumsLanguage;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LanguageUpdate extends FormRequest
 {
-
-    protected $language;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +19,6 @@ class LanguageUpdate extends FormRequest
         return true;
     }
 
-    public function prepareForValidation()
-    {
-        $this->language = $this->route("language");
-    }
 
     /**
      * Get the validation rules that apply to the request.

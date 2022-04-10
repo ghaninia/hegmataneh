@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\Term\TagController;
-use App\Http\Controllers\Dashboard\File\FileController;
 use App\Http\Controllers\Dashboard\Post\PageController;
 use App\Http\Controllers\Dashboard\Post\PostController;
 use App\Http\Controllers\Dashboard\Role\RoleController;
@@ -144,14 +143,14 @@ Route::group([
             ########
             ### file
             ########
-            Route::prefix("gallery")->name("gallery.")->group(function () {
-                Route::post("newfolder/{folder?}", [FileController::class, "newFolder"])->name("new_folder");
-                Route::post("upload/{folder?}", [FileController::class, "upload"])->name("upload");
-                Route::put("move/{file}/{folder?}", [FileController::class, "move"])->name("move");
-                Route::put("rename/{file}", [FileController::class, "rename"])->name("rename");
-                Route::delete("{file}", [FileController::class, "remove"])->name("remove");
-                Route::get("{folder?}", [FileController::class, "index"])->name("index");
-            });
+            // Route::prefix("gallery")->name("gallery.")->group(function () {
+            //     Route::post("newfolder/{folder?}", [FileController::class, "newFolder"])->name("new_folder");
+            //     Route::post("upload/{folder?}", [FileController::class, "upload"])->name("upload");
+            //     Route::put("move/{file}/{folder?}", [FileController::class, "move"])->name("move");
+            //     Route::put("rename/{file}", [FileController::class, "rename"])->name("rename");
+            //     Route::delete("{file}", [FileController::class, "remove"])->name("remove");
+            //     Route::get("{folder?}", [FileController::class, "index"])->name("index");
+            // });
         });
 
         #######

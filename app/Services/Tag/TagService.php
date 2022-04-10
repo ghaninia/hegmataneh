@@ -2,10 +2,9 @@
 
 namespace App\Services\Tag;
 
+use App\Kernel\Tag\Interfaces\TagableInterface;
 use App\Models\Term;
-use App\Core\Enums\EnumsTerm;
-use App\Core\Interfaces\TagableInterface;
-use App\Services\Tag\TagServiceInterface;
+use App\Kernel\Enums\EnumsTerm;
 use App\Services\Slug\SlugServiceInterface;
 use App\Services\Translation\TranslationServiceInterface;
 
@@ -18,8 +17,9 @@ class TagService implements TagServiceInterface
     }
 
     /**
-     * ساخت برچسب
+     * create or update tag
      * @param array $data
+     * @param Term|null $tag
      * @return Term
      */
     public function updateOrCreate(array $data, Term $tag = null): Term
@@ -39,9 +39,9 @@ class TagService implements TagServiceInterface
 
 
     /**
-     * حذف برچسب
+     * delete tag
      * @param Term $tag
-     * @return boolean
+     * @return bool
      */
     public function delete(Term $tag): bool
     {
@@ -49,11 +49,11 @@ class TagService implements TagServiceInterface
     }
 
     /**
-     * لیست تمام فیلتر
+     * get tags list
      * @param array $filters
      * @param bool $isPaginate
      * @param array $relations
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters, bool $isPaginate = TRUE, array $relations = [])
     {
@@ -70,11 +70,9 @@ class TagService implements TagServiceInterface
     }
 
     /**
-     * مدیریت برچسب های
+     * retag for tagable model
      * @param TagableInterface $model
      * @param array $data
-     *
-     * @return void
      */
     public function sync(TagableInterface $model, array $data = []): void
     {

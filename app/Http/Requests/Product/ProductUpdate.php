@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Rules\SlugRule;
 use App\Rules\CurrencyRule;
 use App\Rules\Term\TagRule;
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
 use App\Rules\Term\CategoryRule;
 use App\Rules\TranslationableRule;
@@ -14,8 +14,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductUpdate extends FormRequest
 {
-
-    protected $product;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +23,6 @@ class ProductUpdate extends FormRequest
     public function authorize()
     {
         return true;
-    }
-
-    public function prepareForValidation()
-    {
-        $this->product = $this->route("product");
     }
 
     /**

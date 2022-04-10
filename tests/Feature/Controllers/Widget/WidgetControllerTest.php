@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controllers\Widget;
 
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use Tests\TestCase;
 use App\Models\Post;
 use App\Models\Role;

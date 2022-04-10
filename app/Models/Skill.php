@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsSkill;
+use App\Kernel\Enums\EnumsSkill;
 use App\Core\Traits\HasFileTrait;
-use App\Core\Traits\HasSlugTrait;
+use App\Kernel\Slug\Interfaces\SlugableInterface;
+use App\Kernel\Slug\Traits\HasSlugTrait;
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
+use App\Kernel\Translation\Traits\HasTranslationTrait;
+use App\Kernel\UploadCenter\Interfaces\FileableInterface;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\HasTranslationTrait;
-use App\Core\Interfaces\FileableInterface;
-use App\Core\Interfaces\SlugableInterface;
-use App\Core\Interfaces\TranslationableInterface;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

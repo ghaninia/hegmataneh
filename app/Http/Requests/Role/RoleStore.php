@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Role;
 
-use App\Core\Enums\EnumsRole;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RoleStore extends FormRequest
 {

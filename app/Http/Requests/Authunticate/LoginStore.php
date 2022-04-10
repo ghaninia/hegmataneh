@@ -7,11 +7,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoginStore extends FormRequest
 {
-    protected $authService ;
-    public function __construct(AuthService $authService)
-    {
-        $this->authService = $authService ;
-    }
+
+    public function __construct(
+        protected AuthService $authService
+    ){}
 
     /**
      * Determine if the user is authorized to make this request.

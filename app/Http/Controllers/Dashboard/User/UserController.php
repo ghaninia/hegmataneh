@@ -16,14 +16,14 @@ class UserController extends Controller
 {
 
     public function __construct(
-        public UserServiceInterface $userService
+        protected UserServiceInterface $userService
     ) {
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the resource
+     * @param UserIndex $request
+     * @return UserCollection
      */
     public function index(UserIndex $request)
     {
@@ -43,10 +43,9 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param UserStore $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(UserStore $request)
     {
@@ -61,10 +60,9 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  User $user
-     * @return JsonResource
+     * Display the specified resource
+     * @param User $user
+     * @return UserResource
      */
     public function show(User $user)
     {
@@ -77,11 +75,10 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  UserUpdate  $request
-     * @param  User $user
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param UserUpdate $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UserUpdate $request, User $user)
     {
@@ -96,10 +93,9 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  User $user
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user)
     {

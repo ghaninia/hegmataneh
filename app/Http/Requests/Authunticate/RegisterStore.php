@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Authunticate;
 
-use App\Rules\MobileRule;
 use App\Rules\PasswordRule;
-use App\Rules\UsernameRule;
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsOption;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterStore extends FormRequest

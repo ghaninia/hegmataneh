@@ -8,13 +8,12 @@ use App\Services\Access\AccessServiceInterface;
 
 class AccessService implements AccessServiceInterface
 {
-
-    public $user, $permissions;
-
+    private $user, $permissions;
 
     /**
      * user setter
      * @param User $user
+     * @return $this
      */
     public function setUser(User $user): self
     {
@@ -23,8 +22,9 @@ class AccessService implements AccessServiceInterface
     }
 
     /**
-     * permissions setter
+     * set permissions
      * @param $permissions
+     * @return $this
      */
     public function setPermissions($permissions): self
     {
@@ -34,7 +34,7 @@ class AccessService implements AccessServiceInterface
     }
 
     /**
-     * بررسی وجود یا عدم وجود نقشی که کاربر دارد
+     * Check for the presence or absence of a role that the user has
      * @param string $operator
      * @return bool
      */
@@ -62,11 +62,9 @@ class AccessService implements AccessServiceInterface
     }
 
     /**
-     * بررسی سطح دسترسی تمام ورودی ها اجباری میباشد
-     * تمام نقش ها را باید دارا باشد
-     * @param User $user
-     * @param array $permissions
-     * @return boolean
+     * Checking the access level of all inputs is mandatory
+     * Must have all roles
+     * @return bool
      */
     public function fullAbility(): bool
     {
@@ -74,10 +72,8 @@ class AccessService implements AccessServiceInterface
     }
 
     /**
-     * بررسی میشود که حداقل یک مورد تشابه بین دسترسی ها موجود باشد
-     * @param User $user
-     * @param array $permissions
-     * @return boolean
+     * Check that there is at least one similarity between the accesses
+     * @return bool
      */
     public function sufficientAbility(): bool
     {

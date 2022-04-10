@@ -4,7 +4,6 @@ namespace App\Http\Resources\Category;
 
 use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\File\Guest\FileCollection;
 use App\Http\Resources\Translation\TranslationCollection;
 
 class CategoryResource extends JsonResource
@@ -23,11 +22,9 @@ class CategoryResource extends JsonResource
             "created_at" => $this->created_at,
             "parent" => new CategoryResource($this->whenLoaded("parent")),
             "childrens" => new CategoryCollection($this->whenLoaded("childrens")),
-            
+
             "translations" => new TranslationCollection($this->whenLoaded("translations")),
             "slugs" => new SlugCollection($this->whenLoaded("slugs")) ,
-            
-            "files" => new FileCollection($this->whenLoaded("files")),
         ];
     }
 }

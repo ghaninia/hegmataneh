@@ -15,10 +15,10 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * احراز هویت کاربر بر اساس ورودی
+     * User based authentication based on input
      * @param array $credintioal
-     * @param boolean $remember
-     * @return boolean
+     * @param bool $remember
+     * @return bool
      */
     public function login(array $credintioal, bool $remember = FALSE): bool
     {
@@ -26,8 +26,8 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * بررسی کاربر لاگین شده
-     * @return User || false
+     * get auth user
+     * @return User|null
      */
     public function user(): ?User
     {
@@ -35,8 +35,8 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * دریافت آیدی کاربر لاگین شده
-     * @return integer || false
+     * Get a logged in user ID
+     * @return int|string|null
      */
     public function id()
     {
@@ -44,8 +44,10 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * توانایی دسترسی کاربر
-     * @return boolean
+     * Ability to access the user
+     * @param string $ability
+     * @param $parameters
+     * @return bool
      */
     public function can(string $ability,  $parameters): bool
     {

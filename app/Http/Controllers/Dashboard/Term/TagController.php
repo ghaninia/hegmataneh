@@ -19,8 +19,8 @@ class TagController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param TagIndex $request
+     * @return TagCollection
      */
     public function index(TagIndex $request)
     {
@@ -34,10 +34,9 @@ class TagController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param TagRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(TagRequest $request)
     {
@@ -51,10 +50,9 @@ class TagController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  Term $tag
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param Term $tag
+     * @return TagResource
      */
     public function show(Term $tag)
     {
@@ -62,11 +60,10 @@ class TagController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Term $tag
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param Term $tag
+     * @param TagRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Term $tag, TagRequest $request)
     {
@@ -80,10 +77,9 @@ class TagController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Term $tag
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Term $tag
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Term $tag)
     {

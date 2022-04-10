@@ -9,9 +9,9 @@ class CommentService implements CommentServiceInterface
 {
 
     /**
-     * لیست تمام کامنت ها
+     * get comments list
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {

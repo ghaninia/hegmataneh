@@ -7,13 +7,14 @@ use App\Models\Basket;
 use App\Models\Basketable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Core\Interfaces\BasktableInterface;
+use App\Kernel\Basket\Interfaces\BasktableInterface;
 
 class BasketService implements BasketServiceInterface
 {
     protected $user, $request, $basket;
 
     /**
+     * get user shop basket
      * @param Request $request
      * @param User|null $user
      * @return $this
@@ -34,6 +35,7 @@ class BasketService implements BasketServiceInterface
     }
 
     /**
+     * create secret key
      * @param Request $request
      * @return string
      */
@@ -43,6 +45,7 @@ class BasketService implements BasketServiceInterface
     }
 
     /**
+     * Move guest SHOP cart to user profile
      * @param Request $request
      * @param User $user
      * @return $this
@@ -80,6 +83,7 @@ class BasketService implements BasketServiceInterface
     }
 
     /**
+     * Append new item
      * @param BasktableInterface $model
      * @param $unit
      * @return $this
@@ -98,6 +102,7 @@ class BasketService implements BasketServiceInterface
     }
 
     /**
+     * update shop item
      * @param Basketable $basketable
      * @param $unit
      * @return $this
@@ -118,6 +123,7 @@ class BasketService implements BasketServiceInterface
     }
 
     /**
+     * delete shop cart item
      * @param Basketable $basketable
      * @return $this
      */

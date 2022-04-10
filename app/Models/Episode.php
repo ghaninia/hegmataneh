@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsEpisode;
+use App\Kernel\Enums\EnumsEpisode;
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
+use App\Kernel\Translation\Traits\HasTranslationTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\HasTranslationTrait;
-use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Episode extends Model implements TranslationableInterface
 {
-    
+
     use HasFactory, HasTranslationTrait;
 
     protected $fillable = [

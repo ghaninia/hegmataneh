@@ -8,9 +8,9 @@ use App\Services\Tag\TagService;
 use App\Services\Page\PageService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Page\PageResource;
-use App\Http\Requests\Post\Page\PageIndex;
-use App\Http\Requests\Post\Page\PageStore;
-use App\Http\Requests\Post\Page\PageUpdate;
+use App\Http\Requests\Page\PageIndex;
+use App\Http\Requests\Page\PageStore;
+use App\Http\Requests\Page\PageUpdate;
 use App\Http\Resources\Page\PageCollection;
 
 class PageController extends Controller
@@ -25,10 +25,10 @@ class PageController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     * @param  User $user
-     * @param  PageIndex $request
-     * @return \Illuminate\Http\Response
+     * Display a listing of the resource
+     * @param User $user
+     * @param PageIndex $request
+     * @return PageCollection
      */
     public function index(User $user, PageIndex $request)
     {
@@ -52,11 +52,10 @@ class PageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  User $user
-     * @param  PageStore $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param User $user
+     * @param PageStore $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(User $user, PageStore $request)
     {
@@ -72,11 +71,10 @@ class PageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  User $user
-     * @param  Post $page
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param User $user
+     * @param Post $page
+     * @return PageResource
      */
     public function show(User $user,  Post $page)
     {
@@ -88,11 +86,11 @@ class PageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param User $user
+     * @param Post $page
+     * @param PageUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(User $user, Post $page, PageUpdate $request)
     {
@@ -110,10 +108,10 @@ class PageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param User $user
+     * @param Post $page
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user, Post $page)
     {

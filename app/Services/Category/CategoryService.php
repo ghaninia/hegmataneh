@@ -3,13 +3,9 @@
 namespace App\Services\Category;
 
 use App\Models\Term;
-use App\Core\Enums\EnumsTerm;
-use App\Core\Enums\EnumsFileable;
-use App\Services\File\FileService;
-use Illuminate\Database\Eloquent\Model;
+use App\Kernel\Enums\EnumsTerm;
 use App\Services\Slug\SlugServiceInterface;
-use App\Core\Interfaces\CategoryableInterface;
-use App\Services\Category\CategoryServiceInterface;
+use App\Kernel\Category\Interfaces\CategoryableInterface;
 use App\Services\Translation\TranslationServiceInterface;
 
 class CategoryService implements CategoryServiceInterface
@@ -17,14 +13,14 @@ class CategoryService implements CategoryServiceInterface
 
     public function __construct(
         protected TranslationServiceInterface $translationService,
-        protected SlugServiceInterface $slugService,
-        protected FileService $fileService
+        protected SlugServiceInterface $slugService
     ) {
     }
 
     /**
-     * ساخت دسته بندی
+     * create new category
      * @param array $data
+     * @param Term|null $category
      * @return Term
      */
     public function updateOrCreate(array $data, Term $category = NULL): Term
@@ -42,19 +38,15 @@ class CategoryService implements CategoryServiceInterface
         $this->translationService->sync($term, $translations = $data["translations"] ?? []);
         ### لینک پیوند
         $this->slugService->sync($term, $translations);
-        ### تصویر شاخص
-        $this->fileService->sync($term, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
-        #### تصویر کاور
-        $this->fileService->sync($term, EnumsFileable::USAGE_COVER,  $data["cover"] ?? NULL);
 
         return $term->load(["translations", "slugs"]);
     }
 
 
     /**
-     * حذف دسته بندی
+     * delete category
      * @param Term $category
-     * @return boolean
+     * @return bool
      */
     public function delete(Term $category): bool
     {
@@ -62,9 +54,9 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
-     * لیست تمام فیلتر
+     * get list categories
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -77,14 +69,16 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
-     * مدیریت دسته بندی‌ها
-     * @param Model $model
+     * sync categoryable model
+     * @param CategoryableInterface $model
      * @param array $data
      */
     public function sync(CategoryableInterface $model, array $data = [])
     {
         $items = [];
-        ### ست کردن تایپ در جدول واسط
+        /**
+         * Set typing in the interface table
+         */
         array_map(function ($item) use (&$items) {
             $items[$item] = ["type" => EnumsTerm::TYPE_CATEGORY];
         }, $data);

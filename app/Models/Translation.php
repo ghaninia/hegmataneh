@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use App\Kernel\Translation\Traits\HasTranslationTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\HasTranslationTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Translation extends Model

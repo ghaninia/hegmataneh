@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Term;
 use Illuminate\Support\Arr;
-use App\Core\Enums\EnumsTerm;
+use App\Kernel\Enums\EnumsTerm;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TermFactory extends Factory

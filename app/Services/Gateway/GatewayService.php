@@ -9,10 +9,11 @@ class GatewayService implements GatewayServiceInterface
 {
 
     /**
-     * دریافت لیست درگاه ها
+     * get all gateway list
      * @param array $filters
      * @param bool $isPaginate
      * @param array $withs
+     * @return mixed
      */
     public function list(array $filters, bool $isPaginate = true, array $withs = [])
     {
@@ -31,9 +32,10 @@ class GatewayService implements GatewayServiceInterface
     }
 
     /**
-     * ویرایش و آپدیت درگاه های بانکی
+     * create or update gateway
      * @param array $data
      * @param Gateway|null $gateway
+     * @return mixed
      */
     public function updateOrCreate(array $data, Gateway $gateway = null)
     {
@@ -53,8 +55,9 @@ class GatewayService implements GatewayServiceInterface
     }
 
     /**
-     *
+     * delete gateway
      * @param Gateway $gateway
+     * @return bool|null
      */
     public function delete(Gateway $gateway)
     {
@@ -63,8 +66,9 @@ class GatewayService implements GatewayServiceInterface
 
 
     /**
-     * آیا فاکتوری با این درگاه صادر شده است ؟
+     * Has an invoice been issued with this port?
      * @param Gateway $gateway
+     * @return bool
      */
     public function hasOrders(Gateway $gateway)
     {

@@ -9,10 +9,10 @@ use App\Services\Product\Information\ProductInformationServiceInterface;
 class ProductInformationService implements ProductInformationServiceInterface
 {
     /**
-     * ساخت جزئیات محصول
+     * create product information
      * @param Post $product
      * @param array $data
-     * @return ProductInformation
+     * @return mixed
      */
     public function updateOrCreate(Post $product, array $data)
     {

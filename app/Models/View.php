@@ -15,6 +15,7 @@ class View extends Model
         'viewable_type',
         'user_id',
         'ipv4',
+        "created_at"
     ];
 
     ###################

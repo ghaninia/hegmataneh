@@ -4,7 +4,6 @@ namespace App\Http\Resources\Skill;
 
 use App\Http\Resources\Slug\SlugCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\File\Guest\FileCollection;
 use App\Http\Resources\Translation\TranslationCollection;
 
 class SkillResource extends JsonResource
@@ -23,7 +22,6 @@ class SkillResource extends JsonResource
 
             "translations" => new TranslationCollection($this->whenLoaded("translations")),
             "slugs" => new SlugCollection($this->whenLoaded("slugs")),
-            "files" => new FileCollection($this->whenLoaded("files")),
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Services\Product;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use App\Services\Tag\TagService;
 use App\Services\Slug\SlugService;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +18,17 @@ use App\Services\Product\Information\ProductInformationService;
 
 class ProductService implements ProductServiceInterface
 {
+
+
+    /**
+     * @param ProductInformationService $productInformationService
+     * @param TranslationServiceInterface $translationService
+     * @param PriceServiceInterface $priceService
+     * @param CategoryService $categoryService
+     * @param SkillService $skillService
+     * @param SlugService $slugService
+     * @param TagService $tagService
+     */
     public function __construct(
         protected ProductInformationService $productInformationService,
         protected TranslationServiceInterface $translationService,
@@ -30,9 +41,9 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * لیست تمام محصولات
+     * get all products
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -45,15 +56,14 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * ثبت محصول جدید
+     * create or update product
      * @param User $user
      * @param array $data
-     * @param Post $product|null
+     * @param Post|null $product
+     * @return Post
      */
     public function updateOrCreate(User $user, array $data, ?Post $product = null): Post
     {
-        DB::beginTransaction();
-
         $product =
             Post::updateOrCreate([
                 "id" => $product->id ?? null
@@ -97,15 +107,13 @@ class ProductService implements ProductServiceInterface
                 $data["skills"]
             );
 
-        DB::commit();
-
         return $product->load(["translations", "slugs", "prices"]);
     }
 
     /**
-     * حذف محصولات
+     * delete product
      * @param Post $product
-     * @return boolean
+     * @return bool|null
      */
     public function delete(Post $product)
     {
@@ -113,9 +121,10 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * رستور کردن محصولات حذف شده
+     * restore product
+     *
      * @param Post $product
-     * @return boolean
+     * @return bool|null
      */
     public function restore(Post $product)
     {
@@ -123,9 +132,8 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * حذف اجباری محصولات
+     * force delete product
      * @param Post $product
-     * @return void
      */
     public function forceDelete(Post $product): void
     {

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Language;
 
 use Illuminate\Validation\Rule;
-use App\Core\Enums\EnumsLanguage;
+use App\Kernel\Enums\EnumsLanguage;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LanguageIndex extends FormRequest

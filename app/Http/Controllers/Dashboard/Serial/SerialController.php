@@ -15,18 +15,17 @@ use App\Http\Resources\Serial\SerialCollection;
 class SerialController extends Controller
 {
 
-    protected $serialService, $priceService;
-
-    public function __construct(SerialService $serialService, PriceService $priceService)
-    {
-        $this->serialService = $serialService;
-        $this->priceService = $priceService;
+    public function __construct(
+        protected SerialService $serialService,
+        protected PriceService $priceService
+    ){
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the resource
+     * @param User $user
+     * @param SerialIndex $request
+     * @return SerialCollection
      */
     public function index(User $user, SerialIndex $request)
     {
@@ -47,10 +46,10 @@ class SerialController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param User $user
+     * @param SerialRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(User $user, SerialRequest $request)
     {
@@ -67,11 +66,10 @@ class SerialController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  User $user
-     * @param  Serial $serial
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param User $user
+     * @param Serial $serial
+     * @return SerialResource
      */
     public function show(User $user, Serial $serial)
     {
@@ -81,11 +79,11 @@ class SerialController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param User $user
+     * @param Serial $serial
+     * @param SerialRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(User $user, Serial $serial, SerialRequest $request)
     {
@@ -103,8 +101,10 @@ class SerialController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param User $user
+     * @param Serial $serial
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user, Serial $serial)
     {

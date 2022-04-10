@@ -4,7 +4,6 @@ namespace App\Http\Resources\User;
 
 use App\Http\Resources\Currency\CurrencyResource;
 use App\Http\Resources\Role\RoleResource;
-use App\Http\Resources\File\FileCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -30,7 +29,6 @@ class UserResource extends JsonResource
             "role"  => new RoleResource($this->whenLoaded("role")),
             "currency" => new CurrencyResource($this->whenLoaded("currency")),
             "language" => new CurrencyResource($this->whenLoaded("language")),
-            "files" => new FileCollection($this->whenLoaded("files"))
         ];
     }
 }

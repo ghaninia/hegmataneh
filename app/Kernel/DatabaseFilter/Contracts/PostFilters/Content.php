@@ -2,7 +2,7 @@
 
 namespace App\Kernel\DatabaseFilter\Contracts\PostFilters;
 
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use App\Kernel\DatabaseFilter\Abstracts\QueryFilter;
 use App\Kernel\DatabaseFilter\Interfaces\FilterInterface;
 

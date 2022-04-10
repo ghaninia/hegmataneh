@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Basket;
 
 use App\Http\Resources\Basket\BasketResource;
-use App\Core\Interfaces\BasktableInterface;
+use App\Kernel\Basket\Interfaces\BasktableInterface;
 use App\Http\Requests\Basket\BasketStore;
 use App\Services\Authunticate\AuthService;
 use App\Services\Basket\BasketService;

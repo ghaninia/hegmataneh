@@ -5,9 +5,8 @@ namespace App\Services\Page;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
-use App\Core\Enums\EnumsPost;
-use App\Core\Enums\EnumsFileable;
-use App\Services\File\FileService;
+use App\Kernel\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsFileable;
 use App\Services\Slug\SlugService;
 use App\Services\Translation\TranslationService;
 
@@ -16,15 +15,14 @@ class PageService implements PageServiceInterface
 
     public function __construct(
         protected TranslationService $translationService,
-        protected SlugService $slugService,
-        protected FileService $fileService
+        protected SlugService $slugService
     ) {
     }
 
     /**
-     * لیست تمام برگه ها
+     * get list poges
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -36,10 +34,10 @@ class PageService implements PageServiceInterface
     }
 
     /**
-     * ساخت برگه جدید
+     * create or update page
      * @param User $user
      * @param array $data
-     * @param Post $post | null
+     * @param Post|null $page
      * @return Post
      */
     public function updateOrCreate(User $user, array $data, ?Post $page = null): Post
@@ -63,18 +61,13 @@ class PageService implements PageServiceInterface
 
         $this->slugService->sync($page, $translations);
 
-        ### تصویر شاخص
-        $this->fileService->sync($page, EnumsFileable::USAGE_THUMBNAIL,  $data["thumbnail"] ?? NULL);
-        ### تصویر کاور
-        $this->fileService->sync($page, EnumsFileable::USAGE_COVER,  $data["cover"] ?? NULL);
-
         return $page->load(["translations", "slugs", "files"]);
     }
 
     /**
-     * حذف برگه
+     * delete page
      * @param Post $page
-     * @return boolean
+     * @return mixed
      */
     public function delete(Post $page)
     {

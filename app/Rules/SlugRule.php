@@ -2,10 +2,10 @@
 
 namespace App\Rules;
 
+use App\Kernel\Slug\Interfaces\SlugableInterface;
 use App\Models\Slug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Validation\Rule;
-use App\Core\Interfaces\SlugableInterface;
 
 class SlugRule implements Rule
 {

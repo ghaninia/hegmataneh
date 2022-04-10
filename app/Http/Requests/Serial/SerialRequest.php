@@ -14,14 +14,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class SerialRequest extends FormRequest
 {
 
-    public $user, $serial;
-
-    public function prepareForValidation()
-    {
-        $this->user = $this->route("user");
-        $this->serial = $this->route("serial");
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      *

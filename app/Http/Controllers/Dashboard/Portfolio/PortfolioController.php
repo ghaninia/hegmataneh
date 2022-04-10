@@ -20,7 +20,7 @@ class PortfolioController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
     public function index(User $user, PortfolioIndex $request)
     {
@@ -51,8 +51,8 @@ class PortfolioController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  PortfolioRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(User $user, PortfolioRequest $request)
     {
@@ -82,12 +82,12 @@ class PortfolioController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * Update the specified resource in storage
      * @param User $user
-     * @param  \App\Models\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
+     * @param Portfolio $portfolio
+     * @param PortfolioRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(User $user, Portfolio $portfolio, PortfolioRequest $request)
     {
@@ -108,8 +108,10 @@ class PortfolioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param Portfolio $portfolio
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(User $user, Portfolio $portfolio)
     {

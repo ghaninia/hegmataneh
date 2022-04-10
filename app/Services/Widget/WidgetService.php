@@ -16,6 +16,7 @@ class WidgetService implements WidgetServiceInterface
 
     /**
      * @param User $user
+     * @return $this
      */
     public function setUser(User $user)
     {
@@ -24,7 +25,8 @@ class WidgetService implements WidgetServiceInterface
     }
 
     /**
-     * دریافت تمام فعالیت های در جدول مدل کاربر
+     * Get all the activities in the user model table
+     * @return Collection
      */
     public function statisticPosts(): Collection
     {
@@ -46,7 +48,8 @@ class WidgetService implements WidgetServiceInterface
     }
 
     /**
-     * دریافت تمام کاربرها
+     * get statistic Users
+     * @return Collection
      */
     public function statisticUsers(): Collection
     {
@@ -61,7 +64,8 @@ class WidgetService implements WidgetServiceInterface
     }
 
     /**
-     * دریافت آمار نقش ها
+     * get statistic Roles
+     * @return Collection
      */
     public function statisticRoles(): Collection
     {
@@ -79,7 +83,9 @@ class WidgetService implements WidgetServiceInterface
     }
 
     /**
-     * نمودار فعالیت جدول پست ها
+     * get chart posts
+     * @param array $filters
+     * @return mixed
      */
     public function chartPosts(array $filters = [])
     {
@@ -95,8 +101,11 @@ class WidgetService implements WidgetServiceInterface
             ->get();
     }
 
+
     /**
-     * نمودار فعالیت جدول بازدید ها
+     * get chart views
+     * @param array $filters
+     * @return mixed
      */
     public function chartViews(array $filters = [])
     {

@@ -12,17 +12,15 @@ use App\Http\Resources\Category\CategoryCollection;
 
 class CategoryController extends Controller
 {
-    protected $categoryService;
 
-    public function __construct(CategoryService $categoryService)
-    {
-        $this->categoryService = $categoryService;
-    }
+    public function __construct(
+        protected CategoryService $categoryService
+    ){}
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return CategoryIndex $request
+     * Display a listing of the resource
+     * @param CategoryIndex $request
+     * @return CategoryCollection
      */
     public function index(CategoryIndex $request)
     {
@@ -36,10 +34,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  CategoryStore $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param CategoryRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CategoryRequest $request)
     {
@@ -62,10 +59,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  Term $category
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param Term $category
+     * @return CategoryResource
      */
     public function show(Term $category)
     {
@@ -73,11 +69,10 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Term $category
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param Term $category
+     * @param CategoryRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Term $category, CategoryRequest $request)
     {
@@ -101,10 +96,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Term $category
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Term $category
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Term $category)
     {

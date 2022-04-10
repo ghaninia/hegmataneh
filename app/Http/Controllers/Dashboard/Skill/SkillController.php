@@ -13,16 +13,14 @@ use App\Http\Resources\Skill\SkillCollection;
 class SkillController extends Controller
 {
 
-    protected $skillService;
-    public function __construct(SkillService $skillService)
-    {
-        $this->skillService = $skillService;
-    }
+    public function __construct(
+        protected SkillService $skillService
+    ){}
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      * @param SkillIndex $request
-     * @return \Illuminate\Http\Response
+     * @return SkillCollection
      */
     public function index(SkillIndex $request)
     {
@@ -38,10 +36,9 @@ class SkillController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  SkillStore $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param SkillRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(SkillRequest $request)
     {
@@ -55,10 +52,9 @@ class SkillController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  Skill $skill
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param Skill $skill
+     * @return SkillResource
      */
     public function show(Skill $skill)
     {
@@ -66,11 +62,10 @@ class SkillController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  SkillUpdate  $request
-     * @param  Skill $skill
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param Skill $skill
+     * @param SkillRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Skill $skill, SkillRequest $request)
     {
@@ -87,10 +82,9 @@ class SkillController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Skill $skill
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Skill $skill
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Skill $skill)
     {

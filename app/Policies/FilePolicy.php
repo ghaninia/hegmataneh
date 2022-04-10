@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\File;
 use App\Models\User;
-use App\Core\Enums\EnumsFile;
+use App\Kernel\Enums\EnumsFile;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FilePolicy

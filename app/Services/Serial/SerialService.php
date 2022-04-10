@@ -25,9 +25,9 @@ class SerialService implements SerialServiceInterface
     }
 
     /**
-     * لیست تمام سریال ها
+     * get all serials
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -39,10 +39,11 @@ class SerialService implements SerialServiceInterface
     }
 
     /**
-     * ساخت سریال جدید
+     * create or update serial
      * @param User $user
      * @param array $data
-     * @return Serial
+     * @param Serial|null $serial
+     * @return mixed
      */
     public function updateOrCreate(User $user, array $data, Serial $serial = null)
     {
@@ -85,7 +86,7 @@ class SerialService implements SerialServiceInterface
     }
 
     /**
-     * اضافه کردن اپیزود به سریال
+     * Add episode to serial
      * @param Serial $serial
      * @param array $data
      */
@@ -117,7 +118,7 @@ class SerialService implements SerialServiceInterface
     }
 
     /**
-     * حذف سریال
+     * delete serial
      * @param Serial $serial
      * @return bool
      */

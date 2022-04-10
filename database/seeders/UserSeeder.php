@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Core\Enums\EnumsOption;
-use App\Models\Permission;
-use App\Models\Portfolio;
+use App\Models\File;
 use App\Models\Post;
 use App\Models\Role;
-use App\Models\Skill;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Vote;
+use App\Models\Skill;
+use App\Models\Portfolio;
+use App\Models\Permission;
+use App\Kernel\Enums\EnumsOption;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -25,21 +26,50 @@ class UserSeeder extends Seeder
         Role::factory()
             ->has(
                 User::factory()
+                    ->state([
+                        "email" => "info@ghaninia.ir"
+                    ])
                     ->has(
                         Portfolio::factory()
                     )
-                    // ->has(
-                    //     Post::factory()
-                    // )
-                    // ->has(
-                    //     View::factory()
-                    // )
-                    // ->has(
-                    //     Vote::factory()
-                    // )
-                    // ->has(
-                    //     Skill::factory()
-                    // )
+                    ->afterCreating(function ($user) {
+
+                        // File::factory()
+                        //     ->for($user)
+                        //     ->state([
+                        //         "id",
+                        //         "file_id",
+                        //         "user_id",
+                        //         "type",
+                        //         "name",
+                        //         "extension",
+                        //         "mime_type",
+                        //         "size",
+                        //     ])
+                        //     ->create();
+
+                        // app(FileServiceInterface::class)
+                        //     ->setUser($user)
+                        //     ->upload(
+                        //         File
+                        //     )
+
+                        Post::factory()
+                            ->for($user)
+                            ->has(
+                                View::factory()
+                                    ->for($user)
+                                    ->count(100)
+                            )
+                            ->count(100)
+                            ->create();
+                    })
+                // ->has(
+                //     Vote::factory()
+                // )
+                // ->has(
+                //     Skill::factory()
+                // )
             )
             ->create();
     }

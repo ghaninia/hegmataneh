@@ -11,13 +11,16 @@ use App\Services\Portfolio\PortfolioServiceInterface;
 class PortfolioService implements PortfolioServiceInterface
 {
 
+    /**
+     * @param TranslationService $translationService
+     */
     public function __construct(
         public TranslationService $translationService,
     ) {
     }
 
     /**
-     * لیست تمام نمونه کار ها
+     * list portfolios
      * @param array $filters
      * @return Paginator
      */
@@ -32,10 +35,11 @@ class PortfolioService implements PortfolioServiceInterface
 
 
     /**
-     * ویرایش و حذف نمونه کار
+     * create or update portfolio
      * @param User $user
      * @param array $data
      * @param Portfolio|null $portfolio
+     * @return mixed
      */
     public function updateOrCreate(User $user, array $data, Portfolio $portfolio = null)
     {
@@ -60,8 +64,9 @@ class PortfolioService implements PortfolioServiceInterface
     }
 
     /**
-     * حذف نمونه کار
+     * delete portfolio
      * @param Portfolio $portfolio
+     * @return bool|null
      */
     public function delete(Portfolio $portfolio)
     {

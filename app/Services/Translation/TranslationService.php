@@ -2,14 +2,17 @@
 
 namespace App\Services\Translation;
 
-use App\Core\Interfaces\TranslationableInterface;
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
 use App\Models\Translation;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 
 class TranslationService implements TranslationServiceInterface
 {
 
+    /**
+     * get all translation in local storage
+     * @return array
+     */
     public function getTranslations()
     {
         $translations = [];
@@ -44,10 +47,12 @@ class TranslationService implements TranslationServiceInterface
         return $translations;
     }
 
+
     /**
+     * rebuild translations for transable model
+     *
      * @param TranslationableInterface $model
      * @param array $translations
-     * @return void
      */
     public function sync(TranslationableInterface $model, array $translations): void
     {

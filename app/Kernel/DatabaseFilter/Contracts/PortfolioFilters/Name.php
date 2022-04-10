@@ -2,7 +2,7 @@
 
 namespace App\Kernel\DatabaseFilter\Contracts\PortfolioFilters;
 
-use App\Core\Enums\EnumsPortfolio;
+use App\Kernel\Enums\EnumsPortfolio;
 use App\Kernel\DatabaseFilter\Abstracts\QueryFilter;
 use App\Kernel\DatabaseFilter\Interfaces\FilterInterface;
 

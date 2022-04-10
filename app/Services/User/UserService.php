@@ -5,7 +5,7 @@ namespace App\Services\User;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
-use App\Core\Enums\EnumsUser;
+use App\Kernel\Enums\EnumsUser;
 use Illuminate\Support\Collection;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -15,8 +15,9 @@ class UserService implements UserServiceInterface
 {
 
     /**
-     * ساخت و ویرایش کاربر
+     * create or update user
      * @param array $data
+     * @param User|null $user
      * @return User
      */
     public function updateOrCreate(array $data, User $user = null): User
@@ -48,9 +49,9 @@ class UserService implements UserServiceInterface
 
 
     /**
-     * حذف امن کاربر :)
+     * delete user
      * @param User $user
-     * @return boolean
+     * @return bool
      */
     public function delete(User $user): bool
     {
@@ -58,9 +59,8 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     *
+     * send verify notification
      * @param User $user
-     * @return void
      */
     public function sendVerifyNotification(User $user): void
     {
@@ -69,11 +69,10 @@ class UserService implements UserServiceInterface
         );
     }
 
-
     /**
-     * تایید حساب کاربری
+     * verify new user
      * @param string $token
-     * @return ?User $user
+     * @return User|null
      */
     public function verify(string $token): ?User
     {
@@ -92,7 +91,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * ساخت توکن جدید
+     * generate remember token
      * @return string
      */
     public function rememberTokenGenerate(): string
@@ -101,9 +100,9 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * لیست تمام کاربران
+     * get all users list
      * @param array $filters
-     * @return Paginator
+     * @return Paginator|Collection
      */
     public function list(array $filters): Paginator|Collection
     {

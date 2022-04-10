@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use App\Core\Enums\EnumsUser;
+use App\Kernel\Enums\EnumsUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory

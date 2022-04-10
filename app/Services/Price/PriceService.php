@@ -8,7 +8,11 @@ use App\Services\Price\PriceServiceInterface;
 
 class PriceService implements PriceServiceInterface
 {
-
+    /**
+     * Build prices for priceables
+     * @param Model $model
+     * @param array $currencies
+     */
     public function create(Model $model, array $currencies) : void
     {
         array_walk($currencies, function ($data, $currencyID) use ($model) {

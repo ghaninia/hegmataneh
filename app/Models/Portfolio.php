@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsPortfolio;
+use App\Kernel\Enums\EnumsPortfolio;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
+use App\Kernel\Translation\Traits\HasTranslationTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\HasTranslationTrait;
-use App\Core\Interfaces\TranslationableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Portfolio extends Model implements TranslationableInterface

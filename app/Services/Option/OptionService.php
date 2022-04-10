@@ -7,12 +7,15 @@ use App\Services\Option\OptionServiceInterface;
 
 class OptionService implements OptionServiceInterface
 {
+
     protected static $instances;
 
-    private function __construct()
-    {
-    }
+    private function __construct(){}
 
+    /**
+     * singleton instance
+     * @return static
+     */
     public static function getInstance(): self
     {
         $cls = new self();
@@ -23,8 +26,8 @@ class OptionService implements OptionServiceInterface
     }
 
     /**
-     * دریافت اطلاعات از دیتابیس
-     * @return mixed
+     * Get information from the database
+     * @return array
      */
     public function getRecordesInDatabase(): array
     {
@@ -36,9 +39,9 @@ class OptionService implements OptionServiceInterface
 
 
     /**
+     * get field in cache or database
      * @param string $key
-     * @param $default
-     * @return array|string
+     * @return mixed|null
      */
     public function get(string $key)
     {
@@ -48,8 +51,9 @@ class OptionService implements OptionServiceInterface
     }
 
     /**
+     * update option field
      * @param string $key
-     * @param mixed $value
+     * @param $value
      * @return Option
      */
     public function put(string $key,  $value): Option

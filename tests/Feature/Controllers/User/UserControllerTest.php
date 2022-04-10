@@ -15,6 +15,7 @@ class UserControllerTest extends TestCase
     {
         parent::setUp();
         $this->userBuilder = new UserBuilder;
+        $this->signIn() ;
     }
 
     public function testGetAllSystemUsersWithFilters()
@@ -35,6 +36,7 @@ class UserControllerTest extends TestCase
                 "just_trashed" => false
             ])
         );
+
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonCount(1, "data");
@@ -61,8 +63,14 @@ class UserControllerTest extends TestCase
     {
         $this->userBuilder->create(true, [], $total = random_int(1, 10));
         $response = $this->getJson(route("api.v1.user.index"));
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonCount($total, "data");
+
+        $response
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson([
+                "meta" => [
+                    "total" => $total + 1 // 1 is auth user
+                ]
+            ]);
     }
 
     public function testCreateNewUserOnSystem()

@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use App\Kernel\Model\Interfaces\ModelableInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Gateway extends Model
+class Gateway extends Model implements ModelableInterface
 {
     use HasFactory, HasFilterTrait;
 

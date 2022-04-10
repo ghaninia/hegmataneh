@@ -2,7 +2,8 @@
 
 namespace App\Services\Slug;
 
-use App\Core\Interfaces\SlugableInterface;
+
+use App\Kernel\Slug\Interfaces\SlugableInterface;
 
 interface SlugServiceInterface
 {

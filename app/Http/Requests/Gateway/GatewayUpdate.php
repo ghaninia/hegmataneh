@@ -2,20 +2,11 @@
 
 namespace App\Http\Requests\Gateway;
 
-use App\Core\Enums\EnumsOption;
-use App\Core\Enums\EnumsSystem;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class GatewayUpdate extends FormRequest
 {
-
-    protected $gateway;
-
-    public function prepareForValidation()
-    {
-        $this->gateway = $this->route(EnumsSystem::WALLCARD_GATEWAY);
-    }
 
     /**
      * Determine if the user is authorized to make this request.

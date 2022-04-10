@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard\Post;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Services\Tag\TagService;
 use App\Services\Post\PostService;
 use App\Http\Controllers\Controller;
@@ -17,23 +16,19 @@ use App\Http\Resources\Post\PostCollection;
 
 class PostController extends Controller
 {
-    protected $postService, $categoryService, $tagService;
 
     public function __construct(
-        PostService $postService,
-        CategoryService $categoryService,
-        TagService $tagService
+        protected PostService $postService,
+        protected CategoryService $categoryService,
+        protected TagService $tagService
     ) {
-        $this->postService = $postService;
-        $this->categoryService = $categoryService;
-        $this->tagService = $tagService;
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      * @param User $user
      * @param PostIndex $request
-     * @return \Illuminate\Http\Response
+     * @return PostCollection
      */
     public function index(User $user, PostIndex $request)
     {
@@ -58,10 +53,10 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
      * @param User $user
      * @param PostStore $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(User $user, PostStore $request)
     {
@@ -78,10 +73,10 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param User $user
+     * @param Post $post
+     * @return PostResource
      */
     public function show(User $user, Post $post)
     {
@@ -93,12 +88,11 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  Post $post
-     * @param  User $user
-     * @param  PostUpdate $request
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param User $user
+     * @param Post $post
+     * @param PostUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(User $user, Post $post, PostUpdate $request)
     {
@@ -117,11 +111,10 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  User $user
-     * @param  Post $post
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param User $user
+     * @param Post $post
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user, Post $post)
     {
@@ -133,10 +126,11 @@ class PostController extends Controller
     }
 
     /**
-     * بازگردانی پست حذف شده
+     * restore single post
+     *
      * @param User $user
      * @param Post $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function restore(User $user, Post $post)
     {
@@ -147,10 +141,10 @@ class PostController extends Controller
     }
 
     /**
-     * حذف پست بصورت کامل
+     * force delete single post
      * @param User $user
      * @param Post $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(User $user, Post $post)
     {

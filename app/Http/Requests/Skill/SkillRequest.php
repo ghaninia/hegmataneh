@@ -4,15 +4,13 @@ namespace App\Http\Requests\Skill;
 
 use App\Models\Skill;
 use App\Rules\SlugRule;
-use App\Core\Enums\EnumsFile;
+use App\Kernel\Enums\EnumsFile;
 use App\Rules\FileFilterRule;
 use App\Rules\TranslationableRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SkillRequest extends FormRequest
 {
-
-    protected $skill;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +20,6 @@ class SkillRequest extends FormRequest
     public function authorize()
     {
         return true;
-    }
-
-    public function prepareForValidation()
-    {
-        $this->skill = $this->route("skill");
     }
 
     /**

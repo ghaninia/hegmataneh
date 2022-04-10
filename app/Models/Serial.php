@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Core\Enums\EnumsTerm;
-use App\Core\Traits\HasSlugTrait;
+use App\Kernel\Category\Interfaces\CategoryableInterface;
+use App\Kernel\Enums\EnumsTerm;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use App\Kernel\Slug\Interfaces\SlugableInterface;
+use App\Kernel\Slug\Traits\HasSlugTrait;
+use App\Kernel\Tag\Interfaces\TagableInterface;
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
+use App\Kernel\Translation\Traits\HasTranslationTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\HasTranslationTrait;
-use App\Core\Interfaces\TagableInterface;
-use App\Core\Interfaces\SlugableInterface;
-use App\Core\Interfaces\BasktableInterface;
-use App\Core\Interfaces\CategoryableInterface;
-use App\Core\Interfaces\TranslationableInterface;
+use App\Kernel\Basket\Interfaces\BasktableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Serial extends Model implements

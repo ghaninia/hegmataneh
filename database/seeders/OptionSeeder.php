@@ -5,12 +5,12 @@ namespace Database\Seeders;
 use App\Models\Option;
 use App\Models\Currency;
 use App\Models\Language;
-use App\Core\Enums\EnumsPost;
-use App\Core\Enums\EnumsSort;
-use App\Core\Enums\EnumsOption;
-use App\Core\Enums\EnumsSystem;
+use App\Kernel\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsSort;
+use App\Kernel\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsSystem;
 use Illuminate\Database\Seeder;
-use App\Core\Enums\EnumsAuthunticate;
+use App\Kernel\Enums\EnumsAuthunticate;
 
 class OptionSeeder extends Seeder
 {

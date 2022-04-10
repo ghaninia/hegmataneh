@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\User\Detail;
 
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 

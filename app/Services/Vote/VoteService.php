@@ -2,18 +2,17 @@
 
 namespace App\Services\Vote;
 
+use App\Kernel\Vote\Interfaces\VoteableInterface;
 use App\Models\User;
 use App\Models\Vote;
-use App\Core\Interfaces\VoteableInterface;
-use App\Services\Vote\VoteServiceInterface;
 
 class VoteService implements VoteServiceInterface
 {
 
     /**
-     * لیست تمام امتیازبندهی
+     * get votes list
      * @param array $filters
-     * @return Paginator
+     * @return mixed
      */
     public function list(array $filters)
     {
@@ -24,12 +23,11 @@ class VoteService implements VoteServiceInterface
     }
 
     /**
-     * ثبت امتیاز
+     * create new vote for voteable model
      * @param VoteableInterface $voteable
      * @param string $ipv4
      * @param int $vote
-     * @param User $user
-     * @return void
+     * @param User|null $user
      */
     public function create(
         VoteableInterface $voteable,

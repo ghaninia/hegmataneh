@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Option;
 
 use App\Models\Option;
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsOption;
 use App\Http\Controllers\Controller;
 use App\Services\Option\OptionService;
 use App\Http\Requests\Option\OptionUpdate;
@@ -20,7 +20,7 @@ class OptionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
     public function index()
     {
@@ -33,7 +33,7 @@ class OptionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  OptionUpdate $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(OptionUpdate $request)
     {

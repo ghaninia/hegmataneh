@@ -4,12 +4,12 @@ namespace App\Http\Requests\Option;
 
 use App\Models\Post;
 use App\Models\Comment;
-use App\Core\Enums\EnumsPost;
-use App\Core\Enums\EnumsSort;
-use App\Core\Enums\EnumsSystem;
-use App\Core\Enums\EnumsOption;
+use App\Kernel\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsSort;
+use App\Kernel\Enums\EnumsSystem;
+use App\Kernel\Enums\EnumsOption;
 use Illuminate\Validation\Rule;
-use App\Core\Enums\EnumsAuthunticate;
+use App\Kernel\Enums\EnumsAuthunticate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OptionUpdate extends FormRequest

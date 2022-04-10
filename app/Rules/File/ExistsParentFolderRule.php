@@ -4,7 +4,7 @@ namespace App\Rules\File;
 
 use App\Models\File;
 use App\Models\User;
-use App\Core\Enums\EnumsFile;
+use App\Kernel\Enums\EnumsFile;
 use Illuminate\Contracts\Validation\Rule;
 
 class ExistsParentFolderRule implements Rule

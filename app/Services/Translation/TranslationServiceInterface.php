@@ -2,7 +2,8 @@
 
 namespace App\Services\Translation;
 
-use App\Core\Interfaces\TranslationableInterface;
+
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
 
 interface TranslationServiceInterface
 {

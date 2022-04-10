@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Enums\EnumsFile;
+use App\Kernel\Enums\EnumsFile;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,7 +19,6 @@ class CreateFilesTable extends Migration
             $table->string("extension")->nullable();
             $table->string("mime_type")->nullable();
             $table->integer("size")->default(0);
-
             $table->timestamps();
         });
 

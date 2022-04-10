@@ -14,19 +14,19 @@ use App\Http\Resources\Product\ProductCollection;
 
 class ProductController extends Controller
 {
-    protected
-        $productService;
 
-    public function __construct(ProductService $productService)
-    {
-        $this->productService = $productService;
+    public function __construct(
+        protected ProductService $productService
+    ){
     }
 
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      *
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param ProductIndex $request
+     * @return ProductCollection
      */
     public function index(User $user, ProductIndex $request)
     {
@@ -53,11 +53,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
      *
-     * @param  User $user
-     * @param  ProductStore $request
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param ProductStore $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(User $user,  ProductStore $request)
     {
@@ -76,11 +76,10 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  User $user
-     * @param  Post $product
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param User $user
+     * @param Post $product
+     * @return ProductResource
      */
     public function show(User $user, Post $product)
     {
@@ -90,11 +89,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param User $user
+     * @param Post $product
+     * @param ProductUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(User $user, Post $product, ProductUpdate $request)
     {
@@ -116,10 +115,10 @@ class ProductController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
-     * @param  User $user
-     * @param  Post $product
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param User $user
+     * @param Post $product
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user, Post $product)
     {
@@ -131,10 +130,11 @@ class ProductController extends Controller
     }
 
     /**
-     * بازگردانی محصولات حذف شده
+     * restore single product
+     *
      * @param User $user
      * @param Post $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function restore(User $user, Post $product)
     {
@@ -146,10 +146,11 @@ class ProductController extends Controller
     }
 
     /**
-     * حذف محصولات بصورت کامل
+     * force delete single product
+     *
      * @param User $user
      * @param Post $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(User $user, Post $product)
     {

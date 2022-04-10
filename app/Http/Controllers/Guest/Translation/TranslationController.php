@@ -13,6 +13,11 @@ class TranslationController extends Controller
     {
     }
 
+    /**
+     * get translations files
+     * @param Request $request
+     * @return array
+     */
     public function __invoke(Request $request)
     {
         return $this->translationService->getTranslations();

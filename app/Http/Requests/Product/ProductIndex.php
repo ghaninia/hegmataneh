@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
-use App\Core\Enums\EnumsPost;
+use App\Kernel\Enums\EnumsPost;
 use App\Rules\FilterRangeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

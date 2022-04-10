@@ -19,9 +19,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return RoleCollection
      */
     public function index()
     {
@@ -31,10 +29,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param RoleStore $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(RoleStore $request)
     {
@@ -49,10 +46,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param Role $role
+     * @return RoleResource
      */
     public function show(Role $role)
     {
@@ -60,11 +56,10 @@ class RoleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param RoleUpdate $request
+     * Update the specified resource in storage
      * @param Role $role
-     * @return \Illuminate\Http\Response
+     * @param RoleUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Role $role  ,RoleUpdate $request)
     {
@@ -81,10 +76,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Role $role
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Role $role)
     {
