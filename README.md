@@ -5,45 +5,42 @@
 
 </div>
 
-<div dir="rtl" align="right">
 
 <h1 align="center">HEGMATANEH</h1>
 
-<h2>وب سرویس هگمتانه چیست ؟</h2>
-<p>وب سرویس هگمتانه یک وب سرویس امن برای افرادی هست که قصد دارند وبلاگ  و یا فروشگاه خودشون رو با هر سلیقه ای راه اندازی کنند و توسعه دهند ولی وقت کافی برای پیاده سازی وب سرویس مورد نظر را ندارند این سرویس متشکل از ویژگی های است که کد نویسی و توسعه را آسان مینماید.</p>
+<h2>What is Hegmataneh Web Service?</h2>
+<p>Hegmataneh Web Service is a secure web service for people who want to start and develop their own blog or store with any taste, but do not have enough time to implement the desired web service. This service consists of features that code Makes writing and development easy.</p>
 
-## ویژگی ها
-- ✅احراز هویت
-- ✅مدیریت تنظیمات
-- ✅مدیریت زبان ها
-- ✅مدیریت واحدپولی
-- ✅مدیریت سطح دسترسی نقش ها
-- ✅مدیریت کاربران
-- ✅مدیریت برچسب ها
-- ✅مدیریت دسته بندی ها
-- ✅مدیریت مهارت ها
-- ✅مدیریت فایل ها
-- ✅مدیریت برگه ها
-- ✅مدیریت پست ها
-- ✅مدیریت محصولات
-- ✅مدیریت سریال ها
-- ✅مدیریت درگاه ها
-- ❌مدیریت سفارشات و فروش
-- ✅مدیریت نمونه کارها
-- ❌مدیریت نظرات
-- ❌مدیریت نقل و قول های مشتریان
-- ❌مدیریت فهرست ها
-- ❌مدیریت اسلایدر
-- ❌مدیریت تماسها
-- ✅مدیریت سبدخرید
-- ✅مدیریت ابزارهای گزارش
+##Features
+- ✅Authentication
+- ✅Settings 
+- ✅Language 
+- ✅Currency 
+- ✅Manage the access level of roles
+- ✅User 
+- ✅Tags 
+- ✅Category 
+- ✅Skills 
+- ✅File 
+- ✅Pages 
+- ✅Post 
+- ✅Product 
+- ✅Series 
+- ✅Gateway 
+- ❌Order and sales
+- ✅Portfolio 
+- ❌Comments
+- ❌Manage customer quotes
+- ❌Menu
+- ❌Slider
+- ❌Contact System
+- ✅Shopping Cart
+- ✅Manage reporting tools
 
 <br />
 
-## نصب
-این ریپوزیتوری را دانلود و یا clone نمایید سپس به مسیر پوشه hegmataneh رفته و کامندلاین را باز نمایید و composer را نصب نمایید تا پکیج های مربوطه نصب گردد.
-</div>
-
+## Installation
+Download or clone this repository, then go to the hegmataneh folder and open the command line and install the composer to install the relevant packages.
 ```php
 git clone https://github.com/ghaninia/hegmataneh.git
 ```
@@ -52,7 +49,7 @@ git clone https://github.com/ghaninia/hegmataneh.git
 composer install
 ```
 
-<p dir="rtl" align="right">بعد از نصب باید کانفیگ مربوطه دیتابیس را در انجام دهیم کافی است فایل .env را ویرایش نمایید و بعد از آن میتوانید دیتابیس را migrate و داده های فیک را به دیتابیس بیافزایید.</p>
+After installation, we need to configure the database. Just edit the .env file, and then you can migrate the database and add fake data to the database.
 
 ```php
 php artisan migrate
@@ -62,22 +59,20 @@ php artisan migrate
 php artisan db:seed
 ```
 
-<p dir="rtl" align="right">
-    در صورت بررسی صحت نوع عملکرد, تست سیستم را اجرا نمایید
-</p>
+If the type of operation is checked, run the system test
 
 ```php
 php artisan test
 ```
 
 <a href="https://documenter.getpostman.com/view/14577533/TzmBCtDy#7ee5cd45-65dd-4666-a9d6-b7d498982d75" target="_blank">
-داکیومنت وب سرویس
+Document On Postman
 </a>
 |
 <a href="https://trello.com/b/4HK9UyyD/amen" target="_blank">
-اسکروم برد
+trello board
 </a>
 |
 <a href="https://hegmat.ir" target="_blank">
-نمونه آنلاین
+Online
 </a>
