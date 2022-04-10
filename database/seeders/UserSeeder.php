@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Currency;
 use App\Models\File;
+use App\Models\Language;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\User;
@@ -29,6 +31,8 @@ class UserSeeder extends Seeder
                     ->state([
                         "email" => "info@ghaninia.ir"
                     ])
+                    ->for(Language::factory()->create())
+                    ->for(Currency::factory()->create())
                     ->has(
                         Portfolio::factory()
                     )

@@ -71,8 +71,8 @@ class ProfileControllerTest extends TestCase
 
         unset($user->status , $user->remember_token ) ;
 
-        $response = $this->putJson(
-            route("api.v1.profile.update") ,
+        $response = $this->postJson(
+            route("api.v1.profile.store") ,
             array_merge(
                 $user->toArray() ,
                 [

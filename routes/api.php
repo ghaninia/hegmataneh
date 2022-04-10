@@ -76,7 +76,7 @@ Route::group([
 
         Route::prefix("profile")->name("profile.")->group(function(){
             Route::get("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "index"] )->name("index");
-            Route::put("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "update"] )->name("update");
+            Route::post("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "store"] )->name("store");
         });
 
         ##############

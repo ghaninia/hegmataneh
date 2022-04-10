@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Profile;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Profile\ProfileUpdate;
+use App\Http\Requests\Profile\ProfileStore;
 use App\Http\Resources\User\UserResource;
 use App\Services\Authunticate\AuthServiceInterface;
 use App\Services\User\UserServiceInterface;
@@ -33,10 +33,10 @@ class ProfileController extends Controller
 
     /**
      * edit auth user
-     * @param ProfileUpdate $request
+     * @param ProfileStore $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(ProfileUpdate $request)
+    public function store(ProfileStore $request)
     {
         $user = $this->userService->updateOrCreate(
             $request->only([

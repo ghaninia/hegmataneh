@@ -9,7 +9,7 @@ use App\Services\Authunticate\AuthServiceInterface;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdate extends FormRequest
+class ProfileStore extends FormRequest
 {
 
     public function __construct(
