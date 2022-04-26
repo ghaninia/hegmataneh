@@ -190,6 +190,7 @@ Route::group([
         Route::prefix("widget")->name("widget.")->group(function () {
             Route::name("statistic.")->prefix("statistic")->group(function () {
                 Route::get("posts", [WidgetController::class, "statisticPosts"])->name("posts");
+                Route::get("users", [WidgetController::class, "statisticUsers"])->name("users");
             });
         });
     });
