@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Dashboard\Widget;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Widget\StatisticPostsRequest;
-use App\Services\Authunticate\AuthServiceInterface;
+use App\Http\Requests\Widget\StatisticRequest;
 use App\Services\Widget\WidgetServiceInterface;
+use App\Services\Authunticate\AuthServiceInterface;
 
 class WidgetController extends Controller
 {
@@ -21,7 +21,7 @@ class WidgetController extends Controller
      * @param StatisticPostsRequest $request
      * @return mixed
      */
-    public function statisticPosts(StatisticPostsRequest $request)
+    public function statisticPosts(StatisticRequest $request)
     {
 
         $statistics = $this->widgetService
@@ -29,6 +29,23 @@ class WidgetController extends Controller
                 $this->authService->user()
             )
             ->statisticPosts();
+
+        return $statistics;
+    }
+
+    /**
+     * show post statistic form user
+     * @param StatisticPostsRequest $request
+     * @return mixed
+     */
+    public function statisticUsers(StatisticRequest $request)
+    {
+
+        $statistics = $this->widgetService
+            ->setUser(
+                $this->authService->user()
+            )
+            ->statisticUsers();
 
         return $statistics;
     }

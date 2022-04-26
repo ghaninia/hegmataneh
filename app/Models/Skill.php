@@ -3,20 +3,18 @@
 namespace App\Models;
 
 use App\Kernel\Enums\EnumsSkill;
-use App\Core\Traits\HasFileTrait;
-use App\Kernel\Slug\Interfaces\SlugableInterface;
-use App\Kernel\Slug\Traits\HasSlugTrait;
-use App\Kernel\Translation\Interfaces\TranslationableInterface;
-use App\Kernel\Translation\Traits\HasTranslationTrait;
-use App\Kernel\UploadCenter\Interfaces\FileableInterface;
 use Illuminate\Database\Eloquent\Model;
+use App\Kernel\Slug\Traits\HasSlugTrait;
+use App\Kernel\Slug\Interfaces\SlugableInterface;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use App\Kernel\Translation\Traits\HasTranslationTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Kernel\Translation\Interfaces\TranslationableInterface;
 
-class Skill extends Model implements SlugableInterface, TranslationableInterface, FileableInterface
+class Skill extends Model implements SlugableInterface, TranslationableInterface
 {
 
-    use HasFilterTrait, HasFactory, HasTranslationTrait, HasSlugTrait, HasFileTrait;
+    use HasFilterTrait, HasFactory, HasTranslationTrait, HasSlugTrait;
 
     protected $fillable = [
         'icon'
@@ -53,5 +51,4 @@ class Skill extends Model implements SlugableInterface, TranslationableInterface
     {
         return $this->morphedByMany(User::class, "skillable");
     }
-
 }

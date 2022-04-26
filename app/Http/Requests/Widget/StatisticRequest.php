@@ -4,7 +4,7 @@ namespace App\Http\Requests\Widget;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StatisticPostsRequest extends FormRequest
+class StatisticRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

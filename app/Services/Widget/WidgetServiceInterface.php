@@ -9,4 +9,5 @@ interface WidgetServiceInterface
 {
     public function setUser(User $user) ;
     public function statisticPosts(): Collection ;
+    public function statisticUsers(): Collection ;
 }

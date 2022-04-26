@@ -36,6 +36,7 @@
 - ❌Contact System
 - ✅Shopping Cart
 - ✅Manage reporting tools
+- ✅User Profile 
 
 <br />
 
