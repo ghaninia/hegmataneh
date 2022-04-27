@@ -35,7 +35,11 @@ return [
             "setting" => "تنظیمات",
             "password" => "گذرواژه",
             "signout" => "خروج",
-        ]
+        ] ,
+        "shopping" => [
+            "label" => "فروشگاه" ,
+            "products" => "محصولات" ,
+        ] ,
     ],
 
 
