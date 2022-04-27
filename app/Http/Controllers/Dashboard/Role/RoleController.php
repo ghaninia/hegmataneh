@@ -3,22 +3,21 @@
 namespace App\Http\Controllers\Dashboard\Role;
 
 use App\Models\Role;
-use App\Services\Role\RoleService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStore;
 use App\Http\Requests\Role\RoleUpdate;
 use App\Http\Resources\Role\RoleResource;
 use App\Http\Resources\Role\RoleCollection;
+use App\Services\Role\RoleServiceInterface;
 
 class RoleController extends Controller
 {
-    protected $roleService;
-    public function __construct(RoleService $roleService)
-    {
-        $this->roleService = $roleService;
-    }
+    public function __construct(
+        protected RoleServiceInterface $roleService
+    ){}
 
     /**
+     * get all roles
      * @return RoleCollection
      */
     public function index()

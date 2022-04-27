@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Dashboard\Skill;
 
 use App\Models\Skill;
 use App\Http\Controllers\Controller;
-use App\Services\Skill\SkillService;
 use App\Http\Requests\Skill\SkillIndex;
 use App\Http\Requests\Skill\SkillRequest;
 use App\Http\Resources\Skill\SkillResource;
 use App\Http\Resources\Skill\SkillCollection;
+use App\Services\Skill\SkillServiceInterface;
 
 class SkillController extends Controller
 {
 
     public function __construct(
-        protected SkillService $skillService
+        protected SkillServiceInterface $skillService
     ){}
 
     /**

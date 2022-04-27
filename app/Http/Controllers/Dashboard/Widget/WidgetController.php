@@ -18,7 +18,7 @@ class WidgetController extends Controller
 
     /**
      * shpw post statistic form user
-     * @param StatisticPostsRequest $request
+     * @param StatisticRequest $request
      * @return mixed
      */
     public function statisticPosts(StatisticRequest $request)
@@ -35,7 +35,7 @@ class WidgetController extends Controller
 
     /**
      * show post statistic form user
-     * @param StatisticPostsRequest $request
+     * @param StatisticRequest $request
      * @return mixed
      */
     public function statisticUsers(StatisticRequest $request)

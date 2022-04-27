@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Dashboard\Term;
 
 use App\Models\Term;
 use App\Http\Controllers\Controller;
-use App\Services\Category\CategoryService;
 use App\Http\Requests\Category\CategoryIndex;
 use App\Http\Requests\Category\CategoryRequest;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Category\CategoryCollection;
+use App\Services\Category\CategoryServiceInterface;
 
 class CategoryController extends Controller
 {
 
     public function __construct(
-        protected CategoryService $categoryService
+        protected CategoryServiceInterface $categoryService
     ){}
 
     /**

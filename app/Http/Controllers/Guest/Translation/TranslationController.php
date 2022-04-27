@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Guest\Translation;
 
 use App\Http\Controllers\Controller;
-use App\Services\Translation\TranslationService;
+use App\Services\Translation\TranslationServiceInterface;
 use Illuminate\Http\Request;
 
 class TranslationController extends Controller
 {
 
-    public function __construct(public TranslationService $translationService)
+    public function __construct(
+        public TranslationServiceInterface $translationService
+    )
     {
     }
 

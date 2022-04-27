@@ -5,22 +5,24 @@ namespace App\Http\Controllers\Dashboard\Portfolio;
 use App\Models\User;
 use App\Models\Portfolio;
 use App\Http\Controllers\Controller;
-use App\Services\Portfolio\PortfolioService;
 use App\Http\Requests\Portfolio\PortfolioIndex;
 use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Http\Resources\Portfolio\PortfolioResource;
 use App\Http\Resources\Portfolio\PortfolioCollection;
+use App\Services\Portfolio\PortfolioServiceInterface;
 
 class PortfolioController extends Controller
 {
 
-    public function __construct(public PortfolioService $portfolioService)
-    {
-    }
+    public function __construct(
+        public PortfolioServiceInterface $portfolioService
+    ){}
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\ResourceCollection
+     * Display a listing of the resource
+     * @param User $user
+     * @param PortfolioIndex $request
+     * @return PortfolioCollection
      */
     public function index(User $user, PortfolioIndex $request)
     {
@@ -49,9 +51,9 @@ class PortfolioController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  PortfolioRequest  $request
+     * Store a newly created resource in storage
+     * @param User $user
+     * @param PortfolioRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(User $user, PortfolioRequest $request)
@@ -68,11 +70,11 @@ class PortfolioController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Display the specified resource
      * @param User $user
-     * @param  \App\Models\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
+     * @param Portfolio $portfolio
+     * @return PortfolioResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(User $user, Portfolio $portfolio)
     {
@@ -106,8 +108,7 @@ class PortfolioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Remove the specified resource from storage
      * @param User $user
      * @param Portfolio $portfolio
      * @return \Illuminate\Http\JsonResponse

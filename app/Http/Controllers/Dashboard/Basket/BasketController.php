@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Dashboard\Basket;
 use App\Http\Resources\Basket\BasketResource;
 use App\Kernel\Basket\Interfaces\BasktableInterface;
 use App\Http\Requests\Basket\BasketStore;
-use App\Services\Authunticate\AuthService;
-use App\Services\Basket\BasketService;
+use App\Services\Authunticate\AuthServiceInterface;
 use App\Http\Controllers\Controller;
+use App\Services\Basket\BasketServiceInterface;
 
 class BasketController extends Controller
 {
-    protected $authService , $basketService;
+    public function __construct(
+        protected  AuthServiceInterface  $authService ,
+        protected  BasketServiceInterface $basketService
+    ){}
 
-    public function __construct(AuthService  $authService , BasketService $basketService)
-    {
-        $this->authService = $authService ;
-        $this->basketService = $basketService ;
-    }
-
+    /**
+     * @param BasktableInterface $model
+     * @param BasketStore $request
+     * @return BasketResource
+     */
     public  function append(BasktableInterface $model , BasketStore $request)
     {
         $user = $this->authService->user()  ;

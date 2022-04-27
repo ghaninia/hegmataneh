@@ -23,7 +23,6 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the resource
-     *
      * @param User $user
      * @param ProductIndex $request
      * @return ProductCollection
@@ -54,7 +53,6 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage
-     *
      * @param User $user
      * @param ProductStore $request
      * @return \Illuminate\Http\JsonResponse
@@ -131,7 +129,6 @@ class ProductController extends Controller
 
     /**
      * restore single product
-     *
      * @param User $user
      * @param Post $product
      * @return \Illuminate\Http\JsonResponse
@@ -147,7 +144,6 @@ class ProductController extends Controller
 
     /**
      * force delete single product
-     *
      * @param User $user
      * @param Post $product
      * @return \Illuminate\Http\JsonResponse

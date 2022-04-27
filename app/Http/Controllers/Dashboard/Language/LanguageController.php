@@ -4,30 +4,27 @@ namespace App\Http\Controllers\Dashboard\Language;
 
 use App\Models\Language;
 use App\Http\Controllers\Controller;
-use App\Services\Language\LanguageService;
 use App\Http\Requests\Language\LanguageIndex;
 use App\Http\Requests\Language\LanguageStore;
 use App\Http\Requests\Language\LanguageUpdate;
 use App\Http\Resources\Language\LanguageResource;
 use App\Http\Resources\Language\LanguageCollection;
+use App\Services\Language\LanguageServiceInterface;
 
 class LanguageController extends Controller
 {
-    protected $languageService;
 
-    public function __construct(LanguageService $languageService)
-    {
-        $this->languageService = $languageService;
-    }
+    public function __construct(
+        protected LanguageServiceInterface $languageService
+    ){}
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      * @param LanguageIndex $request
-     * @return \Illuminate\Http\Response
+     * @return LanguageCollection
      */
     public function index(LanguageIndex $request)
     {
-
         $languages = $this->languageService->list(
             $request->only([
                 "name",
@@ -41,10 +38,9 @@ class LanguageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  languageStore $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage
+     * @param LanguageStore $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(LanguageStore $request)
     {
@@ -62,10 +58,9 @@ class LanguageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  Language $language
-     * @return \Illuminate\Http\Response
+     * Display the specified resource
+     * @param Language $language
+     * @return LanguageResource
      */
     public function show(Language $language)
     {
@@ -73,10 +68,10 @@ class LanguageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param  Language $language
-     * @param  LanguageUpdate $request
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param Language $language
+     * @param LanguageUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Language $language, LanguageUpdate $request)
     {
@@ -97,10 +92,9 @@ class LanguageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Language $language
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Language $language
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Language $language)
     {

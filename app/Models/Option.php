@@ -9,16 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Option extends Model
 {
-    use HasFactory , HasFilterTrait ;
+    use HasFactory, HasFilterTrait;
 
     public $fillable = [
         "key",
+        "type",
         "default",
         "value"
     ];
 
     protected $casts = [
-        "default" => SerializeCast::class  ,
+        "default" => SerializeCast::class,
         "value" => SerializeCast::class,
     ];
 

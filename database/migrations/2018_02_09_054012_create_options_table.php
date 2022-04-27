@@ -14,10 +14,11 @@ class CreateOptionsTable extends Migration
     public function up()
     {
         Schema::create('options', function (Blueprint $table) {
-            $table->id() ;
-            $table->string("key" , 100)->unique() ;
-            $table->text("value")->nullable() ;
-            $table->text("default")->nullable() ;
+            $table->id();
+            $table->string("key", 100)->unique();
+            $table->string("type")->nullable();
+            $table->text("value")->nullable();
+            $table->text("default")->nullable();
         });
     }
 

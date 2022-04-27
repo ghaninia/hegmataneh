@@ -13,17 +13,15 @@ use App\Services\Currency\CurrencyServiceInterface;
 
 class CurrencyController extends Controller
 {
-    protected $currencyService;
 
-    public function __construct(CurrencyServiceInterface $currencyService)
-    {
-        $this->currencyService = $currencyService;
-    }
+    public function __construct(
+        protected CurrencyServiceInterface $currencyService
+    ){}
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      * @param CurrencyIndex $request
-     * @return \Illuminate\Http\Response
+     * @return CurrencyCollection
      */
     public function index(CurrencyIndex $request)
     {
@@ -41,9 +39,8 @@ class CurrencyController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  CurrencyStore $request
-     * @return \Illuminate\Http\Response
+     * @param CurrencyStore $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CurrencyStore $request)
     {
@@ -63,9 +60,8 @@ class CurrencyController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  Currency $currency
-     * @return \Illuminate\Http\Response
+     * @param Currency $currency
+     * @return CurrencyResource
      */
     public function show(Currency $currency)
     {
@@ -74,9 +70,9 @@ class CurrencyController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Currency $currency
-     * @param  CurrencyUpdate $request
-     * @return \Illuminate\Http\Response
+     * @param Currency $currency
+     * @param CurrencyUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Currency $currency, CurrencyUpdate $request)
     {
@@ -96,10 +92,9 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Currency $currency
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Currency $currency
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Currency $currency)
     {

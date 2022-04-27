@@ -4,25 +4,22 @@ namespace App\Http\Controllers\Dashboard\Post;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Services\Tag\TagService;
-use App\Services\Page\PageService;
+use App\Services\Page\PageServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Page\PageResource;
 use App\Http\Requests\Page\PageIndex;
 use App\Http\Requests\Page\PageStore;
 use App\Http\Requests\Page\PageUpdate;
 use App\Http\Resources\Page\PageCollection;
+use App\Services\Tag\TagServiceInterface;
 
 class PageController extends Controller
 {
 
-    protected $pageService, $tagService;
-
-    public function __construct(PageService $pageService, TagService $tagService)
-    {
-        $this->pageService = $pageService;
-        $this->tagService = $tagService;
-    }
+    public function __construct(
+        protected PageServiceInterface $pageService,
+        protected TagServiceInterface $tagService
+    ){}
 
     /**
      * Display a listing of the resource

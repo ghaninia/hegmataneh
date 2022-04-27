@@ -4,24 +4,24 @@ namespace App\Http\Controllers\Dashboard\Gateway;
 
 use App\Models\Gateway;
 use App\Http\Controllers\Controller;
-use App\Services\Gateway\GatewayService;
 use App\Http\Requests\Gateway\GatewayIndex;
 use App\Http\Requests\Gateway\GatewayStore;
 use App\Http\Requests\Gateway\GatewayUpdate;
 use App\Http\Requests\Gateway\GatewayDestroy;
 use App\Http\Resources\Gateway\GatewayResource;
 use App\Http\Resources\Gateway\GatewayCollection;
+use App\Services\Gateway\GatewayServiceInterface;
 
 class GatewayController extends Controller
 {
-    public function __construct(public GatewayService $gatewayService)
-    {
-    }
+    public function __construct(
+        public GatewayServiceInterface $gatewayService
+    ){}
 
     /**
-     * Display a listing of the resource.
-     *
+     * Display a listing of the resource
      * @param GatewayIndex $request
+     * @return GatewayCollection
      */
     public function index(GatewayIndex $request)
     {
@@ -38,10 +38,9 @@ class GatewayController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store a newly created resource in storage
      * @param GatewayStore $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(GatewayStore $request)
     {
@@ -60,9 +59,8 @@ class GatewayController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Gateway  $gateway
-     * @return \Illuminate\Http\Response
+     * @param Gateway $gateway
+     * @return GatewayResource
      */
     public function show(Gateway $gateway)
     {
@@ -70,11 +68,10 @@ class GatewayController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Models\Gateway  $gateway
-     * @param  GatewayUpdate $request
-     * @return \Illuminate\Http\Response
+     * Update the specified resource in storage
+     * @param Gateway $gateway
+     * @param GatewayUpdate $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Gateway $gateway, GatewayUpdate $request)
     {
@@ -93,10 +90,10 @@ class GatewayController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Gateway  $gateway
-     * @return \Illuminate\Http\Response
+     * Remove the specified resource from storage
+     * @param Gateway $gateway
+     * @param GatewayDestroy $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Gateway $gateway, GatewayDestroy $request)
     {

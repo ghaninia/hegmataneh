@@ -21,7 +21,7 @@ class AuthController extends Controller
     }
 
     /**
-     * ورود به حساب کاربری
+     * Login On system
      * @param LoginStore $request
      * @return JsonResponse
      */
@@ -53,7 +53,7 @@ class AuthController extends Controller
     }
 
     /**
-     * ثبت حساب جدید
+     * register On System
      * @param RegisterStore $request
      * @return JsonResponse
      */
@@ -77,7 +77,7 @@ class AuthController extends Controller
 
 
     /**
-     * تایید حساب کاربری
+     * Confirmed On system
      * @param string $token
      * @return JsonResponse
      */

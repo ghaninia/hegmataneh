@@ -127,7 +127,6 @@ class PostController extends Controller
 
     /**
      * restore single post
-     *
      * @param User $user
      * @param Post $post
      * @return \Illuminate\Http\JsonResponse

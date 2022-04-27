@@ -12,15 +12,9 @@ use App\Http\Resources\Option\OptionCollection;
 class OptionController extends Controller
 {
 
-
-    public function __construct()
-    {
-    }
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\ResourceCollection
+     * Display a listing of the resource
+     * @return OptionCollection
      */
     public function index()
     {
@@ -30,9 +24,8 @@ class OptionController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  OptionUpdate $request
+     * Update the specified resource in storage
+     * @param OptionUpdate $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(OptionUpdate $request)
