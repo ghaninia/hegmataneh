@@ -25,6 +25,7 @@ class OptionControllerTest extends TestCase
             ->assertJsonStructure([
                 "data" => [
                     "*" => [
+                        "title" ,
                         "key" ,
                         "type" ,
                         "value" ,

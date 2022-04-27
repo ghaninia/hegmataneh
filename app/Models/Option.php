@@ -12,6 +12,7 @@ class Option extends Model
     use HasFactory, HasFilterTrait;
 
     public $fillable = [
+        "title",
         "key",
         "type",
         "default",
