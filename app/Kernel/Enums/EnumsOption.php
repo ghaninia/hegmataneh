@@ -7,11 +7,14 @@ use App\Kernel\Enums\Abstracts\Enum;
 class EnumsOption extends Enum
 {
 
-    /**
-     * برای ولیدیشن باید در کلاس
-     * App\Http\Requests\Option\OptionUpdate
-     * اقدام نمایید
-     */
+    /** TYPE FIELDS  */
+    const TYPE_FIELD_TEXT = "text" ;
+    const TYPE_FIELD_TEXTAREA = "textarea" ;
+    const TYPE_FIELD_NUMBER = "number" ;
+    const TYPE_FIELD_EMAIL = "email" ;
+    const TYPE_FIELD_DATE = "date" ;
+    const TYPE_FIELD_DROPDOWN = "dropdown" ;
+
 
     ### سربرگ داشبورد
     const TITLE = "title";

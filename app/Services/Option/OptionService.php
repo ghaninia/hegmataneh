@@ -58,7 +58,7 @@ class OptionService implements OptionServiceInterface
      */
     public function put(string $key,  $value): Option
     {
-        $config = Option::updateOrCreate(["key" => $key], ["value" => serialize($value)]);
+        $config = Option::updateOrCreate(["key" => $key], ["value" => $value]);
         return $config;
     }
 }

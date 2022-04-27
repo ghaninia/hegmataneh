@@ -16,7 +16,7 @@ class CreateOptionsTable extends Migration
         Schema::create('options', function (Blueprint $table) {
             $table->id();
             $table->string("key", 100)->unique();
-            $table->string("type")->nullable();
+            $table->enum("type" , \App\Kernel\Enums\EnumsOption::type() )->nullable();
             $table->text("value")->nullable();
             $table->text("default")->nullable();
         });
