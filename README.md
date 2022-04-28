@@ -27,16 +27,16 @@
 - ✅Product 
 - ✅Series 
 - ✅Gateway 
-- ❌Order and sales
 - ✅Portfolio 
+- ✅Shopping Cart
+- ✅Manage reporting tools
+- ✅User Profile 
+- ❌Order and sales
 - ❌Comments
 - ❌Manage customer quotes
 - ❌Menu
 - ❌Slider
 - ❌Contact System
-- ✅Shopping Cart
-- ✅Manage reporting tools
-- ✅User Profile 
 
 <br />
 
@@ -53,11 +53,7 @@ composer install
 After installation, we need to configure the database. Just edit the .env file, and then you can migrate the database and add fake data to the database.
 
 ```php
-php artisan migrate
-```
-
-```php
-php artisan db:seed
+php artisan migrate:refresh --seed
 ```
 
 If the type of operation is checked, run the system test
@@ -66,7 +62,7 @@ If the type of operation is checked, run the system test
 php artisan test
 ```
 
-<a href="https://documenter.getpostman.com/view/14577533/TzmBCtDy#7ee5cd45-65dd-4666-a9d6-b7d498982d75" target="_blank">
+<a href="https://documenter.getpostman.com/view/14577533/TzmBCtDy" target="_blank">
 Document On Postman
 </a>
 |
