@@ -18,7 +18,8 @@ class UserControllerTest extends TestCase
         $this->signIn() ;
     }
 
-    public function testGetAllSystemUsersWithFilters()
+    /** @test */
+    public function getAllSystemUsersWithFilters()
     {
 
         $users = $this->userBuilder->create(true, [], $total = random_int(1, 10));
@@ -59,7 +60,8 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function testGetAllSystemUsersWithoutFilters()
+    /** @test */
+    public function getAllSystemUsersWithoutFilters()
     {
         $this->userBuilder->create(true, [], $total = random_int(1, 10));
         $response = $this->getJson(route("api.v1.user.index"));
@@ -73,7 +75,8 @@ class UserControllerTest extends TestCase
             ]);
     }
 
-    public function testCreateNewUserOnSystem()
+    /** @test */
+    public function createNewUserOnSystem()
     {
         $user = $this->userBuilder->create(false);
 
@@ -114,7 +117,8 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function testShowAUserOnSystem()
+    /** @test */
+    public function showAUserOnSystem()
     {
         $user = $this->userBuilder->create(true);
 
@@ -140,7 +144,8 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function testUpdateUserOnSystem()
+    /** @test */
+    public function updateUserOnSystem()
     {
         $user = $this->userBuilder->create(true);
         $newUser = $this->userBuilder->create(false);
@@ -177,7 +182,8 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function testUpdateUserPassword()
+    /** @test */
+    public function updateUserPassword()
     {
         $user = $this->userBuilder->create(true);
         $newUser = $this->userBuilder->create(false);
@@ -202,7 +208,8 @@ class UserControllerTest extends TestCase
     }
 
 
-    public function testDeleteUserInSystem()
+    /** @test */
+    public function deleteUserInSystem()
     {
         $user = $this->userBuilder->create(true);
 

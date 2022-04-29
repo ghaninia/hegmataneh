@@ -17,7 +17,8 @@ class CurrencyControllerTest extends TestCase
         $this->authUser = $this->signIn();
     }
 
-    public function testGetSystemCurrency()
+    /** @test */
+    public function getSystemCurrency()
     {
 
         $currencies = Currency::factory()
@@ -62,7 +63,8 @@ class CurrencyControllerTest extends TestCase
             ]);
     }
 
-    public function testCreateNewCurrency()
+    /** @test */
+    public function createNewCurrency()
     {
         $currency = Currency::factory()->make();
 
@@ -85,7 +87,8 @@ class CurrencyControllerTest extends TestCase
         $this->assertDatabaseHas("currencies", $currency->toArray());
     }
 
-    public function testUpdateCurrency()
+    /** @test */
+    public function updateCurrency()
     {
         $currency = Currency::factory()->create();
 
@@ -107,7 +110,8 @@ class CurrencyControllerTest extends TestCase
         ]);
     }
 
-    public function testShowCurrency()
+    /** @test */
+    public function showCurrency()
     {
         $currency = Currency::factory()->create();
 
@@ -127,8 +131,8 @@ class CurrencyControllerTest extends TestCase
             ->assertJsonPath("data.code", $currency->code);
     }
 
-
-    public function testDeleteCurrency()
+    /** @test */
+    public function deleteCurrency()
     {
         $currency = Currency::factory()->create();
 

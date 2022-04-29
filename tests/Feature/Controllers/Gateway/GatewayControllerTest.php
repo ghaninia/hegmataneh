@@ -19,7 +19,8 @@ class GatewayControllerTest extends TestCase
         $this->authUser = $this->signIn();
     }
 
-    public function testGetTheListGateways()
+    /** @test */
+    public function getTheListGateways()
     {
 
         $gateways =
@@ -55,8 +56,8 @@ class GatewayControllerTest extends TestCase
             ->assertJsonCount(1, "data");
     }
 
-
-    public function testCreateNewGateway()
+    /** @test */
+    public function createNewGateway()
     {
 
         $gateway = Gateway::factory()->make();
@@ -101,7 +102,8 @@ class GatewayControllerTest extends TestCase
             ]);
     }
 
-    public function testShowGateway()
+    /** @test */
+    public function showGateway()
     {
 
         $gateway = Gateway::factory()
@@ -146,7 +148,8 @@ class GatewayControllerTest extends TestCase
     }
 
 
-    public function testUpdateGateway()
+    /** @test */
+    public function updateGateway()
     {
         $gateway = Gateway::factory()
             ->create();
@@ -190,7 +193,8 @@ class GatewayControllerTest extends TestCase
     }
 
 
-    public function testDeleteGateway()
+    /** @test */
+    public function deleteGateway()
     {
         $gateway = Gateway::factory()
             ->hasAttached(
