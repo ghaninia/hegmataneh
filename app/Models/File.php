@@ -12,10 +12,11 @@ class File extends Model
 
     protected $fillable = [
         "id",
-        "file_id",
         "user_id",
+        "folder_id",
         "type",
         "name",
+        "path",
         "extension",
         "mime_type",
         "size",
@@ -23,7 +24,6 @@ class File extends Model
 
     protected $casts = [
         "id" => UuidCast::class,
-        "file_id" => UuidCast::class,
     ];
 
     ###################
@@ -32,12 +32,12 @@ class File extends Model
 
     public function parent()
     {
-        return $this->belongsTo(File::class, "file_id");
+        return $this->belongsTo(File::class, "folder_id");
     }
 
     public function childrens()
     {
-        return $this->hasMany(File::class, "file_id");
+        return $this->hasMany(File::class, "folder_id");
     }
 
     public function fileables()

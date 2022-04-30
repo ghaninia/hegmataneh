@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\File;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Serial;
 use App\Models\Portfolio;
-use App\Policies\FilePolicy;
 use App\Policies\PostPolicy;
 use App\Policies\SerialPolicy;
 use App\Policies\PortfolioPolicy;
@@ -26,7 +24,6 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Portfolio::class => PortfolioPolicy::class,
         Serial::class => SerialPolicy::class,
-        File::class => FilePolicy::class
     ];
 
     /**
@@ -41,9 +38,6 @@ class AuthServiceProvider extends ServiceProvider
         ############
         ### GATE ###
         ############
-
-        Gate::define('dir', [FilePolicy::class, 'dir']);    ### access to dir
-        Gate::define('file', [FilePolicy::class, 'file']); ### access to file or folder
 
         Gate::define("f_ability", function (User $user, ...$permissions) {
             return

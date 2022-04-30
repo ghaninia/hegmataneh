@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Kernel\UploadCenter\Traits;
+namespace App\Kernel\Filemanager\Traits;
 
 use App\Models\File;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Kernel\UploadCenter\Interfaces;
+namespace App\Kernel\Filemanager\Interfaces;
 
 use App\Kernel\Model\Interfaces\ModelableInterface;
 

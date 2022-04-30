@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Kernel\UploadCenter\Interfaces\FileableInterface;
-use App\Kernel\UploadCenter\Traits\HasFileTrait;
+use App\Kernel\Filemanager\Interfaces\FileableInterface;
+use App\Kernel\Filemanager\Traits\HasFileTrait;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;

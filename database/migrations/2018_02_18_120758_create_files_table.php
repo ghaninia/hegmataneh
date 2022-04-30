@@ -12,18 +12,18 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid("file_id")->index()->nullable();
-            $table->unsignedBigInteger("user_id")->index();
-            $table->enum("type", EnumsFile::type());
-            $table->string("name");
-            $table->string("extension")->nullable();
-            $table->string("mime_type")->nullable();
-            $table->integer("size")->default(0);
+            $table->foreignId("user_id")->nullable()->constrained("users")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->enum("type", EnumsFile::type())->default(EnumsFile::TYPE_FILE);
+            $table->text("name");
+            $table->text("path");
+            $table->text("extension")->nullable();
+            $table->text("mime_type")->nullable();
+            $table->integer("size")->nullable();
             $table->timestamps();
         });
 
-        Schema::table('files', function (Blueprint $table) {
-            $table->foreign("file_id")->references("id")->on("files")->onDelete("cascade")->onUpdate("cascade");
+        Schema::table("files" , function (Blueprint $table){
+            $table->foreignUuid("folder_id")->nullable()->constrained("files")->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

@@ -15,13 +15,10 @@ class CreateFileablesTable extends Migration
     public function up()
     {
         Schema::create('fileables', function (Blueprint $table) {
-
-            $table->increments("id") ;
-
+            $table->id() ;
             $table->uuid('file_id')->index();
             $table->morphs("fileable");
             $table->enum("usage", EnumsFileable::usages());
-
             $table->timestamps();
         });
     }

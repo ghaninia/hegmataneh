@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/.iac-data
 .phpunit.result.cache
 .env
 docker-compose.override.yml
