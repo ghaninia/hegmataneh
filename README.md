@@ -34,8 +34,9 @@
     - CRUD Categories
 - ✅Skills 
     - CRUD Skills
-- ✅File 
-    - Filemanager System
+- ✅Filemanager 
+    - Show all file with lazyloading
+    - Upload Multi files
 - ✅Pages 
     - CRUD Pages
 - ✅Post 
