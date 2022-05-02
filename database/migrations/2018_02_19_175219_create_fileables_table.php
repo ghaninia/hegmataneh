@@ -16,8 +16,8 @@ class CreateFileablesTable extends Migration
     {
         Schema::create('fileables', function (Blueprint $table) {
             $table->id() ;
-            $table->uuid('file_id')->index();
-            $table->morphs("fileable");
+            $table->foreignUuid("file_id")->nullable()->constrained("files")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->uuidMorphs("fileable");
             $table->enum("usage", EnumsFileable::usages());
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ class CreateFilesTable extends Migration
             $table->foreignId("user_id")->nullable()->constrained("users")->cascadeOnDelete()->cascadeOnUpdate();
             $table->enum("type", EnumsFile::type())->default(EnumsFile::TYPE_FILE);
             $table->text("name");
-            $table->text("path");
+            $table->text("relpath");
             $table->text("extension")->nullable();
             $table->text("mime_type")->nullable();
             $table->integer("size")->nullable();

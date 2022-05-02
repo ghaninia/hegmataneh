@@ -19,9 +19,10 @@ class UploadFile extends UploadAbstract
 
         $this->files[] = [
             "user_id" => $this?->user?->id ,
+            "folder_id" => $this?->baseFolder?->id ,
             "file" => $this->file ,
             "type" => EnumsFile::TYPE_FILE ,
-            "path" => $this->generatePath() ,
+            "relpath" => $this->generateRelativePath() ,
             "name" => $this->getName() ,
             "extension" => $this->getExtension() ,
             "mime_type" => $this->getMimeType() ,
@@ -77,7 +78,7 @@ class UploadFile extends UploadAbstract
     /**
      * @return string
      */
-    public function generatePath()
+    public function generateRelativePath()
     {
         if (isset($this->user))
             $path[] = $this->user->id ;

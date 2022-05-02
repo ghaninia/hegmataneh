@@ -2,17 +2,18 @@
 
 namespace App\Kernel\Filemanager\Abstracts;
 
-use App\Kernel\Filemanager\Interfaces\UploadDriverInterface;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use http\Exception\InvalidArgumentException;
 use Illuminate\Http\UploadedFile;
+use App\Kernel\Filemanager\Interfaces\FileInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Kernel\Filemanager\Interfaces\UploadDriverInterface;
 
 class UploadAbstract
 {
 
     protected ?UploadDriverInterface $driver = null ;
+    protected ?FileInterface $baseFolder = null;
     protected ?Authenticatable $user = null ;
-    protected ?string $path = null;
+    protected ?string $basePath = null;
     protected UploadedFile $file ;
 
     /**
@@ -39,16 +40,18 @@ class UploadAbstract
      * @param $path
      * @return $this
      */
-    public function path($path)
+    public function basePath(FileInterface $folder)
     {
+        // if (preg_match("/\\\.|\/\./" , $path )){
+        //     throw new InvalidArgumentException() ;
+        // }
 
-        if (preg_match("/\\\.|\/\./" , $path )){
-            throw new InvalidArgumentException() ;
-        }
+        // $path = str_replace( "/" , DIRECTORY_SEPARATOR , $path ) ;
+        // $path = str_replace( "\\" , DIRECTORY_SEPARATOR , $path ) ;
+        // $this->path = trim($path , DIRECTORY_SEPARATOR) ;
 
-        $path = str_replace( "/" , DIRECTORY_SEPARATOR , $path ) ;
-        $path = str_replace( "\\" , DIRECTORY_SEPARATOR , $path ) ;
-        $this->path = trim($path , DIRECTORY_SEPARATOR) ;
+        $this->baseFolder = $folder ;
+        $this->basePath = $folder->path ;
 
         return $this ;
     }

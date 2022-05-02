@@ -2,33 +2,34 @@
 
 namespace App\Models;
 
-use App\Casts\UuidCast;
-use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use App\Kernel\Uuid\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class File extends Model
 {
-    use HasFilterTrait;
+    use HasFilterTrait, HasFactory, UuidTrait;
 
     protected $fillable = [
-        "id",
         "user_id",
         "folder_id",
         "type",
         "name",
-        "path",
+        "relpath",
         "extension",
         "mime_type",
         "size",
     ];
 
-    protected $casts = [
-        "id" => UuidCast::class,
-    ];
-
     ###################
     #### RELATIONS ####
     ###################
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function parent()
     {

@@ -9,6 +9,11 @@ class Type extends QueryFilter implements FilterInterface
 {
     public function handle($value): void
     {
-        $this->query->whereIn("type", $value);
+        $this->query
+            ->when(
+                is_array($value),
+                fn ($query) => $query->whereIn("type", $value),
+                fn ($query) => $query->where("type", $value),
+            );
     }
 }

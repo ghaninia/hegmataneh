@@ -1,25 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\Term\TagController;
-use App\Http\Controllers\Dashboard\Post\PageController;
-use App\Http\Controllers\Dashboard\Post\PostController;
-use App\Http\Controllers\Dashboard\Role\RoleController;
-use App\Http\Controllers\Dashboard\User\UserController;
-use App\Http\Controllers\Dashboard\Skill\SkillController;
-use App\Http\Controllers\Dashboard\Post\ProductController;
-use App\Http\Controllers\Dashboard\Basket\BasketController;
-use App\Http\Controllers\Dashboard\Option\OptionController;
-use App\Http\Controllers\Dashboard\Serial\SerialController;
-use App\Http\Controllers\Dashboard\Term\CategoryController;
-use App\Http\Controllers\Dashboard\Gateway\GatewayController;
-use App\Http\Controllers\Dashboard\Authunticate\AuthController;
-use App\Http\Controllers\Dashboard\Currency\CurrencyController;
-use App\Http\Controllers\Dashboard\Language\LanguageController;
-use App\Http\Controllers\Dashboard\Portfolio\PortfolioController;
-use App\Http\Controllers\Dashboard\Widget\WidgetController;
-use App\Http\Controllers\Guest\Translation\TranslationController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +12,6 @@ use App\Http\Controllers\Guest\Translation\TranslationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
 
 Route::group([
     "prefix" => "v1",
@@ -47,14 +26,14 @@ Route::group([
         ]
     ], function () {
         ### ورود به حساب کاربری
-        Route::post("login", [AuthController::class, "login"])->name("login");
+        Route::post("login", [\App\Http\Controllers\Dashboard\Authunticate\AuthController::class, "login"])->name("login");
         ### ثبت نام در سیستم
         Route::group([
             "prefix" => "register",
             "as" => "register.",
         ], function () {
-            Route::post("/", [AuthController::class, "register"])->name("store");
-            Route::get("verify/{token}", [AuthController::class, "verify"])->name("verify");
+            Route::post("/", [\App\Http\Controllers\Dashboard\Authunticate\AuthController::class, "register"])->name("store");
+            Route::get("verify/{token}", [\App\Http\Controllers\Dashboard\Authunticate\AuthController::class, "verify"])->name("verify");
         });
     });
 
@@ -70,9 +49,21 @@ Route::group([
     })->name("routes");
 
 
-    Route::get("translations", TranslationController::class)->name("translations");
+    Route::get("translations", \App\Http\Controllers\Guest\Translation\TranslationController::class)->name("translations");
 
     Route::middleware("auth:sanctum")->group(function () {
+
+
+        ########
+        ### file
+        ########
+        Route::prefix("filemanager/{user?}")->name("filemanager.")->group(function (){
+            Route::get("/" ,  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class , "index"])->name("index");
+        });
+
+        ###########
+        ### PROFILE
+        ###########
 
         Route::prefix("profile")->name("profile.")->group(function(){
             Route::get("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "index"] )->name("index");
@@ -82,27 +73,27 @@ Route::group([
         ##############
         ### role route
         ##############
-        Route::apiResource("role", RoleController::class);
+        Route::apiResource("role", \App\Http\Controllers\Dashboard\Role\RoleController::class);
 
         ##############
         ### gatway route
         ##############
-        Route::apiResource("gateway", GatewayController::class);
+        Route::apiResource("gateway", \App\Http\Controllers\Dashboard\Gateway\GatewayController::class);
 
         ##############
         ### language route
         ##############
-        Route::apiResource("language", LanguageController::class);
+        Route::apiResource("language", \App\Http\Controllers\Dashboard\Language\LanguageController::class);
 
         ##############
         ### currency route
         ##############
-        Route::apiResource("currency", CurrencyController::class);
+        Route::apiResource("currency", \App\Http\Controllers\Dashboard\Currency\CurrencyController::class);
 
         ##############
         ### user route
         ##############
-        Route::apiResource("user", UserController::class);
+        Route::apiResource("user", \App\Http\Controllers\Dashboard\User\UserController::class);
         Route::group([
             "prefix" => "user/{user}",
             "as" => "user."
@@ -111,64 +102,53 @@ Route::group([
             ############
             ### portfolio
             ############
-            Route::apiResource("portfolio", PortfolioController::class);
+            Route::apiResource("portfolio", \App\Http\Controllers\Dashboard\Portfolio\PortfolioController::class);
 
             ########
             ### page
             ########
-            Route::apiResource("page", PageController::class);
+            Route::apiResource("page", \App\Http\Controllers\Dashboard\Post\PageController::class);
 
             ########
             ### post
             ########
-            Route::apiResource("post", PostController::class);
+            Route::apiResource("post", \App\Http\Controllers\Dashboard\Post\PostController::class);
             Route::group([
                 "prefix" => "post/{post}",
                 "as" => "post."
             ], function () {
-                Route::delete("force", [PostController::class, "forceDelete"])->name("force");
-                Route::post("restore", [PostController::class, "restore"])->name("restore");
+                Route::delete("force", [\App\Http\Controllers\Dashboard\Post\PostController::class, "forceDelete"])->name("force");
+                Route::post("restore", [\App\Http\Controllers\Dashboard\Post\PostController::class, "restore"])->name("restore");
             });
 
             ##########
             ### serial
             ##########
-            Route::apiResource("serial", SerialController::class);
+            Route::apiResource("serial", \App\Http\Controllers\Dashboard\Serial\SerialController::class);
 
             ###########
             ### product
             ###########
-            Route::apiResource("product", ProductController::class);
+            Route::apiResource("product", \App\Http\Controllers\Dashboard\Post\ProductController::class);
             Route::group([
                 "prefix" => "product/{product}",
                 "as" => "product."
             ], function () {
-                Route::delete("force", [ProductController::class, "forceDelete"])->name("force");
-                Route::post("restore", [ProductController::class, "restore"])->name("restore");
+                Route::delete("force", [\App\Http\Controllers\Dashboard\Post\ProductController::class, "forceDelete"])->name("force");
+                Route::post("restore", [\App\Http\Controllers\Dashboard\Post\ProductController::class, "restore"])->name("restore");
             });
 
-            ########
-            ### file
-            ########
-            // Route::prefix("gallery")->name("gallery.")->group(function () {
-            //     Route::post("newfolder/{folder?}", [FileController::class, "newFolder"])->name("new_folder");
-            //     Route::post("upload/{folder?}", [FileController::class, "upload"])->name("upload");
-            //     Route::put("move/{file}/{folder?}", [FileController::class, "move"])->name("move");
-            //     Route::put("rename/{file}", [FileController::class, "rename"])->name("rename");
-            //     Route::delete("{file}", [FileController::class, "remove"])->name("remove");
-            //     Route::get("{folder?}", [FileController::class, "index"])->name("index");
-            // });
         });
 
         #######
         ### tag
         #######
-        Route::apiResource("tag", TagController::class);
+        Route::apiResource("tag", \App\Http\Controllers\Dashboard\Term\TagController::class);
 
         ############
         ### category
         ############
-        Route::apiResource("category", CategoryController::class);
+        Route::apiResource("category", \App\Http\Controllers\Dashboard\Term\CategoryController::class);
 
         ###########
         ### options
@@ -178,19 +158,19 @@ Route::group([
             "prefix" => "option",
             "as" => "option.",
         ], function () {
-            Route::get("/", [OptionController::class, "index"])->name("index");
-            Route::patch("/", [OptionController::class, "update"])->name("update");
+            Route::get("/", [\App\Http\Controllers\Dashboard\Option\OptionController::class, "index"])->name("index");
+            Route::patch("/", [\App\Http\Controllers\Dashboard\Option\OptionController::class, "update"])->name("update");
         });
 
         #########
         ### skill
         #########
-        Route::apiResource("skill", SkillController::class);
+        Route::apiResource("skill", \App\Http\Controllers\Dashboard\Skill\SkillController::class);
 
         Route::prefix("widget")->name("widget.")->group(function () {
             Route::name("statistic.")->prefix("statistic")->group(function () {
-                Route::get("posts", [WidgetController::class, "statisticPosts"])->name("posts");
-                Route::get("users", [WidgetController::class, "statisticUsers"])->name("users");
+                Route::get("posts", [\App\Http\Controllers\Dashboard\Widget\WidgetController::class, "statisticPosts"])->name("posts");
+                Route::get("users", [\App\Http\Controllers\Dashboard\Widget\WidgetController::class, "statisticUsers"])->name("users");
             });
         });
     });
@@ -209,8 +189,8 @@ Route::name("guest.")->group(function () {
             "prefix" => "append",
             "as" => "append."
         ], function () {
-            Route::get("product/{product}", [BasketController::class, "append"])->name("product");
-            Route::get("serial/{serial}", [BasketController::class, "append"])->name("serial");
+            Route::get("product/{product}", [\App\Http\Controllers\Dashboard\Basket\BasketController::class, "append"])->name("product");
+            Route::get("serial/{serial}", [\App\Http\Controllers\Dashboard\Basket\BasketController::class, "append"])->name("serial");
         });
     });
 });

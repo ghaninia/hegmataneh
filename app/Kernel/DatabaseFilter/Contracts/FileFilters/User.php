@@ -7,14 +7,10 @@ use App\Kernel\DatabaseFilter\Interfaces\FilterInterface;
 
 class User extends QueryFilter implements FilterInterface
 {
-    public function handle($value): void
+    public function handle($filters): void
     {
-        $this->query->when(
-            is_array($value),
-            fn ($query) =>
-            $query->whereHas("user", fn ($query) => $query->filterBy($value)),
-            fn ($query) =>
-            $query->where("user_id", $value)
-        );
+        $this->query->whereHas("user", function ($query) use ($filters) {
+            $query->filterBy($filters);
+        });
     }
 }
