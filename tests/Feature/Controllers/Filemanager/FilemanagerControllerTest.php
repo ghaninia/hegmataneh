@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Controllers\Filemanager;
 
+use App\Kernel\Enums\EnumsFile;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use App\Models\File;
 use Illuminate\Http\Response;
@@ -37,7 +39,7 @@ class FilemanagerControllerTest extends TestCase
                         "updated_at" ,
                         "type",
                         "name",
-                        "relpath",
+                        "path",
                     ]
                 ],
                 "meta" => [
@@ -87,7 +89,7 @@ class FilemanagerControllerTest extends TestCase
                         "updated_at" ,
                         "type",
                         "name",
-                        "relpath",
+                        "path",
                     ]
                 ],
                 "meta" => [
@@ -97,5 +99,52 @@ class FilemanagerControllerTest extends TestCase
                     "next_page" ,
                 ]
             ]);
+    }
+
+    /** @test */
+    public function uploadFileWithoutFolder()
+    {
+        $user = $this->signIn();
+        $response = $this->postJson(
+            route("api.v1.filemanager.store" , ["user" => $user]) , [
+                "attachments" => [
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" )
+                ]
+            ]
+        );
+
+        $this->assertDatabaseHas("files" , [
+            "user_id" => $user->id ,
+            "folder_id" => null ,
+            "type" => EnumsFile::TYPE_FILE,
+            "name" => $filename,
+            "extension" => "png",
+            "mime_type" => $mimeType ,
+            "driver" => "public"
+        ]);
+
+        $this->assertDatabaseCount("files" , 1) ;
+
+        $response
+                ->assertStatus(Response::HTTP_OK)
+                ->assertJsonStructure([
+                    "ok" ,
+                    "msg" ,
+                    "data" => [
+                        "*" => [
+                            "id" ,
+                            "type",
+                            "name",
+                            "path",
+                            "extension",
+                            "mime_type",
+                            "size",
+                            "driver",
+                            "created_at" ,
+                            "updated_at"
+                        ]
+                    ]
+                ]);
+
     }
 }

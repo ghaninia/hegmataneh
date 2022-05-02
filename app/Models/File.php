@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Kernel\Filemanager\Interfaces\FileInterface;
 use App\Kernel\Uuid\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Kernel\DatabaseFilter\Scopes\HasFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class File extends Model
+class File extends Model implements FileInterface
 {
     use HasFilterTrait, HasFactory, UuidTrait;
 
@@ -16,10 +17,11 @@ class File extends Model
         "folder_id",
         "type",
         "name",
-        "relpath",
+        "path",
         "extension",
         "mime_type",
         "size",
+        "driver"
     ];
 
     ###################
@@ -31,7 +33,7 @@ class File extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function parent()
+    public function folder()
     {
         return $this->belongsTo(File::class, "folder_id");
     }

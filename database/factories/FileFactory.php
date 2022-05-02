@@ -21,10 +21,11 @@ class FileFactory extends Factory
         return [
             "type" => Arr::random(EnumsFile::type()),
             "name" => $this->faker->realText(20),
-            "relpath" => $this->faker->filePath(),
+            "path" => $this->faker->filePath(),
             "extension" => $this->faker->fileExtension(),
             "mime_type" => $this->faker->mimeType(),
             "size" => $this->faker->numerify(),
+            "driver" => Arr::random(["public" , "s3"])
         ];
     }
 }

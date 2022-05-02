@@ -229,7 +229,7 @@ return [
             "forceDelete" => "محصول بصورت کامل حذف گردیده است",
             "restore" => "محصول از سطل زباله بازگردانده شده است",
         ],
-        "file" => [
+        "filemanager" => [
             "rename" => "نام ':name' به ':newName' تغییر کرده است",
             "move" => "فایل یا فولدر ':name' به ':destination' انتقال یافته است",
             "create_folder" => "پوشه :attribute با موفقیت ساخته شده است",

@@ -59,6 +59,7 @@ Route::group([
         ########
         Route::prefix("filemanager/{user?}")->name("filemanager.")->group(function (){
             Route::get("/" ,  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class , "index"])->name("index");
+            Route::post("/" ,  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class , "store"])->name("store");
         });
 
         ###########

@@ -200,6 +200,10 @@ return [
 
         "email" => "پست الکترونیکی" ,
         "password" => "گذرواژه" ,
+
+        "folder_id" => "پوشه" ,
+        "attachments" => "فایلهای پیوستی" ,
+        "attachments.*" => "فایل پیوستی" ,
     ],
 
 ];

@@ -49,6 +49,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Widget\WidgetServiceInterface::class, \App\Services\Widget\WidgetService::class);
         $this->app->bind(\App\Services\Gateway\GatewayServiceInterface::class, \App\Services\Gateway\GatewayService::class);
         $this->app->bind(\App\Services\Filemanager\FilemanagerServiceInterface::class, \App\Services\Filemanager\FilemanagerService::class);
+        $this->app->bind(\App\Services\File\FileServiceInterface::class, \App\Services\File\FileService::class);
         //:end-bindings:
     }
 }

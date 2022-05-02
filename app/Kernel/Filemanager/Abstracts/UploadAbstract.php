@@ -6,31 +6,28 @@ use Illuminate\Http\UploadedFile;
 use App\Kernel\Filemanager\Interfaces\FileInterface;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Kernel\Filemanager\Interfaces\UploadDriverInterface;
+use Illuminate\Support\Facades\Storage;
 
-class UploadAbstract
+class UploadAbstract extends UploadModel
 {
 
-    protected ?UploadDriverInterface $driver = null ;
     protected ?FileInterface $baseFolder = null;
     protected ?Authenticatable $user = null ;
+    protected ?UploadedFile $file = null;
     protected ?string $basePath = null;
-    protected UploadedFile $file ;
 
     /**
-     * @param null $driver
-     * @return $this
+     * @param UploadDriverInterface $driver
      */
-    public function driver($driver)
-    {
-        $this->driver = $driver;
-        return $this;
-    }
+    public function __construct(
+        protected UploadDriverInterface $driver
+    ){}
 
     /**
      * @param null $user
      * @return $this
      */
-    public function user($user)
+    public function user($user = null)
     {
         $this->user = $user ;
         return $this;
@@ -40,29 +37,22 @@ class UploadAbstract
      * @param $path
      * @return $this
      */
-    public function basePath(FileInterface $folder)
+    public function basePath($folder = null )
     {
-        // if (preg_match("/\\\.|\/\./" , $path )){
-        //     throw new InvalidArgumentException() ;
-        // }
-
-        // $path = str_replace( "/" , DIRECTORY_SEPARATOR , $path ) ;
-        // $path = str_replace( "\\" , DIRECTORY_SEPARATOR , $path ) ;
-        // $this->path = trim($path , DIRECTORY_SEPARATOR) ;
-
         $this->baseFolder = $folder ;
-        $this->basePath = $folder->path ;
+        $this->basePath = $folder?->path ;
 
         return $this ;
     }
 
     /**
      * @param UploadedFile $file
-     * @return UploadedFile
+     * @return $this
      */
     public function file(UploadedFile $file)
     {
         $this->file = $file;
-        return $file ;
+        return $this ;
     }
+
 }

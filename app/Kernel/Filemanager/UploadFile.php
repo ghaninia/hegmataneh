@@ -12,17 +12,19 @@ class UploadFile extends UploadAbstract
     private array $files = [] ;
 
     /**
+     * append file
      * @return $this
      */
     public function add()
     {
 
         $this->files[] = [
+            "driver" => $this->driver->disk() ,
             "user_id" => $this?->user?->id ,
             "folder_id" => $this?->baseFolder?->id ,
             "file" => $this->file ,
             "type" => EnumsFile::TYPE_FILE ,
-            "relpath" => $this->generateRelativePath() ,
+            "path" => $this->generateRelativePath() ,
             "name" => $this->getName() ,
             "extension" => $this->getExtension() ,
             "mime_type" => $this->getMimeType() ,
@@ -33,14 +35,17 @@ class UploadFile extends UploadAbstract
     }
 
     /**
-     * @param bool $pull
+     * upload files and store files in storage
+     * @return \Illuminate\Support\Collection
      */
     public function upload()
     {
         array_walk(
             $this->files ,
-            fn($file) => Storage::disk($file["disk"])->put( $file["path"] , $file["file"])
+            fn($file) => Storage::disk($file["driver"])->put( $file["path"] , $file["file"])
         );
+
+        return $this->insert($this->files);
     }
 
     /**
