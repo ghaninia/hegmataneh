@@ -4,9 +4,9 @@ namespace Tests\Feature\Controllers\Filemanager;
 
 use App\Kernel\Enums\EnumsFile;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 use App\Models\File;
-use Illuminate\Http\Response;
 
 class FilemanagerControllerTest extends TestCase
 {
@@ -146,5 +146,62 @@ class FilemanagerControllerTest extends TestCase
                     ]
                 ]);
 
+    }
+
+    /** @test */
+    public function uploadMutliFiles()
+    {
+        $user = $this->signIn() ;
+        $response = $this->postJson(
+            route("api.v1.filemanager.store" , ["user" => $user]) , [
+                "attachments" => [
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" ) ,
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" ) ,
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" ) ,
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" ) ,
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" ) ,
+                ]
+            ]
+        );
+
+        $response
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJsonCount(5 , "data");
+
+    }
+
+    /** @test */
+    public function uploadFileWithFolder()
+    {
+        $user = $this->signIn();
+        $folder = File::factory()
+            ->state([
+                "type" => EnumsFile::TYPE_FOLDER ,
+                "path" => $basePath = implode(DIRECTORY_SEPARATOR , [
+                    $user->id ,
+                    "uploads" ,
+                ])
+            ])
+            ->for($user)
+            ->create() ;
+
+        $response = $this->postJson(
+            route("api.v1.filemanager.store" , [
+                "user" => $user ,
+                "folder_id" => $folder->id
+            ]) , [
+                "attachments" => [
+                    UploadedFile::fake()->create( $filename = "file.png" , 300 ,  $mimeType = "image/png" ) ,
+                ]
+            ]
+        );
+
+        $response
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJsonCount(1 , "data") ;
+
+        $this->assertDatabaseHas("files" , [
+            "folder_id" => $folder->id ,
+        ]);
     }
 }

@@ -42,7 +42,11 @@ class UploadFile extends UploadAbstract
     {
         array_walk(
             $this->files ,
-            fn($file) => Storage::disk($file["driver"])->put( $file["path"] , $file["file"])
+            function($file) {
+                $path = pathinfo($file["path"] , PATHINFO_DIRNAME) ;
+                $name = basename($file["path"]) ;
+                Storage::disk($file["driver"])->putFileAs($path , $file["file"] , $name);
+            }
         );
 
         return $this->insert($this->files);
@@ -85,14 +89,15 @@ class UploadFile extends UploadAbstract
      */
     public function generateRelativePath()
     {
-        if (isset($this->user))
-            $path[] = $this->user->id ;
 
-        if (isset($this->path))
-            $path[] = $this->path ;
+        if (isset($this->basePath)){
+            $path = explode(DIRECTORY_SEPARATOR , $this->basePath ) ;
+        } elseif (isset($this->user)){
+            $path[] = $this->user->id ;
+        }
 
         $path[] = sprintf( "%s.%s" , uniqid() , $this->getExtension() ) ;
 
-        return implode(DIRECTORY_SEPARATOR , $path) ;
+        return implode("/" , $path) ;
     }
 }
