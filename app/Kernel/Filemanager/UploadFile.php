@@ -87,7 +87,7 @@ class UploadFile extends UploadAbstract
     /**
      * @return string
      */
-    public function generateRelativePath()
+    public function generateRelativePath() : string
     {
 
         if (isset($this->basePath)){

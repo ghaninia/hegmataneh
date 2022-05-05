@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Kernel\Filemanager\Interfaces\UploadDriverInterface;
 use Illuminate\Support\Facades\Storage;
 
-class UploadAbstract extends UploadModel
+abstract class UploadAbstract extends UploadModel
 {
 
     protected ?FileInterface $baseFolder = null;
@@ -22,6 +22,8 @@ class UploadAbstract extends UploadModel
     public function __construct(
         protected UploadDriverInterface $driver
     ){}
+
+    abstract public function generateRelativePath() : string ;
 
     /**
      * @param null $user

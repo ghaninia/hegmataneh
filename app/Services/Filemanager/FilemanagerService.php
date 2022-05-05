@@ -2,6 +2,7 @@
 
 namespace App\Services\Filemanager;
 
+use App\Kernel\DatabaseFilter\Interfaces\FilterInterface;
 use App\Kernel\Filemanager\Drivers\PublicDriver;
 use App\Kernel\Filemanager\Interfaces\FileInterface;
 use App\Kernel\Lazyloading\Lazyloading;
@@ -39,6 +40,17 @@ class FilemanagerService implements FilemanagerServiceInterface
         array_walk( $attachments , fn($attachment) => $instanceUpload->file($attachment)->add() );
 
         return $instanceUpload->upload() ;
+    }
+
+    /**
+     * make new directory
+     * @param string $directoryName
+     * @param FilterInterface|null $folder
+     * @param User|null $user
+     */
+    public function makeDirectory(string $directoryName , FilterInterface $folder = null , User $user = null )
+    {
+
     }
 
 }

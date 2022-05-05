@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers\Filemanager;
 use App\Kernel\Enums\EnumsFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use App\Models\File;
 
@@ -199,6 +200,9 @@ class FilemanagerControllerTest extends TestCase
         $response
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonCount(1 , "data") ;
+
+        Storage::disk($response->json("data.0.driver"))
+            ->assertExists($response->json("data.0.path")) ;
 
         $this->assertDatabaseHas("files" , [
             "folder_id" => $folder->id ,

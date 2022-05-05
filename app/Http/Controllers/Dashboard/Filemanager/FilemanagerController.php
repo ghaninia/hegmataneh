@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard\Filemanager;
 
 use App\Http\Requests\Filemanager\FilemanagerStore;
-use App\Models\File;
 use App\Models\User;
 use App\Http\Resources\File\FileCollection;
 use App\Http\Controllers\Controller;
