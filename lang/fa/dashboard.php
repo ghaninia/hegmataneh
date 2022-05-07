@@ -109,6 +109,7 @@ return [
     ],
 
     "fields" => [
+        "primaryKeyID" => "#ID" ,
         "bio" => "بیوگرافی",
         "mobile" => "شماره موبایل",
         "name" => "نام و نام خانوادگی",
