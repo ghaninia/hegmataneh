@@ -42,8 +42,6 @@ return [
         ] ,
     ],
 
-
-
     "pages" => [
         "profile" => [
             "index" => [
@@ -108,7 +106,14 @@ return [
         "update" => "بروزرسانی",
     ],
 
+    "pagination" => [
+        "firstPage" => "صفحه نخست" ,
+        "nextPage" => "صفحه بعدی" ,
+        "lastPage" => "صفحه آخر" ,
+    ] ,
+
     "fields" => [
+        "loading" => "در حال بارگذاری ..." ,
         "primaryKeyID" => "#ID" ,
         "bio" => "بیوگرافی",
         "mobile" => "شماره موبایل",
