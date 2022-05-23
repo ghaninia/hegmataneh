@@ -111,8 +111,9 @@ return [
         "nextPage" => "صفحه بعدی" ,
         "lastPage" => "صفحه آخر" ,
     ] ,
-
+        
     "fields" => [
+        "detail" => "جزییات" ,
         "loading" => "در حال بارگذاری ..." ,
         "primaryKeyID" => "#ID" ,
         "bio" => "بیوگرافی",
