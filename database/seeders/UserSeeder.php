@@ -28,9 +28,9 @@ class UserSeeder extends Seeder
         Role::factory()
             ->has(
                 User::factory()
-                    ->state([
-                        "email" => "info@ghaninia.ir"
-                    ])
+                    // ->state([
+                    //     "email" => "info@ghaninia.ir"
+                    // ])
                     ->for(Language::factory()->create())
                     ->for(Currency::factory()->create())
                     ->has(
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
                                     ->for($user)
                                     ->count(100)
                             )
-                            ->count(100)
+                            ->count(10)
                             ->create();
                     })
                 // ->has(
@@ -75,6 +75,11 @@ class UserSeeder extends Seeder
                 //     Skill::factory()
                 // )
             )
+            ->count(10)
             ->create();
+
+        User::whereId(1)->update([
+            "email" => "info@ghaninia.ir"
+        ]);
     }
 }

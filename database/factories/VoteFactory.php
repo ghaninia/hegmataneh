@@ -25,7 +25,7 @@ class VoteFactory extends Factory
         return [
             'ipv4' => $this->faker->ipv4(),
             'vote' => $this->faker->numberBetween(1, 5),
-            "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
+            "created_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')->format("Y-m-d H:i:s")
         ];
     }
 }

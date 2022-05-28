@@ -24,7 +24,7 @@ class PortfolioFactory extends Factory
         return [
             "demo" => $this->faker->url,
             "percent" => $this->faker->numberBetween(0, 100),
-            "launched_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
+            "launched_at" => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')->format("Y-m-d H:i:s")
         ];
     }
 }

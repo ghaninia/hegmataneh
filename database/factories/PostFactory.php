@@ -31,8 +31,8 @@ class PostFactory extends Factory
             "vote_status" => $this->faker->boolean() ,
             "format" => $format = Arr::random(EnumsPost::format()),
             "development" => $this->faker->numberBetween(0,100),
-            "published_at" => $this->faker->dateTime() ,
-            "created_at" => $this->faker->dateTimeBetween()
+            "published_at" => $this->faker->dateTime()->format("Y-m-d H:i:s") ,
+            "created_at" => $this->faker->dateTimeBetween()->format("Y-m-d H:i:s")
         ];
     }
 }

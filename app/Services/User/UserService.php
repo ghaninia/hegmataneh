@@ -46,15 +46,24 @@ class UserService implements UserServiceInterface
             );
     }
 
-
     /**
      * delete user
      * @param User $user
      * @return bool
      */
-    public function delete(User $user): bool
+    public function delete(User|array $user): bool
     {
         return $user->delete();
+    }
+
+    /**
+     * restore user
+     * @param User $user
+     * @return bool
+     */
+    public function restore(User $user): bool
+    {
+        return $user->restore();
     }
 
     /**

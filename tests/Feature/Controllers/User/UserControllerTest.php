@@ -227,4 +227,26 @@ class UserControllerTest extends TestCase
             "id" => $user->id
         ]);
     }
+
+
+    /** @test */
+    public function restoreUserInSystem()
+    {
+        $user = $this->userBuilder->create(true);
+        $user->delete() ;
+
+        $response = $this->postJson(
+            route("api.v1.user.restore", ["user" => $user->id])
+        );
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJsonStructure([
+            "ok",
+            "msg"
+        ]);
+
+        $this->assertDatabaseHas("users", [
+            "id" => $user->id
+        ]);
+    }
 }

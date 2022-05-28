@@ -105,4 +105,18 @@ class UserController extends Controller
             "msg" => trans("dashboard.success.user.delete")
         ]);
     }
+
+    /**
+     * Restore the user
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore(User $user)
+    {
+        $this->userService->restore($user);
+
+        return $this->success([
+            "msg" => trans("dashboard.success.user.restore")
+        ]);
+    }
 }

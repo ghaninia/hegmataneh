@@ -41,7 +41,7 @@ Route::group([
     ### GET ALL ROUTES
     ##################
 
-    Route::get("routes", function (){
+    Route::get("routes", function () {
         return getRoutes()->map(fn ($route) => [
             "uri" => url($route["uri"]),
             "as" => $route["as"],
@@ -57,18 +57,18 @@ Route::group([
         ########
         ### file
         ########
-        Route::prefix("filemanager/{user?}")->name("filemanager.")->group(function (){
-            Route::get("/" ,  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class , "index"])->name("index");
-            Route::post("/" ,  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class , "store"])->name("store");
+        Route::prefix("filemanager/{user?}")->name("filemanager.")->group(function () {
+            Route::get("/",  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class, "index"])->name("index");
+            Route::post("/",  [\App\Http\Controllers\Dashboard\Filemanager\FilemanagerController::class, "store"])->name("store");
         });
 
         ###########
         ### PROFILE
         ###########
 
-        Route::prefix("profile")->name("profile.")->group(function(){
-            Route::get("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "index"] )->name("index");
-            Route::post("/" , [\App\Http\Controllers\Dashboard\Profile\ProfileController::class , "store"] )->name("store");
+        Route::prefix("profile")->name("profile.")->group(function () {
+            Route::get("/", [\App\Http\Controllers\Dashboard\Profile\ProfileController::class, "index"])->name("index");
+            Route::post("/", [\App\Http\Controllers\Dashboard\Profile\ProfileController::class, "store"])->name("store");
         });
 
         ##############
@@ -95,10 +95,12 @@ Route::group([
         ### user route
         ##############
         Route::apiResource("user", \App\Http\Controllers\Dashboard\User\UserController::class);
-        Route::group([
-            "prefix" => "user/{user}",
-            "as" => "user."
-        ], function () {
+        Route::prefix("user/{user}")->name("user.")->group(function () {
+
+            ###########
+            ### restore
+            ###########
+            Route::post("restore", [\App\Http\Controllers\Dashboard\User\UserController::class, "restore"])->name("restore");
 
             ############
             ### portfolio
