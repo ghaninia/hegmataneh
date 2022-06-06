@@ -36,8 +36,8 @@ class PostService implements PostServiceInterface
      */
     public function list(array $filters)
     {
-        return
-            Post::query()
+        return Post::query()
+            ->with(["views", "comments", "votes"])
             ->where("type", EnumsPost::TYPE_POST)
             ->filterBy($filters)
             ->with(["translations", "slugs"])

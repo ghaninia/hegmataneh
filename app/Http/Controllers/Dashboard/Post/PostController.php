@@ -47,9 +47,7 @@ class PostController extends Controller
             ])
         );
         $posts = $this->postService->list($filters);
-        return new PostCollection(
-            $posts->loadCount(["views", "comments", "votes"])
-        );
+        return new PostCollection($posts);
     }
 
     /**

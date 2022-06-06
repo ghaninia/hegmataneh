@@ -55,12 +55,18 @@
     - Charts & Staticts 
 - ✅User Profile 
     - Edit Profile & Password & Notification
-- ❌Order and sales
-- ❌Comments
-- ❌Manage customer quotes
-- ❌Menu
-- ❌Slider
-- ❌Contact System
+
+[//]: # (- ❌Order and sales)
+
+[//]: # (- ❌Comments)
+
+[//]: # (- ❌Manage customer quotes)
+
+[//]: # (- ❌Menu)
+
+[//]: # (- ❌Slider)
+
+[//]: # (- ❌Contact System)
 
 <br />
 
