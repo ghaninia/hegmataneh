@@ -16,7 +16,8 @@ class LanguageController extends Controller
 
     public function __construct(
         protected LanguageServiceInterface $languageService
-    ){}
+    ) {
+    }
 
     /**
      * Display a listing of the resource
@@ -30,8 +31,8 @@ class LanguageController extends Controller
                 "name",
                 "code",
                 "direction"
-            ]) ,
-            $request->get("is_paginate" , false )
+            ]),
+            $request->get("is_paginate", false)
         );
 
         return new LanguageCollection($languages);

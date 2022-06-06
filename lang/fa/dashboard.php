@@ -2,6 +2,14 @@
 
 return [
 
+
+
+    "placeholder" => [
+        "choose" => [
+            "language" => "لطفا یک زبان را انتخاب کنید" ,
+        ]
+    ],
+
     "sidebar" => [
         "main" => "داشبورد",
         "users" => [

@@ -84,7 +84,14 @@ Route::group([
         ##############
         ### language route
         ##############
-        Route::apiResource("language", \App\Http\Controllers\Dashboard\Language\LanguageController::class);
+        Route::prefix("language")->name("language.")->group(function () {
+            Route::apiResource("/", \App\Http\Controllers\Dashboard\Language\LanguageController::class)
+                ->parameter(null, "language")
+                ->except("index");
+            Route::get("/", [\App\Http\Controllers\Dashboard\Language\LanguageController::class, "index"])
+                ->name("index")
+                ->withoutMiddleware("auth:sanctum");
+        });
 
         ##############
         ### currency route
@@ -100,7 +107,7 @@ Route::group([
             ###########
             ### restore
             ###########
-            Route::post("restore", [\App\Http\Controllers\Dashboard\User\UserController::class, "restore"])->name("restore");
+            Route::post("restore", [\App\Http\Controllers\Dashboard\User\UserController::class, "restore"])->name("restore")->withTrashed();
 
             ############
             ### portfolio
@@ -140,7 +147,6 @@ Route::group([
                 Route::delete("force", [\App\Http\Controllers\Dashboard\Post\ProductController::class, "forceDelete"])->name("force");
                 Route::post("restore", [\App\Http\Controllers\Dashboard\Post\ProductController::class, "restore"])->name("restore");
             });
-
         });
 
         #######

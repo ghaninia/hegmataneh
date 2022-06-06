@@ -15,7 +15,7 @@ class UserControllerTest extends TestCase
     {
         parent::setUp();
         $this->userBuilder = new UserBuilder;
-        $this->signIn() ;
+        $this->signIn();
     }
 
     /** @test */
@@ -233,7 +233,7 @@ class UserControllerTest extends TestCase
     public function restoreUserInSystem()
     {
         $user = $this->userBuilder->create(true);
-        $user->delete() ;
+        $user->delete();
 
         $response = $this->postJson(
             route("api.v1.user.restore", ["user" => $user->id])
